@@ -1,0 +1,44 @@
+{
+  "generation": 3,
+  "candidate_sha256": "49600d18f07be5cfb9445cee2a7e71a32d6b9dde6e9fa4a75f9a45f83ee811a9",
+  "champion_sha256": "bbe8b1b65acf0932a2074b18d8cc854dd4f410ecd7c687e0c5de884be80619d1",
+  "training": {
+    "history": [
+      {
+        "epoch": 0,
+        "policy_loss": 3.63752304315567,
+        "value_loss": 0.5754189234847824,
+        "optimizer_updates": 60,
+        "validation": [
+          3.77001953125,
+          0.0
+        ]
+      }
+    ],
+    "training_positions": 480,
+    "validation_positions": 32,
+    "effective_batch_size": 8,
+    "value_labeled_positions": 77,
+    "device": "cuda"
+  },
+  "config": {
+    "hours": 0.05,
+    "workers": 1,
+    "simulations": 2,
+    "replay_positions": 200000,
+    "max_plies": 8,
+    "train_positions": 8,
+    "sample_positions": 512,
+    "epochs": 1,
+    "batch_size": 8,
+    "device": "cuda",
+    "cpuct": 1.5,
+    "learning_rate": 0.001,
+    "arena_games": 2,
+    "promotion_threshold": 0.6,
+    "seed": 1701,
+    "disk_cap": 2000000000,
+    "engine": "build/genseki.exe"
+  },
+  "status": "arena_pending"
+}
