@@ -25,4 +25,13 @@ inline constexpr Hex directions[6] = {
     return Hex{static_cast<std::int16_t>(a.q + b.q), static_cast<std::int16_t>(a.r + b.r)};
 }
 
+[[nodiscard]] constexpr bool adjacent(Hex a, Hex b) {
+    for (const auto direction : directions) {
+        if (add(a, direction) == b) {
+            return true;
+        }
+    }
+    return false;
+}
+
 }  // namespace genseki

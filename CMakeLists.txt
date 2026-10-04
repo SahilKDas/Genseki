@@ -15,6 +15,7 @@ target_compile_options(genseki_cxx26_flags INTERFACE
 add_library(genseki_core
     src/core/board.cpp
     src/core/bot.cpp
+    src/core/uhp.cpp
 )
 target_include_directories(genseki_core PUBLIC include)
 target_link_libraries(genseki_core PUBLIC genseki_cxx26_flags)

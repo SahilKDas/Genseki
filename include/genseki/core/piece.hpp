@@ -22,6 +22,8 @@ struct Piece {
     Color color = Color::white;
     Bug bug = Bug::queen;
     std::uint8_t id = 0;
+
+    auto operator<=>(const Piece&) const = default;
 };
 
 [[nodiscard]] constexpr Color other(Color color) {
