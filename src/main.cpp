@@ -6,6 +6,7 @@
 #include <charconv>
 #include <cstdint>
 #include <iostream>
+#include <filesystem>
 #include <random>
 #include <string>
 #include <string_view>
@@ -130,8 +131,29 @@ int main(int argc, char** argv) {
             }
             return 0;
         }
-        std::cerr << "unknown option\n";
-        return 2;
+        std::filesystem::path model;
+        unsigned threads = 1;
+        unsigned table_mib = 64;
+        unsigned move_ms = 230;
+        for (int i = 1; i < argc; ++i) {
+            const std::string_view option{argv[i]};
+            if (option == "--model" && i + 1 < argc) model = argv[++i];
+            else if (option == "--threads" && i + 1 < argc && parse_unsigned(argv[++i], threads)) {}
+            else if (option == "--table-mib" && i + 1 < argc && parse_unsigned(argv[++i], table_mib)) {}
+            else if (option == "--move-ms" && i + 1 < argc && parse_unsigned(argv[++i], move_ms)) {}
+            else {
+                std::cerr << "unknown or invalid option\n";
+                return 2;
+            }
+        }
+        if (threads == 0 || threads > 12 || table_mib == 0 || move_ms == 0) {
+            std::cerr << "engine option out of range\n";
+            return 2;
+        }
+        genseki::UhpEngine engine{
+            model, threads, table_mib, std::chrono::milliseconds{move_ms}};
+        engine.run(std::cin, std::cout);
+        return 0;
     }
     genseki::UhpEngine engine;
     engine.run(std::cin, std::cout);

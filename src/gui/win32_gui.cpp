@@ -953,28 +953,22 @@ private:
     std::vector<std::pair<RECT, Piece>> reserve_hits_{};
     std::optional<Move> selected_{};
     std::wstring status_ = L"Starting";
-    std::array<BotProfile, 24> bot_profiles_{{
-        {L"Alpha handcrafted", 1},
-        {L"Beta handcrafted", 2},
+    std::array<BotProfile, 18> bot_profiles_{{
         {L"Gamma NNUE", 1},
         {L"Delta NNUE", 2},
         {L"Epsilon dense", 1},
         {L"Zeta dense", 2},
         {L"Eta convolutional", 1},
         {L"Theta convolutional", 2},
-        {L"Iota handcrafted", 3},
         {L"Kappa NNUE", 3},
         {L"Lambda dense", 3},
         {L"Mu convolutional", 3},
-        {L"Nu handcrafted", 4},
         {L"Xi NNUE", 4},
         {L"Omicron dense", 4},
         {L"Pi convolutional", 4},
-        {L"Rho handcrafted", 5},
         {L"Sigma NNUE", 5},
         {L"Tau dense", 5},
         {L"Upsilon convolutional", 5},
-        {L"Phi handcrafted", 6},
         {L"Chi NNUE", 6},
         {L"Psi dense", 6},
         {L"Omega convolutional", 6},

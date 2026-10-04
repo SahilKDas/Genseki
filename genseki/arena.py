@@ -101,7 +101,6 @@ def verdicts(scores: tuple[FamilyScore, ...]) -> dict[str, object]:
     nnue = by_eval.get(EvaluatorKind.NNUE)
     dense = by_eval.get(EvaluatorKind.DENSE)
     convolutional = by_eval.get(EvaluatorKind.CONVOLUTIONAL)
-    handcrafted = by_eval.get(EvaluatorKind.HANDCRAFTED)
     if nnue is None:
         return {"ready": False, "reason": "no NNUE games"}
     neural_field_games = (dense.games if dense else 0) + (convolutional.games if convolutional else 0)
@@ -109,7 +108,6 @@ def verdicts(scores: tuple[FamilyScore, ...]) -> dict[str, object]:
         convolutional.score if convolutional else 0.0
     )
     neural_field_rate = neural_field_score / neural_field_games if neural_field_games else None
-    handcrafted_rate = handcrafted.win_rate if handcrafted else None
     return {
         "ready": True,
         "nnue_win_rate": nnue.win_rate,
@@ -117,8 +115,4 @@ def verdicts(scores: tuple[FamilyScore, ...]) -> dict[str, object]:
         if neural_field_rate is None
         else nnue.win_rate > neural_field_rate,
         "dense_or_conv_win_rate": neural_field_rate,
-        "nnue_beats_handcrafted": None
-        if handcrafted_rate is None
-        else nnue.win_rate > handcrafted_rate,
-        "handcrafted_win_rate": handcrafted_rate,
     }

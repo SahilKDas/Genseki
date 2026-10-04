@@ -124,16 +124,6 @@ def encode_position(text: str) -> tuple[list[float], list[list[list[float]]]]:
     return vector, grid
 
 
-class Handcrafted(nn.Module):
-    def __init__(self) -> None:
-        super().__init__()
-        self.linear = nn.Linear(128, 1)
-
-    def forward(self, vector: Tensor, grid: Tensor) -> Tensor:
-        del grid
-        return torch.tanh(self.linear(vector)).squeeze(1)
-
-
 class Nnue(nn.Module):
     def __init__(self, width: int = 64) -> None:
         super().__init__()
@@ -180,8 +170,6 @@ class Convolutional(nn.Module):
 
 
 def make_model(bot: BotSpec) -> nn.Module:
-    if bot.evaluator == EvaluatorKind.HANDCRAFTED:
-        return Handcrafted()
     if bot.evaluator == EvaluatorKind.NNUE:
         return Nnue(48 + bot.search_depth * 8)
     if bot.evaluator == EvaluatorKind.DENSE:
@@ -199,6 +187,11 @@ def load_dataset(path: Path) -> tuple[TensorDataset, TensorDataset, dict[str, ob
     finishes: dict[str, int] = {}
     with path.open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle, delimiter="\t"):
+            if row.get("label_source") != "terminal_outcome":
+                raise ValueError(
+                    "dataset contains legacy or heuristic labels; regenerate it with the "
+                    "current terminal-outcome generator"
+                )
             vector, grid = encode_position(row["position"])
             target = float(row["label"])
             finishes[row["finish"]] = finishes.get(row["finish"], 0) + 1
@@ -263,18 +256,15 @@ def train_bot(
     torch.cuda.manual_seed_all(seed)
     model = make_model(bot).to(device)
     generator = torch.Generator().manual_seed(seed)
-    effective_batch_size = (
-        len(train) if bot.evaluator == EvaluatorKind.CONVOLUTIONAL else batch_size
-    )
     loader = DataLoader(
         train,
-        batch_size=effective_batch_size,
+        batch_size=batch_size,
         shuffle=True,
         generator=generator,
     )
     optimizer = torch.optim.AdamW(
         model.parameters(),
-        lr=0.0015 if bot.evaluator != EvaluatorKind.HANDCRAFTED else 0.004,
+        lr=0.0015,
         weight_decay=0.0001 * bot.search_depth,
     )
     loss_function = nn.SmoothL1Loss()
@@ -311,7 +301,7 @@ def train_bot(
         "seed": seed,
         "parameters": sum(parameter.numel() for parameter in model.parameters()),
         "epochs": epochs,
-        "batch_size": effective_batch_size,
+        "batch_size": batch_size,
         "seconds": time.perf_counter() - started,
         "artifact": output.as_posix(),
         **metrics,
@@ -325,11 +315,20 @@ def main() -> None:
     parser.add_argument("--epochs", type=int, default=8)
     parser.add_argument("--batch-size", type=int, default=384)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--max-vram-gib", type=float, default=1.5)
     args = parser.parse_args()
 
     if args.device == "cuda" and not torch.cuda.is_available():
         raise SystemExit("CUDA was requested but is unavailable")
+    if args.max_vram_gib <= 0:
+        raise SystemExit("--max-vram-gib must be positive")
     device = torch.device(args.device)
+    if device.type == "cuda":
+        total_bytes = torch.cuda.get_device_properties(device).total_memory
+        requested_bytes = args.max_vram_gib * 1024**3
+        torch.cuda.set_per_process_memory_fraction(
+            min(1.0, requested_bytes / total_bytes), device=device
+        )
     train, test, dataset_metadata = load_dataset(args.dataset)
     results = []
     for bot in GREEK_BOTS:
@@ -345,6 +344,7 @@ def main() -> None:
         "device_name": torch.cuda.get_device_name(0) if device.type == "cuda" else "CPU",
         "epochs": args.epochs,
         "batch_size": args.batch_size,
+        "max_vram_gib": args.max_vram_gib,
         "dataset": dataset_metadata,
         "bots": results,
     }

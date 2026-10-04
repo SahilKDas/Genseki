@@ -15,6 +15,7 @@ target_compile_options(genseki_cxx26_flags INTERFACE
 add_library(genseki_core
     src/core/board.cpp
     src/core/bot.cpp
+    src/core/search.cpp
     src/core/selfplay.cpp
     src/core/uhp.cpp
 )

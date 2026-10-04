@@ -16,7 +16,6 @@ def experiment_manifest() -> dict[str, object]:
         "game": "Hive",
         "questions": [
             "Are NNUE evaluators stronger than dense or convolutional neural evaluators?",
-            "Are NNUE evaluators stronger than handcrafted evaluators?",
         ],
         "active_bots": [bot.to_json() for bot in bots],
         "all_slots": len(GREEK_BOTS),

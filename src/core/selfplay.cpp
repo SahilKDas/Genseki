@@ -74,7 +74,7 @@ DatasetStats generate_training_data(
     std::filesystem::create_directories(output.parent_path());
     std::ofstream stream{output, std::ios::trunc};
     if (!stream) throw std::runtime_error("unable to open training data output");
-    stream << "game\tply\tlabel\tfinish\tposition\n";
+    stream << "game\tply\tlabel\tfinish\tlabel_source\tposition\n";
 
     DatasetStats stats{.games = games};
     std::mt19937 random{seed};
@@ -92,11 +92,13 @@ DatasetStats generate_training_data(
         const bool terminal = board.is_terminal();
         stats.terminal_games += terminal ? 1U : 0U;
         stats.adjudicated_games += terminal ? 0U : 1U;
-        const auto label = white_score(board);
-        for (const auto& [ply, position] : positions) {
-            stream << game << '\t' << ply << '\t' << std::format("{:.6f}", label) << '\t'
-                   << (terminal ? "terminal" : "adjudicated") << '\t' << position << '\n';
-            ++stats.positions;
+        if (terminal) {
+            const auto label = white_score(board);
+            for (const auto& [ply, position] : positions) {
+                stream << game << '\t' << ply << '\t' << std::format("{:.6f}", label)
+                       << "\tterminal\tterminal_outcome\t" << position << '\n';
+                ++stats.positions;
+            }
         }
     }
     return stats;

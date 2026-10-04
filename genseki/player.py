@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import subprocess
 import sys
-import time
 from pathlib import Path
 
 import torch
@@ -87,12 +86,7 @@ def main() -> None:
                 print("ok", flush=True)
                 continue
             if command == "bestmove":
-                started = time.perf_counter()
-                if max(0, current_game.count(";") - 2) >= 48:
-                    print(native.command("genseki-pressuremove")[0])
-                    print("ok", flush=True)
-                    continue
-                children = native.command("genseki-children 16")[:-1]
+                children = native.command("genseki-children")[:-1]
                 moves: list[str] = []
                 vectors = []
                 grids = []

@@ -31,6 +31,7 @@ must not be treated as an additional dedicated training budget.
 | Resource or activity | Limit |
 | --- | --- |
 | Genseki engine search | At most 12 CPU search threads per engine process |
+| Genseki CUDA training VRAM | At most 1.5 GiB allocated per training process |
 | All temporary project data combined | At most 10,000,000,000 bytes (10 GB) at any instant |
 | Temporary neural training data and artifacts | At most 6,000,000,000 bytes (6 GB) at any instant, included inside the 10 GB total cap |
 | Concurrent CPU-heavy training or gauntlet jobs | At most 1 unless SahilKDas explicitly authorizes more |
@@ -76,6 +77,8 @@ test evidence the repository intentionally keeps.
 - GPU execution is controlled independently by the CUDA runtime. CUDA cores do
   not map one-to-one to engine search threads, so the 12-thread CPU limit must
   not be interpreted as a GPU worker or CUDA-core limit.
+- CUDA training must configure PyTorch's per-process allocator ceiling to at
+  most 1.5 GiB before model or batch tensors are moved to the GPU.
 - Do not run multiple CPU-heavy gauntlets or training jobs concurrently unless
   SahilKDas explicitly authorizes that specific run.
 - Keep long background matches and benchmarks bounded. When foreground use or

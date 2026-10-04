@@ -1,10 +1,12 @@
 #include "genseki/core/board.hpp"
 #include "genseki/core/bot.hpp"
+#include "genseki/core/search.hpp"
 #include "genseki/core/uhp.hpp"
 
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>
+#include <chrono>
 #include <string>
 #include <vector>
 
@@ -139,6 +141,8 @@ void uhp_protocol() {
     require(engine.execute("validmoves")
         == std::vector<std::string>({"wS1;wB1;wG1;wA1", "ok"}),
         "UHP opening validmoves uses standard notation");
+    require(engine.execute("genseki-children").size() == 5,
+        "unbounded child command returns every legal move plus ok");
     require(engine.execute("play wS1")
         == std::vector<std::string>({"Base;InProgress;Black[1];wS1", "ok"}),
         "UHP play updates game string");
@@ -147,6 +151,10 @@ void uhp_protocol() {
         "UHP undo restores game");
     require(engine.execute("bestmove depth 0").back() == "ok", "UHP depth bestmove completes");
     require(engine.execute("bestmove time 00:00:01").back() == "ok", "UHP time bestmove completes");
+    require(engine.execute("bestmove time 00:00:00.010").back() == "ok",
+        "UHP accepts fractional-second limits");
+    require(engine.execute("genseki-searchinfo").back() == "ok",
+        "UHP exposes search evidence");
 
     auto loaded = genseki::Board::from_game_string(
         "Base;InProgress;White[2];wS1;bS1 wS1-");
@@ -155,14 +163,43 @@ void uhp_protocol() {
         "UHP game string round trips");
 }
 
+void native_search() {
+    genseki::Board board;
+    genseki::SearchEngine first{1};
+    genseki::SearchEngine second{1};
+    const genseki::SearchLimits depth_limits{
+        .max_depth = 2,
+        .time = std::chrono::milliseconds{500},
+        .threads = 1,
+        .table_mib = 1,
+    };
+    const auto a = first.search(board, depth_limits);
+    const auto b = second.search(board, depth_limits);
+    require(board.is_legal(a.move), "search returns a legal move");
+    require(a.move == b.move && a.score == b.score,
+        "single-thread fixed-depth search is deterministic");
+
+    genseki::SearchEngine timed{1};
+    const genseki::SearchLimits time_limits{
+        .max_depth = 64,
+        .time = std::chrono::milliseconds{20},
+        .threads = 1,
+        .table_mib = 1,
+    };
+    const auto result = timed.search(board, time_limits);
+    require(board.is_legal(result.move), "interrupted search retains a legal completed move");
+    require(result.elapsed < std::chrono::milliseconds{150}, "deadline interruption is bounded");
+}
+
 }  // namespace
 
 int main() {
-    require(genseki::greek_bot_specs().size() == 24, "there are 24 greek bot slots");
+    require(genseki::greek_bot_specs().size() == 18, "there are 18 neural bot slots");
     opening_and_queen_deadline();
     piece_movement();
     connectivity_and_results();
     state_integrity_and_perft();
+    native_search();
     uhp_protocol();
     return 0;
 }

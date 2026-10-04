@@ -1,4 +1,10 @@
-# MzingaCpp Qualification
+# MzingaCpp Qualification (Superseded)
+
+This is preserved historical evidence from the removed 24-bot experiment. It
+is not a valid architecture comparison: the removed family was learned linear,
+CNN training used far fewer optimizer updates, only 16 candidate moves were
+sampled, and all models were replaced by a shared queen-pressure chooser after
+ply 48.
 
 Run date: 2026-10-03
 
@@ -17,27 +23,27 @@ Run date: 2026-10-03
 
 | Bot | Family | Score |
 | --- | --- | ---: |
-| Alpha | Handcrafted | 38.0 |
-| Beta | Handcrafted | 37.5 |
+| Alpha | Learned linear (removed) | 38.0 |
+| Beta | Learned linear (removed) | 37.5 |
 | Gamma | NNUE | 35.5 |
 | Delta | NNUE | 38.0 |
 | Epsilon | Dense | 38.5 |
 | Zeta | Dense | 35.5 |
 | Eta | Convolutional | 39.5 |
 | Theta | Convolutional | 33.5 |
-| Iota | Handcrafted | 38.0 |
+| Iota | Learned linear (removed) | 38.0 |
 | Kappa | NNUE | 37.5 |
 | Lambda | Dense | 35.0 |
 | Mu | Convolutional | 30.5 |
-| Nu | Handcrafted | 38.0 |
+| Nu | Learned linear (removed) | 38.0 |
 | Xi | NNUE | 39.5 |
 | Omicron | Dense | 35.5 |
 | Pi | Convolutional | 34.0 |
-| Rho | Handcrafted | 35.0 |
+| Rho | Learned linear (removed) | 35.0 |
 | Sigma | NNUE | 40.0 |
 | Tau | Dense | 39.0 |
 | Upsilon | Convolutional | 35.5 |
-| Phi | Handcrafted | 37.5 |
+| Phi | Learned linear (removed) | 37.5 |
 | Chi | NNUE | 36.5 |
 | Psi | Dense | 37.5 |
 | Omega | Convolutional | 33.5 |
@@ -47,10 +53,9 @@ Family totals:
 | Family | Score | Percentage |
 | --- | ---: | ---: |
 | NNUE | 227/300 | 75.7% |
-| Handcrafted | 224/300 | 74.7% |
+| Learned linear (removed) | 224/300 | 74.7% |
 | Dense | 221/300 | 73.7% |
 | Convolutional | 206.5/300 | 68.8% |
 
-The raw CSV is the authoritative match record. The architecture comparison is
-preliminary because search profiles differ, all bots share a tactical closer,
-and MzingaCpp v0.9.8 uses a first-legal `bestmove` policy.
+The raw CSV is the authoritative match record. This run is compatibility
+history only and must not be used to rank evaluator architectures.

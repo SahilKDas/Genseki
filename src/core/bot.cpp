@@ -4,8 +4,6 @@ namespace genseki {
 
 std::string_view name(EvaluatorKind kind) {
     switch (kind) {
-        case EvaluatorKind::handcrafted:
-            return "handcrafted";
         case EvaluatorKind::nnue:
             return "nnue";
         case EvaluatorKind::dense:
