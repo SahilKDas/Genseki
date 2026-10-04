@@ -5,11 +5,14 @@ description = "Experiment tooling for Genseki's Hive bot league."
 requires-python = ">=3.11"
 dependencies = [
   "numpy>=1.26",
+  "torch>=2.12",
 ]
 
 [project.scripts]
 genseki-experiments = "genseki.experiments:main"
 genseki-report = "genseki.report:main"
+genseki-train = "genseki.training:main"
+genseki-gauntlet = "genseki.gauntlet:main"
 
 [tool.ruff]
 line-length = 100

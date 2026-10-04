@@ -1,5 +1,6 @@
 #include "genseki/core/uhp.hpp"
 
+#include <algorithm>
 #include <charconv>
 #include <sstream>
 
@@ -18,6 +19,21 @@ std::pair<std::string, std::string> command_and_args(std::string_view line) {
     const auto space = cleaned.find(' ');
     if (space == std::string::npos) return {cleaned, {}};
     return {cleaned.substr(0, space), trim(std::string_view{cleaned}.substr(space + 1))};
+}
+
+unsigned queen_pressure(const Board& board, Color color) {
+    std::optional<Hex> queen;
+    for (const auto& stack : board.stacks()) {
+        for (const auto piece : stack.pieces) {
+            if (piece.color == color && piece.bug == Bug::queen) queen = stack.cell;
+        }
+    }
+    if (!queen) return 0;
+    return static_cast<unsigned>(std::ranges::count_if(directions, [&](Hex direction) {
+        return std::ranges::any_of(board.stacks(), [&](const Stack& stack) {
+            return stack.cell == add(*queen, direction);
+        });
+    }));
 }
 
 }  // namespace
@@ -68,6 +84,59 @@ std::vector<std::string> UhpEngine::execute(std::string_view line) {
         }
         if (!board_->undo(count)) return error("Unable to undo that many moves.");
         return {board_->game_string(), "ok"};
+    }
+    if (command == "genseki-position") {
+        return {board_->position_string(), "ok"};
+    }
+    if (command == "genseki-children") {
+        std::vector<std::string> response;
+        const auto moves = board_->legal_moves();
+        unsigned limit = 32;
+        if (!args.empty()) {
+            const auto [end, ec] = std::from_chars(args.data(), args.data() + args.size(), limit);
+            if (ec != std::errc{} || end != args.data() + args.size() || limit == 0) {
+                return error("genseki-children requires a positive limit.");
+            }
+        }
+        const auto count = std::min<std::size_t>(moves.size(), limit);
+        for (std::size_t sample = 0; sample < count; ++sample) {
+            const auto move_index = count == moves.size() || count == 1
+                ? sample
+                : sample * (moves.size() - 1) / (count - 1);
+            const auto& move = moves[move_index];
+            auto notation = board_->uhp_move_string(move);
+            auto undo = board_->make_move(move);
+            response.push_back(*notation + "\t" + board_->position_string());
+            board_->unmake_move(*undo);
+        }
+        response.push_back("ok");
+        return response;
+    }
+    if (command == "genseki-pressuremove") {
+        const auto mover = board_->side_to_move();
+        const auto moves = board_->legal_moves();
+        const auto count = std::min<std::size_t>(moves.size(), 16);
+        std::size_t selected = 0;
+        int best = -1000000;
+        for (std::size_t sample = 0; sample < count; ++sample) {
+            const auto i = count == moves.size() || count == 1
+                ? sample
+                : sample * (moves.size() - 1) / (count - 1);
+            auto undo = board_->make_move(moves[i]);
+            int score = static_cast<int>(queen_pressure(*board_, other(mover))) * 10
+                - static_cast<int>(queen_pressure(*board_, mover)) * 7;
+            if (board_->result() == (mover == Color::white
+                    ? GameResult::white_win : GameResult::black_win)) {
+                score += 100000;
+            }
+            board_->unmake_move(*undo);
+            if (score > best) {
+                best = score;
+                selected = i;
+            }
+        }
+        auto notation = board_->uhp_move_string(moves[selected]);
+        return {*notation, "ok"};
     }
     if (board_->is_terminal()) {
         return error("The game is over. Try 'newgame' to start a new game.");

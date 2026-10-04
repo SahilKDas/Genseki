@@ -30,7 +30,7 @@ must not be treated as an additional dedicated training budget.
 
 | Resource or activity | Limit |
 | --- | --- |
-| Genseki engine search | At most 3 search threads per engine process |
+| Genseki engine search | At most 12 CPU search threads per engine process |
 | All temporary project data combined | At most 10,000,000,000 bytes (10 GB) at any instant |
 | Temporary neural training data and artifacts | At most 6,000,000,000 bytes (6 GB) at any instant, included inside the 10 GB total cap |
 | Concurrent CPU-heavy training or gauntlet jobs | At most 1 unless SahilKDas explicitly authorizes more |
@@ -69,16 +69,21 @@ test evidence the repository intentionally keeps.
 
 ## CPU, memory, and process rules
 
-- Genseki's production search contract is capped at three threads. Do not
+- Genseki's production search contract is capped at twelve CPU threads, one
+  for each logical processor reported by Windows. Do not
   silently raise protocol thread count, helper count, or parallel-search lane
   count.
+- GPU execution is controlled independently by the CUDA runtime. CUDA cores do
+  not map one-to-one to engine search threads, so the 12-thread CPU limit must
+  not be interpreted as a GPU worker or CUDA-core limit.
 - Do not run multiple CPU-heavy gauntlets or training jobs concurrently unless
   SahilKDas explicitly authorizes that specific run.
 - Keep long background matches and benchmarks bounded. When foreground use or
   an online bridge/match controller is active, use Windows Idle priority for
   background gauntlets where supported.
-- Neural training must use batch sizes and dataset shards that leave the laptop
-  usable. If available memory falls below 2 GiB, stop or shrink the job.
+- Neural training may use available physical memory aggressively, but must
+  leave at least 0.5 GiB free. If available memory falls below that floor,
+  stop or shrink the job.
 - Very deep fixed-depth searches can take hours on this device. Depth ladders
   and matches must have declared time, game-count, and storage bounds rather
   than running indefinitely.
@@ -124,7 +129,7 @@ Before a resource-heavy task:
 
 1. Confirm projected peak storage stays within both the 10 GB total cap and,
    when applicable, the nested 6 GB training cap.
-2. Confirm projected RAM use leaves at least 2 GiB free memory.
+2. Confirm projected RAM use leaves at least 0.5 GiB free memory.
 3. Confirm no conflicting training or gauntlet is already running.
 4. Count active bridge/controller and GUI processes.
 5. Protect live play and keep the laptop usable for foreground work.

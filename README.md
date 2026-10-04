@@ -7,9 +7,9 @@ evaluators at scale. The core question is simple:
 - Are NNUEs better than dense or convolutional neural evaluators?
 - Are NNUEs better than handcrafted evaluation functions?
 
-The bot league reserves up to twenty-four Greek-letter identities from Alpha
-through Omega. The first active wave compares handcrafted, NNUE, dense neural,
-and convolutional evaluators at shallow search depths.
+The bot league contains twenty-four trained Greek-letter identities from Alpha
+through Omega. Six bots apiece compare handcrafted, NNUE, dense neural, and
+convolutional evaluators across search-depth profiles one through six.
 
 ## Engine
 
@@ -19,22 +19,24 @@ and convolutional evaluators at shallow search depths.
 - Reversible make/unmake, deterministic move generation, replay validation,
   and reference-checked perft.
 - Universal Hive Protocol engine for use with UHP viewers and match tools.
-- `genseki/`: Python experiment manifest tooling.
-- `docs/EXPERIMENTS.md`: evaluator comparison plan.
+- CUDA training and UHP gauntlet tooling in `genseki/`.
+- Native Win32/GDI UHP GUI in `src/gui/win32_gui.cpp`.
+- Frozen model artifacts and a reproducibility manifest in `models/frozen/`.
+- Completed 1,200-game qualification evidence in `reports/`.
 
 ## Commands
 
 ```powershell
-python -m genseki.experiments
-python -m genseki.experiments --out reports/manifest.json --pairings reports/pairings.csv
-python -m genseki.report data/samples/arena_results.csv
+.\build\genseki.exe --generate-data data\generated\selfplay.tsv 128 96 1195724371
+python -m genseki.training data\generated\selfplay.tsv --output models\frozen --epochs 12 --batch-size 512 --device cuda
+python -m genseki.gauntlet --engine build\genseki.exe --mzinga path\to\mzingacpp.exe --games 50 --move-ms 250
 ```
 
 Build and test:
 
 ```powershell
 cmake -S . -B build -G "MinGW Makefiles"
-cmake --build build -j 3
+cmake --build build -j12
 ctest --test-dir build --output-on-failure
 ```
 
@@ -52,3 +54,5 @@ command: `info`, `newgame`, `play`, `pass`, `validmoves`,
 
 See [docs/HIVE_ENGINE.md](docs/HIVE_ENGINE.md) for the rules, notation,
 invariants, UHP behavior, and verified perft counts.
+See [docs/WIN32_GUI.md](docs/WIN32_GUI.md) for the native GUI and
+[docs/EXPERIMENTS.md](docs/EXPERIMENTS.md) for the evaluator results.

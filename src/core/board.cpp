@@ -4,6 +4,7 @@
 #include <charconv>
 #include <cctype>
 #include <format>
+#include <limits>
 #include <queue>
 #include <ranges>
 #include <set>
@@ -307,7 +308,7 @@ bool Board::can_slide(Hex from, Hex to) const {
             ++blockers;
         }
     }
-    return blockers < 2;
+    return blockers == 1;
 }
 
 bool Board::beetle_gate_open(Hex from, Hex to, std::size_t source_height) const {
@@ -386,8 +387,11 @@ std::vector<Hex> Board::movement_destinations(Hex from, const Piece& piece) cons
         case Bug::beetle:
             for (const auto direction : directions) {
                 const auto to = add(from, direction);
-                if (lifted.beetle_gate_open(from, to, source_height)
-                    && (lifted.occupied(to) || lifted.touches_hive(to))) {
+                const auto ground_slide = source_height == 1 && !lifted.occupied(to);
+                const auto gate_open = ground_slide
+                    ? lifted.can_slide(from, to)
+                    : lifted.beetle_gate_open(from, to, source_height);
+                if (gate_open && (lifted.occupied(to) || lifted.touches_hive(to))) {
                     destinations.push_back(to);
                 }
             }
@@ -601,7 +605,9 @@ std::expected<Board, std::string> Board::from_position_string(std::string_view t
     unsigned white_turns = 0;
     unsigned black_turns = 0;
     if (!parse_integer(fields[2], board.ply_) || !parse_integer(fields[3], white_turns)
-        || !parse_integer(fields[4], black_turns) || white_turns > 11 || black_turns > 11) {
+        || !parse_integer(fields[4], black_turns)
+        || white_turns > std::numeric_limits<std::uint8_t>::max()
+        || black_turns > std::numeric_limits<std::uint8_t>::max()) {
         return std::unexpected("invalid position counters");
     }
     board.turns_taken_ = {
@@ -776,9 +782,15 @@ std::expected<Board, std::string> Board::from_game_string(std::string_view text)
         if (!played) return std::unexpected(std::format("illegal move {}", i - 2));
     }
     if (fields.size() >= 3) {
-        const auto canonical = split(board.game_string(), ';');
+        const auto canonical_game = board.game_string();
+        const auto canonical = split(canonical_game, ';');
         if (fields[1] != canonical[1] || fields[2] != canonical[2]) {
-            return std::unexpected("game state or turn does not match move history");
+            return std::unexpected(std::format(
+                "game state or turn does not match move history (received {};{}, derived {};{})",
+                fields[1],
+                fields[2],
+                canonical[1],
+                canonical[2]));
         }
     }
     return board;

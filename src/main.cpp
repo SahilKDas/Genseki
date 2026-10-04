@@ -1,5 +1,6 @@
 #include "genseki/core/board.hpp"
 #include "genseki/core/bot.hpp"
+#include "genseki/core/selfplay.hpp"
 #include "genseki/core/uhp.hpp"
 
 #include <charconv>
@@ -83,6 +84,29 @@ int main(int argc, char** argv) {
         const std::string_view command{argv[1]};
         if (command == "--perft") return run_perft(argc, argv);
         if (command == "--stress") return run_stress(argc, argv);
+        if (command == "--generate-data") {
+            if (argc < 4) {
+                std::cerr << "usage: genseki --generate-data PATH GAMES [MAX_PLIES] [SEED]\n";
+                return 2;
+            }
+            unsigned games = 0;
+            unsigned max_plies = 96;
+            unsigned seed = 0x47454e53U;
+            if (!parse_unsigned(argv[3], games)
+                || (argc > 4 && !parse_unsigned(argv[4], max_plies))
+                || (argc > 5 && !parse_unsigned(argv[5], seed))) {
+                std::cerr << "invalid dataset arguments\n";
+                return 2;
+            }
+            try {
+                const auto stats = genseki::generate_training_data(argv[2], games, max_plies, seed);
+                std::cout << genseki::to_json(stats) << '\n';
+                return 0;
+            } catch (const std::exception& error) {
+                std::cerr << error.what() << '\n';
+                return 1;
+            }
+        }
         if (command == "--replay") {
             if (argc < 3) {
                 std::cerr << "usage: genseki --replay GAMESTRING\n";

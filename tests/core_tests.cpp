@@ -75,6 +75,13 @@ void piece_movement() {
     require(has_move(beetle, genseki::Bug::beetle, {0, 0}, {1, 0}),
         "beetle climbs occupied cell");
 
+    auto open_gap_beetle = position(
+        "G1|w|48|24|24|-4,2=bA3;-3,1=wA3;-2,-1=bA2;-2,0=bQ;-2,1=bS1;"
+        "-2,2=bA1;-1,1=bB1;-1,3=wA2;0,-2=wB1;0,-1=wQ;0,0=wG1;0,2=wG3;"
+        "1,-2=wS1;1,0=wA1;1,1=wG2;2,-2=wS2;3,-3=wB2");
+    require(!has_move(open_gap_beetle, genseki::Bug::beetle, {0, -2}, {-1, -2}),
+        "ground beetle cannot cross a zero-flank gap");
+
     auto crawlers = position(
         "G1|w|8|4|4|-1,0=wQ;0,0=wA1;1,0=bQ;1,-1=bG1;0,-1=wS1");
     const auto ant_moves = std::ranges::count_if(crawlers.legal_moves(), [](const genseki::Move& move) {
