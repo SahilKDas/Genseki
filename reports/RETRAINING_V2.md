@@ -43,6 +43,6 @@ run. Future sessions enforce the ceiling through `--max-vram-gib 1.5`.
 These are correlated position-level metrics from game-grouped held-out data.
 They are useful training diagnostics, not playing-strength conclusions.
 
-All six NNUE models were also exported to the native `.nnue` format. The
-requested 40-game Nokamute gauntlets are pending explicit user authorization;
-no partial gauntlet report is retained.
+All six NNUE models were also exported to the native `.nnue` format. A
+subsequent 20-game-per-bot Nokamute development gauntlet is documented in
+`reports/NOKAMUTE_V2.md`.

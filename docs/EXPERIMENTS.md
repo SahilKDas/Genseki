@@ -53,8 +53,9 @@ be retrained before the architecture comparison is rerun.
 
 That retraining completed on 2026-10-04 with 68,627 terminal-outcome positions,
 a whole-game train/test split, and batch size 512 for every family. See
-`reports/RETRAINING_V2.md`. The 40-game-per-bot Nokamute comparison remains
-pending and no strength conclusion is drawn from training metrics alone.
+`reports/RETRAINING_V2.md`. The subsequent 20-game-per-bot Nokamute run
+produced no completed-game wins; see `reports/NOKAMUTE_V2.md`. No evaluator
+family ranking is inferred from opponent timeout forfeits.
 
 ## Nokamute Champion Gate
 
