@@ -1,0 +1,3 @@
+._\msys64\ucrt64\bin\cmake.exe -E rm -f CMakeFiles\alpha_nokamute.dir/objects.a
+._\msys64\ucrt64\bin\ar.exe qc CMakeFiles\alpha_nokamute.dir/objects.a @CMakeFiles\alpha_nokamute.dir\objects1.rsp
+._\msys64\ucrt64\bin\c++.exe -O3 -DNDEBUG -Wl,--whole-archive CMakeFiles\alpha_nokamute.dir/objects.a -Wl,--no-whole-archive -o alpha_nokamute.exe -Wl,--out-implib,libalpha_nokamute.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\alpha_nokamute.dir\linkLibs.rsp

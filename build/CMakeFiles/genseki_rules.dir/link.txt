@@ -1,0 +1,3 @@
+._\msys64\ucrt64\bin\cmake.exe -E rm -f CMakeFiles\genseki_rules.dir/objects.a
+._\msys64\ucrt64\bin\ar.exe qc CMakeFiles\genseki_rules.dir/objects.a @CMakeFiles\genseki_rules.dir\objects1.rsp
+._\msys64\ucrt64\bin\c++.exe -O3 -DNDEBUG -Wl,--whole-archive CMakeFiles\genseki_rules.dir/objects.a -Wl,--no-whole-archive -o genseki_rules.exe -Wl,--out-implib,libgenseki_rules.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\genseki_rules.dir\linkLibs.rsp

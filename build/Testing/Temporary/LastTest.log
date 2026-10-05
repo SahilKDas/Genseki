@@ -1,0 +1,94 @@
+Start testing: Oct 05 08:54 Pacific Daylight Time
+----------------------------------------------------------
+1/6 Testing: genseki_core_tests
+1/6 Test: genseki_core_tests
+Command: "._/Workspace_______/Genseki/build/genseki_tests.exe"
+Directory: ._/Workspace_______/Genseki/build
+"genseki_core_tests" start time: Oct 05 08:54 Pacific Daylight Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"genseki_core_tests" end time: Oct 05 08:54 Pacific Daylight Time
+"genseki_core_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/6 Testing: genseki_default_engine
+2/6 Test: genseki_default_engine
+Command: "._/Users/user_/AppData/Local/Programs/Python/Python313/python.exe" "._/Workspace_______/Genseki/tests/default_engine.py" "._/Workspace_______/Genseki/build/genseki.exe" "._/Workspace_______/Genseki/build/rust-target/release/alpha_nokamute_mit.exe"
+Directory: ._/Workspace_______/Genseki/build
+"genseki_default_engine" start time: Oct 05 08:54 Pacific Daylight Time
+Output:
+----------------------------------------------------------
+Public default is Alpha; timed UHP move is legal.
+<end of output>
+Test time =   0.19 sec
+----------------------------------------------------------
+Test Passed.
+"genseki_default_engine" end time: Oct 05 08:54 Pacific Daylight Time
+"genseki_default_engine" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/6 Testing: alpha_smoke
+3/6 Test: alpha_smoke
+Command: "._/Users/user_/AppData/Local/Programs/Python/Python313/python.exe" "._/Workspace_______/Genseki/Alpha/tests/smoke.py" "._/Workspace_______/Genseki/build/Alpha/alpha_nokamute.exe"
+Directory: ._/Workspace_______/Genseki/build/Alpha
+"alpha_smoke" start time: Oct 05 08:54 Pacific Daylight Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.13 sec
+----------------------------------------------------------
+Test Passed.
+"alpha_smoke" end time: Oct 05 08:54 Pacific Daylight Time
+"alpha_smoke" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/6 Testing: alpha_contracts
+4/6 Test: alpha_contracts
+Command: "._/Users/user_/AppData/Local/Programs/Python/Python313/python.exe" "._/Workspace_______/Genseki/Alpha/tests/contracts.py" "._/Workspace_______/Genseki/build/Alpha/alpha_nokamute.exe"
+Directory: ._/Workspace_______/Genseki/build/Alpha
+"alpha_contracts" start time: Oct 05 08:54 Pacific Daylight Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"alpha_contracts" end time: Oct 05 08:54 Pacific Daylight Time
+"alpha_contracts" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/6 Testing: alpha_modes
+5/6 Test: alpha_modes
+Command: "._/Users/user_/AppData/Local/Programs/Python/Python313/python.exe" "._/Workspace_______/Genseki/Alpha/tests/modes.py" "._/Workspace_______/Genseki/build/Alpha/alpha_nokamute.exe"
+Directory: ._/Workspace_______/Genseki/build/Alpha
+"alpha_modes" start time: Oct 05 08:54 Pacific Daylight Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.20 sec
+----------------------------------------------------------
+Test Passed.
+"alpha_modes" end time: Oct 05 08:54 Pacific Daylight Time
+"alpha_modes" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/6 Testing: alpha_mit_backend
+6/6 Test: alpha_mit_backend
+Command: "._/Users/user_/AppData/Local/Programs/Python/Python313/python.exe" "._/Workspace_______/Genseki/Alpha/tests/mit_backend.py" "._/Workspace_______/Genseki/build/rust-target/release/alpha_nokamute_mit.exe"
+Directory: ._/Workspace_______/Genseki/build/Alpha
+"alpha_mit_backend" start time: Oct 05 08:54 Pacific Daylight Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.17 sec
+----------------------------------------------------------
+Test Passed.
+"alpha_mit_backend" end time: Oct 05 08:54 Pacific Daylight Time
+"alpha_mit_backend" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 05 08:54 Pacific Daylight Time
