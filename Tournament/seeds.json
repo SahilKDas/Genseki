@@ -1,0 +1,195 @@
+{
+  "format": "genseki-greek-knockout-v1",
+  "engine": "._\\Workspace_______\\Genseki\\build\\genseki.exe",
+  "engine_sha256": "7027bde62e086e6dc67c8198cd1bfae01d505d26bf921126f94340195fa9eed6",
+  "alpha": "._\\Workspace_______\\Genseki\\Alpha\\build\\rust-target\\release\\alpha_nokamute_mit.exe",
+  "alpha_sha256": "28386174a3810e34b540bd40f363ad32f5588e516323a7619e89c31e8989feb2",
+  "seeding": "timeout-adjusted Nokamute completed score, corrected-corpus sign accuracy, name",
+  "match_games": 20,
+  "final_games": 40,
+  "tiebreak_games": 10,
+  "external_ms": 250,
+  "max_plies": 160,
+  "entrants": [
+    {
+      "seed": 1,
+      "name": "Theta",
+      "family": "convolutional",
+      "profile": 2,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\theta.pt",
+      "model_sha256": "33980375735e49246f951d5a4ed528b2246eb30f79ec91f642e332659fe45754",
+      "completed_score": 0.5,
+      "sign_accuracy": 0.7309803921568627
+    },
+    {
+      "seed": 2,
+      "name": "Pi",
+      "family": "convolutional",
+      "profile": 4,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\pi.pt",
+      "model_sha256": "0c684ea8ded6e87ae5998b0bafbb0bc5bb73908a9481708c92ab5272c29b7300",
+      "completed_score": 0.5,
+      "sign_accuracy": 0.7133689839572193
+    },
+    {
+      "seed": 3,
+      "name": "Psi",
+      "family": "dense",
+      "profile": 6,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\psi.pt",
+      "model_sha256": "de65f160c666be9da737dd301a42cd2249189743c30afd3dd2f7fd3ea254ecb2",
+      "completed_score": 0.5,
+      "sign_accuracy": 0.7122281639928699
+    },
+    {
+      "seed": 4,
+      "name": "Mu",
+      "family": "convolutional",
+      "profile": 3,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\mu.pt",
+      "model_sha256": "087816f8dafc141f58f008d059a67c3eef6a419748be333b0688c94ac1132f4a",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7289126559714795
+    },
+    {
+      "seed": 5,
+      "name": "Delta",
+      "family": "nnue",
+      "profile": 2,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\delta.pt",
+      "model_sha256": "b318325cf96150f0834fffe6ecb4223fbecc25ecb7ff26a5e003daef16046cde",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7262032085561497
+    },
+    {
+      "seed": 6,
+      "name": "Sigma",
+      "family": "nnue",
+      "profile": 5,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\sigma.pt",
+      "model_sha256": "0ca7cdeecf707ed14d5cc5270e196505e6ea0b15dec0ac660e329e0acbefad99",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7242780748663101
+    },
+    {
+      "seed": 7,
+      "name": "Eta",
+      "family": "convolutional",
+      "profile": 1,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\eta.pt",
+      "model_sha256": "c3d3091cf6f43be15e41a7ebb5f6953b421320300ad4df31256d616c0a1ad21d",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7228520499108735
+    },
+    {
+      "seed": 8,
+      "name": "Kappa",
+      "family": "nnue",
+      "profile": 3,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\kappa.pt",
+      "model_sha256": "df2f02a64d43ff8a7950fc9003e8211749d8529ab77a4c7e794080ce53ef27a3",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7224955436720143
+    },
+    {
+      "seed": 9,
+      "name": "Zeta",
+      "family": "dense",
+      "profile": 2,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\zeta.pt",
+      "model_sha256": "893a4c26dace87f9846b465bfbe52a8907c2154bd1e17138ac20777c15180ecd",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7202852049910874
+    },
+    {
+      "seed": 10,
+      "name": "Xi",
+      "family": "nnue",
+      "profile": 4,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\xi.pt",
+      "model_sha256": "d3223db86246a8f5cc848d8665c5d07b97c951e298036e6666ecab260c777ba8",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7194295900178254
+    },
+    {
+      "seed": 11,
+      "name": "Chi",
+      "family": "nnue",
+      "profile": 6,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\chi.pt",
+      "model_sha256": "36afcd1edde65538b47188fab34e3caf67d0677c494bae5e4fc991ecaeaf3b55",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7180748663101604
+    },
+    {
+      "seed": 12,
+      "name": "Upsilon",
+      "family": "convolutional",
+      "profile": 5,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\upsilon.pt",
+      "model_sha256": "97e3d6dee3b088922726f272ad75a0c62a4dab224d074b39b90a1895f0914d51",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7168627450980393
+    },
+    {
+      "seed": 13,
+      "name": "Omega",
+      "family": "convolutional",
+      "profile": 6,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\omega.pt",
+      "model_sha256": "c880062e2de56b2c9148f6504853d90a15d5cdac0b906dbbec13680cb766240c",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7155793226381462
+    },
+    {
+      "seed": 14,
+      "name": "Lambda",
+      "family": "dense",
+      "profile": 3,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\lambda.pt",
+      "model_sha256": "54cbca87602cb269bdd28cdfb9d31ffba13407bf3e793f4cde9fa4f8388a91c9",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7150802139037433
+    },
+    {
+      "seed": 15,
+      "name": "Omicron",
+      "family": "dense",
+      "profile": 4,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\omicron.pt",
+      "model_sha256": "cdb74ecdf376b54a686676da68396532d2e4f3a4f90d6db69b0df3235ec7676b",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7122994652406417
+    },
+    {
+      "seed": 16,
+      "name": "Gamma",
+      "family": "nnue",
+      "profile": 1,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\gamma.pt",
+      "model_sha256": "9b388b86fa7dc45d4338e6cf7d66d02c002aa5763483db886a4203a3a700bfc5",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7085204991087344
+    },
+    {
+      "seed": 17,
+      "name": "Tau",
+      "family": "dense",
+      "profile": 5,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\tau.pt",
+      "model_sha256": "63926e42da619381e59fd53402b7207e0cf32b6194407f5b2fa73ccafaa8a053",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.7083778966131907
+    },
+    {
+      "seed": 18,
+      "name": "Epsilon",
+      "family": "dense",
+      "profile": 1,
+      "model": "._\\Workspace_______\\Genseki\\models\\retrained-v2\\epsilon.pt",
+      "model_sha256": "6e20ca8982bb269d6260e9819cf55e73ac671affe4ee6d260f60eeb9cf421d9d",
+      "completed_score": 0.0,
+      "sign_accuracy": 0.700035650623886
+    }
+  ]
+}
