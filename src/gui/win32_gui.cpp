@@ -62,11 +62,6 @@ struct Button {
     std::wstring text{};
 };
 
-struct BotProfile {
-    std::wstring name{};
-    int depth = 1;
-};
-
 std::wstring widen(std::string_view text) {
     if (text.empty()) return {};
     const int needed = MultiByteToWideChar(CP_UTF8, 0, text.data(), static_cast<int>(text.size()), nullptr, 0);
@@ -536,7 +531,6 @@ private:
         add_button(105, x, 4, 98, L"White Bot"); x += 104;
         add_button(106, x, 4, 98, L"Black Bot"); x += 104;
         add_button(107, x, 4, 96, L"Both Bots"); x += 102;
-        add_button(108, x, 4, 88, L"Greek");
     }
 
     void add_button(int id, int x, int y, int width, std::wstring text) {
@@ -621,10 +615,11 @@ private:
             last_tick_ = now;
         }
         const Mode mode = board_.side() == Color::white ? white_mode_ : black_mode_;
-        if (mode == Mode::engine && !thinking_ && board_.result() == L"InProgress") {
+        if (mode == Mode::engine && !thinking_
+            && (board_.result() == L"InProgress" || board_.result() == L"NotStarted")) {
             thinking_ = true;
             status_ = L"Engine thinking (" + bot_name() + L")";
-            auto lines = engine_.command("bestmove depth " + std::to_string(bot_profiles_[bot_index_].depth));
+            auto lines = engine_.command("bestmove time 00:00:00.230");
             if (!lines.empty() && !lines.front().starts_with("err ")) play_move(widen(lines.front()));
             thinking_ = false;
         }
@@ -742,15 +737,11 @@ private:
             white_mode_ = Mode::engine;
             black_mode_ = Mode::engine;
         }
-        if (id == 108) {
-            bot_index_ = (bot_index_ + 1) % bot_profiles_.size();
-            status_ = L"Selected " + bot_name();
-        }
         InvalidateRect(hwnd_, nullptr, TRUE);
     }
 
     void maybe_engine_once() {
-        auto lines = engine_.command("bestmove depth " + std::to_string(bot_profiles_[bot_index_].depth));
+        auto lines = engine_.command("bestmove time 00:00:00.230");
         if (!lines.empty() && !lines.front().starts_with("err ")) play_move(widen(lines.front()));
         else consume_engine_response(lines);
     }
@@ -804,7 +795,7 @@ private:
     std::wstring mode_name(Mode mode) const { return mode == Mode::human ? L"Human" : L"Engine"; }
 
     std::wstring bot_name() const {
-        return bot_profiles_[bot_index_].name + L" d" + std::to_wstring(bot_profiles_[bot_index_].depth);
+        return L"Alpha";
     }
 
     void paint_board(HDC hdc) {
@@ -889,7 +880,7 @@ private:
         draw_line(hdc, 10, y, L"Result: " + board_.result()); y += 22;
         draw_line(hdc, 10, y, L"Clock W/B: " + clock_text(white_elapsed_) + L" / " + clock_text(black_elapsed_)); y += 22;
         draw_line(hdc, 10, y, L"Status: " + status_); y += 22;
-        draw_line(hdc, 10, y, L"Greek: " + bot_name()); y += 42;
+        draw_line(hdc, 10, y, L"Engine: " + bot_name()); y += 42;
         draw_reserve(hdc, y, Color::white); y += 96;
         draw_reserve(hdc, y, Color::black); y += 104;
         draw_line(hdc, 10, y, L"Legal destinations: " + std::to_wstring(legal_.size())); y += 24;
@@ -953,27 +944,6 @@ private:
     std::vector<std::pair<RECT, Piece>> reserve_hits_{};
     std::optional<Move> selected_{};
     std::wstring status_ = L"Starting";
-    std::array<BotProfile, 18> bot_profiles_{{
-        {L"Gamma NNUE", 1},
-        {L"Delta NNUE", 2},
-        {L"Epsilon dense", 1},
-        {L"Zeta dense", 2},
-        {L"Eta convolutional", 1},
-        {L"Theta convolutional", 2},
-        {L"Kappa NNUE", 3},
-        {L"Lambda dense", 3},
-        {L"Mu convolutional", 3},
-        {L"Xi NNUE", 4},
-        {L"Omicron dense", 4},
-        {L"Pi convolutional", 4},
-        {L"Sigma NNUE", 5},
-        {L"Tau dense", 5},
-        {L"Upsilon convolutional", 5},
-        {L"Chi NNUE", 6},
-        {L"Psi dense", 6},
-        {L"Omega convolutional", 6},
-    }};
-    std::size_t bot_index_ = 0;
     Mode white_mode_ = Mode::human;
     Mode black_mode_ = Mode::human;
     bool thinking_ = false;

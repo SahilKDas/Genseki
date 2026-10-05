@@ -22,6 +22,8 @@ Local modifications are deliberately limited to:
 - cached queen-neighbor arrays with unchanged evaluation terms;
 - direct native monotonic deadline checks alongside timer cancellation flags;
 - a test-only allocation experiment (production history ordering is unchanged).
+- fractional seconds and checked arithmetic in UHP hh:mm:ss time limits for
+  the production GUI's 230 ms searches.
 
 See `PERFORMANCE.md` for measured/rejected experiments. The derivative now has
 local performance and timing changes; it should not be called byte-identical or

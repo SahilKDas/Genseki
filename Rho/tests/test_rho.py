@@ -121,7 +121,7 @@ class RhoTests(unittest.TestCase):
                 self.guard.check()
 
     def test_real_deadline_closes_native_worker(self):
-        board = Board('build/genseki.exe', self.guard)
+        board = Board('build/genseki_rules.exe', self.guard)
         self.guard.deadline = time.monotonic()+.03
         try:
             with self.assertRaises((StopWork, TimeoutError)):
@@ -133,7 +133,7 @@ class RhoTests(unittest.TestCase):
     def test_training_oom_reduces_batch(self):
         config = {'simulations': 2, 'cpuct': 1.5, 'max_plies': 8, 'device': 'cpu',
                   'learning_rate': .001, 'batch_size': 4, 'epochs': 1}
-        examples, _ = play_game('build/genseki.exe', {'w': self.model, 'b': self.model},
+        examples, _ = play_game('build/genseki_rules.exe', {'w': self.model, 'b': self.model},
                                 config, 1, self.guard)
         for example in examples:
             example['game_id'] = 'test-game'
@@ -145,12 +145,12 @@ class RhoTests(unittest.TestCase):
                 raise torch.cuda.OutOfMemoryError('injected test failure')
             return forward(*args)
         with patch.object(self.model, 'forward', fail_once):
-            metrics = train(self.model, examples, 'build/genseki.exe', config, self.guard, 1)
+            metrics = train(self.model, examples, 'build/genseki_rules.exe', config, self.guard, 1)
         self.assertEqual(metrics['effective_batch_size'], 2)
         self.assertEqual(metrics['history'][0]['optimizer_updates'], 4)
 
     def test_mcts_all_legal_visits_and_board_restored(self):
-        board = Board('build/genseki.exe', self.guard)
+        board = Board('build/genseki_rules.exe', self.guard)
         try:
             initial = board.game
             legal = board.children()
@@ -166,8 +166,8 @@ class RhoTests(unittest.TestCase):
 
     def test_seeded_selfplay_and_cap_excluded_value(self):
         config = {'simulations': 2, 'cpuct': 1.5, 'max_plies': 8}
-        first, game = play_game('build/genseki.exe', {'w': self.model, 'b': self.model}, config, 4, self.guard)
-        second, other = play_game('build/genseki.exe', {'w': self.model, 'b': self.model}, config, 4, self.guard)
+        first, game = play_game('build/genseki_rules.exe', {'w': self.model, 'b': self.model}, config, 4, self.guard)
+        second, other = play_game('build/genseki_rules.exe', {'w': self.model, 'b': self.model}, config, 4, self.guard)
         self.assertEqual(first, second)
         self.assertEqual(game['moves'], other['moves'])
         self.assertTrue(all(e['z'] is None for e in first))

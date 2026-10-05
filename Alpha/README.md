@@ -2,6 +2,11 @@
 
 This directory contains two deliberately distinct engines:
 
+The root Genseki build now installs the MIT-derived flagship as
+`build/genseki.exe`; the GUI defaults to that executable. The retired neural
+league and its engine search paths have been removed from the active codebase.
+Rho uses the separate root `genseki_rules.exe` position/children service.
+
 - `alpha_nokamute` is the independently written experimental C++26 engine.
 - `alpha_nokamute_mit` is the strength backend derived from MIT-licensed
   Nokamute commit `c9ab65e0d9f496fd8735096ae37babc8bb50a57c` and

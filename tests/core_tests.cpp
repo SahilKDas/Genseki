@@ -1,6 +1,4 @@
 #include "genseki/core/board.hpp"
-#include "genseki/core/bot.hpp"
-#include "genseki/core/search.hpp"
 #include "genseki/core/uhp.hpp"
 
 #include <algorithm>
@@ -134,7 +132,7 @@ void state_integrity_and_perft() {
 
 void uhp_protocol() {
     genseki::UhpEngine engine;
-    require(engine.startup() == std::vector<std::string>({"id Genseki v0.1.0", "ok"}),
+    require(engine.startup() == std::vector<std::string>({"id Genseki rules service v0.1.0", "ok"}),
         "UHP startup identifies engine");
     require(engine.execute("newgame") == std::vector<std::string>({"Base;NotStarted;White[1]", "ok"}),
         "UHP newgame returns game string");
@@ -149,12 +147,8 @@ void uhp_protocol() {
     require(engine.execute("undo")
         == std::vector<std::string>({"Base;NotStarted;White[1]", "ok"}),
         "UHP undo restores game");
-    require(engine.execute("bestmove depth 0").back() == "ok", "UHP depth bestmove completes");
-    require(engine.execute("bestmove time 00:00:01").back() == "ok", "UHP time bestmove completes");
-    require(engine.execute("bestmove time 00:00:00.010").back() == "ok",
-        "UHP accepts fractional-second limits");
-    require(engine.execute("genseki-searchinfo").back() == "ok",
-        "UHP exposes search evidence");
+    require(engine.execute("bestmove depth 1").front().starts_with("err "),
+        "rules service does not contain a retired evaluator");
 
     auto loaded = genseki::Board::from_game_string(
         "Base;InProgress;White[2];wS1;bS1 wS1-");
@@ -163,43 +157,13 @@ void uhp_protocol() {
         "UHP game string round trips");
 }
 
-void native_search() {
-    genseki::Board board;
-    genseki::SearchEngine first{1};
-    genseki::SearchEngine second{1};
-    const genseki::SearchLimits depth_limits{
-        .max_depth = 2,
-        .time = std::chrono::milliseconds{500},
-        .threads = 1,
-        .table_mib = 1,
-    };
-    const auto a = first.search(board, depth_limits);
-    const auto b = second.search(board, depth_limits);
-    require(board.is_legal(a.move), "search returns a legal move");
-    require(a.move == b.move && a.score == b.score,
-        "single-thread fixed-depth search is deterministic");
-
-    genseki::SearchEngine timed{1};
-    const genseki::SearchLimits time_limits{
-        .max_depth = 64,
-        .time = std::chrono::milliseconds{20},
-        .threads = 1,
-        .table_mib = 1,
-    };
-    const auto result = timed.search(board, time_limits);
-    require(board.is_legal(result.move), "interrupted search retains a legal completed move");
-    require(result.elapsed < std::chrono::milliseconds{150}, "deadline interruption is bounded");
-}
-
 }  // namespace
 
 int main() {
-    require(genseki::greek_bot_specs().size() == 18, "there are 18 neural bot slots");
     opening_and_queen_deadline();
     piece_movement();
     connectivity_and_results();
     state_integrity_and_perft();
-    native_search();
     uhp_protocol();
     return 0;
 }

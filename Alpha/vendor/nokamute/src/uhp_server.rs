@@ -433,17 +433,22 @@ fn parse_hhmmss(time: &str) -> Option<Duration> {
     let mut toks = time.split(':');
     let hours = toks.next().unwrap_or("").parse::<u64>().ok()?;
     let minutes = toks.next().unwrap_or("").parse::<u64>().ok()?;
-    let seconds = toks.next().unwrap_or("").parse::<u64>().ok()?;
-    if toks.next().is_some() {
+    let seconds = parse_seconds(toks.next().unwrap_or(""))?;
+    if toks.next().is_some() || minutes >= 60 || seconds >= Duration::from_secs(60) {
         return None;
     }
-    Some(Duration::from_secs(hours * 3600 + minutes * 60 + seconds))
+    let whole = hours.checked_mul(3600)?.checked_add(minutes.checked_mul(60)?)?;
+    Duration::from_secs(whole).checked_add(seconds)
 }
 
 #[test]
 fn test_parse_hhmmss() {
     assert_eq!(Some(Duration::from_secs(7)), parse_hhmmss("00:00:07"));
     assert_eq!(Some(Duration::from_secs(3661)), parse_hhmmss("01:01:01"));
+    assert_eq!(Some(Duration::from_millis(230)), parse_hhmmss("00:00:00.230"));
+    assert_eq!(None, parse_hhmmss("00:60:00"));
+    assert_eq!(None, parse_hhmmss("00:00:60"));
+    assert_eq!(None, parse_hhmmss("18446744073709551615:00:00"));
     assert_eq!(None, parse_hhmmss("45"));
     assert_eq!(None, parse_hhmmss("1:23"));
     assert_eq!(None, parse_hhmmss("01:02:03:04"));

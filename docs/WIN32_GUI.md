@@ -8,13 +8,13 @@ Build:
 
 ```powershell
 cmake -S . -B build
-cmake --build build --target genseki_gui
+cmake --build build --target genseki_gui -j2
 ```
 
 Run from the build directory, or pass an engine path:
 
 ```powershell
-.\build\Debug\genseki_gui.exe .\build\Debug\genseki.exe
+.\build\genseki_gui.exe
 ```
 
 The GUI talks to the engine with `info`, `newgame`, `validmoves`, `play`,
@@ -32,4 +32,9 @@ Controls:
   engine moves for the selected side mode.
 
 The side panel shows reserves, side to move, result, clocks, engine status,
-legal move count, move history, and the selected Greek bot/model label.
+legal move count, move history, and Alpha's engine label. The retired Greek
+roster (including Kappa) is no longer selectable. Both engine-move controls
+request 230 ms searches from Alpha, with the last completed depth retained.
+
+Building the GUI also builds its sibling `genseki.exe`, which is the Alpha
+MIT-derived backend. A custom UHP engine path can still be passed explicitly.

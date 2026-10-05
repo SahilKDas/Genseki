@@ -1,7 +1,7 @@
 [project]
 name = "genseki-hive"
 version = "0.1.0"
-description = "Experiment tooling for Genseki's Hive bot league."
+description = "Rho research and UHP tooling for the Alpha Hive engine."
 requires-python = ">=3.11"
 dependencies = [
   "numpy>=1.26",
@@ -9,12 +9,15 @@ dependencies = [
 ]
 
 [project.scripts]
-genseki-experiments = "genseki.experiments:main"
-genseki-report = "genseki.report:main"
-genseki-train = "genseki.training:main"
-genseki-gauntlet = "genseki.gauntlet:main"
-genseki-export-nnue = "genseki.export_nnue:main"
-genseki-nokamute-gate = "genseki.nokamute_gate:main"
+genseki-rho = "genseki.rho.campaign:main"
+genseki-rho-status = "genseki.rho.status:main"
 
 [tool.ruff]
 line-length = 100
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["genseki", "genseki.*"]

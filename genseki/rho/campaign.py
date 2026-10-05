@@ -21,7 +21,7 @@ DEFAULTS = dict(hours=8., workers=2, simulations=64, replay_positions=200000, ma
                 train_positions=5000, sample_positions=10000, epochs=2, batch_size=128,
                 device='auto', cpuct=1.5, learning_rate=.001, arena_games=40,
                 promotion_threshold=.6, seed=1701, disk_cap=2_000_000_000,
-                engine='build/genseki.exe', move_seconds=30.)
+                engine='build/genseki_rules.exe', move_seconds=30.)
 
 
 def persist(root, state):
@@ -254,6 +254,8 @@ def main():
     config = dict(DEFAULTS)
     if args.resume and (args.workspace/'config.json').exists():
         config.update(json.loads((args.workspace/'config.json').read_text()))
+    if config['engine'].replace('\\', '/') == 'build/genseki.exe':
+        config['engine'] = 'build/genseki_rules.exe'
     if args.smoke_test:
         config.update(hours=.15, workers=1, simulations=4, max_plies=64, train_positions=128,
                       sample_positions=256, epochs=1, batch_size=8, arena_games=2, device='cpu')
@@ -283,7 +285,7 @@ def main():
             capture_output=True, text=True, timeout=10)
         if result.returncode:
             parser.error('cannot inspect active jobs; refusing unattended start')
-        if any(('gauntlet' in line.lower() or 'genseki.training' in line.lower())
+        if any('gauntlet' in line.lower()
                for line in result.stdout.splitlines()):
             parser.error('active training/gauntlet detected; finish it before overnight training')
     raise SystemExit(run_campaign(args.workspace, config, args.smoke_test, args.resume))

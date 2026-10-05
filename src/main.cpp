@@ -1,6 +1,4 @@
 #include "genseki/core/board.hpp"
-#include "genseki/core/bot.hpp"
-#include "genseki/core/selfplay.hpp"
 #include "genseki/core/uhp.hpp"
 
 #include <charconv>
@@ -20,7 +18,7 @@ bool parse_unsigned(std::string_view text, unsigned& value) {
 
 int run_perft(int argc, char** argv) {
     if (argc < 3) {
-        std::cerr << "usage: genseki --perft DEPTH [--divide]\n";
+        std::cerr << "usage: genseki_rules --perft DEPTH [--divide]\n";
         return 2;
     }
     unsigned depth = 0;
@@ -85,32 +83,9 @@ int main(int argc, char** argv) {
         const std::string_view command{argv[1]};
         if (command == "--perft") return run_perft(argc, argv);
         if (command == "--stress") return run_stress(argc, argv);
-        if (command == "--generate-data") {
-            if (argc < 4) {
-                std::cerr << "usage: genseki --generate-data PATH GAMES [MAX_PLIES] [SEED]\n";
-                return 2;
-            }
-            unsigned games = 0;
-            unsigned max_plies = 96;
-            unsigned seed = 0x47454e53U;
-            if (!parse_unsigned(argv[3], games)
-                || (argc > 4 && !parse_unsigned(argv[4], max_plies))
-                || (argc > 5 && !parse_unsigned(argv[5], seed))) {
-                std::cerr << "invalid dataset arguments\n";
-                return 2;
-            }
-            try {
-                const auto stats = genseki::generate_training_data(argv[2], games, max_plies, seed);
-                std::cout << genseki::to_json(stats) << '\n';
-                return 0;
-            } catch (const std::exception& error) {
-                std::cerr << error.what() << '\n';
-                return 1;
-            }
-        }
         if (command == "--replay") {
             if (argc < 3) {
-                std::cerr << "usage: genseki --replay GAMESTRING\n";
+                std::cerr << "usage: genseki_rules --replay GAMESTRING\n";
                 return 2;
             }
             const auto board = genseki::Board::from_game_string(argv[2]);
@@ -121,39 +96,8 @@ int main(int argc, char** argv) {
             std::cout << board->game_string() << '\n';
             return 0;
         }
-        if (command == "--about") {
-            std::cout << "Genseki Hive bot lab\n";
-            for (const auto spec : genseki::greek_bot_specs()) {
-                if (spec.enabled) {
-                    std::cout << spec.letter << " evaluator=" << genseki::name(spec.evaluator)
-                              << " depth=" << static_cast<int>(spec.search_depth) << '\n';
-                }
-            }
-            return 0;
-        }
-        std::filesystem::path model;
-        unsigned threads = 1;
-        unsigned table_mib = 64;
-        unsigned move_ms = 230;
-        for (int i = 1; i < argc; ++i) {
-            const std::string_view option{argv[i]};
-            if (option == "--model" && i + 1 < argc) model = argv[++i];
-            else if (option == "--threads" && i + 1 < argc && parse_unsigned(argv[++i], threads)) {}
-            else if (option == "--table-mib" && i + 1 < argc && parse_unsigned(argv[++i], table_mib)) {}
-            else if (option == "--move-ms" && i + 1 < argc && parse_unsigned(argv[++i], move_ms)) {}
-            else {
-                std::cerr << "unknown or invalid option\n";
-                return 2;
-            }
-        }
-        if (threads == 0 || threads > 12 || table_mib == 0 || move_ms == 0) {
-            std::cerr << "engine option out of range\n";
-            return 2;
-        }
-        genseki::UhpEngine engine{
-            model, threads, table_mib, std::chrono::milliseconds{move_ms}};
-        engine.run(std::cin, std::cout);
-        return 0;
+        std::cerr << "Rules service: use --perft, --stress, --replay, or no arguments for UHP. Search is in genseki (Alpha).\n";
+        return 2;
     }
     genseki::UhpEngine engine;
     engine.run(std::cin, std::cout);

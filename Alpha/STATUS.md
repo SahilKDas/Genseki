@@ -1,5 +1,25 @@
 # Port status
 
+## Production default (2026-10-05)
+
+The root build emits this MIT-derived backend itself as `build/genseki.exe`.
+The native GUI defaults to that executable and no longer contains the retired
+Greek roster. Engine moves use a 230 ms time request. The UHP time parser now
+accepts fractional hh:mm:ss seconds and rejects overflowing/out-of-range values.
+Rho retains its models/replay and uses a separate, bot-free
+`build/genseki_rules.exe` position/child-enumeration service.
+
+Verified: the root Release build completed; all six CTest suites passed,
+including an executable-hash/default-UHP test; all 23 Alpha Rust tests and
+17 Rho tests passed. Rules-service perft(3) returned 1440 and a 1000-ply
+make/unmake stress check passed. GUI compilation is verified; interactive GUI
+acceptance has not been run in this consolidation pass.
+
+The retired league's 107 artifact files were copied into local branch `history`,
+root commit `0e7d2acc63ae6eaf92c14ba4dd3ba7d7a513693e`, with no source-code files
+or parent commits. Every archived blob was compared with its working file
+before removal. Current-branch consolidation changes remain uncommitted.
+
 Alpha now has two separately labeled implementations. `alpha_nokamute` is the
 independent C++26 experiment. `alpha_nokamute_mit` is an attributed derivative
 of Nokamute `c9ab65e0d9f496fd8735096ae37babc8bb50a57c` and minimax-rs

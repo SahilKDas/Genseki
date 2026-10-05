@@ -12,7 +12,7 @@ if(CARGO_EXECUTABLE)
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/nokamute/src/*.rs
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/minimax-rs/src/*.rs)
   add_custom_command(OUTPUT ${ALPHA_MIT_EXE}
-    COMMAND ${CARGO_EXECUTABLE} build --release
+    COMMAND ${CARGO_EXECUTABLE} build --release -j 1 --locked
             --manifest-path ${CMAKE_CURRENT_SOURCE_DIR}/vendor/nokamute/Cargo.toml
             --target-dir ${CMAKE_BINARY_DIR}/rust-target
     DEPENDS ${ALPHA_MIT_SOURCES}

@@ -3,7 +3,7 @@
 New policy/value reinforcement learning system; unrelated to the retired learned-linear bot.
 
 Run from the repository root with Python 3.11+, installed NumPy/PyTorch and
-`build/genseki.exe`. The native executable remains the rules authority.
+`build/genseki_rules.exe`. The native executable remains the rules authority.
 
 ```powershell
 python -m genseki.rho.campaign --workspace Rho --resume --hours 8 --workers 2 --simulations 64 --replay-positions 200000 --max-plies 160 --train-positions 5000 --sample-positions 10000 --epochs 2 --batch-size 128 --arena-games 40 --device cuda

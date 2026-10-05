@@ -1,7 +1,8 @@
 # Hive Engine
 
-Genseki implements regular, expansion-free Hive. The rules core is the sole
-authority used by command-line tools, UHP, tests, and future bots and GUIs.
+This document describes the regular, expansion-free rules service used by Rho:
+`genseki_rules.exe`. The production `genseki.exe` and GUI use Alpha's independent
+MIT-derived engine; see Alpha/STATUS.md for its verified capabilities.
 
 ## Rules
 
@@ -41,9 +42,8 @@ move notation. UHP game strings are replayed move by move and rejected if a
 move, state field, or turn field is inconsistent. Expansion game types are
 rejected because Genseki currently advertises no expansion capabilities.
 
-`bestmove depth N` and `bestmove time hh:mm:ss` validate the requested
-limit and currently return the first deterministic legal move. This is a
-protocol-correct baseline that will be replaced by the Greek bot search.
+The rules-only service rejects `bestmove`; use Alpha (`genseki.exe`) for search.
+Rho consumes `genseki-position` and full-width `genseki-children` instead.
 
 The UHP grammar follows the [Universal Hive Protocol specification](http._//github.com/jonthysell/Mzinga/wiki/UniversalHiveProtocol).
 

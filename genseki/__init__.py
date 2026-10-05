@@ -1,2 +1,2 @@
-"""Python experiment tooling for the Genseki Hive bot lab."""
+"""Rho research and shared UHP tooling for Alpha."""
 

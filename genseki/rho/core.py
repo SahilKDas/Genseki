@@ -20,8 +20,8 @@ import numpy as np
 import torch
 from torch import nn
 
-from genseki.nokamute_gate import UhpProcess
-from genseki.training import piece_slot
+from genseki.uhp import UhpProcess
+from .encoding import piece_slot
 
 
 def digest(path):
