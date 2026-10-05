@@ -10,7 +10,9 @@ python -m genseki.rho.campaign --workspace Rho --resume --hours 8 --workers 2 --
 ```
 
 Finish other heavy training/gauntlets before starting the overnight campaign.
-An eight-hour campaign has not been run as part of this implementation.
+The first overnight campaign stopped before completing its eight-hour window:
+G8 trained on CUDA, but its promotion arena stopped at the 2 GiB available-RAM
+floor. See [reports/OVERNIGHT_SUMMARY.md](reports/OVERNIGHT_SUMMARY.md).
 
 ```powershell
 python -m genseki.rho.status --workspace Rho
@@ -53,7 +55,8 @@ Self-play uses root Dirichlet noise (alpha .3, weight .25), temperature 1 throug
 ply 23 and .5 afterward. Evaluation has no noise and takes the most visited move.
 Search counts are real simulations, not depth claims. No adaptive simulation
 reduction is currently performed. Both arena players have the same simulation
-budget, 30-second move ceiling and campaign deadline; native protocol responses
+budget, configurable move ceiling (30 seconds by default; 120 seconds in the
+overnight recovery) and campaign deadline; native protocol responses
 have a five-second maximum. A move timeout aborts the arena and prevents
 promotion. Openings are deterministic four-ply legal random openings shared by
 each color pair. A >=60% score is a development heuristic, with no Elo or
@@ -82,4 +85,5 @@ latency; no new generation launches after expiration.
 See [AUDIT.md](AUDIT.md) for architecture/reuse decisions and held-out benchmark
 policy. See reports/latest.md and state.json for actual outcomes. Scientific
 limits: small smoke corpus and arena, no established strength improvement,
-no native PVS adapter, no Nokamute probe, and no full overnight endurance test.
+no native PVS adapter, no Nokamute probe, and no successfully completed
+eight-hour endurance test.
