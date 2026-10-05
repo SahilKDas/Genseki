@@ -19,7 +19,7 @@ if(CARGO_EXECUTABLE)
             ${CMAKE_CURRENT_SOURCE_DIR}/vendor/nokamute/Cargo.toml
             ${CMAKE_CURRENT_SOURCE_DIR}/vendor/minimax-rs/Cargo.toml
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMENT "Building exact MIT-derived Nokamute strength backend")
+    COMMENT "Building MIT-derived Alpha strength backend")
   add_custom_target(alpha_nokamute_mit ALL DEPENDS ${ALPHA_MIT_EXE})
 endif()
 if(MSVC)

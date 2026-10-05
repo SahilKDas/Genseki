@@ -287,6 +287,8 @@ impl Stats {
 pub(super) struct Negamaxer<E: Evaluator, T> {
     #[cfg(not(target_arch = "wasm32"))]
     timeout: Arc<AtomicBool>,
+    #[cfg(not(target_arch = "wasm32"))]
+    native_deadline: Option<Instant>,
     #[cfg(target_arch = "wasm32")]
     deadline: Instant,
     #[cfg(target_arch = "wasm32")]
@@ -308,6 +310,8 @@ where
         Self {
             #[cfg(not(target_arch = "wasm32"))]
             timeout: Arc::new(AtomicBool::new(false)),
+            #[cfg(not(target_arch = "wasm32"))]
+            native_deadline: None,
             #[cfg(target_arch = "wasm32")]
             deadline: Instant::now(),
             #[cfg(target_arch = "wasm32")]
@@ -338,6 +342,7 @@ where
     }
     #[cfg(not(target_arch = "wasm32"))]
     fn reset_timeout(&mut self, duration: Duration) {
+        self.native_deadline = if duration.is_zero() { None } else { Some(Instant::now() + duration) };
         self.set_timeout(if duration == Duration::new(0, 0) {
             Arc::new(AtomicBool::new(false))
         } else {
@@ -357,6 +362,7 @@ where
     #[cfg(not(target_arch = "wasm32"))]
     fn timeout_check(&mut self) -> bool {
         self.timeout.load(Ordering::Relaxed)
+            || self.native_deadline.is_some_and(|deadline| Instant::now() >= deadline)
     }
 
     fn null_move_check(

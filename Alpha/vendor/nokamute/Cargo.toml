@@ -8,6 +8,11 @@ repository = "http._//github.com/edre/nokamute"
 readme = "README.md"
 license = "MIT"
 
+[profile.performance]
+inherits = "release"
+lto = "thin"
+codegen-units = 1
+
 [dependencies]
 minimax = { path = "../minimax-rs" }
 rand = "0.9"

@@ -265,6 +265,9 @@ pub fn configure_player() -> Result<(PlayerConfig, Vec<String>), pico_args::Erro
         }
         "iterative" => {
             let mut parallel_opts = ParallelOptions::new();
+            if let Some(depth) = args.opt_value_from_str::<_, u8>("--serial-cutoff-depth")? {
+                parallel_opts = parallel_opts.with_serial_cutoff_depth(depth);
+            }
             if args.contains("--background-ponder") {
                 parallel_opts = parallel_opts.with_background_pondering();
             }

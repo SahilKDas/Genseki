@@ -439,3 +439,46 @@ where
         self.history_table.iter_mut().for_each(|n| *n >>= 3);
     }
 }
+
+// Experimental allocation-free ordering retained only for its equivalence test.
+// Paired timing did not justify replacing the production stable sort.
+#[cfg(test)]
+fn stable_history_sort<M: Copy>(moves: &mut [M], scratch: &mut Vec<M>, score: impl Fn(M) -> u32) {
+    if moves.len() < 2 { return; }
+    scratch.clear();
+    scratch.extend_from_slice(moves);
+    let mut width = 1;
+    while width < moves.len() {
+        for start in (0..moves.len()).step_by(width * 2) {
+            let middle = (start + width).min(moves.len());
+            let end = (start + width * 2).min(moves.len());
+            let (mut left, mut right) = (start, middle);
+            for dest in &mut scratch[start..end] {
+                if left < middle && (right == end || score(moves[left]) >= score(moves[right])) {
+                    *dest = moves[left]; left += 1;
+                } else {
+                    *dest = moves[right]; right += 1;
+                }
+            }
+        }
+        moves.copy_from_slice(scratch);
+        width *= 2;
+    }
+}
+
+#[cfg(test)]
+mod ordering_tests {
+    use super::stable_history_sort;
+
+    #[test]
+    fn reusable_ordering_matches_stable_sort() {
+        let mut scratch = Vec::new();
+        for len in 0..160 {
+            let mut actual: Vec<_> = (0..len).map(|i| (i, ((i * 17 + len) % 11) as u32)).collect();
+            let mut expected = actual.clone();
+            expected.sort_by_key(|m| !m.1);
+            stable_history_sort(&mut actual, &mut scratch, |m| m.1);
+            assert_eq!(actual, expected);
+        }
+    }
+}

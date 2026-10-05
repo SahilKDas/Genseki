@@ -70,6 +70,7 @@ struct ParallelNegamaxer<E: Evaluator> {
     opts: IterativeOptions,
     par_opts: ParallelOptions,
     timeout: Arc<AtomicBool>,
+    deadline: Option<Instant>,
     stats: ThreadLocal<CachePadded<Stats>>,
     move_pool: ThreadLocal<MovePool<<E::G as Game>::M>>,
     countermoves: ThreadLocal<CounterMoves<E::G>>,
@@ -93,6 +94,7 @@ where
             opts,
             par_opts,
             timeout,
+            deadline: None,
             stats: ThreadLocal::new(CachePadded::default, thread_pool),
             move_pool: ThreadLocal::new(MovePool::default, thread_pool),
             countermoves: ThreadLocal::new(
@@ -136,7 +138,7 @@ where
     fn noisy_negamax(
         &self, s: &mut <E::G as Game>::S, depth: u8, mut alpha: Evaluation, beta: Evaluation,
     ) -> Option<Evaluation> {
-        if self.timeout.load(Ordering::Relaxed) {
+        if self.timeout.load(Ordering::Relaxed) || self.deadline.is_some_and(|d| Instant::now() >= d) {
             return None;
         }
         if let Some(winner) = E::G::get_winner(s) {
@@ -178,7 +180,7 @@ where
         <E::G as Game>::M: Copy + Eq + Send + Sync,
         E: Sync,
     {
-        if self.timeout.load(Ordering::Relaxed) {
+        if self.timeout.load(Ordering::Relaxed) || self.deadline.is_some_and(|d| Instant::now() >= d) {
             return None;
         }
 
@@ -310,7 +312,7 @@ where
             });
             if result.is_none() {
                 // Check for timeout.
-                if self.timeout.load(Ordering::Relaxed) {
+                if self.timeout.load(Ordering::Relaxed) || self.deadline.is_some_and(|d| Instant::now() >= d) {
                     return None;
                 }
             }
@@ -474,6 +476,9 @@ where
                 &self.thread_pool,
             );
             // Launch in threadpool and wait for result.
+            if self.max_time != Duration::ZERO {
+                negamaxer.deadline = Some(start_time + self.max_time);
+            }
             let value_move_depth = self
                 .thread_pool
                 .install(|| negamaxer.iterative_search(s.clone(), self.max_depth, false));

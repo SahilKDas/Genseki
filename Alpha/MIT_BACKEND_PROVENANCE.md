@@ -18,6 +18,14 @@ Local modifications are deliberately limited to:
 - removing an unused benchmark manifest entry from the runtime-only snapshot;
 - assigning a distinct library target name to avoid Windows PDB collisions;
 - Alpha build/test integration.
+- Alpha profiling modes, optional performance build profile and parallel cutoff;
+- cached queen-neighbor arrays with unchanged evaluation terms;
+- direct native monotonic deadline checks alongside timer cancellation flags;
+- a test-only allocation experiment (production history ordering is unchanged).
+
+See `PERFORMANCE.md` for measured/rejected experiments. The derivative now has
+local performance and timing changes; it should not be called byte-identical or
+behaviorally identical under timed search to the pinned upstream executable.
 
 The independent experimental C++ engine remains `alpha_nokamute`. See
 `THIRD_PARTY_NOTICES.md` for required notices.

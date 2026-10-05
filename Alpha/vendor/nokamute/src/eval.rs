@@ -107,6 +107,7 @@ impl Evaluator for BasicEvaluator {
         let mut score = 0;
         let mut pillbug_defense = [false; 2];
         let mut queen_score = [0; 2];
+        let queen_neighbors = [adjacent(board.queens[0]), adjacent(board.queens[1])];
 
         let remaining = board.get_remaining();
         let opp_remaining = board.get_opponent_remaining();
@@ -161,7 +162,7 @@ impl Evaluator for BasicEvaluator {
 
             // TODO: transpose this loop, i.e. categorize queen liberties after the bug loop.
             // Count libs for more if they are not crawlable (e.g. behind a gate)
-            if adjacent(friendly_queen).contains(&hex) {
+            if queen_neighbors[node.color() as usize].contains(&hex) {
                 // Filling friendly queen's liberty.
                 if immovable.get(hex) && !node.is_stacked() {
                     queen_score[node.color() as usize] -= self.queen_liberty_factor;
@@ -189,7 +190,7 @@ impl Evaluator for BasicEvaluator {
 
             let enemy_queen = board.queens[node.color().other()];
 
-            if adjacent(enemy_queen).contains(&hex) {
+            if queen_neighbors[node.color().other()].contains(&hex) {
                 // Discourage liberty filling by valuable bugs, by setting their score to zero when filling a liberty.
                 bug_score = 0;
                 // A little extra boost for filling opponent's queen, as we will never choose to move.
@@ -239,7 +240,7 @@ impl Evaluator for BasicEvaluator {
         for &color in &[Color::Black, Color::White] {
             if board.node(board.queens[color as usize]).clipped_height() == 1
                 && board.remaining[color as usize][Bug::Pillbug as usize] > 0
-                && adjacent(board.queens[color as usize])
+                && queen_neighbors[color as usize]
                     .iter()
                     .any(|&lib| placeable(board, lib, color))
             {

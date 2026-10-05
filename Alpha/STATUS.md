@@ -25,8 +25,9 @@ BasicEvaluator constants and mobility/cut-vertex features, noisy-move
 quiescence policy, counter-moves and history, iterative/parallel minimax,
 aspiration and transposition behavior, optional null-move/quiet-search modes,
 time management, pondering, and constrained random-opening policy. Its local
-changes are package identity, version provenance, vendored dependency wiring,
-and Alpha build/test integration.
+changes also include profiling tools, cached queen-neighbor arrays, optional
+performance build/cutoff settings and direct native deadline checks. Evaluation
+weights and default pruning/order policies remain unchanged. See PERFORMANCE.md.
 
 ## Verification evidence
 
@@ -74,7 +75,30 @@ Earlier exact-230 ms attempts exposed Windows scheduling overruns in both
 engines and are retained under `reports/` as protocol-stress evidence. Their
 timeout scores are not strength evidence.
 
-## Outstanding
+## Alpha performance pass (2026-10-04)
+
+All four CTest suites and 23 Rust tests passed with the retained portable build.
+All 13 dependency unit/integration/documentation tests also passed, including
+the experimental stable-ordering equivalence test and search comparisons.
+Nine frozen positions, 25 alternating paired measurements each at depth 4 and
+one worker, gave a summed-median baseline/candidate ratio of 1.0182. This is a
+small sampled throughput result, not a demonstrated strength improvement.
+All 18 timed replies (one/two workers, 230 ms requests) were legal; maximum
+observed response was 230.2924 ms. No hard deadline guarantee follows from this.
+
+The component/split-depth suite checked nine positions with two workers and
+three repeats per cutoff. Root scores matched across cutoffs 1, 2 and 3 on every
+sample. Summed median search times were 127098, 118571 and 128082 microseconds;
+default cutoff remains 1 pending broader validation. LTO/native and reusable
+sorting experiments were not promoted. PGO execution is unverified because a
+matching llvm-profdata was unavailable on PATH.
+
+Evidence: reports/performance-retained.json and reports/profile-suite.json.
+See PERFORMANCE.md for all six tracks, rejected experiments, reproduction and
+the separate intelligence roadmap. No new strength or qualification claim is
+made, and no Rho work was modified.
+
+## Remaining work
 
 - Resolve Base+MLP behavior against the exact pinned revision.
 - Improve the independent C++ evaluator/search if that implementation remains

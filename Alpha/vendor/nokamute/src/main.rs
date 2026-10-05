@@ -9,6 +9,8 @@ fn help() {
         r#"nokamute hive engine {}
 
 commands:
+ profile [game_state]: Measure evaluation, move generation and board copies
+ profile-search [game_state] [depth] [threads] [serial_cutoff]: Fixed-depth search timings
  cli:   Interactive interface to a board
  uhp:   Run as a Universal Hive Protocol engine
  play [--game-type=] [--depth=] [--timeout=] [player1] [player2]:
@@ -25,6 +27,7 @@ engine flags:
  --strategy=iterative|mcts|mtdf|random
  --table-mb=[int]
  --num-threads=[int]|all
+ --serial-cutoff-depth=[int]
  --aspiration-window=[int]
  --double-step
  --quiet-search
@@ -37,6 +40,17 @@ engine flags:
 fn main() {
     let (config, args) = configure_player().unwrap();
     match args.first().unwrap_or(&"uhp".to_owned()).as_ref() {
+        "profile-search" => {
+            let game = args.get(1).map(String::as_str).unwrap_or("Base");
+            let depth = args.get(2).map(|s| s.parse().expect("depth")).unwrap_or(4);
+            let threads = args.get(3).map(|s| s.parse().expect("threads")).unwrap_or(1);
+            let cutoff = args.get(4).map(|s| s.parse().expect("cutoff")).unwrap_or(1);
+            profile_search(game, depth, threads, cutoff);
+        }
+        "profile" => {
+            let game = args.get(1).map(String::as_str).unwrap_or("Base");
+            profile_position(game, 10000);
+        }
         "cli" => {
             terminal_game_interface(config);
         }
