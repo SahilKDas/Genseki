@@ -98,7 +98,10 @@ revision/executable/options are in `reports/gen2/nokamute-pin.json`.
 Its accepted common command is `bestmove seconds 0.230`.
 
 Gen 1 uses a 32 MiB TT. The 64-wide neural artifacts occupy 1,048,992 bytes;
-their TTs are reduced to 16 MiB plus a 256 KiB model/cache bookkeeping reserve.
+their TTs are reduced to fit model memory plus a 3.25 MiB cache/bookkeeping
+reserve covering twelve workers and the controller. Current Lab-driven changes
+and verification scope are documented in `GEN2_LAB.md`; historical reports keep
+their original allocation settings.
 This reflects the inherited power-of-two TT allocator, not equal actual TT
 sizes. Diagnostics report sizes; they are not total-process RSS measurements.
 

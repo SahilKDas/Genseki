@@ -54,6 +54,10 @@ def training_runtime():
         atomic(pin,dict(revision=revision,source='latest Nu working tree',root=str(root.relative_to(ROOT)),files=identities))
     metadata=read(pin);root=ROOT/metadata['root']
     for file,sha in metadata['files'].items():
+        if not (root/file).exists():
+            if digest(ROOT/file)!=sha:raise RuntimeError('pinned trainer unavailable and current source differs')
+            (root/file).parent.mkdir(parents=True,exist_ok=True)
+            shutil.copyfile(ROOT/file,root/file)
         if digest(root/file)!=sha:raise RuntimeError('pinned trainer changed')
     return root/'Nu/tools'
 def pin_latest_nu():
@@ -100,7 +104,7 @@ def heavy_conflict():
     processes=json.loads(output or '[]');processes=processes if isinstance(processes,list) else [processes]
     for process in processes:
         line=(process.get('CommandLine') or '').replace('\\','/').lower()
-        if process['ProcessId']!=os.getpid() and any(pattern in line for pattern in ('campaign','gauntlet','genseki.arena','gen2.py arena','gen2.py train','gen2.py collect','gen2.py benchmark','learning.py','train.py','arena.py','benchmark.py','tournament','selfplay','training.py')):return True
+        if process['ProcessId']!=os.getpid() and any(pattern in line for pattern in ('campaign','gauntlet','genseki.arena','gen2.py arena','gen2.py train','gen2.py collect','gen2.py benchmark','gen2_lab.py','learning.py','train.py','arena.py','benchmark.py','tournament','selfplay','training.py')):return True
     return False
 def guard():
     floors()
@@ -273,6 +277,23 @@ def collect(args):
             atomic(manifest,dict(config=identity,games=game,positions=sum(sum(1 for _ in p.open()) for p in root.glob('game-*.jsonl')),complete=game>=args.games))
             print('corpus games',game,flush=True)
 
+def rule_aware_predictions(rows,predictions):
+    if len(rows)!=len(predictions):raise ValueError('decision count mismatch')
+    result=[]
+    for row,values in zip(rows,predictions):
+        children=row.get('alternatives',[])
+        if len(children)!=len(values):raise ValueError('child prediction count mismatch')
+        adjusted=[]
+        for child,value in zip(children,values):
+            if not math.isfinite(float(value)):raise ValueError('nonfinite decision prediction')
+            if child.get('repetition_draw'):adjusted.append(0.)
+            elif child.get('terminal') is not None:
+                if child['terminal'] not in (-1,0,1):raise ValueError('invalid terminal outcome')
+                adjusted.append(child['terminal']*10.)
+            else:adjusted.append(max(-5000/600,min(5000/600,float(value))))
+        result.append(adjusted)
+    return result
+
 def train(args):
     deadline=time.monotonic()+args.seconds
     guard();sys.path.insert(0,str(training_runtime()))
@@ -283,15 +304,24 @@ def train(args):
     project.mkdir(parents=True,exist_ok=True)
     runtime_pin=project/'training-runtime.json'
     identity=read(REPORT/'trainer-latest-pin.json')
+    identity=identity|dict(alpha_wrapper_sha256=digest(__file__))
     if runtime_pin.exists() and read(runtime_pin)!=identity:raise RuntimeError('trainer resume identity mismatch; use a new corpus namespace')
     if not runtime_pin.exists():
         if (project/'trained/nu-64-linear.resume.pt').exists():raise RuntimeError('legacy checkpoint retained; latest Nu requires a new corpus namespace')
         atomic(runtime_pin,identity)
     options=SimpleNamespace(data=files,data_manifest=None,index=project/'training-index.sqlite',output=project/'trained',epochs=12,batch=128,accumulation=1,widths=[64],heads=['linear'],device='auto',seed=220620,learning_rate=.001,wall_seconds=args.seconds,ablate=None,outcome_only=False,initialize=None)
-    db,exclusion_signature,excluded=curated_index(learning,files,options.index,options.output/'nu-64-linear.resume.pt');db.close()
+    options.selection=getattr(args,'selection','regret');options.ranking_weight=getattr(args,'ranking_weight',.25)
+    db,exclusion_signature,excluded=curated_index(learning,files,options.index,options.output/'nu-64-linear.resume.pt')
+    if options.selection=='regret':
+        counts=[sum(bool(json.loads(row[0]).get('full_width')) and len(json.loads(row[0]).get('alternatives',[]))>=2 for row in db.execute('select payload from samples where split=?',(split,))) for split in (0,1)]
+        if not all(counts):db.close();raise RuntimeError('regret selection requires full-width decisions in disjoint training and validation families')
+    db.close()
     options.wall_seconds=int(deadline-time.monotonic())-2
     if options.wall_seconds<=0:return
-    completed=learning.run(options)
+    original_metrics=learning.decision_metrics
+    learning.decision_metrics=lambda rows,values:original_metrics(rows,rule_aware_predictions(rows,values))
+    try:completed=learning.run(options)
+    finally:learning.decision_metrics=original_metrics
     if not completed:return
     path=options.output/'nu-64-linear.nnue';meta=read(path.with_suffix('.json'))
     if meta['updates']<=0:raise RuntimeError('untrained artifact')
@@ -303,7 +333,7 @@ def train(args):
         for line in file.open():
             row=json.loads(line);targets['search_score_positions']+=1
             targets['natural_outcome_positions' if row['termination']=='natural' else 'adjudicated_positions']+=1
-    atomic(REPORT/'training.json',meta|dict(target_sources=targets,tactical_exclusion_signature=exclusion_signature,excluded_tactical_positions=excluded,production_promoted=False))
+    atomic(REPORT/('training.json' if args.corpus=='corpus' else 'training-'+args.corpus+'.json'),meta|dict(target_sources=targets,tactical_exclusion_signature=exclusion_signature,excluded_tactical_positions=excluded,production_promoted=False))
 
 def calibrate(args):
     guard()
@@ -424,7 +454,7 @@ def benchmark(args):
                     reply=dict(milliseconds=t*1000,legal=cmd(e,'alpha-moveid '+lines[0])[0][0] in canonical,timeout=False)
                 except TimeoutError:reply=dict(legal=False,timeout=True)
                 records.append(dict(mode=mode,game_sha256=hashlib.sha256(game.encode()).hexdigest(),evaluation_ms=evaluation,diagnostics=diagnostics,search=search,reply=reply))
-    result=dict(binary_sha256=digest(ENGINE),model_sha256=digest(model),threads=args.threads,budget_mib=32,cache_reserve_bytes=256*1024,records=records,all_legal_and_on_time=all(r['reply']['legal'] and not r['reply']['timeout'] for r in records),loaded_system_guarantee=False)
+    result=dict(binary_sha256=digest(ENGINE),model_sha256=digest(model),threads=args.threads,budget_mib=32,cache_reserve_bytes=13*256*1024,records=records,all_legal_and_on_time=all(r['reply']['legal'] and not r['reply']['timeout'] for r in records),loaded_system_guarantee=False)
     atomic(REPORT/(Path(model).stem+'-benchmark.json'),result);print(dict(samples=len(records),all_legal_and_on_time=result['all_legal_and_on_time']))
 
 def costs(args):
@@ -446,7 +476,10 @@ def costs(args):
 def main():
     global ENGINE
     p=argparse.ArgumentParser();p.add_argument('mode',choices=['prepare','parity','schemas','collect','train','calibrate','arena','benchmark','costs']);p.add_argument('--seconds',type=int,default=600);p.add_argument('--games',type=int,default=20);p.add_argument('--threads',type=int,default=1);p.add_argument('--model');p.add_argument('--opponent');p.add_argument('--name',default='nu-vs-gen1');p.add_argument('--stage-id');p.add_argument('--corpus',default='corpus');p.add_argument('--engine')
+    p.add_argument('--selection',choices=('regret','mse'),default='regret')
+    p.add_argument('--ranking-weight',type=float,default=.25)
     args=p.parse_args()
+    if not math.isfinite(args.ranking_weight) or not 0<=args.ranking_weight<=1:p.error('bounded ranking weight required')
     import re
     if not re.fullmatch(r'[A-Za-z0-9_-]+',args.name) or not re.fullmatch(r'[A-Za-z0-9_-]+',args.corpus) or args.corpus.lower()=='iota' or (args.stage_id and not re.fullmatch(r'[A-Za-z0-9_-]+',args.stage_id)):p.error('safe report, corpus and stage names required')
     for path in (args.model,args.opponent,args.engine):
@@ -463,6 +496,7 @@ def main():
     try:
         stage=REPORT/'stages'/((args.stage_id or str(time.time_ns()))+'.json')
         identity=dict(mode=args.mode,name=args.name,model=args.model,opponent=args.opponent,games=args.games,threads=args.threads,corpus=args.corpus,binary_sha256=digest(ENGINE))
+        if args.mode=='train':identity.update(selection=args.selection,ranking_weight=args.ranking_weight)
         progress,args.seconds=stage_start(stage,identity,args.seconds)
         try:
             {'prepare':lambda _:prepare(),'parity':parity,'schemas':schemas,'collect':collect,'train':train,'calibrate':calibrate,'arena':arena,'benchmark':benchmark,'costs':costs}[args.mode](args)

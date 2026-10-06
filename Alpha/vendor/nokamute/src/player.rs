@@ -289,7 +289,7 @@ pub fn configure_player() -> Result<(PlayerConfig, Vec<String>), pico_args::Erro
         _ => exit(format!("Unrecognized strategy: {}", strategy.unwrap_or_default())),
     };
     if config.num_threads.is_some_and(|n|n>12) {exit("NumThreads cannot exceed 12".into());}
-    if config.neural.as_ref().is_some_and(|m|m.bytes+1024*1024+256*1024>config.opts.table_byte_size) {exit("memory budget too small for model".into());}
+    if config.neural.as_ref().is_some_and(|m|m.bytes+1024*1024+crate::neural::CACHE_RESERVE>config.opts.table_byte_size) {exit("memory budget too small for model".into());}
     if config.neural_enabled && !matches!(config.strategy,PlayerStrategy::Iterative(_)) {exit("neural evaluator requires iterative search".into());}
     Ok((config, args.finish().into_iter().map(|s| s.into_string().unwrap()).collect::<Vec<_>>()))
 }
@@ -380,7 +380,7 @@ impl PlayerConfig {
         if let Some(model)=self.neural.as_ref() {
             // Tables round upward to a power of two. Request a lower power of two
             // so model+TT fit the same configured budget as the Gen 1 table.
-            let available=opts.table_byte_size.saturating_sub(model.bytes+256*1024);
+            let available=opts.table_byte_size.saturating_sub(model.bytes+crate::neural::CACHE_RESERVE);
             assert!(available>=1024*1024,"memory budget too small for model");
             opts.table_byte_size=1usize << (usize::BITS-1-available.leading_zeros());
         }

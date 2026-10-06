@@ -29,7 +29,7 @@ class TransportTests(unittest.TestCase):
 
     def test_close_is_idempotent(self):
         engine = UhpProcess([sys.executable, '-u', '-c',
-                             'print("ok", flush=True)\nfor line in __import__("sys").stdi._\n'
+                             'print("ok", flush=True)\nfor line in __import__("sys").stdin:\n'
                              ' if line.strip()=="exit": break\n print("ok", flush=True)'])
         self.assertEqual(engine.command('info')[0], ['ok'])
         engine.close()
