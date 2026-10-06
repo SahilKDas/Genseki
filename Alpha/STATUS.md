@@ -124,13 +124,25 @@ made, and no Rho work was modified.
 
 The current production Alpha is designated **Gen 1** and remains the default.
 An isolated native neural challenger, calibrated Nu adapter, and Alpha-specific
-bootstrap model are implemented. Neither earned promotion: the clean Gen 1
-screens scored 1.5/20 and 0/20 respectively. No sealed qualification was run.
+bootstrap model are implemented. Neither earned promotion: historical Gen 1
+screens scored 1.5/20 and 0/20 respectively, before the neural identity-sensitive
+TT fix; those screens are not evidence for the repaired search. No sealed
+qualification was run.
 The trained model's Nokamute screen stopped after 18 games under resource pressure;
 its seven points were opponent timeouts, not natural wins. Completed games and
 failure evidence are retained for a matching resume when no competing heavy job
 is active. See `GEN2.md` and `reports/gen2/` for exact verification scope, gates,
 resource-contamination notes, and remaining limitations. No Iota content was used.
+
+Latest Nu reliability-v8 checkpoint: calibrated on 249 development-only rows
+at scale 0.1779741166522808; model and calibration frozen together. Fourteen
+preflight replies were legal and within 250 ms. Fresh repaired-search Gen 1
+screen completed at 1/20 (zero wins, one natural draw, one capped draw, three
+challenger timeout losses). It failed advancement. Pinned Nokamute screen is
+incomplete at 5/8: one natural win, three natural losses, four opponent timeout
+wins. Repeated RAM-floor stops left it resumable, not qualified. Both screens
+used one thread, a 32 MiB evaluator/table ceiling and 230/250 ms time control;
+Gen 1 and Nokamute are related baselines, not independent engine families.
 
 - Resolve Base+MLP behavior against the exact pinned revision.
 - Improve the independent C++ evaluator/search if that implementation remains

@@ -1,0 +1,3443 @@
+{
+  "identity": {
+    "model": "cf72434dd632bd88502e0e6ac1b029c9e0dcd56df90cae20a1a1daf52de892fd",
+    "iota": "0bd2932ad3c36daabddd8f7f4506b067c096912ffc91060d7adbc8a329857b58",
+    "alpha": "80d1cc75571c2e3266e0246b2cec00d3657e3ba94029e5ca4635cfe0eaf12ef6",
+    "mode": "alphabeta",
+    "move_ms": 250,
+    "internal_ms": 230,
+    "alpha_request_ms": 230,
+    "iota_request_ms": 250,
+    "threads": 1,
+    "cap": 160,
+    "repetition": 3,
+    "ponder": false
+  },
+  "seed": 95011,
+  "qualification": false,
+  "games": [
+    {
+      "pair": 0,
+      "opening_seed": 95011,
+      "iota_color": "w",
+      "moves": [
+        "wG1",
+        "bB1 -wG1",
+        "wQ wG1/",
+        "bS1 \\bB1",
+        "wA1 \\wQ",
+        "bQ /bB1",
+        "wA2 wG1-",
+        "bS1 \\wA1",
+        "wA3 wQ-",
+        "bA1 \\bB1",
+        "wG2 wA3/",
+        "bA1 wA2\\",
+        "wG2 wG1\\",
+        "bA1 wA3-",
+        "wG3 wG2\\",
+        "bA2 \\bB1",
+        "wB1 wG3-",
+        "bA2 wA2\\",
+        "wG3 wA2-",
+        "bA1 \\bA1",
+        "wS1 /wG2",
+        "bS2 \\bS1",
+        "wB2 wG3-",
+        "bS2 -bA1",
+        "wS1 wB1\\",
+        "bA1 /wA1"
+      ],
+      "times": [
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23039050000079442
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23026860000391025
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2306310999993002
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23033089999807999
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23033180000493303
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302672999940114
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23040030000265688
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23027829999045935
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23037839999597054
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23035690000688192
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23047170000791084
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23032069999317173
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2305659999983618
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23037900000053924
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23052729999471921
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302979999949457
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2305357000004733
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23052610000013374
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23042170000553597
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.004495300003327429
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.003654700005427003
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0003555000002961606
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;BlackWins;White[14];wG1;bB1 -wG1;wQ wG1/;bS1 \\bB1;wA1 \\wQ;bQ /bB1;wA2 wG1-;bS1 \\wA1;wA3 wQ-;bA1 \\bB1;wG2 wA3/;bA1 wA2\\;wG2 wG1\\;bA1 wA3-;wG3 wG2\\;bA2 \\bB1;wB1 wG3-;bA2 wG2-;wG3 wA2-;bA1 wA3/;wS1 /wG2;bS2 \\bS1;wB2 wG3-;bS2 wA1-;wS1 wB1\\;bA1 bB1/"
+    },
+    {
+      "pair": 0,
+      "opening_seed": 95011,
+      "iota_color": "b",
+      "moves": [
+        "wG1",
+        "bB1 -wG1",
+        "wQ wG1/",
+        "bS1 \\bB1",
+        "wA1 wG1\\",
+        "bS2 bS1/",
+        "wA1 \\bS2",
+        "bQ /bB1",
+        "wA2 wG1\\",
+        "bA1 \\bQ",
+        "wA2 -bA1",
+        "bA2 bQ\\",
+        "wA1 bA2\\",
+        "bA3 \\bS1",
+        "wA3 wG1\\",
+        "bB2 bS2/",
+        "wA3 \\bA3",
+        "bB2 bS2",
+        "wG2 \\wA2",
+        "bB2 bA3",
+        "wG2 wA2\\",
+        "bS2 \\wA3",
+        "wS1 wA1\\",
+        "bS2 bB2-",
+        "wS1 wG2\\",
+        "bS2 \\wA3",
+        "wA1 bB1\\"
+      ],
+      "times": [
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022129999299068
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23044039998785593
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.230148000002373
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2307650000002468
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23029029999452177
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2303410000022268
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23024099999747705
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2305000999913318
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23032109999621753
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23062609999033157
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23026470000331756
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304013999964809
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2304359999980079
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23052880000614095
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022139999375213
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23032170000078622
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23023319999629166
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23036870000942145
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302250000066124
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304322999989381
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0004912000003969297
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.0017692999972496182
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0004275999963283539
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;WhiteWins;Black[14];wG1;bB1 -wG1;wQ wG1/;bS1 \\bB1;wA1 wG1\\;bS2 bS1/;wA1 \\bS2;bQ /bB1;wA2 wG1\\;bA1 \\bQ;wA2 -bA1;bA2 bQ\\;wA1 bA2\\;bA3 \\bS1;wA3 wG1\\;bB2 bS2/;wA3 \\bA3;bB2 bS2;wG2 \\wA2;bB2 bA3;wG2 wA2\\;bS2 \\wA3;wS1 wA1\\;bS2 bB2-;wS1 wG2\\;bS2 \\wA3;wA1 bQ-"
+    },
+    {
+      "pair": 1,
+      "opening_seed": 95012,
+      "iota_color": "w",
+      "moves": [
+        "wB1",
+        "bB1 \\wB1",
+        "wA1 wB1-",
+        "bG1 \\bB1",
+        "wG1 /wB1",
+        "bQ bG1/",
+        "wQ -wG1",
+        "bA1 bQ\\",
+        "wG2 \\wQ",
+        "bA1 -wG2",
+        "wA2 wG1-",
+        "bA2 -bG1",
+        "wG3 wA1/",
+        "bS1 -bA1",
+        "wB2 wA2\\",
+        "bS1 /wQ",
+        "wB2 wA2",
+        "bA3 bQ\\",
+        "wB2 wG1",
+        "bA2 wA2\\",
+        "wG3 wB2\\",
+        "bA3 wA1/",
+        "wG3 bA2-",
+        "bG2 -bS1",
+        "wS1 wG3\\",
+        "bG2 wQ\\",
+        "wS1 bG2-",
+        "bG2 \\wG2",
+        "wS1 /bS1",
+        "bB2 bQ\\",
+        "wS1 /bA1",
+        "bB2 bG1",
+        "wS1 /bS1",
+        "bS2 /bA2",
+        "wS1 /bA1",
+        "bG2 wQ\\",
+        "wA3 wG3/",
+        "bG3 bS1\\",
+        "wA3 bA3-",
+        "bG3 bA1\\",
+        "wG2 \\wS1",
+        "bA1 \\wQ",
+        "wA3 \\bA1",
+        "bB2 bB1",
+        "wA3 wG3-",
+        "bB2 /bB2"
+      ],
+      "times": [
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23039120000612456
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.230218499986222
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2302417000028072
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301620000071125
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23028110001177993
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017079998680856
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2306051000050502
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23018100000626873
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23038519998954143
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23031920001085382
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23042480000003707
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302586000005249
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23041669999656733
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23019900001236238
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23038480000104755
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022459998901468
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23047529999166727
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23043160000815988
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23035620000155177
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.230207500004326
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23040909999690484
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23021850000077393
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2303431000036653
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.230409800002235
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23054800000682008
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022450000280514
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23088849999476224
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23026660000323318
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23062339999887627
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23028269999485929
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23079739999957383
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23018420000153128
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304640000074869
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017940000863746
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23046169998997357
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23028669999621343
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23051009999471717
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23032339999917895
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304747000016505
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0019964999955845997
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.008011300000362098
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.00032380000629927963
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;BlackWins;White[24];wB1;bB1 \\wB1;wA1 wB1-;bG1 \\bB1;wG1 /wB1;bQ bG1/;wQ -wG1;bA1 bG1-;wG2 \\wQ;bA1 -wG2;wA2 wG1-;bA2 -bG1;wG3 wA1/;bS1 -bA1;wB2 wA2\\;bS1 /wQ;wB2 wA2;bA3 bG1-;wB2 wG1;bA2 wA2\\;wG3 wB2\\;bA3 wA1/;wG3 bA2-;bG2 -bS1;wS1 wG3\\;bG2 bS1-;wS1 bG2-;bG2 bA1/;wS1 /bS1;bB2 bG1-;wS1 /bA1;bB2 bG1;wS1 /bS1;bS2 /bA2;wS1 /bA1;bG2 bS1-;wA3 wG3/;bG3 bS1\\;wA3 bA3-;bG3 wS1-;wG2 \\wS1;bA1 bG3/;wA3 \\bA1;bB2 bB1;wA3 wG3-;bB2 bA1-"
+    },
+    {
+      "pair": 1,
+      "opening_seed": 95012,
+      "iota_color": "b",
+      "moves": [
+        "wB1",
+        "bB1 \\wB1",
+        "wA1 wB1-",
+        "bG1 \\bB1",
+        "wQ /wB1",
+        "bS1 /bG1",
+        "wA1 \\bG1",
+        "bQ bG1-",
+        "wA2 wB1-",
+        "bB2 -bS1",
+        "wA2 /bB2",
+        "bA1 \\bB2",
+        "wA3 wB1-",
+        "bA1 wA3\\",
+        "wS1 \\wA1",
+        "bA1 -wA2",
+        "wS1 bQ/",
+        "bA1 /wA2",
+        "wA3 \\bB2",
+        "bA1 -wA2",
+        "wG1 \\wS1",
+        "bA1 \\wA1",
+        "wA3 \\bA1",
+        "bA2 \\bB2",
+        "wA2 \\bA2",
+        "bA3 bB2\\",
+        "wG1 wS1\\",
+        "bA3 -wA2",
+        "wB2 wB1-",
+        "bA3 wB2\\",
+        "wQ wB1\\",
+        "bA3 -wA2",
+        "wB2 wB1",
+        "bA3 wA3/",
+        "wG2 wG1/",
+        "bA3 -wA2",
+        "wG3 \\wS1",
+        "bA3 wA3/",
+        "wS2 wG2\\",
+        "bA3 -wA2",
+        "wG2 /wG3",
+        "bG1 bB2\\",
+        "wG3 wA1\\",
+        "bA3 wQ\\",
+        "wA2 bQ\\"
+      ],
+      "times": [
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23028299999714363
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23044559999834746
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022189999755938
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304939000023296
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23024330000043847
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23040949999995064
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23020619999442715
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23051599999598693
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302691000077175
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304054999985965
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302005000092322
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23031740001169965
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23016760000609793
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23047569999471307
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23025439999764785
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23030509999080095
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302484999963781
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23032129999774043
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23023169999942183
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23048549999657553
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017219999746885
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23048589999962132
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23018810000212397
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23046740000427235
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302979999949457
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23058770000352524
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23043070000130683
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23064350000640843
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23030170000856742
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23050950000470039
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2308132000034675
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23046330000215676
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23035240000172053
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2305417000025045
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23029979999409989
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23037099999783095
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302851999993436
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23081399999500718
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0023477000067941844
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.005474300007335842
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0004115999909117818
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;WhiteWins;Black[23];wB1;bB1 \\wB1;wA1 wB1-;bG1 \\bB1;wQ /wB1;bS1 /bG1;wA1 \\bG1;bQ bG1-;wA2 wB1-;bB2 -bS1;wA2 /bB2;bA1 \\bB2;wA3 wB1-;bA1 wA3\\;wS1 \\wA1;bA1 -wA2;wS1 bQ/;bA1 /wA2;wA3 \\bB2;bA1 -wA2;wG1 \\wS1;bA1 \\wA1;wA3 \\bA1;bA2 \\bB2;wA2 \\bA2;bA3 bB2\\;wG1 bQ-;bA3 -wA2;wB2 wB1-;bA3 wB2\\;wQ wB1\\;bA3 -wA2;wB2 wB1;bA3 wA3/;wG2 wS1-;bA3 -wA2;wG3 \\wS1;bA3 wA3/;wS2 wG1-;bA3 -wA2;wG2 wA1-;bG1 bB2\\;wG3 bS1/;bA3 wQ\\;wA2 bB1-"
+    },
+    {
+      "pair": 2,
+      "opening_seed": 95013,
+      "iota_color": "w",
+      "moves": [
+        "wB1",
+        "bA1 wB1\\",
+        "wS1 \\wB1",
+        "bG1 bA1\\",
+        "wG1 -wS1",
+        "bA2 /bA1",
+        "wQ wS1/",
+        "bQ bG1/",
+        "wA1 wS1-",
+        "bA2 wA1-",
+        "wA2 wG1/",
+        "bG1 \\wA2",
+        "wA3 wG1\\",
+        "bA3 /bA1",
+        "wG2 wQ/",
+        "bA3 wG2\\",
+        "wG3 \\wG2",
+        "bG2 -bG1",
+        "wA3 /bG2",
+        "bB1 bA2/",
+        "wB2 /wG1",
+        "bB2 \\bG1",
+        "wB2 wG1",
+        "bB2 bG1",
+        "wA3 bQ-",
+        "bG2 /wG3"
+      ],
+      "times": [
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23058550000132527
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23020240000914782
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23036539999884553
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23025209999468643
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23035000001254957
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301620000071125
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2303051999915624
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23015839999425225
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23039379999681842
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017659998731688
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23041440000815783
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23014670000702608
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23048849999031518
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23029769999266136
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23036870000942145
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23016429999552201
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23050360000343062
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23033079999731854
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2305361000035191
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0007194999925559387
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.00837619999947492
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0004945999971823767
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;BlackWins;White[14];wB1;bA1 wB1\\;wS1 \\wB1;bG1 bA1\\;wG1 -wS1;bA2 /bA1;wQ wS1/;bQ bA1-;wA1 wS1-;bA2 wA1-;wA2 wG1/;bG1 \\wA2;wA3 wG1\\;bA3 /bA1;wG2 wQ/;bA3 wQ-;wG3 \\wG2;bG2 -bG1;wA3 /bG2;bB1 bA3-;wB2 /wG1;bB2 bG2/;wB2 wG1;bB2 bG1;wA3 bQ-;bG2 bB2-"
+    },
+    {
+      "pair": 2,
+      "opening_seed": 95013,
+      "iota_color": "b",
+      "moves": [
+        "wB1",
+        "bA1 wB1\\",
+        "wS1 \\wB1",
+        "bG1 bA1\\",
+        "wQ -wS1",
+        "bB1 /bG1",
+        "wA1 wQ\\",
+        "bQ \\bB1",
+        "wA1 bB1\\",
+        "bA2 bA1-",
+        "wS2 wQ\\",
+        "bB2 bA2/",
+        "wA2 wB1/",
+        "bB2 bA2",
+        "wA2 -bQ",
+        "bG1 -wA2",
+        "wG1 wA1\\",
+        "bB2 bA1",
+        "wG1 wS2\\",
+        "bA2 /wA1",
+        "wB1 bB2",
+        "bA2 wA1-",
+        "wG2 wB1/",
+        "bA2 /wA1",
+        "wG2 wA2\\",
+        "bA2 \\wQ",
+        "wB1 wB1\\"
+      ],
+      "times": [
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23026719999324996
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304440000007162
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23015619999205228
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2302256000111811
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23019790000398643
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23043349999352358
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23014249998959713
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23035990000062156
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022579999815207
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23050649999640882
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23014729999704286
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23034880000341218
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302512000023853
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23040190000028815
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23087060000398196
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23051290000148583
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022040000068955
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23036570000112988
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.16079599999648053
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23046859999885783
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.002510899998014793
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.005584800004726276
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.00044419999176170677
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;WhiteWins;Black[14];wB1;bA1 wB1\\;wS1 \\wB1;bG1 bA1\\;wQ -wS1;bB1 /bG1;wA1 wQ\\;bQ \\bB1;wA1 bB1\\;bA2 bA1-;wS2 wQ\\;bB2 bA2/;wA2 wS1-;bB2 bA2;wA2 -bQ;bG1 -wA2;wG1 wA1\\;bB2 bA1;wG1 wA2/;bA2 /wA1;wB1 bB2;bA2 wA1-;wG2 wB1/;bA2 /wA1;wG2 wA2\\;bA2 \\wQ;wB1 bQ-"
+    },
+    {
+      "pair": 3,
+      "opening_seed": 95014,
+      "iota_color": "w",
+      "moves": [
+        "wA1",
+        "bA1 \\wA1",
+        "wG1 /wA1",
+        "bS1 bA1/",
+        "wS1 wG1-",
+        "bQ -bA1",
+        "wQ wG1\\",
+        "bA2 -bS1",
+        "wA2 wQ-",
+        "bA2 wA2\\",
+        "wG2 /wQ",
+        "bA3 /bA2",
+        "wG3 /wG2",
+        "bA3 /wG1",
+        "wG1 \\wG3",
+        "bB1 -bS1",
+        "wB1 wG3\\",
+        "bB1 bA1",
+        "wB2 /wB1",
+        "bA2 bA2/",
+        "wA3 \\wB2",
+        "bS2 bA2-",
+        "wG2 -wG1",
+        "bG1 \\bA3",
+        "wB1 wG3",
+        "bG1 bA3\\",
+        "wB1 wG1",
+        "bS2 wQ\\",
+        "wB2 wA3",
+        "bA2 /wA1"
+      ],
+      "times": [
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23065199999837205
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23045600000477862
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23036199998750817
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301768000033917
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23037389999080915
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23018119999323972
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23028659999545198
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23013999999966472
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23047070000029635
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23020859999815002
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23033700000087265
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23020499999984168
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.230397899998934
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.230202199993073
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23056939999514725
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23021840000001248
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23043419999885373
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23035990000062156
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304939000023296
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301997000031406
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23039920000883285
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23023070000635926
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23067439999431372
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.00889640000241343
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.006315499995253049
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0002908000024035573
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;BlackWins;White[16];wA1;bA1 \\wA1;wG1 /wA1;bS1 bA1/;wS1 wG1-;bQ -bA1;wQ wG1\\;bA2 bQ/;wA2 wQ-;bA2 wA2\\;wG2 /wQ;bA3 /bA2;wG3 /wG2;bA3 \\wG2;wG1 \\wG3;bB1 bQ/;wB1 wG3\\;bB1 bA1;wB2 /wB1;bA2 wA2-;wA3 \\wB2;bS2 bA2-;wG2 -wG1;bG1 \\bA3;wB1 wG3;bG1 wG1-;wB1 wG1;bS2 bG1-;wB2 wA3;bA2 bA3/"
+    },
+    {
+      "pair": 3,
+      "opening_seed": 95014,
+      "iota_color": "b",
+      "moves": [
+        "wA1",
+        "bA1 \\wA1",
+        "wG1 /wA1",
+        "bS1 bA1/",
+        "wA2 /wG1",
+        "bB1 bS1-",
+        "wQ wG1\\",
+        "bQ bS1/",
+        "wA2 bB1-",
+        "bA2 \\bS1",
+        "wA3 wA1\\",
+        "bB2 -bA1",
+        "wA3 \\bA2",
+        "bB2 bA1",
+        "wB1 wA1\\",
+        "bQ bB1/",
+        "wS1 wA2\\",
+        "bQ wA2/",
+        "wS1 bQ/",
+        "bB2 wA1",
+        "wB1 bB2",
+        "bA3 \\bA1",
+        "wB2 wB1\\",
+        "bA3 \\wA3",
+        "wG2 \\wS1",
+        "bA3 wA3/",
+        "wG3 wS1-",
+        "bS2 bA2-",
+        "wG2 wS1\\",
+        "bS2 \\wS1",
+        "wG3 /bS2",
+        "bS2 wG2-",
+        "wB2 wQ",
+        "bG1 bA2-",
+        "wB2 wG1",
+        "bG1 /wA3",
+        "wS2 -wG3",
+        "bA3 \\wA3",
+        "wS2 -wS2",
+        "bS2 wA2\\",
+        "wQ /wB2",
+        "bS2 wG2-",
+        "wG3 \\bS2",
+        "bS2 wA2\\",
+        "wS2 -wS1",
+        "bA3 wA3/",
+        "wG3 bQ\\",
+        "bS2 wG2-",
+        "wQ wB2\\",
+        "bG1 bA3/",
+        "wB2 /bA1",
+        "bG1 /wA3",
+        "wB2 bA1",
+        "bG2 bA2-",
+        "wB2 bS1",
+        "bG2 -bG1",
+        "wB2 bB1",
+        "bA3 wQ\\",
+        "wA3 /wS2"
+      ],
+      "times": [
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302448000118602
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23063679999904707
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301523000060115
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23020910000195727
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23014169999805745
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23045550000097137
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23021449999941979
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23079339999821968
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23020449999603443
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23046599999361206
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23016409999399912
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23049980000359938
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302415000012843
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23038770000857767
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2303165000048466
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2305466000107117
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23025899998901878
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23033089999807999
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23020339998765849
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23045620000630151
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23020839999662712
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23059789999388158
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.230223799997475
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2303955999959726
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301937000011094
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23038959999394137
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23024869999790099
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304128999967361
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301995000016177
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23069110000506043
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23018059998867102
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23043379999580793
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2304256999923382
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304627999983495
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302555000060238
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23036239999055397
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302194999938365
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304199000063818
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23031790000095498
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23046540000359528
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23040970000147354
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23073419999855105
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23031620000256225
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23050689999945462
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23018849999061786
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23034819999884348
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301898000005167
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23044389999995474
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022869999113027
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23040089999267366
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.00039590000233147293
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23033739998936653
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0006702000100631267
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.004719599994132295
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.00016570001025684178
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;WhiteWins;Black[30];wA1;bA1 \\wA1;wG1 /wA1;bS1 bA1/;wA2 /wG1;bB1 bS1-;wQ wA2-;bQ bS1/;wA2 bB1-;bA2 \\bS1;wA3 wG1-;bB2 -bA1;wA3 \\bA2;bB2 bA1;wB1 wG1-;bQ bB1/;wS1 wA2\\;bQ wA2/;wS1 bQ/;bB2 wA1;wB1 bB2;bA3 \\bA1;wB2 wG1-;bA3 \\wA3;wG2 \\wS1;bA3 wA3/;wG3 wS1-;bS2 bA2-;wG2 bQ-;bS2 \\wS1;wG3 \\bQ;bS2 wG2-;wB2 wQ;bG1 bA2-;wB2 wG1;bG1 /wA3;wS2 -wG3;bA3 \\wA3;wS2 wA3-;bS2 wA2\\;wQ /wB2;bS2 wG2-;wG3 wS1-;bS2 wA2\\;wS2 \\bQ;bA3 wA3/;wG3 wA2-;bS2 wG2-;wQ wB2\\;bG1 bA3/;wB2 \\wG1;bG1 /wA3;wB2 bA1;bG2 bA2-;wB2 bS1;bG2 -bG1;wB2 bB1;bA3 wQ\\;wA3 wB2/"
+    },
+    {
+      "pair": 4,
+      "opening_seed": 95015,
+      "iota_color": "w",
+      "moves": [
+        "wA1",
+        "bS1 wA1/",
+        "wA2 /wA1",
+        "bQ \\bS1",
+        "wQ -wA2",
+        "bA1 bS1-",
+        "wA3 wQ/",
+        "bA1 /wQ",
+        "wS1 \\wQ",
+        "bA1 -wS1",
+        "wG1 wA2\\",
+        "bS2 -bA1",
+        "wG2 /wQ",
+        "bA2 bS1-",
+        "wG3 wG1-",
+        "bA2 \\wA3",
+        "wG2 bA2-",
+        "bS2 /wQ",
+        "wB1 wG3\\",
+        "bA2 wQ\\",
+        "wA1 /bA1",
+        "bA2 /wA1",
+        "wB2 /wG1",
+        "bG1 \\bA1",
+        "wB2 wG1",
+        "bS1 \\bQ",
+        "wB1 wG3",
+        "bS1 \\wS1",
+        "wB1 wB2",
+        "bG1 bA1\\",
+        "wS2 /wB1",
+        "bG2 \\bS1",
+        "wS2 wG3-",
+        "bG2 wQ\\"
+      ],
+      "times": [
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2307507999939844
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2304512000118848
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23041679999732878
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23025009999400936
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23029620001034345
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23018349999620114
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23029849999875296
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23016619999543764
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2303676000010455
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23016070001176558
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23038110000197776
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017460000119172
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23040699999546632
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23019340001337696
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23048920001019724
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23018359999696258
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2303498999972362
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23015660000965
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23039029999927152
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23020059999544173
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23059600000851788
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302198999968823
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23028219999105204
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23018500000762288
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304193000018131
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.21662429999560118
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23040000000037253
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0003988999960711226
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.00210019999940414
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0003319999959785491
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;BlackWins;White[18];wA1;bS1 wA1/;wA2 /wA1;bQ \\bS1;wQ -wA2;bA1 bS1-;wA3 wQ/;bA1 /wQ;wS1 \\wQ;bA1 -wS1;wG1 wA2\\;bS2 -bA1;wG2 /wQ;bA2 bS1-;wG3 wG1-;bA2 wS1/;wG2 bA2-;bS2 /wQ;wB1 wG3\\;bA2 bS2-;wA1 /bA1;bA2 /wA1;wB2 /wG1;bG1 \\bA1;wB2 wG1;bS1 \\bQ;wB1 wG3;bS1 bG1-;wB1 wB2;bG1 wA1-;wS2 /wB1;bG2 \\bS1;wS2 wG3-;bG2 bS2-"
+    },
+    {
+      "pair": 4,
+      "opening_seed": 95015,
+      "iota_color": "b",
+      "moves": [
+        "wA1",
+        "bS1 wA1/",
+        "wA2 /wA1",
+        "bQ \\bS1",
+        "wQ -wA1",
+        "bA1 bQ-",
+        "wA2 bA1-",
+        "bA2 bQ/",
+        "wA3 wA1\\",
+        "bB1 bA2/",
+        "wA3 bB1/",
+        "bA3 \\bQ",
+        "wA3 /bA3",
+        "bA3 \\wA3",
+        "wB1 wA1\\",
+        "bB2 \\bB1",
+        "wB1 wA1",
+        "bB2 bB1",
+        "wS1 wA2/",
+        "bB2 bA2",
+        "wS1 bA1\\",
+        "bA3 wA2-",
+        "wB1 wA3\\",
+        "bA3 /wQ",
+        "wA1 -bB2"
+      ],
+      "times": [
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302534999907948
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23052029999962542
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23014770000008866
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23023879999527708
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23018709999450948
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2302313999971375
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022559999662917
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23031349999655504
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23015550000127405
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23026779999781866
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017419999814592
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23048620000190567
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23026350000873208
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2303366999985883
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23028569998859894
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2303418000083184
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23015630000736564
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23031420000188518
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0033576999994693324
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.0054687000083504245
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.000494699997943826
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;WhiteWins;Black[13];wA1;bS1 wA1/;wA2 /wA1;bQ \\bS1;wQ \\wA2;bA1 bQ-;wA2 bA1-;bA2 bQ/;wA3 wA1\\;bB1 bA2/;wA3 bB1/;bA3 \\bQ;wA3 /bA3;bA3 \\wA3;wB1 wA1\\;bB2 \\bB1;wB1 wA1;bB2 bB1;wS1 wA2/;bB2 bA2;wS1 bS1-;bA3 wA2-;wB1 wQ/;bA3 /wQ;wA1 wA3/"
+    },
+    {
+      "pair": 5,
+      "opening_seed": 95016,
+      "iota_color": "w",
+      "moves": [
+        "wG1",
+        "bS1 /wG1",
+        "wB1 \\wG1",
+        "bB1 /bS1",
+        "wS1 wB1-",
+        "bQ -bB1",
+        "wQ wB1/",
+        "bA1 bB1\\",
+        "wA1 \\wB1",
+        "bA1 \\wA1",
+        "wA2 /wA1",
+        "bA2 -bS1",
+        "wG2 -wA2",
+        "bA3 bS1\\",
+        "wB2 wQ/",
+        "bA3 wB2/",
+        "wA3 wG1-",
+        "bA2 wB2\\",
+        "wA3 bA1/",
+        "bG1 -bA1",
+        "wB1 wG1",
+        "bG1 wA3\\",
+        "wG3 \\wA3",
+        "bG2 bA3/",
+        "wG3 wB1-",
+        "bG2 wA1\\"
+      ],
+      "times": [
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23069280000345316
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23037229999317788
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23031330000958405
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017959999560844
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23049380000156816
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23039799999969546
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23052110000571702
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23023720001219772
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23050269999657758
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017179999442305
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23053129999607336
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017100000288337
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.230363299997407
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23015590000431985
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23053080000681803
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23026029999891762
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2303167000063695
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017419999814592
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2305637000099523
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.009541699997498654
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.004579500004183501
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0004898000042885542
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;BlackWins;White[14];wG1;bS1 /wG1;wB1 \\wG1;bB1 /bS1;wS1 wB1-;bQ -bB1;wQ wB1/;bA1 bB1\\;wA1 \\wB1;bA1 \\wA1;wA2 /wA1;bA2 bQ/;wG2 -wA2;bA3 bB1-;wB2 wQ/;bA3 wB2/;wA3 wG1-;bA2 wQ-;wA3 bA1/;bG1 -bA1;wB1 wG1;bG1 bA1-;wG3 \\wA3;bG2 bA3/;wG3 wB1-;bG2 wA2-"
+    },
+    {
+      "pair": 5,
+      "opening_seed": 95016,
+      "iota_color": "b",
+      "moves": [
+        "wG1",
+        "bS1 /wG1",
+        "wB1 \\wG1",
+        "bB1 /bS1",
+        "wQ wG1-",
+        "bS2 \\bB1",
+        "wB1 wG1",
+        "bQ bB1\\",
+        "wA1 \\wB1"
+      ],
+      "times": [
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23034030001144856
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23067069999524392
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23025629999756347
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23053169999911916
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302524000115227
+        }
+      ],
+      "reason": "timeout",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "failed_actor": "iota",
+      "failed_move_seconds": 0.27895629999693483,
+      "final_game": "Base;InProgress;Black[5];wG1;bS1 /wG1;wB1 \\wG1;bB1 /bS1;wQ wG1-;bS2 \\bB1;wB1 wG1;bQ bB1\\;wA1 \\wB1"
+    },
+    {
+      "pair": 6,
+      "opening_seed": 95017,
+      "iota_color": "w",
+      "moves": [
+        "wS1",
+        "bB1 wS1\\",
+        "wS2 -wS1",
+        "bA1 /bB1",
+        "wG1 wS1/",
+        "bQ bB1-",
+        "wQ wS2/",
+        "bA1 \\wQ",
+        "wA1 wG1-",
+        "bA1 wA1-",
+        "wA2 \\wS2",
+        "bB2 /bB1",
+        "wG2 -wA2",
+        "bA2 bB2\\",
+        "wB1 /wS2",
+        "bA1 \\wG1",
+        "wA1 bA2-",
+        "bA3 bA1/",
+        "wG1 wB1-",
+        "bQ \\bQ",
+        "wB2 -wB1",
+        "bQ bA1\\",
+        "wA1 \\wG2",
+        "bA2 -bA1"
+      ],
+      "times": [
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23058070000843145
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2303877999947872
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23037279999698512
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23030460000154562
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23279930000717286
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23032109999621753
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23053339999751188
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23030270000163
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23047699999006
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23035300000628922
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2306414000049699
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23026340000797063
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23058499999751803
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23030589999689255
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23055700000259094
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022120000678115
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304875000118045
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0028774999955203384
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.008285499992780387
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0003966999938711524
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;BlackWins;White[13];wS1;bB1 wS1\\;wS2 -wS1;bA1 /bB1;wG1 wS1/;bQ bB1-;wQ wS2/;bA1 \\wQ;wA1 wG1-;bA1 wA1-;wA2 \\wS2;bB2 /bB1;wG2 -wA2;bA2 bB2\\;wB1 /wS2;bA1 wQ/;wA1 bA2-;bA3 bA1/;wG1 wB1-;bQ wS1-;wB2 -wB1;bQ wQ-;wA1 \\wG2;bA2 wA2/"
+    },
+    {
+      "pair": 6,
+      "opening_seed": 95017,
+      "iota_color": "b",
+      "moves": [
+        "wS1",
+        "bB1 wS1\\",
+        "wS2 -wS1",
+        "bA1 /bB1",
+        "wQ \\wS1",
+        "bQ bB1-",
+        "wS2 /bA1",
+        "bA2 bA1-",
+        "wA1 -wS2",
+        "bB2 bA2\\",
+        "wA1 bB2-",
+        "bA3 /bB2",
+        "wA1 /bA3",
+        "bS1 bA2-",
+        "wB1 wS1/",
+        "bS2 bQ-",
+        "wB1 wS1",
+        "bS2 wQ-",
+        "wB1 bS2",
+        "bS1 wS1-",
+        "wS1 -wS2",
+        "bB1 bA2",
+        "wA2 wS1\\",
+        "bB1 bA1",
+        "wA2 bQ-",
+        "bB1 wS2",
+        "wS1 /bS1",
+        "bB1 bA1",
+        "wG1 wA2\\",
+        "bB1 wS2",
+        "wG2 /wA1",
+        "bB1 bA1",
+        "wG2 bQ\\",
+        "bB1 bA2",
+        "wA1 \\wA2"
+      ],
+      "times": [
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23024589999113232
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23048270000435878
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301590999995824
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23035549999622162
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017960001016036
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23042019999411423
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302105999988271
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23032039999088738
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23015490001125727
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23030419999849983
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23014729999704286
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23031120000814553
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301508999953512
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23035470000468194
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301651000016136
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2305252000078326
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23032319999765605
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.230315699998755
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301990999985719
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23080069999559782
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23025700000289362
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23029110000061337
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022310000669677
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23051230001146905
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302759000012884
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23073629999998957
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.21528439999383409
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23050779999175575
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0036837999941781163
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.002686599997105077
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.00040929998795036227
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;WhiteWins;Black[18];wS1;bB1 wS1\\;wS2 -wS1;bA1 /bB1;wQ wS2/;bQ bB1-;wS2 /bA1;bA2 bA1-;wA1 -wS2;bB2 bA2\\;wA1 bB2-;bA3 /bB2;wA1 /bA3;bS1 bA2-;wB1 wQ-;bS2 bQ-;wB1 wS1;bS2 wQ-;wB1 bS2;bS1 wS1-;wS1 -wS2;bB1 bA2;wA2 wS1\\;bB1 bA1;wA2 bQ-;bB1 wS2;wS1 bA1/;bB1 bA1;wG1 wA2\\;bB1 wS2;wG2 /wA1;bB1 bA1;wG2 bA2-;bB1 bA2;wA1 bS1-"
+    },
+    {
+      "pair": 7,
+      "opening_seed": 95018,
+      "iota_color": "w",
+      "moves": [
+        "wS1",
+        "bG1 wS1-",
+        "wB1 -wS1",
+        "bS1 bG1\\",
+        "wQ \\wB1",
+        "bQ bG1/",
+        "wA1 wQ-",
+        "bS1 /wB1",
+        "wA2 wQ/",
+        "bS1 -wA2",
+        "wG1 wA2/",
+        "bA1 \\bS1",
+        "wG2 /wB1",
+        "bB1 bG1\\",
+        "wG3 wG2\\",
+        "bB1 bG1",
+        "wB2 wG3-",
+        "bA2 bB1\\",
+        "wB2 wG3",
+        "bA2 /bS1",
+        "wA1 /bA2",
+        "bA1 -wA1",
+        "wB2 wG2",
+        "bA3 \\bQ",
+        "wB2 wG3",
+        "bB2 bB1\\",
+        "wB2 wG2",
+        "bG2 \\bS1",
+        "wB2 wG3",
+        "bA3 \\bA3",
+        "wB2 wG2",
+        "bA3 wA2\\",
+        "wB2 wG3",
+        "bG3 /bG2",
+        "wB2 wG2",
+        "bG3 bA2\\"
+      ],
+      "times": [
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23040470000705682
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2303447000012966
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23059469999861903
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23037489999842364
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23033840001153294
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2303234999999404
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2305898999911733
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2303749999991851
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23050669999793172
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23031040000205394
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23035759999766015
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23019449999264907
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2306624000048032
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23034519999055192
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23071850000997074
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2303758000052767
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23058479999599513
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23056900000665337
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23057080000580754
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23032259999308735
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23034279998682905
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23028360000171233
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23030540000763722
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23025980000966229
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23047280000173487
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23031880000780802
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23058790000504814
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23029699998733122
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2313144000072498
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.011834999997518025
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.006337099999655038
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.00042839998786803335
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;BlackWins;White[19];wS1;bG1 wS1-;wB1 -wS1;bS1 bG1\\;wQ \\wB1;bQ bG1/;wA1 wQ-;bS1 /wB1;wA2 wQ/;bS1 \\wQ;wG1 wA2/;bA1 \\bS1;wG2 /wB1;bB1 bG1\\;wG3 wG2\\;bB1 bG1;wB2 wG3-;bA2 bB1\\;wB2 wG3;bA2 /bS1;wA1 /bA2;bA1 -wA1;wB2 wG2;bA3 \\bQ;wB2 wG3;bB2 bB1\\;wB2 wG2;bG2 \\bS1;wB2 wG3;bA3 wG1-;wB2 wG2;bA3 wQ-;wB2 wG3;bG3 \\bA2;wB2 wG2;bG3 wA1-"
+    },
+    {
+      "pair": 7,
+      "opening_seed": 95018,
+      "iota_color": "b",
+      "moves": [
+        "wS1",
+        "bG1 wS1-",
+        "wB1 -wS1",
+        "bS1 bG1\\",
+        "wQ \\wB1",
+        "bS2 bG1-",
+        "wA1 \\wS1",
+        "bQ bS1-",
+        "wA1 bS2/",
+        "bA1 bS1\\",
+        "wA1 bA1\\",
+        "bA2 bS2-",
+        "wS2 wA1\\",
+        "bB1 bA2/",
+        "wS2 bA2\\",
+        "bS2 wQ-",
+        "wB1 bS2",
+        "bB2 bB1-",
+        "wG1 wQ\\",
+        "bB2 bB1",
+        "wA2 /wQ",
+        "bB2 bA2",
+        "wG1 -bB2",
+        "bS1 wA2-",
+        "wA2 bG1\\",
+        "bB2 wG1",
+        "wA1 bQ\\"
+      ],
+      "times": [
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23032360000070184
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304571999993641
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23025090000010096
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23056179999548476
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23025520000373945
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23049750000063796
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23027749999891967
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23048199999902863
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23026620000018738
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2305023000080837
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23027040000306442
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23028319999866653
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23026409999874886
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23042290000012144
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23026510000636335
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2303025000001071
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23018790000060108
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23041359998751432
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23032940000121016
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23044410000147764
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0003826000029221177
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.0029928000003565103
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0004721000004792586
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;WhiteWins;Black[14];wS1;bG1 wS1-;wB1 -wS1;bS1 bG1\\;wQ \\wB1;bS2 bG1-;wA1 wQ-;bQ bS1-;wA1 bS2/;bA1 bS1\\;wA1 bA1\\;bA2 bS2-;wS2 wA1\\;bB1 bA2/;wS2 bQ-;bS2 wQ-;wB1 bS2;bB2 bB1-;wG1 wQ\\;bB2 bB1;wA2 /wQ;bB2 bA2;wG1 bG1-;bS1 wA2-;wA2 bG1\\;bB2 wG1;wA1 bA1-"
+    },
+    {
+      "pair": 8,
+      "opening_seed": 95019,
+      "iota_color": "w",
+      "moves": [
+        "wB1",
+        "bS1 -wB1",
+        "wS1 wB1-",
+        "bG1 /bS1",
+        "wG1 wS1\\",
+        "bA1 -bS1",
+        "wQ /wG1",
+        "bQ /bA1",
+        "wA1 wB1\\",
+        "bA1 /wA1",
+        "wG2 wS1/",
+        "bS2 /bA1",
+        "wA2 wB1/",
+        "bA2 -bS1",
+        "wG3 \\wA2",
+        "bA2 wQ\\",
+        "wB2 wG1-",
+        "bA3 -bS1",
+        "wB2 wG1",
+        "bG2 /bA2",
+        "wG2 /bS2",
+        "bG2 wB2\\",
+        "wS1 bG2-",
+        "bA3 bA1\\"
+      ],
+      "times": [
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2306588999927044
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23030360000848304
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23027539999748114
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23019860000931658
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304973999998765
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23019260000728536
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23026269998808857
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301527000090573
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23046439999598078
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23026019999815617
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23038379999343306
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022250000212807
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23038320000341628
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23019469999417197
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23056550000910647
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23020049999468029
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304864999896381
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.004228800011333078
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.0065556000045035034
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0004611000040313229
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;BlackWins;White[13];wB1;bS1 -wB1;wS1 wB1-;bG1 /bS1;wG1 wS1\\;bA1 \\bG1;wQ /wG1;bQ /bA1;wA1 wB1\\;bA1 /wA1;wG2 wS1/;bS2 /bA1;wA2 wB1/;bA2 bQ/;wG3 \\wA2;bA2 wQ\\;wB2 wG1-;bA3 bQ/;wB2 wG1;bG2 /bA2;wG2 /bS2;bG2 wQ-;wS1 bG2-;bA3 bS2-"
+    },
+    {
+      "pair": 8,
+      "opening_seed": 95019,
+      "iota_color": "b",
+      "moves": [
+        "wB1",
+        "bS1 -wB1",
+        "wS1 wB1-",
+        "bG1 /bS1",
+        "wQ wS1/",
+        "bB1 \\bS1",
+        "wA1 wB1\\",
+        "bQ \\bG1",
+        "wA1 \\bB1",
+        "bA1 /bQ",
+        "wS2 \\wA1",
+        "bB2 bG1\\",
+        "wS2 -bQ",
+        "bA1 wA1/",
+        "wG1 \\wS2",
+        "bS2 /bG1",
+        "wG1 wS2\\",
+        "bA2 bS2\\",
+        "wA2 wB1\\",
+        "bA2 wA2\\",
+        "wA3 \\wS2",
+        "bG1 /bS2",
+        "wG2 /wS2",
+        "bB2 bS2",
+        "wA3 bQ\\",
+        "bA1 /bG1",
+        "wG2 /wA1"
+      ],
+      "times": [
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302439999912167
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2305249999917578
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23016149998875335
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23028410000551958
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23015730000042822
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2303025000001071
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23016619999543764
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23032860000967048
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23019159999967087
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23034359999292064
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23028770000382792
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2305194000073243
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017799999797717
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23032090000924654
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302363999915542
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23057520001020748
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23019180000119377
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23033859999850392
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23029349998978432
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23040369999944232
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0027488000050652772
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.009584900006302632
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.00030160001188050956
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;WhiteWins;Black[14];wB1;bS1 -wB1;wS1 wB1-;bG1 /bS1;wQ wS1/;bB1 \\bS1;wA1 wB1\\;bQ \\bG1;wA1 \\bB1;bA1 /bQ;wS2 \\wA1;bB2 bG1\\;wS2 \\bA1;bA1 wA1/;wG1 \\wS2;bS2 /bG1;wG1 wS2\\;bA2 bS2\\;wA2 wB1\\;bA2 wA2\\;wA3 \\wS2;bG1 /bS2;wG2 /wS2;bB2 bS2;wA3 wG1-;bA1 /bG1;wG2 wS2/"
+    },
+    {
+      "pair": 9,
+      "opening_seed": 95020,
+      "iota_color": "w",
+      "moves": [
+        "wG1",
+        "bG1 -wG1",
+        "wS1 wG1\\",
+        "bG2 \\bG1",
+        "wA1 wG1-",
+        "bQ /bG1",
+        "wQ wG1/",
+        "bA1 -bG2",
+        "wG2 \\wQ",
+        "bA1 wA1-",
+        "wA2 wG2-",
+        "bA2 -bG2",
+        "wG3 \\wG2",
+        "bA2 wA2/",
+        "wB1 wS1\\",
+        "bB1 /bG2",
+        "wB2 /wB1",
+        "bB1 bG1",
+        "wA3 \\wB2",
+        "bA3 \\bG2",
+        "wB1 wS1",
+        "bA3 wA2\\",
+        "wB2 wA3",
+        "bB1 /wG2"
+      ],
+      "times": [
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23053310000977945
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23038660000020172
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23048189999826718
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301990999985719
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.2304297999944538
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2301910000096541
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23025290000077803
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23031079999054782
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23032469999452587
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23027850000653416
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23039779999817256
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23029769999266136
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23049909999826923
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23029730000416748
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23041370000282768
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23030880000442266
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23051110000233166
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.011787800001911819
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.003154200006974861
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0004174000059720129
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;BlackWins;White[13];wG1;bG1 -wG1;wS1 wG1\\;bG2 \\bG1;wA1 wG1-;bQ /bG1;wQ wG1/;bA1 -bG2;wG2 \\wQ;bA1 wA1-;wA2 wG2-;bA2 -bG2;wG3 \\wG2;bA2 wA2/;wB1 wS1\\;bB1 \\bQ;wB2 /wB1;bB1 bG1;wA3 \\wB2;bA3 \\bG2;wB1 wS1;bA3 wQ-;wB2 wA3;bB1 bG2-"
+    },
+    {
+      "pair": 9,
+      "opening_seed": 95020,
+      "iota_color": "b",
+      "moves": [
+        "wG1",
+        "bG1 -wG1",
+        "wS1 wG1\\",
+        "bG2 \\bG1",
+        "wQ wG1/",
+        "bS1 bG2/",
+        "wA1 wS1-",
+        "bQ /bG2",
+        "wA1 \\bS1",
+        "bA1 bQ\\",
+        "wS1 /bA1",
+        "bA2 \\bQ",
+        "wA2 wG1\\",
+        "bB1 -bA2",
+        "wS2 /wS1",
+        "bB2 /bB1",
+        "wS2 bB1\\",
+        "bA2 wA2-",
+        "wA3 -wS1",
+        "bB2 wS2",
+        "wA1 -bG2",
+        "bA2 -wA3",
+        "wG2 wS1\\",
+        "bA2 wQ-",
+        "wA3 bB2\\"
+      ],
+      "times": [
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2303228999953717
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23063720000209287
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23022990000026766
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23033780000696424
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23026799999934155
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23046249999606516
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23017879998951685
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23035549999622162
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.230192499991972
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23043460000189953
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23015590000431985
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23046369999065064
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.230271399996127
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23139060000539757
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23049629999150056
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23062700001173653
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.23037990000739228
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23064700000395533
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.002574000012828037
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.009907899991958402
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.0004992999893147498
+        }
+      ],
+      "reason": "terminal",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;WhiteWins;Black[13];wG1;bG1 -wG1;wS1 wG1\\;bG2 \\bG1;wQ wG1/;bS1 bG2/;wA1 wS1-;bQ /bG2;wA1 \\bS1;bA1 bQ\\;wS1 /bA1;bA2 \\bQ;wA2 wG1\\;bB1 -bA2;wS2 /wS1;bB2 /bB1;wS2 bB2-;bA2 wA2-;wA3 -wS1;bB2 wS2;wA1 bB1-;bA2 -wA3;wG2 wS1\\;bA2 wQ-;wA3 bB2\\"
+    }
+  ],
+  "complete": true,
+  "points": 0,
+  "valid": true,
+  "passed": false,
+  "natural_games": 19,
+  "natural_points": 0,
+  "timeout_points": 0,
+  "timeouts": {
+    "iota": 1,
+    "alpha": 0
+  }
+}

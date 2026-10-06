@@ -1,0 +1,86 @@
+{
+  "identity": {
+    "model": "cf72434dd632bd88502e0e6ac1b029c9e0dcd56df90cae20a1a1daf52de892fd",
+    "iota": "0bd2932ad3c36daabddd8f7f4506b067c096912ffc91060d7adbc8a329857b58",
+    "alpha": "80d1cc75571c2e3266e0246b2cec00d3657e3ba94029e5ca4635cfe0eaf12ef6",
+    "mode": "alphabeta",
+    "move_ms": 250,
+    "internal_ms": 230,
+    "alpha_request_ms": 230,
+    "iota_request_ms": 250,
+    "threads": 1,
+    "cap": 160,
+    "repetition": 3,
+    "ponder": false
+  },
+  "seed": 95011,
+  "qualification": false,
+  "games": [
+    {
+      "pair": 0,
+      "opening_seed": 95011,
+      "iota_color": "w",
+      "moves": [
+        "wG1",
+        "bB1 -wG1",
+        "wQ wG1/",
+        "bS1 \\bB1",
+        "wA1 \\wQ",
+        "bQ /bB1",
+        "wA2 wG1-"
+      ],
+      "times": [
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23049329999776091
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0.2302983999979915
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23026589999790303
+        }
+      ],
+      "reason": "divergence_or_failure",
+      "score": 0,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;1;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "error": "RuntimeError('rules state divergence')"
+    }
+  ],
+  "complete": false,
+  "points": 0,
+  "valid": false,
+  "passed": false,
+  "natural_games": 0,
+  "natural_points": 0,
+  "timeout_points": 0,
+  "timeouts": {
+    "iota": 0,
+    "alpha": 0
+  }
+}

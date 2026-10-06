@@ -137,6 +137,17 @@ unverified. The fresh mirrored development screens use the repaired search.
 Gen 1 is Nokamute-derived: its screen and the pinned Nokamute screen are related
 baseline checks, not independent evidence against distinct engine families.
 
+### Latest checkpoint development screens
+
+- Gen 1: completed 1/20, zero wins; one natural draw, one capped draw,
+  fifteen natural losses and three challenger timeout losses. Advancement failed.
+- Pinned Nokamute: incomplete 5/8; one natural win, three natural losses,
+  four opponent timeout wins. Repeated RAM-floor stops interrupted the screen;
+  completed games are preserved for a matching resume within its original stage.
+- No larger development run or sealed qualification was launched. Production
+  remains Gen 1. Reports: `latest-nu-vs-gen1.json` and
+  `latest-nu-vs-nokamute.json` under `reports/gen2/`.
+
 The screens below predate the identity-sensitive neural transposition-key
 repair. They are historical integration experiments, not advancement evidence
 for the repaired search. Gen 1's identity-independent keys remain unchanged.
