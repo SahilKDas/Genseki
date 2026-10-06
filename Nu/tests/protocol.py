@@ -22,9 +22,15 @@ try:
     move = command('bestmove time 00:00:00.020')[0]
     assert move in command('validmoves')[0].split(';')
     assert not command('play ' + move)[0].startswith('err')
+    played = command('nu-position')
+    for malformed in ('1junk', '-1', '4294967296', '1 2'):
+        assert command('undo ' + malformed)[0].startswith('err')
+        assert command('nu-position') == played
     command('undo')
     assert command('nu-position') == initial
     assert command('options Threads 13')[0].startswith('err')
+    assert command('bestmove time 00:00:00:1')[0].startswith('err')
+    assert command('bestmove depth 1 junk')[0].startswith('err')
     assert command('options ThreatPlies 5')[0].startswith('err')
     assert command('options set ThreatPlies 1')[0].startswith('ThreatPlies;int;1')
     assert command('options set LateMoveReductions True')[0].startswith('LateMoveReductions;bool;True')

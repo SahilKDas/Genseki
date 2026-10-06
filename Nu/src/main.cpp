@@ -96,9 +96,11 @@ int main(int argc,char** argv) {
                     else if(mode=="time") {
                         std::string time;args>>time;std::replace(time.begin(),time.end(),':',' ');std::istringstream t(time);double h,m,s;
                         if(!(t>>h>>m>>s)||h<0||m<0||m>=60||s<0||s>=60)throw std::runtime_error("invalid time");
+                        std::string extra;if(t>>extra)throw std::runtime_error("invalid time");
                         ms=(h*3600+m*60+s)*1000;
                     }else if(mode=="depthorseconds") {double seconds;if(!(args>>depth>>seconds)||!depth||depth>64)throw std::runtime_error("invalid limit");ms=seconds*1000;}
                     else throw std::runtime_error("expected depth or time");
+                    std::string extra;if(args>>extra)throw std::runtime_error("unexpected bestmove argument");
                     if(!std::isfinite(ms)||ms<0||ms>60000)throw std::runtime_error("invalid time budget");
                     last=search->run(state,depth,ms,threads,nullptr,search_options);std::cout<<*state.board.uhp_move_string(last.move)<<'\n';
                 }else if(command=="options") {

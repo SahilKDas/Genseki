@@ -5,6 +5,7 @@ project(Genseki VERSION 0.1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
 add_library(genseki_cxx26_flags INTERFACE)
 target_compile_options(genseki_cxx26_flags INTERFACE
@@ -44,6 +45,8 @@ add_executable(genseki_tests tests/core_tests.cpp)
 target_link_libraries(genseki_tests PRIVATE genseki_core)
 add_test(NAME genseki_core_tests COMMAND genseki_tests)
 if(Python3_Interpreter_FOUND)
+    add_test(NAME genseki_transport_tests
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/transport_tests.py)
     add_test(NAME genseki_default_engine
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/default_engine.py
             ${GENSEKI_ALPHA_EXE}

@@ -480,3 +480,24 @@ fn test_parse_seconds() {
     assert_eq!(None, parse_seconds("01:23:45"));
     assert_eq!(None, parse_seconds("2e1"));
 }
+
+#[test]
+fn test_pv_output_failure_preserves_board() {
+    struct Output { fail: bool }
+    impl std::io::Write for Output {
+        fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
+            if self.fail {
+                Err(std::io::Error::new(std::io::ErrorKind::BrokenPipe, "test failure"))
+            } else { Ok(bytes.len()) }
+        }
+        fn flush(&mut self) -> std::io::Result<()> { Ok(()) }
+    }
+    let mut server = UhpServer::new(PlayerConfig::default(), Output { fail: false });
+    server.new_game("Base").unwrap();
+    server.best_move("depth 1").unwrap();
+    assert!(!server.engine.as_ref().unwrap().principal_variation().is_empty());
+    let before = server.board.as_ref().unwrap().game_string();
+    server.output.fail = true;
+    assert!(server.pv().is_err());
+    assert_eq!(before, server.board.as_ref().unwrap().game_string());
+}
