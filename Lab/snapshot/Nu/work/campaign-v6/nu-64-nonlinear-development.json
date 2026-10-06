@@ -1,0 +1,4257 @@
+{
+  "kind": "development",
+  "games": [
+    {
+      "pair": 0,
+      "opening_seed": 71000,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 231.8334000010509,
+      "moves": [
+        "wA1",
+        "bG1 wA1\\",
+        "wQ \\wA1",
+        "bS1 bG1\\",
+        "wA2 wQ-",
+        "bQ /bS1",
+        "wA2 bQ\\",
+        "bA1 /bG1",
+        "wQ wA1/",
+        "bS1 wQ-",
+        "wA3 \\wA1",
+        "bA2 bG1\\",
+        "wA3 /bQ",
+        "bS2 -bA1",
+        "wS1 wA3\\",
+        "bS2 -wQ",
+        "wG1 wS1-",
+        "bA2 \\bS1",
+        "wS2 /wA3",
+        "bA3 bG1\\",
+        "wS2 -bA1",
+        "bA3 -bA2",
+        "wG2 wS1\\",
+        "bG2 bS1/",
+        "wA3 bG2/",
+        "bB1 bG1-",
+        "wA3 \\wS1",
+        "bB1 wQ\\"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 230.35849999723723,
+          "info": [
+            "depth 4 nodes 8267 score -6",
+            "pv;wA2 wQ-;bA1 bG1-;wA2 bA1-;bQ bS1\\"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.29229999883682,
+          "info": [
+            "depth 3 nodes 5816 score 120",
+            "pv;wA2 bQ\\;bS2 \\bQ;wQ wA1/"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.2099000007729,
+          "info": [
+            "depth 3 nodes 5607 score 76",
+            "pv;wQ wA1/;bA1 \\wQ;wA3 -wA1"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.18379999848548,
+          "info": [
+            "depth 3 nodes 4754 score 147",
+            "pv;wA3 \\wA1;bA2 bA1-;wA3 -bA1"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.20910000195727,
+          "info": [
+            "depth 3 nodes 4666 score 77",
+            "pv;wA3 /bQ;bA1 \\wQ;wS1 wA3\\"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.22259999925154,
+          "info": [
+            "depth 2 nodes 3859 score 79",
+            "pv;wS1 wA3\\;bA2 \\wQ"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.69979999854695,
+          "info": [
+            "depth 2 nodes 1782 score 28",
+            "pv;wG1 wS1-;bA1 wQ/"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.3386000021419,
+          "info": [
+            "depth 2 nodes 1086 score 62",
+            "pv;wS2 /wA3;bA3 bS1\\"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.56150000047637,
+          "info": [
+            "depth 2 nodes 711 score -65",
+            "pv;wS2 -bA1;bA3 bS2/"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.54749999937485,
+          "info": [
+            "depth 2 nodes 732 score -104",
+            "pv;wG2 wS1\\;bG2 \\bS2"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.5603999993764,
+          "info": [
+            "depth 2 nodes 790 score -283",
+            "pv;wA3 bG2/;bG3 \\bS2"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 122.92159999924479,
+          "info": [
+            "depth 2 nodes 429 score -99998",
+            "pv;wA3 \\wS1;bB1 wA1-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 0,
+      "opening_seed": 71000,
+      "nu_color": "black",
+      "score": 0.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 232.2124000020267,
+      "moves": [
+        "wA1",
+        "bG1 wA1\\",
+        "wQ \\wA1",
+        "bS1 bG1\\",
+        "wA2 wA1/",
+        "bA1 bG1-",
+        "wA2 bA1-",
+        "bQ /bG1",
+        "wA3 wA2/",
+        "bS1 wA2-",
+        "wA3 bQ\\",
+        "bA2 bS1\\",
+        "wS1 /wQ",
+        "bA2 wQ/",
+        "wS1 /bQ",
+        "bA3 bA2-",
+        "wG1 wA3\\",
+        "bA3 /wG1",
+        "wS2 /wS1",
+        "bS2 bS1/",
+        "wB1 wG1/",
+        "bA3 wS2\\",
+        "wB2 -wS1",
+        "bG2 bS1\\",
+        "wG2 /wB2",
+        "bG2 wA2/",
+        "wG2 -bQ",
+        "bG3 bG2/",
+        "wB1 bG1\\",
+        "bA3 wG1-",
+        "wB2 wG2",
+        "bA3 /wQ",
+        "wB2 bA3\\"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 230.44319999826257,
+          "info": [
+            "depth 4 nodes 6101 score -51",
+            "pv;bA1 bG1-;wA3 /wQ;bQ bS1\\;wA3 bQ-"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.4863999997906,
+          "info": [
+            "depth 4 nodes 5759 score -87",
+            "pv;bQ /bG1;wA3 wA2/;bS1 wA2-;wA3 /bQ"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.24290000103065,
+          "info": [
+            "depth 4 nodes 4421 score -124",
+            "pv;bS1 wA2-;wA3 /bQ;bA2 bQ-;wQ wA1/"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.17590000017663,
+          "info": [
+            "depth 3 nodes 5997 score 52",
+            "pv;bA2 bS1\\;wA3 bA2-;bA3 bS1/"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.28440000052797,
+          "info": [
+            "depth 3 nodes 4638 score 59",
+            "pv;bA2 wQ/;wS1 /bQ;bA3 bA2/"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.267000002641,
+          "info": [
+            "depth 3 nodes 3897 score 104",
+            "pv;bA3 bA2-;wA3 bA3/;bG2 bA3\\"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.35320000053616,
+          "info": [
+            "depth 2 nodes 1574 score 69",
+            "pv;bA3 /wG1;wS2 wG1-"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.6392999998934,
+          "info": [
+            "depth 2 nodes 1036 score 61",
+            "pv;bS2 bS1/;wS2 /bA3"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.4240999983449,
+          "info": [
+            "depth 2 nodes 1315 score 83",
+            "pv;bA3 wS2\\;wB1 wG1"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 230.47909999877447,
+          "info": [
+            "depth 2 nodes 1128 score 92",
+            "pv;bG2 bS1\\;wB1 wG1"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 230.29359999782173,
+          "info": [
+            "depth 2 nodes 1044 score 73",
+            "pv;bG2 wA2/;wB1 wG1"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.46550000071875,
+          "info": [
+            "depth 2 nodes 697 score 5",
+            "pv;bG3 bG2/;wG1 wG2/"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 230.53820000131964,
+          "info": [
+            "depth 2 nodes 826 score -148",
+            "pv;bA3 wG1-;wG3 \\wB2"
+          ]
+        },
+        {
+          "ply": 31,
+          "move_ms": 64.26569999894127,
+          "info": [
+            "depth 2 nodes 281 score -99998",
+            "pv;bA3 /wQ;wB2 wG2/"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 1,
+      "opening_seed": 71001,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 231.62190000221017,
+      "moves": [
+        "wS1",
+        "bA1 -wS1",
+        "wG1 wS1/",
+        "bQ /bA1",
+        "wQ wS1\\",
+        "bS1 bQ\\",
+        "wB1 wQ-",
+        "bA2 -bA1",
+        "wB1 wQ",
+        "bS1 wB1\\",
+        "wB1 bS1",
+        "bA3 bQ\\",
+        "wA1 wS1-",
+        "bA2 wA1-",
+        "wG1 wQ-",
+        "bA3 /wQ",
+        "wA1 /bQ",
+        "bB1 \\bA1",
+        "wA2 wS1/",
+        "bB1 bA1",
+        "wA2 \\wA1",
+        "bB2 \\bB1",
+        "wA3 /wA2",
+        "bB2 \\wS1",
+        "wS2 \\wA3",
+        "bB2 wS1",
+        "wG2 /wS2",
+        "bB1 bB1\\",
+        "wG2 wA1-",
+        "bA2 -bA2"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 230.42619999978342,
+          "info": [
+            "depth 4 nodes 7691 score -39",
+            "pv;wQ wS1\\;bA2 \\bA1;wS2 wS1-;bA2 wQ\\"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.34170000028098,
+          "info": [
+            "depth 3 nodes 5989 score 78",
+            "pv;wB1 wQ-;bS1 wQ\\;wB1 bS1"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.41770000054385,
+          "info": [
+            "depth 3 nodes 5847 score 43",
+            "pv;wB1 wQ;bS1 wB1\\;wB1 bS1"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.34560000087367,
+          "info": [
+            "depth 3 nodes 5788 score 38",
+            "pv;wB1 bS1;bA2 wG1-;wA1 /wB1"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.2912999984983,
+          "info": [
+            "depth 3 nodes 4498 score 85",
+            "pv;wA1 wS1-;bA3 wG1-;wA1 /bQ"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.28899999917485,
+          "info": [
+            "depth 3 nodes 4890 score -43",
+            "pv;wG1 wQ-;bA3 /wQ;wA1 /bQ"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.43959999995423,
+          "info": [
+            "depth 2 nodes 1954 score -132",
+            "pv;wA1 /bQ"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.582800002594,
+          "info": [
+            "depth 2 nodes 1285 score -32",
+            "pv;wA2 wS1/;bA2 wS1-"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.42659999919124,
+          "info": [
+            "depth 2 nodes 1664 score -72",
+            "pv;wA2 \\wA1;bA2 wS1-"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.4063000010501,
+          "info": [
+            "depth 2 nodes 1744 score 45",
+            "pv;wA3 /wA2;bB2 wA2/"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.39520000020275,
+          "info": [
+            "depth 2 nodes 1374 score 73",
+            "pv;wS2 \\wA3;bB2 wS1"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.34019999977318,
+          "info": [
+            "depth 2 nodes 1806 score 44",
+            "pv;wG2 /wS2;bB1 bQ-"
+          ]
+        },
+        {
+          "ply": 28,
+          "move_ms": 57.640300001366995,
+          "info": [
+            "depth 2 nodes 418 score -99998",
+            "pv;wG2 wA1-;bA1 bB2-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 1,
+      "opening_seed": 71001,
+      "nu_color": "black",
+      "score": 0.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 231.4074999994773,
+      "moves": [
+        "wS1",
+        "bA1 -wS1",
+        "wG1 wS1/",
+        "bQ /bA1",
+        "wQ wG1-",
+        "bA2 \\bA1",
+        "wA1 \\wG1",
+        "bA2 \\wA1",
+        "wA2 wS1\\",
+        "bA3 \\bA1",
+        "wA2 /bQ",
+        "bA3 wQ\\",
+        "wA3 -wA2",
+        "bB1 \\bA1",
+        "wG2 wA2\\",
+        "bB1 bA1",
+        "wG2 -bQ",
+        "bB1 wS1",
+        "wA3 bQ\\",
+        "bB1 wG1",
+        "wS2 /wG2",
+        "bB1 wQ",
+        "wS2 -bA1",
+        "bS1 bB1/",
+        "wG3 wA2\\",
+        "bA3 /wG3",
+        "wB1 wA3\\",
+        "bS2 bB1-",
+        "wB1 wA3",
+        "bG1 bB1\\",
+        "wB1 bA1\\"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 230.53369999979623,
+          "info": [
+            "depth 4 nodes 6702 score -4",
+            "pv;bA2 \\bA1;wA1 wS1-;bA2 wQ-;wA1 /bQ"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.32030000103987,
+          "info": [
+            "depth 3 nodes 5073 score 88",
+            "pv;bA2 \\wA1;wA2 wS1\\;bA3 \\bA1"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.53340000114986,
+          "info": [
+            "depth 3 nodes 4733 score 62",
+            "pv;bA3 \\bA1;wA2 -bA3;bA2 wQ\\"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.41549999834388,
+          "info": [
+            "depth 2 nodes 4108 score 63",
+            "pv;bA3 wQ\\;wA3 wS1\\"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.41190000003553,
+          "info": [
+            "depth 2 nodes 3752 score 18",
+            "pv;bB1 \\bA1;wA3 \\bQ"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.4199999998673,
+          "info": [
+            "depth 2 nodes 3365 score -16",
+            "pv;bB1 bA1;wG2 wA3/"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.4982999994536,
+          "info": [
+            "depth 2 nodes 1676 score -47",
+            "pv;bB1 wS1;wG3 \\wA3"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.48909999852185,
+          "info": [
+            "depth 2 nodes 1157 score -82",
+            "pv;bB1 wG1;wB1 wS1\\"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.49759999776143,
+          "info": [
+            "depth 2 nodes 1226 score -141",
+            "pv;bB1 wQ;wS2 wG2/"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 230.5281000008108,
+          "info": [
+            "depth 2 nodes 785 score -142",
+            "pv;bS1 bB1/;wG3 /wG2"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 230.5173000022478,
+          "info": [
+            "depth 2 nodes 994 score -119",
+            "pv;bA3 /wG3;wB1 wS1\\"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.91639999984181,
+          "info": [
+            "depth 2 nodes 723 score -110",
+            "pv;bS2 bB1-;wB1 wG3"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 76.35320000190404,
+          "info": [
+            "depth 2 nodes 394 score -99998",
+            "pv;bG1 bB1\\;wB1 bQ-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 2,
+      "opening_seed": 71002,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 232.21620000185794,
+      "moves": [
+        "wA1",
+        "bA1 wA1/",
+        "wS1 /wA1",
+        "bA2 bA1-",
+        "wQ \\wS1",
+        "bQ \\bA1",
+        "wS1 bA2\\",
+        "bS1 -bQ",
+        "wA2 wA1\\",
+        "bS1 -wQ",
+        "wA2 bQ/",
+        "bG1 -bS1",
+        "wA3 /wS1",
+        "bG1 bA1\\",
+        "wA3 bA2/",
+        "bA3 \\bS1",
+        "wG1 wA2/",
+        "bS2 /bA3",
+        "wG2 \\wA2",
+        "bS2 wQ\\",
+        "wG3 wG2/",
+        "bA3 \\wG3",
+        "wG1 \\bA3",
+        "bG2 /bS1",
+        "wS2 wG2-",
+        "bG2 \\wQ",
+        "wB1 \\wG1",
+        "bG3 -bG2",
+        "wB1 wG1",
+        "bB1 /bS1",
+        "wB1 bA3",
+        "bB1 bS1\\",
+        "wA3 \\bG3",
+        "bA2 wA2\\",
+        "wA3 bG2/",
+        "bG3 wA3\\"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 230.31149999951595,
+          "info": [
+            "depth 4 nodes 8591 score -61",
+            "pv;wQ \\wS1;bG1 bA2-;wQ -wS1;bQ bG1/"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.4404999995313,
+          "info": [
+            "depth 3 nodes 6675 score 96",
+            "pv;wS1 bA2\\;bA3 bQ-;wA2 /wS1"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.29930000120657,
+          "info": [
+            "depth 4 nodes 5221 score 56",
+            "pv;wA2 wA1\\;bS1 -wQ;wA2 bQ/;bA3 /bS1"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.26970000137226,
+          "info": [
+            "depth 3 nodes 4892 score 95",
+            "pv;wA2 bQ/"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.22539999874425,
+          "info": [
+            "depth 3 nodes 4982 score 165",
+            "pv;wA3 /wS1;bA3 bG1\\;wA3 -bQ"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.30279999875347,
+          "info": [
+            "depth 2 nodes 4064 score 124",
+            "pv;wA3 bA2/;bA3 /bS1"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.33360000044922,
+          "info": [
+            "depth 2 nodes 1874 score 47",
+            "pv;wG1 wA2/;bA3 bS1\\"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.468200003088,
+          "info": [
+            "depth 2 nodes 967 score 105",
+            "pv;wG2 \\wA2;bA3 bS1\\"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.30519999883836,
+          "info": [
+            "depth 2 nodes 1034 score 108",
+            "pv;wG3 wG2/;bA3 bS1/"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.49399999945308,
+          "info": [
+            "depth 2 nodes 921 score 134",
+            "pv;wG1 \\bA3;bB1 \\bS1"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.51069999928586,
+          "info": [
+            "depth 2 nodes 1215 score 104",
+            "pv;wS2 wG2-;bG2 bS1/"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.55979999844567,
+          "info": [
+            "depth 2 nodes 817 score 41",
+            "pv;wB1 \\wG1;bG3 \\bS1"
+          ]
+        },
+        {
+          "ply": 28,
+          "move_ms": 230.4547999992792,
+          "info": [
+            "depth 2 nodes 718 score -68",
+            "pv;wB1 wG1;bG3 bS1\\"
+          ]
+        },
+        {
+          "ply": 30,
+          "move_ms": 230.4879000002984,
+          "info": [
+            "depth 2 nodes 719 score -49",
+            "pv;wB1 bA3;bB1 bS1\\"
+          ]
+        },
+        {
+          "ply": 32,
+          "move_ms": 230.26459999891813,
+          "info": [
+            "depth 3 nodes 990 score -109",
+            "pv;wA3 \\bG3;bA2 -wA3;wB2 \\wG2"
+          ]
+        },
+        {
+          "ply": 34,
+          "move_ms": 64.47389999812003,
+          "info": [
+            "depth 2 nodes 254 score -99998",
+            "pv;wA3 bG2/;bG3 bG2-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 2,
+      "opening_seed": 71002,
+      "nu_color": "black",
+      "score": 0.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 231.99530000056257,
+      "moves": [
+        "wA1",
+        "bA1 wA1/",
+        "wS1 /wA1",
+        "bA2 bA1-",
+        "wQ wS1\\",
+        "bQ bA1/",
+        "wS2 wA1\\",
+        "bA3 \\bQ",
+        "wS2 bA2-",
+        "bA3 wA1-",
+        "wA2 -wA1",
+        "bS1 \\bQ",
+        "wA2 bS1/",
+        "bS2 bA3\\",
+        "wQ wA1\\",
+        "bA1 wS1\\",
+        "wS1 /bQ",
+        "bS2 wS2-",
+        "wA1 \\wS2",
+        "bA1 -wQ",
+        "wG1 wA2/",
+        "bA1 wG1/",
+        "wA3 -wS1",
+        "bB1 -bS1",
+        "wA3 -bB1",
+        "bG1 bS2\\",
+        "wB1 -wS1",
+        "bA1 -wQ",
+        "wA3 wA2\\",
+        "bB1 \\bS1",
+        "wG1 /bS1"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 230.58219999802532,
+          "info": [
+            "depth 4 nodes 6026 score -4",
+            "pv;bQ bA1/;wA2 /wS1;bA2 wQ\\;wA2 bQ-"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.32690000036382,
+          "info": [
+            "depth 3 nodes 5532 score 85",
+            "pv;bA3 \\bQ;wA2 \\wS1;bA3 wQ\\"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.35949999757577,
+          "info": [
+            "depth 3 nodes 5748 score 56",
+            "pv;bA3 wA1-;wA2 wS2/;bA1 /wQ"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.43850000249222,
+          "info": [
+            "depth 3 nodes 4616 score 31",
+            "pv;bS1 \\bQ;wA2 \\wA1;bS1 -wA2"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.25000000052387,
+          "info": [
+            "depth 3 nodes 3707 score 10",
+            "pv;bS2 bA3\\;wA3 \\wS1;bS2 wQ\\"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.4091999976663,
+          "info": [
+            "depth 3 nodes 3363 score 60",
+            "pv;bA1 wS1\\;wS1 bA1\\;bB1 -bS1"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.38309999901685,
+          "info": [
+            "depth 2 nodes 1547 score -95",
+            "pv;bS2 wS2-"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.35069999968982,
+          "info": [
+            "depth 2 nodes 1917 score -230",
+            "pv;bA1 -wQ;wA2 bS1-"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.4020000010496,
+          "info": [
+            "depth 2 nodes 1664 score -224",
+            "pv;bA1 wG1/;wA3 -wS1"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 230.42720000012196,
+          "info": [
+            "depth 2 nodes 1032 score -352",
+            "pv;bB1 -bS1;wA3 bS1-"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 230.51200000190875,
+          "info": [
+            "depth 2 nodes 1053 score -349",
+            "pv;bG1 bS2\\;wA3 bS1-"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.3131000007852,
+          "info": [
+            "depth 2 nodes 823 score -330",
+            "pv;bA1 -wQ;wG1 wB1/"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 83.8227000022016,
+          "info": [
+            "depth 2 nodes 297 score -99998",
+            "pv;bB1 \\bS1;wB1 \\wS1"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 3,
+      "opening_seed": 71003,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 231.97409999920637,
+      "moves": [
+        "wB1",
+        "bB1 /wB1",
+        "wQ wB1/",
+        "bB2 -bB1",
+        "wA1 wB1-",
+        "bQ bB1\\",
+        "wA1 /bQ",
+        "bA1 -bB2",
+        "wA1 /bA1",
+        "bA2 bB2\\",
+        "wA2 /wA1",
+        "bA2 /wA2",
+        "wA3 wB1-",
+        "bS1 \\bB2",
+        "wA3 /bQ",
+        "bS1 \\wQ",
+        "wG1 \\wA2",
+        "bA3 bS1/",
+        "wB2 wB1-",
+        "bA3 wB2-",
+        "wG2 \\wG1",
+        "bS2 -bS1",
+        "wG3 /wG2",
+        "bS2 wQ/",
+        "wS1 \\wG3",
+        "bG1 \\bA1",
+        "wS2 wS1/",
+        "bG1 bA1\\",
+        "wS2 \\bA1",
+        "bA2 wA2\\",
+        "wS1 wG3\\",
+        "bG1 -wG3",
+        "wG2 bG1\\",
+        "bG1 wG2\\",
+        "wG3 wA1-",
+        "bA2 /bS1",
+        "wA2 bA3-",
+        "bG2 \\bS2",
+        "wA3 \\bG2",
+        "bG3 -bA2",
+        "wA3 /bQ",
+        "bG3 bS2\\"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 230.5311999989499,
+          "info": [
+            "depth 4 nodes 8425 score 30",
+            "pv;wA1 wB1-;bG1 bB2\\;wA1 bG1\\;bQ /bB2"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.3941999998642,
+          "info": [
+            "depth 3 nodes 6199 score 143",
+            "pv;wA1 /bQ;bA1 \\bB2;wA2 wB1-"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.34589999952004,
+          "info": [
+            "depth 3 nodes 6092 score 119",
+            "pv;wA1 /bA1;bS1 bA1/;wA2 wB1-"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.36479999791482,
+          "info": [
+            "depth 3 nodes 5477 score 68",
+            "pv;wA2 /wA1;bA2 -wA2;wA3 wA2\\"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.3609000009601,
+          "info": [
+            "depth 3 nodes 4515 score 121",
+            "pv;wA3 wB1-;bA2 wQ/;wA3 /bQ"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.32189999867114,
+          "info": [
+            "depth 3 nodes 3593 score 134",
+            "pv;wA3 /bQ;bS1 \\wQ;wG1 \\wA2"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.41469999952824,
+          "info": [
+            "depth 2 nodes 1603 score 59",
+            "pv;wG1 \\wA2"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.63969999930123,
+          "info": [
+            "depth 2 nodes 1239 score -15",
+            "pv;wB2 wB1-;bA3 wQ-"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.41440000088187,
+          "info": [
+            "depth 2 nodes 1226 score -37",
+            "pv;wG2 \\wG1;bA2 bS1-"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.55079999903683,
+          "info": [
+            "depth 2 nodes 1460 score -75",
+            "pv;wG3 /wG2;bS2 bS1-"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.3713000001153,
+          "info": [
+            "depth 2 nodes 781 score -152",
+            "pv;wS1 \\wG3;bA3 wQ-"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.8039000017743,
+          "info": [
+            "depth 2 nodes 549 score -116",
+            "pv;wS2 wS1/;bA2 \\wB1"
+          ]
+        },
+        {
+          "ply": 28,
+          "move_ms": 230.99740000179736,
+          "info": [
+            "depth 2 nodes 602 score -113",
+            "pv;wS2 \\bA1;bA2 \\wB1"
+          ]
+        },
+        {
+          "ply": 30,
+          "move_ms": 230.5800000031013,
+          "info": [
+            "depth 2 nodes 431 score -114",
+            "pv;wS1 wG3\\;bA3 wQ-"
+          ]
+        },
+        {
+          "ply": 32,
+          "move_ms": 230.7390000023588,
+          "info": [
+            "depth 2 nodes 500 score -109",
+            "pv;wG2 bG1\\;bA3 wQ-"
+          ]
+        },
+        {
+          "ply": 34,
+          "move_ms": 230.5701000004774,
+          "info": [
+            "depth 2 nodes 584 score -120",
+            "pv;wG3 wA1-;bA3 wQ-"
+          ]
+        },
+        {
+          "ply": 36,
+          "move_ms": 231.02080000171554,
+          "info": [
+            "depth 2 nodes 631 score -111",
+            "pv;wA2 bA3-;bG2 \\bA2"
+          ]
+        },
+        {
+          "ply": 38,
+          "move_ms": 230.98839999875054,
+          "info": [
+            "depth 2 nodes 568 score -254",
+            "pv;wA3 \\bG2;bQ wG3-"
+          ]
+        },
+        {
+          "ply": 40,
+          "move_ms": 121.7596999995294,
+          "info": [
+            "depth 2 nodes 248 score -99998",
+            "pv;wA3 /bQ;bG3 wQ-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 3,
+      "opening_seed": 71003,
+      "nu_color": "black",
+      "score": 0.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 234.9513000008301,
+      "moves": [
+        "wB1",
+        "bB1 /wB1",
+        "wQ wB1/",
+        "bB2 -bB1",
+        "wA1 wQ\\",
+        "bQ /bB2",
+        "wA2 -wQ",
+        "bA1 \\bB2",
+        "wA1 \\bA1",
+        "bS1 bB1\\",
+        "wA2 /bS1",
+        "bA2 bS1-",
+        "wB2 wQ\\",
+        "bA3 \\bQ",
+        "wA2 -bA3",
+        "bA2 wA1/",
+        "wS1 /wA2",
+        "bG1 bQ-",
+        "wS1 bQ\\",
+        "bQ -wS1",
+        "wB2 wB1",
+        "bS1 wQ-",
+        "wA3 wS1\\",
+        "bA2 wA2/",
+        "wA3 /bQ",
+        "bS2 bG1-",
+        "wA2 -bA2",
+        "bA3 bA1-",
+        "wG1 wA3\\",
+        "bB1 wB2",
+        "wG1 -bQ",
+        "bG2 bS2/",
+        "wS2 /wG1",
+        "bG3 bB2-",
+        "wA1 /bB2",
+        "bG2 bA2\\",
+        "wS2 /bG2",
+        "bA1 -wA2",
+        "wG2 /wG1",
+        "bA3 -wG2",
+        "wG3 -wS2",
+        "bG1 -wG3",
+        "wA3 bQ\\",
+        "bA3 wA3\\",
+        "wS1 bA3\\",
+        "bG1 wA1-",
+        "wG3 wG1\\",
+        "bS2 wA3-",
+        "wS2 /bA1",
+        "bB2 bG2",
+        "wG2 /bB2",
+        "bB2 wA2\\",
+        "wG1 wA1\\",
+        "bB2 wG2",
+        "wG1 /bB2",
+        "bB2 wG1",
+        "wG2 bG2/",
+        "bB2 wG1/",
+        "wG1 wA1\\",
+        "bB2 bQ",
+        "wS2 /bG2",
+        "bS2 wS1\\",
+        "wG2 /wS2"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 230.4398999986006,
+          "info": [
+            "depth 4 nodes 6743 score -91",
+            "pv;bQ /bB2;wA1 -bQ;bA1 \\bB2;wA2 -wA1"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.35280000112834,
+          "info": [
+            "depth 3 nodes 4829 score -11",
+            "pv;bA1 \\bB2;wA1 -bA1;bA2 bB1\\"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.30110000036075,
+          "info": [
+            "depth 3 nodes 4727 score -51",
+            "pv;bS1 bB1\\;wA2 bS1\\;bG1 bQ-"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.3868999988481,
+          "info": [
+            "depth 3 nodes 3730 score 4",
+            "pv;bA2 bS1-;wA2 bA2/;bA3 /bS1"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.21460000018124,
+          "info": [
+            "depth 3 nodes 3602 score 37",
+            "pv;bA3 \\bQ;wB2 wB1;bA2 wQ/"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.20159999941825,
+          "info": [
+            "depth 3 nodes 3501 score 82",
+            "pv;bA2 wA1/;wB2 wB1;bS1 wQ-"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.32259999672533,
+          "info": [
+            "depth 2 nodes 1764 score 27",
+            "pv;bG1 bQ-;wB2 wB1"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.29680000036024,
+          "info": [
+            "depth 2 nodes 1107 score -13",
+            "pv;bQ -wS1;wA3 wS1\\"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.49649999666144,
+          "info": [
+            "depth 2 nodes 1455 score -21",
+            "pv;bS1 wQ-;wB2 bB1"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 230.50330000114627,
+          "info": [
+            "depth 2 nodes 921 score -50",
+            "pv;bA2 wA2/;wA1 -bQ"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 230.72780000075,
+          "info": [
+            "depth 2 nodes 840 score -83",
+            "pv;bS2 bG1-;wA2 \\bQ"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.45819999970263,
+          "info": [
+            "depth 2 nodes 1032 score -111",
+            "pv;bA3 bA1-;wB2 bB1"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 230.33039999791072,
+          "info": [
+            "depth 2 nodes 1065 score -52",
+            "pv;bB1 wB2;wG1 \\wA3"
+          ]
+        },
+        {
+          "ply": 31,
+          "move_ms": 230.25409999900148,
+          "info": [
+            "depth 2 nodes 1130 score -3",
+            "pv;bG2 bS2/;wA1 bQ/"
+          ]
+        },
+        {
+          "ply": 33,
+          "move_ms": 230.7790999984718,
+          "info": [
+            "depth 2 nodes 496 score 23",
+            "pv;bG3 bB2-;wA1 bQ/"
+          ]
+        },
+        {
+          "ply": 35,
+          "move_ms": 230.77230000126292,
+          "info": [
+            "depth 2 nodes 513 score -62",
+            "pv;bG2 bA2\\;wS2 wA3-"
+          ]
+        },
+        {
+          "ply": 37,
+          "move_ms": 230.44500000105472,
+          "info": [
+            "depth 2 nodes 754 score -77",
+            "pv;bA1 -wA2;wG2 /wG1"
+          ]
+        },
+        {
+          "ply": 39,
+          "move_ms": 230.68469999998342,
+          "info": [
+            "depth 2 nodes 708 score -101",
+            "pv;bA3 -wG2;wG3 wG2\\"
+          ]
+        },
+        {
+          "ply": 41,
+          "move_ms": 230.83029999907012,
+          "info": [
+            "depth 2 nodes 555 score -83",
+            "pv;bG1 -wG3;wA3 bQ\\"
+          ]
+        },
+        {
+          "ply": 43,
+          "move_ms": 230.4188999987673,
+          "info": [
+            "depth 2 nodes 745 score -54",
+            "pv;bA3 wA3\\;wG2 bA2-"
+          ]
+        },
+        {
+          "ply": 45,
+          "move_ms": 230.79389999838895,
+          "info": [
+            "depth 2 nodes 585 score -130",
+            "pv;bG1 wA1-;wG3 wG2-"
+          ]
+        },
+        {
+          "ply": 47,
+          "move_ms": 230.49750000063796,
+          "info": [
+            "depth 2 nodes 704 score -144",
+            "pv;bS2 wA3-;wG2 bS2-"
+          ]
+        },
+        {
+          "ply": 49,
+          "move_ms": 230.63429999820073,
+          "info": [
+            "depth 3 nodes 924 score -88",
+            "pv;bB2 bG2;wG2 wG1/;bB2 wA2\\"
+          ]
+        },
+        {
+          "ply": 51,
+          "move_ms": 230.4158999977517,
+          "info": [
+            "depth 3 nodes 849 score -115",
+            "pv;bB2 wA2\\;wG1 bQ-;bS2 wS1\\"
+          ]
+        },
+        {
+          "ply": 53,
+          "move_ms": 230.5454000015743,
+          "info": [
+            "depth 3 nodes 843 score -88",
+            "pv;bB2 wG2;wG1 \\wG3;bB2 wA2\\"
+          ]
+        },
+        {
+          "ply": 55,
+          "move_ms": 230.78720000194153,
+          "info": [
+            "depth 3 nodes 1077 score -89",
+            "pv;bB2 wG1;wS1 bS2/;bA3 wA2\\"
+          ]
+        },
+        {
+          "ply": 57,
+          "move_ms": 230.67149999769754,
+          "info": [
+            "depth 3 nodes 781 score 38",
+            "pv;bB2 wG1/;wG2 /wG1;bB2 bQ"
+          ]
+        },
+        {
+          "ply": 59,
+          "move_ms": 230.7102999984636,
+          "info": [
+            "depth 3 nodes 569 score -99",
+            "pv;bB2 bQ;wG2 \\bB2;bS2 wS1\\"
+          ]
+        },
+        {
+          "ply": 61,
+          "move_ms": 26.937200000247685,
+          "info": [
+            "depth 2 nodes 104 score -99998",
+            "pv;bS2 wS1\\;wG2 \\wG3"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 4,
+      "opening_seed": 71004,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 231.9917999993777,
+      "moves": [
+        "wB1",
+        "bS1 \\wB1",
+        "wQ wB1\\",
+        "bA1 \\bS1",
+        "wA1 wB1-",
+        "bA2 /bA1",
+        "wA1 bA1/",
+        "bQ -bA1",
+        "wA2 /wB1",
+        "bA2 /wA2",
+        "wS1 \\wA1",
+        "bS2 bA2\\",
+        "wA3 wB1-",
+        "bS2 wA3\\",
+        "wA3 /bQ",
+        "bA3 bS2/",
+        "wS1 \\wA3",
+        "bA3 wQ\\",
+        "wA1 -bA2",
+        "bB1 bS1/",
+        "wG1 /wS1",
+        "bB1 bA1",
+        "wG1 wS1/",
+        "bG1 bS2\\",
+        "wA1 wG1-",
+        "bG1 \\bS2",
+        "wA1 -bA2",
+        "bG2 bG1/",
+        "wA3 bG2-",
+        "bG3 bS2\\",
+        "wA3 wS1\\",
+        "bG3 wA2\\"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 230.39459999927203,
+          "info": [
+            "depth 4 nodes 7878 score 88",
+            "pv;wA1 wB1-;bQ /bA1;wA1 bA1/;bQ /bS1"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.2756999997655,
+          "info": [
+            "depth 3 nodes 5357 score 157",
+            "pv;wA1 bA1/;bQ \\bA2;wA2 wA1-"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.31039999841596,
+          "info": [
+            "depth 3 nodes 6094 score 137",
+            "pv;wA2 /wB1;bA2 wQ\\;wA2 -bQ"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.22670000136713,
+          "info": [
+            "depth 3 nodes 4597 score 174",
+            "pv;wS1 \\wA1;bA2 wQ\\;wA2 bQ/"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.45679999995627,
+          "info": [
+            "depth 3 nodes 3584 score 167",
+            "pv;wA3 wB1-;bS2 wQ-;wS1 -bQ"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.2029999991646,
+          "info": [
+            "depth 2 nodes 3557 score 64",
+            "pv;wA3 /bQ"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.60919999988982,
+          "info": [
+            "depth 2 nodes 1311 score 28",
+            "pv;wS1 \\wA3;bA3 wQ\\"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.60619999887422,
+          "info": [
+            "depth 2 nodes 954 score 70",
+            "pv;wA1 -bA2;bG1 bA3-"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.46599999725004,
+          "info": [
+            "depth 2 nodes 1099 score 58",
+            "pv;wG1 /wS1;bB1 bA1"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.43260000122245,
+          "info": [
+            "depth 2 nodes 1384 score 103",
+            "pv;wG1 wS1/;bB2 bA3-"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.71169999820995,
+          "info": [
+            "depth 2 nodes 1172 score 93",
+            "pv;wA1 wG1-;bG1 wB1-"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.67860000082874,
+          "info": [
+            "depth 2 nodes 889 score -145",
+            "pv;wA1 -bA2;bG2 bG1-"
+          ]
+        },
+        {
+          "ply": 28,
+          "move_ms": 230.38889999952517,
+          "info": [
+            "depth 2 nodes 1005 score -254",
+            "pv;wA3 bG2-;bB2 bA3-"
+          ]
+        },
+        {
+          "ply": 30,
+          "move_ms": 111.69000000154483,
+          "info": [
+            "depth 2 nodes 434 score -99998",
+            "pv;wA3 wS1\\;bG3 bA2-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 4,
+      "opening_seed": 71004,
+      "nu_color": "black",
+      "score": 0.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 231.79390000223066,
+      "moves": [
+        "wB1",
+        "bS1 \\wB1",
+        "wQ wB1\\",
+        "bA1 \\bS1",
+        "wA1 wQ/",
+        "bQ /bA1",
+        "wA1 bA1/",
+        "bA2 /bQ",
+        "wA2 wA1-",
+        "bA2 wA2\\",
+        "wA3 wQ/",
+        "bQ /bS1",
+        "wA3 -bQ",
+        "bA3 bA2\\",
+        "wQ bQ\\",
+        "bA3 wB1-",
+        "wG1 \\wA3",
+        "bA3 wQ\\",
+        "wG1 wA3\\",
+        "bB1 -bA1",
+        "wG2 /wA3",
+        "bA3 -wG2",
+        "wG3 \\wA2",
+        "bA2 wG3/",
+        "wA2 -bA3",
+        "bA2 wG3-",
+        "wB2 -wG3",
+        "bA2 wG3/",
+        "wB2 wA1",
+        "bA2 wG3-",
+        "wB2 bA1",
+        "bB1 wB2",
+        "wA2 /bB1"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 230.41070000181207,
+          "info": [
+            "depth 4 nodes 6236 score -143",
+            "pv;bQ /bA1;wA1 bA1/;bQ /bS1;wA2 wB1-"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.2235000024666,
+          "info": [
+            "depth 3 nodes 5649 score -58",
+            "pv;bA2 /bQ;wA1 /bA2;bA1 wQ\\"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.36660000070697,
+          "info": [
+            "depth 3 nodes 5134 score -52",
+            "pv;bA2 wA2\\;wA3 /wB1;bA2 wQ\\"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.5223000003025,
+          "info": [
+            "depth 3 nodes 4689 score -59",
+            "pv;bQ /bS1;wA3 /bQ;bA3 -bA1"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.35629999867524,
+          "info": [
+            "depth 3 nodes 4228 score 7",
+            "pv;bA3 bA2\\;wA3 bA3\\;bQ /wB1"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.3992000015569,
+          "info": [
+            "depth 3 nodes 4031 score -55",
+            "pv;bA3 wB1-;wG1 wA1/;bA3 /wQ"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.37459999977727,
+          "info": [
+            "depth 2 nodes 2170 score -185",
+            "pv;bA3 wQ\\;wG1 wA3\\"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.60400000031223,
+          "info": [
+            "depth 2 nodes 1119 score -251",
+            "pv;bB1 -bA1;wG2 /wA3"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.6425999995554,
+          "info": [
+            "depth 2 nodes 896 score -381",
+            "pv;bA3 -wG2;wB2 wQ-"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 230.42069999792147,
+          "info": [
+            "depth 2 nodes 808 score -468",
+            "pv;bA2 wG3/;wA2 /bA3"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 230.2862999968056,
+          "info": [
+            "depth 2 nodes 1261 score -500",
+            "pv;bA2 wG3-;wB2 wQ-"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.3756000001158,
+          "info": [
+            "depth 2 nodes 1068 score -523",
+            "pv;bA2 wG3/;wS1 wA1-"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 230.70739999820944,
+          "info": [
+            "depth 2 nodes 863 score -522",
+            "pv;bA2 wG3-;wS1 \\wG3"
+          ]
+        },
+        {
+          "ply": 31,
+          "move_ms": 49.09350000161794,
+          "info": [
+            "depth 2 nodes 227 score -99998",
+            "pv;bB1 wB2;wA2 wA3/"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 5,
+      "opening_seed": 71005,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 231.4712999977928,
+      "moves": [
+        "wS1",
+        "bB1 wS1/",
+        "wB1 /wS1",
+        "bS1 bB1-",
+        "wQ -wB1",
+        "bQ \\bB1",
+        "wA1 wQ/",
+        "bS1 wB1\\",
+        "wA1 bQ/",
+        "bS1 -wQ",
+        "wA2 wQ/",
+        "bA1 \\bS1",
+        "wA2 bA1/",
+        "bB2 bB1-",
+        "wA3 wQ/",
+        "bB2 bB1",
+        "wA3 -bQ",
+        "bS2 /bA1",
+        "wS2 wQ/",
+        "bS2 wQ\\",
+        "wB1 wQ",
+        "bG1 /bS1",
+        "wA2 -bA1",
+        "bG1 -wS2",
+        "wB1 bS1",
+        "bA2 \\bG1",
+        "wA3 bA2/",
+        "bA3 bS2\\",
+        "wA1 bA3-",
+        "bG2 /bS2",
+        "wG1 wS1\\",
+        "bG2 wA1-",
+        "wG1 wS2/",
+        "bB2 wG1",
+        "wS1 bQ-",
+        "bG3 /bS2",
+        "wA2 \\bQ",
+        "bA1 wB1\\",
+        "wA2 /bG3",
+        "bB2 wS2",
+        "wA2 \\bQ",
+        "bB2 bB2\\"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 230.41250000096625,
+          "info": [
+            "depth 4 nodes 8219 score 26",
+            "pv;wQ -wB1;bB2 \\bB1;wS2 wQ/;bQ \\bB2"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.4318999995303,
+          "info": [
+            "depth 3 nodes 6240 score 121",
+            "pv;wA1 wQ/;bB2 bQ-;wA2 wB1-"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.19019999992452,
+          "info": [
+            "depth 4 nodes 5538 score 48",
+            "pv;wA1 bQ/;bS1 -wQ;wA2 wQ/;bA1 bB1-"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.34439999901224,
+          "info": [
+            "depth 3 nodes 4996 score 125",
+            "pv;wA2 wQ/;bA1 bB1-;wA2 bA1\\"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.2146999973047,
+          "info": [
+            "depth 2 nodes 4521 score 55",
+            "pv;wA2 bA1/;bA2 bB1-"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.3046999986691,
+          "info": [
+            "depth 2 nodes 4961 score 104",
+            "pv;wA3 wQ/;bB2 bB1"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.72549999778857,
+          "info": [
+            "depth 2 nodes 2108 score 67",
+            "pv;wA3 -bQ;bA2 /bA1"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.33729999951902,
+          "info": [
+            "depth 2 nodes 1346 score 106",
+            "pv;wS2 wQ/;bA2 bS2\\"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.59439999997267,
+          "info": [
+            "depth 2 nodes 1027 score 103",
+            "pv;wB1 wQ;bA2 /bA1"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.63060000276892,
+          "info": [
+            "depth 2 nodes 1101 score 74",
+            "pv;wA2 -bA1;bG1 bA1-"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.41310000189696,
+          "info": [
+            "depth 2 nodes 1208 score 19",
+            "pv;wB1 bS1;bA2 /bS2"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.33059999943362,
+          "info": [
+            "depth 2 nodes 1203 score -5",
+            "pv;wA3 bA2/;bA3 bS2\\"
+          ]
+        },
+        {
+          "ply": 28,
+          "move_ms": 230.33719999875757,
+          "info": [
+            "depth 2 nodes 1288 score -117",
+            "pv;wA1 bA3-;bG2 /bS2"
+          ]
+        },
+        {
+          "ply": 30,
+          "move_ms": 230.6907999991381,
+          "info": [
+            "depth 2 nodes 838 score -192",
+            "pv;wG1 wS1\\;bG2 wQ-"
+          ]
+        },
+        {
+          "ply": 32,
+          "move_ms": 230.48449999987497,
+          "info": [
+            "depth 2 nodes 904 score -161",
+            "pv;wG1 wS2/;bQ wA3-"
+          ]
+        },
+        {
+          "ply": 34,
+          "move_ms": 230.50230000080774,
+          "info": [
+            "depth 2 nodes 773 score -133",
+            "pv;wS1 bQ-;bQ \\wS1"
+          ]
+        },
+        {
+          "ply": 36,
+          "move_ms": 230.56470000301488,
+          "info": [
+            "depth 2 nodes 984 score -160",
+            "pv;wA2 \\bQ;bA1 wB1\\"
+          ]
+        },
+        {
+          "ply": 38,
+          "move_ms": 230.6373999999778,
+          "info": [
+            "depth 2 nodes 664 score -410",
+            "pv;wA2 /bG3;bQ wA3-"
+          ]
+        },
+        {
+          "ply": 40,
+          "move_ms": 130.9631999974954,
+          "info": [
+            "depth 2 nodes 367 score -99998",
+            "pv;wA2 \\bQ;bG3 wQ-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 5,
+      "opening_seed": 71005,
+      "nu_color": "black",
+      "score": 0.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 232.7279000019189,
+      "moves": [
+        "wS1",
+        "bB1 wS1/",
+        "wB1 /wS1",
+        "bS1 bB1-",
+        "wQ -wB1",
+        "bG1 \\bB1",
+        "wA1 -wS1",
+        "bQ \\bG1",
+        "wA2 \\wA1",
+        "bA1 bS1\\",
+        "wA2 bA1-",
+        "bS2 bS1/",
+        "wS2 \\wA1",
+        "bA2 bG1-",
+        "wS2 -bQ",
+        "bA2 /wQ",
+        "wG1 /wS2",
+        "bS2 wA2-",
+        "wG1 \\bQ",
+        "bA3 bS1/",
+        "wB2 wG1/",
+        "bA3 \\wQ",
+        "wB2 wB2\\",
+        "bG2 bG1-",
+        "wG2 wB2/",
+        "bG2 bA2-",
+        "wG2 wS2\\",
+        "bB2 \\bA3",
+        "wA3 -wG1",
+        "bA2 -wA3",
+        "wG3 \\wB2",
+        "bA2 /wQ",
+        "wA3 wB2\\"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 230.4340000009688,
+          "info": [
+            "depth 4 nodes 6568 score -108",
+            "pv;bG1 \\bB1;wA1 wQ/;bQ \\bG1;wA1 -bQ"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.2239999989979,
+          "info": [
+            "depth 4 nodes 4795 score -130",
+            "pv;bQ \\bG1;wA1 -bQ;bA1 bS1\\;wS2 wQ/"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.2744000007806,
+          "info": [
+            "depth 3 nodes 4268 score -16",
+            "pv;bA1 bS1\\;wA2 bA1-;bA2 bS1/"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.23860000103014,
+          "info": [
+            "depth 3 nodes 3575 score -56",
+            "pv;bS2 bS1/;wA1 \\bS2;bA2 bS2-"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.350300000282,
+          "info": [
+            "depth 3 nodes 2632 score 35",
+            "pv;bA2 bG1-;wS2 -bQ;bA2 /wQ"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.33310000027996,
+          "info": [
+            "depth 2 nodes 2478 score -49",
+            "pv;bA2 /wQ"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.6289000007382,
+          "info": [
+            "depth 2 nodes 943 score 27",
+            "pv;bS2 wA2-;wA3 \\wG1"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.57150000022375,
+          "info": [
+            "depth 2 nodes 937 score 0",
+            "pv;bA3 bS1/;wA1 \\bA3"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.51930000292487,
+          "info": [
+            "depth 2 nodes 805 score 90",
+            "pv;bA3 \\wQ;wA1 wG1-"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 230.69140000006882,
+          "info": [
+            "depth 2 nodes 1005 score 39",
+            "pv;bG2 bG1-;wA1 wS2\\"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 230.98799999934272,
+          "info": [
+            "depth 1 nodes 498 score 298",
+            "pv;bG2 bA2-"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.70549999829382,
+          "info": [
+            "depth 2 nodes 528 score -24",
+            "pv;bB2 \\bA3;wB1 bG2"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 230.67279999668244,
+          "info": [
+            "depth 3 nodes 610 score -279",
+            "pv;bA2 -wA3;wQ /bA3;bB2 \\wQ"
+          ]
+        },
+        {
+          "ply": 31,
+          "move_ms": 95.5909000003885,
+          "info": [
+            "depth 2 nodes 241 score -99998",
+            "pv;bA2 /wQ;wA3 bQ-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 6,
+      "opening_seed": 71006,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 232.32279999865568,
+      "moves": [
+        "wG1",
+        "bS1 /wG1",
+        "wQ \\wG1",
+        "bS2 -bS1",
+        "wA1 wG1-",
+        "bQ bS1\\",
+        "wA1 /bS2",
+        "bA1 \\bS2",
+        "wA1 -bA1",
+        "bA2 /bS2",
+        "wA2 -wA1",
+        "bA2 wQ/",
+        "wA2 \\bA2",
+        "bA3 /bS2",
+        "wA2 -bA3",
+        "bB1 bS2\\",
+        "wA3 wG1-",
+        "bB1 bS1",
+        "wA3 /bQ",
+        "bG1 bA2-",
+        "wS1 wG1-",
+        "bG1 -bA2",
+        "wS1 bA2/",
+        "bG2 bQ-",
+        "wG2 wG1-",
+        "bG2 bS2\\",
+        "wA3 bQ\\",
+        "bG2 -wA2",
+        "wG3 wG2\\",
+        "bB2 bS2\\",
+        "wS2 wG2-",
+        "bB2 bS2",
+        "wB1 wG3-",
+        "bG3 bA3\\",
+        "wA3 bG3\\",
+        "bB2 wA1\\",
+        "wA1 bQ\\",
+        "bA1 /bG1",
+        "wB2 wG3\\",
+        "bA1 wB2\\",
+        "wA3 /bA1",
+        "bB2 bS2",
+        "wA3 /bG3",
+        "bB2 bB1",
+        "wA3 wB2-",
+        "bG3 -bS2",
+        "wA3 bA3\\",
+        "bB2 bQ",
+        "wA1 /bA1",
+        "bG3 wA3\\",
+        "wS2 wB2-",
+        "bB2 bS2\\",
+        "wS1 -bG1",
+        "bB2 bS2",
+        "wS1 bA2/",
+        "bB2 /wQ",
+        "wS1 -bG1",
+        "bA2 /wA1",
+        "wS2 wG2-",
+        "bB2 wS1\\",
+        "wB1 wB2",
+        "bA2 wQ/",
+        "wS1 bA2/",
+        "bB1 bB2\\",
+        "wA1 bA1\\",
+        "bG2 bS2\\",
+        "wA1 bQ-",
+        "bG2 bA2\\"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 230.38469999664812,
+          "info": [
+            "depth 4 nodes 8627 score 6",
+            "pv;wA1 wG1-;bA1 bS1\\;wA1 /bS2;bQ \\bS2"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.34389999884297,
+          "info": [
+            "depth 3 nodes 6529 score 115",
+            "pv;wA1 /bS2;bA1 \\bS2;wA2 wG1-"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.50169999987702,
+          "info": [
+            "depth 3 nodes 5353 score 80",
+            "pv;wA1 -bA1;bA2 /bS2;wA2 wG1-"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.2358999986609,
+          "info": [
+            "depth 3 nodes 4981 score 18",
+            "pv;wA2 -wA1;bA2 \\wQ;wA2 /bQ"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.33480000231066,
+          "info": [
+            "depth 3 nodes 4319 score 55",
+            "pv;wA2 \\bA2;bA3 /bS2;wA3 wG1-"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.30269999799202,
+          "info": [
+            "depth 2 nodes 4051 score -71",
+            "pv;wA2 -bA3"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.5701000004774,
+          "info": [
+            "depth 2 nodes 2064 score -25",
+            "pv;wA3 wG1-;bB1 bS1"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.5264000024181,
+          "info": [
+            "depth 2 nodes 1769 score 35",
+            "pv;wA3 /bQ;bA2 \\wQ"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.61080000115908,
+          "info": [
+            "depth 2 nodes 856 score -27",
+            "pv;wS1 wG1-;bG1 \\wQ"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.33980000036536,
+          "info": [
+            "depth 2 nodes 1281 score -1",
+            "pv;wS1 bA2/;bB2 -bG1"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.40739999851212,
+          "info": [
+            "depth 2 nodes 1108 score 15",
+            "pv;wG2 wG1-;bG2 bA3-"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.51180000038585,
+          "info": [
+            "depth 2 nodes 1145 score -17",
+            "pv;wA3 bQ\\;bG2 -wA2"
+          ]
+        },
+        {
+          "ply": 28,
+          "move_ms": 232.02660000242759,
+          "info": [
+            "depth 2 nodes 1005 score 2",
+            "pv;wG3 wG2\\;bG3 -bG2"
+          ]
+        },
+        {
+          "ply": 30,
+          "move_ms": 230.34539999935078,
+          "info": [
+            "depth 2 nodes 1019 score 9",
+            "pv;wS2 wG2-;bB2 bS2"
+          ]
+        },
+        {
+          "ply": 32,
+          "move_ms": 230.67470000023604,
+          "info": [
+            "depth 2 nodes 811 score -44",
+            "pv;wB1 wG3-;bB2 wA2/"
+          ]
+        },
+        {
+          "ply": 34,
+          "move_ms": 230.79259999940405,
+          "info": [
+            "depth 2 nodes 507 score -38",
+            "pv;wA3 bG3\\;bQ bA3-"
+          ]
+        },
+        {
+          "ply": 36,
+          "move_ms": 230.8776999998372,
+          "info": [
+            "depth 1 nodes 420 score 52",
+            "pv;wA1 bQ\\"
+          ]
+        },
+        {
+          "ply": 38,
+          "move_ms": 230.67710000032093,
+          "info": [
+            "depth 2 nodes 448 score -39",
+            "pv;wB2 wG3\\;bB1 bS2/"
+          ]
+        },
+        {
+          "ply": 40,
+          "move_ms": 230.52930000267224,
+          "info": [
+            "depth 2 nodes 582 score 53",
+            "pv;wA3 /bA1;bG3 \\bB2"
+          ]
+        },
+        {
+          "ply": 42,
+          "move_ms": 230.51570000097854,
+          "info": [
+            "depth 2 nodes 614 score -20",
+            "pv;wA3 /bG3;bA1 /wA3"
+          ]
+        },
+        {
+          "ply": 44,
+          "move_ms": 230.36750000028405,
+          "info": [
+            "depth 2 nodes 777 score 67",
+            "pv;wA3 wB2-;bB2 bS2/"
+          ]
+        },
+        {
+          "ply": 46,
+          "move_ms": 230.54899999988265,
+          "info": [
+            "depth 2 nodes 433 score -55",
+            "pv;wA3 bA3\\;bB2 bS2/"
+          ]
+        },
+        {
+          "ply": 48,
+          "move_ms": 230.46619999877294,
+          "info": [
+            "depth 2 nodes 503 score 10",
+            "pv;wA1 /bA1;bB2 bA3-"
+          ]
+        },
+        {
+          "ply": 50,
+          "move_ms": 230.74289999931352,
+          "info": [
+            "depth 2 nodes 546 score -4",
+            "pv;wS2 wB2-;bB1 bS2/"
+          ]
+        },
+        {
+          "ply": 52,
+          "move_ms": 230.57780000090133,
+          "info": [
+            "depth 2 nodes 637 score -94",
+            "pv;wS1 -bG1;bB2 wA3"
+          ]
+        },
+        {
+          "ply": 54,
+          "move_ms": 230.6282999998075,
+          "info": [
+            "depth 2 nodes 594 score -105",
+            "pv;wS1 bA2/;bB1 bB2/"
+          ]
+        },
+        {
+          "ply": 56,
+          "move_ms": 230.7409999993979,
+          "info": [
+            "depth 2 nodes 676 score -126",
+            "pv;wS1 -bG1;bQ bA3-"
+          ]
+        },
+        {
+          "ply": 58,
+          "move_ms": 230.70169999846257,
+          "info": [
+            "depth 2 nodes 521 score -117",
+            "pv;wS2 wG2-;bA2 bG1-"
+          ]
+        },
+        {
+          "ply": 60,
+          "move_ms": 230.7777999994869,
+          "info": [
+            "depth 3 nodes 602 score -75",
+            "pv;wB1 wB2;bB2 wQ;wB1 bA1"
+          ]
+        },
+        {
+          "ply": 62,
+          "move_ms": 230.59529999954975,
+          "info": [
+            "depth 2 nodes 527 score -162",
+            "pv;wS1 bA2/;bB1 bS2/"
+          ]
+        },
+        {
+          "ply": 64,
+          "move_ms": 230.57340000013937,
+          "info": [
+            "depth 2 nodes 556 score -178",
+            "pv;wA1 bA1\\;bG3 wA2/"
+          ]
+        },
+        {
+          "ply": 66,
+          "move_ms": 89.52510000017355,
+          "info": [
+            "depth 2 nodes 275 score -99998",
+            "pv;wA1 bQ-;bG2 wQ-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 6,
+      "opening_seed": 71006,
+      "nu_color": "black",
+      "score": 0.5,
+      "result": "Draw",
+      "termination": "repetition",
+      "max_move_ms": 232.00509999878705,
+      "moves": [
+        "wG1",
+        "bS1 /wG1",
+        "wQ \\wG1",
+        "bS2 -bS1",
+        "wA1 wG1-",
+        "bB1 bS1\\",
+        "wA2 wA1/",
+        "bQ bB1\\",
+        "wA2 /bS2",
+        "bA1 \\bS2",
+        "wA1 -bA1",
+        "bA2 bB1-",
+        "wA2 bA2-",
+        "bA3 bS2\\",
+        "wA3 wG1-",
+        "bA3 wA3-",
+        "wB1 \\wA3",
+        "bG1 bS2\\",
+        "wB1 wG1",
+        "bG2 /bS2",
+        "wS1 wA2\\",
+        "bG3 bG1\\",
+        "wS1 bG3\\",
+        "bG2 wA2-",
+        "wS2 /wS1",
+        "bQ wS1-",
+        "wS2 bQ-",
+        "bB2 /bS2",
+        "wB2 wS2\\",
+        "bB2 wA1\\",
+        "wA1 \\bA1",
+        "bB2 bS2",
+        "wB2 bQ\\",
+        "bG1 wQ-",
+        "wQ \\bG1",
+        "bB2 bA1-",
+        "wB1 bG1",
+        "bA3 -wQ",
+        "wG2 /wS1",
+        "bA3 /wB2",
+        "wA3 bA3\\",
+        "bB2 \\wG1",
+        "wQ -wQ",
+        "bG2 bS2\\",
+        "wG3 wB1/",
+        "bG2 wA2-",
+        "wB1 bB2",
+        "bG2 bS2\\",
+        "wA3 /bA3",
+        "bG2 wA2-",
+        "wA3 bA3\\",
+        "bG2 bS2\\",
+        "wA3 /bA3",
+        "bG2 wA2-",
+        "wS2 bG2\\",
+        "pass",
+        "wA1 /wA1",
+        "pass",
+        "wS2 wB2/",
+        "bG2 bS2\\",
+        "wA3 bA3\\",
+        "bG2 wA2-",
+        "wA3 /bA3",
+        "bG2 bS2\\",
+        "wA3 bA3\\",
+        "bG2 wA2-",
+        "wS2 bG2\\",
+        "pass",
+        "wS2 wB2/",
+        "bG2 bS2\\",
+        "wA3 /bA3",
+        "bG2 wA2-",
+        "wA3 bA3\\",
+        "bG2 bS2\\",
+        "wA3 /bA3",
+        "bG2 wA2-",
+        "wA1 \\bA1",
+        "bG2 bS2\\",
+        "wA3 bA3\\",
+        "bG2 wA2-",
+        "wA3 /bA3",
+        "bG2 bS2\\",
+        "wA3 bA3\\",
+        "bG2 wA2-",
+        "wS2 bG2\\",
+        "pass",
+        "wA3 /bA3",
+        "pass",
+        "wA1 /wA1",
+        "pass",
+        "wA1 \\bA1",
+        "pass",
+        "wA1 /wA1",
+        "pass",
+        "wS2 wB2/",
+        "bG2 bS2\\",
+        "wA3 bA3\\",
+        "bG2 wA2-",
+        "wS2 bG2\\",
+        "pass",
+        "wA1 \\bA1",
+        "pass",
+        "wS2 wB2/",
+        "bG2 bS2\\",
+        "wA1 /wA1",
+        "bG2 wA2-",
+        "wA3 /bA3",
+        "bG2 bS2\\",
+        "wA2 \\wA2",
+        "bG2 wG3/",
+        "wA3 bA3\\",
+        "bG2 bS2\\",
+        "wA1 \\bA1",
+        "bG2 \\wA1",
+        "wA2 wA2\\",
+        "bG2 bS2\\",
+        "wA2 \\wA2",
+        "bG2 \\wA1",
+        "wA2 wA2\\",
+        "bG2 bS2\\"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 230.35629999867524,
+          "info": [
+            "depth 4 nodes 6791 score -110",
+            "pv;bB1 bS1\\;wA1 /bB1;bQ \\bS2;wA1 -bQ"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.37420000036946,
+          "info": [
+            "depth 4 nodes 5069 score -152",
+            "pv;bQ bB1\\;wA2 bQ-;bS2 \\wQ;wA1 /bQ"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.4102000016428,
+          "info": [
+            "depth 3 nodes 4432 score -47",
+            "pv;bA1 \\bS2;wA1 \\bA1;bA2 bB1-"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.27189999993425,
+          "info": [
+            "depth 3 nodes 3892 score -52",
+            "pv;bA2 bB1-;wA2 bA2/;bG1 bS2\\"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.36779999893042,
+          "info": [
+            "depth 3 nodes 3107 score -9",
+            "pv;bA3 bS2\\;wA3 wG1-;bA3 wA1\\"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.59610000200337,
+          "info": [
+            "depth 3 nodes 2881 score 42",
+            "pv;bA3 wA3-;wS1 wA2\\;bG1 bS2\\"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.47120000046561,
+          "info": [
+            "depth 2 nodes 1165 score -21",
+            "pv;bG1 bS2\\;wA1 /bQ"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.68319999947562,
+          "info": [
+            "depth 2 nodes 857 score -11",
+            "pv;bG2 /bS2;wA1 /bQ"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.37570000087726,
+          "info": [
+            "depth 2 nodes 923 score -18",
+            "pv;bG3 bG1\\;wS1 bA3-"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 230.67530000116676,
+          "info": [
+            "depth 1 nodes 693 score 67",
+            "pv;bG2 wA2-"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 230.73420000218903,
+          "info": [
+            "depth 2 nodes 708 score -114",
+            "pv;bQ wS1-;wS2 bQ-"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.65050000150222,
+          "info": [
+            "depth 2 nodes 545 score -138",
+            "pv;bB2 /bS2;wG2 wQ-"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 230.609899997944,
+          "info": [
+            "depth 2 nodes 625 score -67",
+            "pv;bB2 wA1\\;wA1 bA3-"
+          ]
+        },
+        {
+          "ply": 31,
+          "move_ms": 230.44239999944693,
+          "info": [
+            "depth 2 nodes 630 score -76",
+            "pv;bB2 bS2;wB2 wS2"
+          ]
+        },
+        {
+          "ply": 33,
+          "move_ms": 230.36409999986063,
+          "info": [
+            "depth 2 nodes 595 score -171",
+            "pv;bG1 wQ-;wB2 bQ"
+          ]
+        },
+        {
+          "ply": 35,
+          "move_ms": 230.60260000056587,
+          "info": [
+            "depth 2 nodes 525 score -277",
+            "pv;bB2 bA1-;wB2 bQ"
+          ]
+        },
+        {
+          "ply": 37,
+          "move_ms": 230.6334999993851,
+          "info": [
+            "depth 2 nodes 510 score -207",
+            "pv;bA3 -wQ;wB2 bQ"
+          ]
+        },
+        {
+          "ply": 39,
+          "move_ms": 230.63729999921634,
+          "info": [
+            "depth 2 nodes 552 score -236",
+            "pv;bA3 /wB2;wQ wB1/"
+          ]
+        },
+        {
+          "ply": 41,
+          "move_ms": 230.50380000131554,
+          "info": [
+            "depth 1 nodes 636 score -245",
+            "pv;bB2 \\wG1"
+          ]
+        },
+        {
+          "ply": 43,
+          "move_ms": 230.5510999976832,
+          "info": [
+            "depth 3 nodes 454 score -353",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 45,
+          "move_ms": 230.71279999930994,
+          "info": [
+            "depth 3 nodes 478 score -398",
+            "pv;bG2 wA2-;wB1 bB2;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 47,
+          "move_ms": 230.56240000005346,
+          "info": [
+            "depth 3 nodes 387 score -412",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 49,
+          "move_ms": 230.81669999737642,
+          "info": [
+            "depth 3 nodes 458 score -398",
+            "pv;bG2 wA2-;wA3 bA3\\;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 51,
+          "move_ms": 230.72829999728128,
+          "info": [
+            "depth 3 nodes 341 score -412",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 53,
+          "move_ms": 230.64379999777884,
+          "info": [
+            "depth 3 nodes 454 score -396",
+            "pv;bG2 wA2-;wG2 bG3-;bG3 bS1-"
+          ]
+        },
+        {
+          "ply": 55,
+          "move_ms": 230.54140000022016,
+          "info": [
+            "depth 3 nodes 479 score -412",
+            "pv;pass;wS2 bQ-;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 57,
+          "move_ms": 230.61630000302102,
+          "info": [
+            "depth 3 nodes 546 score -395",
+            "pv;pass;wS2 bQ-;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 59,
+          "move_ms": 230.63700000056997,
+          "info": [
+            "depth 3 nodes 373 score -406",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 61,
+          "move_ms": 230.55410000233678,
+          "info": [
+            "depth 3 nodes 449 score -395",
+            "pv;bG2 wA2-;wA3 /bA3;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 63,
+          "move_ms": 230.8974000006856,
+          "info": [
+            "depth 3 nodes 520 score -406",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 65,
+          "move_ms": 230.43500000130734,
+          "info": [
+            "depth 3 nodes 537 score -381",
+            "pv;bG2 wA2-;wG2 bG3-;bG3 bS1-"
+          ]
+        },
+        {
+          "ply": 67,
+          "move_ms": 230.68789999888395,
+          "info": [
+            "depth 3 nodes 382 score -381",
+            "pv;pass;wS2 bQ-;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 69,
+          "move_ms": 230.44319999826257,
+          "info": [
+            "depth 3 nodes 380 score -402",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 71,
+          "move_ms": 230.92910000195843,
+          "info": [
+            "depth 3 nodes 398 score -412",
+            "pv;bG2 wA2-;wA1 \\bA1;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 73,
+          "move_ms": 230.78539999914938,
+          "info": [
+            "depth 3 nodes 387 score -402",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 75,
+          "move_ms": 230.97380000035628,
+          "info": [
+            "depth 3 nodes 415 score -412",
+            "pv;bG2 wA2-;wA1 \\bA1;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 77,
+          "move_ms": 230.95300000204588,
+          "info": [
+            "depth 3 nodes 348 score -417",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 79,
+          "move_ms": 230.84279999966384,
+          "info": [
+            "depth 3 nodes 397 score -412",
+            "pv;bG2 wA2-;wA3 /bA3;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 81,
+          "move_ms": 230.66100000141887,
+          "info": [
+            "depth 3 nodes 443 score -417",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 83,
+          "move_ms": 230.81760000059148,
+          "info": [
+            "depth 3 nodes 452 score -396",
+            "pv;bG2 wA2-;wG2 bG3-;bG3 bS1-"
+          ]
+        },
+        {
+          "ply": 85,
+          "move_ms": 230.6432000004861,
+          "info": [
+            "depth 3 nodes 424 score -398",
+            "pv;pass;wS2 bQ-;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 87,
+          "move_ms": 230.35610000079032,
+          "info": [
+            "depth 3 nodes 770 score -336",
+            "pv;pass;wA3 bA3\\;pass"
+          ]
+        },
+        {
+          "ply": 89,
+          "move_ms": 230.6135999970138,
+          "info": [
+            "depth 3 nodes 661 score -348",
+            "pv;pass;wA1 \\bA1;pass"
+          ]
+        },
+        {
+          "ply": 91,
+          "move_ms": 230.58840000157943,
+          "info": [
+            "depth 3 nodes 519 score -336",
+            "pv;pass;wA3 bA3\\;pass"
+          ]
+        },
+        {
+          "ply": 93,
+          "move_ms": 230.5792000006477,
+          "info": [
+            "depth 3 nodes 409 score -395",
+            "pv;pass;wS2 bQ-;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 95,
+          "move_ms": 230.8140999994066,
+          "info": [
+            "depth 3 nodes 401 score -406",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 97,
+          "move_ms": 230.71859999981825,
+          "info": [
+            "depth 3 nodes 395 score -398",
+            "pv;bG2 wA2-;wA1 \\bA1;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 99,
+          "move_ms": 230.67779999837512,
+          "info": [
+            "depth 3 nodes 448 score -336",
+            "pv;pass;wA1 \\bA1;pass"
+          ]
+        },
+        {
+          "ply": 101,
+          "move_ms": 230.59210000064922,
+          "info": [
+            "depth 3 nodes 518 score -398",
+            "pv;pass;wS2 bQ-;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 103,
+          "move_ms": 230.70829999778653,
+          "info": [
+            "depth 3 nodes 367 score -412",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 105,
+          "move_ms": 230.58239999954822,
+          "info": [
+            "depth 3 nodes 427 score -398",
+            "pv;bG2 wA2-;wA1 \\bA1;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 107,
+          "move_ms": 230.89819999950123,
+          "info": [
+            "depth 3 nodes 390 score -406",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 109,
+          "move_ms": 230.55160000149044,
+          "info": [
+            "depth 2 nodes 416 score -481",
+            "pv;bG2 wG3/;wA1 bQ/"
+          ]
+        },
+        {
+          "ply": 111,
+          "move_ms": 230.80530000152066,
+          "info": [
+            "depth 3 nodes 483 score -404",
+            "pv;bG2 bS2\\;wA3 /bA3;bG2 wA1/"
+          ]
+        },
+        {
+          "ply": 113,
+          "move_ms": 230.83330000008573,
+          "info": [
+            "depth 3 nodes 590 score -410",
+            "pv;bG2 \\wA1;wA3 /bA3;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 115,
+          "move_ms": 230.83319999932428,
+          "info": [
+            "depth 3 nodes 339 score -412",
+            "pv;bG2 bS2\\;wG2 bG3-;bB1 bG2"
+          ]
+        },
+        {
+          "ply": 117,
+          "move_ms": 230.83689999839407,
+          "info": [
+            "depth 3 nodes 417 score -410",
+            "pv;bG2 \\wA1;wA3 /bA3;bG2 bS2\\"
+          ]
+        },
+        {
+          "ply": 119,
+          "move_ms": 28.66139999969164,
+          "info": [
+            "depth 64 nodes 64 score 0",
+            "pv;bG2 bS2\\"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 7,
+      "opening_seed": 71007,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 232.83790000277804,
+      "moves": [
+        "wB1",
+        "bA1 wB1\\",
+        "wA1 \\wB1",
+        "bS1 /bA1",
+        "wQ wA1-",
+        "bQ bA1-",
+        "wA1 -bS1",
+        "bA2 bS1\\",
+        "wA1 /bA2",
+        "bS2 bQ/",
+        "wA2 -wB1",
+        "bS2 wQ/",
+        "wA2 bQ-",
+        "bA3 bS2/",
+        "wA3 -wB1",
+        "bA3 -wA3",
+        "wA1 bA2-",
+        "bG1 \\bS2",
+        "wS1 wA2/",
+        "bG1 bS2\\",
+        "wG1 wA2-",
+        "bB1 \\bS2",
+        "wG2 wA2\\",
+        "bB1 /bB1",
+        "wS2 wG2-",
+        "bB1 wQ",
+        "wB2 wG2\\",
+        "bG2 -bS2",
+        "wG3 wS1-",
+        "bA3 /bG2",
+        "wA3 -bA3",
+        "bB1 bB1\\"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 230.5143000012322,
+          "info": [
+            "depth 4 nodes 7074 score 48",
+            "pv;wQ wA1-;bQ bS1\\;wA1 bQ-;bG1 -bS1"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.27430000001914,
+          "info": [
+            "depth 3 nodes 6018 score 199",
+            "pv;wA1 -bS1;bG1 bS1\\;wA2 -wB1"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.27290000027278,
+          "info": [
+            "depth 3 nodes 5691 score 183",
+            "pv;wA1 /bA2;bA3 -bS1;wA2 -wB1"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.1819999993313,
+          "info": [
+            "depth 3 nodes 5356 score 186",
+            "pv;wA2 -wB1;bS2 wQ/;wA2 bQ-"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.27680000086548,
+          "info": [
+            "depth 2 nodes 5011 score 118",
+            "pv;wA2 bQ-;bB1 bS1-"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.43719999986934,
+          "info": [
+            "depth 2 nodes 4073 score 87",
+            "pv;wA3 -wB1;bA3 /wA3"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.27559999900404,
+          "info": [
+            "depth 2 nodes 2382 score 75",
+            "pv;wA1 bA2-;bG1 -bS1"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.3238999993482,
+          "info": [
+            "depth 2 nodes 1491 score 11",
+            "pv;wS1 wA2/;bG2 bG1-"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.20739999992657,
+          "info": [
+            "depth 2 nodes 1474 score 73",
+            "pv;wG1 wA2-;bA3 wA1/"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.24290000103065,
+          "info": [
+            "depth 2 nodes 1315 score 91",
+            "pv;wG2 wA2\\;bG2 bB1-"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.45270000147866,
+          "info": [
+            "depth 2 nodes 1063 score 88",
+            "pv;wS2 wG2-;bG2 bB1/"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.28859999976703,
+          "info": [
+            "depth 2 nodes 1100 score 79",
+            "pv;wB2 wG2\\;bA3 wA1-"
+          ]
+        },
+        {
+          "ply": 28,
+          "move_ms": 230.34139999799663,
+          "info": [
+            "depth 2 nodes 858 score 54",
+            "pv;wG3 wS1-;bG3 bG2/"
+          ]
+        },
+        {
+          "ply": 30,
+          "move_ms": 82.70849999826169,
+          "info": [
+            "depth 2 nodes 273 score -99998",
+            "pv;wA3 -bA3;bB1 wB1-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 7,
+      "opening_seed": 71007,
+      "nu_color": "black",
+      "score": 0.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 233.8396000013745,
+      "moves": [
+        "wB1",
+        "bA1 wB1\\",
+        "wA1 \\wB1",
+        "bS1 /bA1",
+        "wQ wB1/",
+        "bQ bS1\\",
+        "wA2 /wA1",
+        "bA2 bS1-",
+        "wA1 bA2\\",
+        "bA2 \\wA2",
+        "wA3 wA1/",
+        "bA2 wA3/",
+        "wA2 /bS1",
+        "bA3 \\bA2",
+        "wA2 bA3/",
+        "bB1 -bS1",
+        "wB2 -wQ",
+        "bB1 \\bS1",
+        "wB2 wB1",
+        "bB1 wB2",
+        "wS1 wA3\\",
+        "bB2 \\bS1",
+        "wS1 /bQ",
+        "bB2 bB1",
+        "wS2 wS1\\",
+        "bB2 wQ",
+        "wS2 /bS1",
+        "bG1 \\bB1",
+        "wG1 wA1\\",
+        "bG2 bG1/",
+        "wA2 bQ\\",
+        "bA3 wG1-",
+        "wG2 /wS1",
+        "bS2 \\bS1",
+        "wG2 bA1\\"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 230.81319999982952,
+          "info": [
+            "depth 4 nodes 6474 score -127",
+            "pv;bQ bS1\\;wA1 /bQ;bA2 bS1-;wA2 -wB1"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.2445000022999,
+          "info": [
+            "depth 3 nodes 5637 score -26",
+            "pv;bA2 bS1-;wA1 /bQ;bA2 \\wQ"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.26360000221757,
+          "info": [
+            "depth 3 nodes 5231 score -1",
+            "pv;bA2 \\wA2;wA3 /wA2;bA2 wQ-"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.47139999835053,
+          "info": [
+            "depth 3 nodes 4706 score -44",
+            "pv;bA2 wA3/;wA2 /bQ;bG1 -bS1"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.23549999925308,
+          "info": [
+            "depth 3 nodes 4588 score 44",
+            "pv;bA3 \\bA2;wA2 bA3/;bG1 -bS1"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.23990000001504,
+          "info": [
+            "depth 4 nodes 3840 score -69",
+            "pv;bB1 -bS1;wS1 wA1-;bB1 \\bS1;wS1 /bQ"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.29529999985243,
+          "info": [
+            "depth 3 nodes 1936 score 76",
+            "pv;bB1 \\bS1;wS1 wA1-;bG1 /bB1"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.26880000179517,
+          "info": [
+            "depth 3 nodes 2025 score 143",
+            "pv;bB1 wB2;wS1 wA1-;bB2 \\bS1"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.4511000002094,
+          "info": [
+            "depth 3 nodes 1427 score 176",
+            "pv;bB2 \\bS1;wS1 /bQ;bB1 wQ"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 230.2808999993431,
+          "info": [
+            "depth 3 nodes 1656 score 199",
+            "pv;bB2 bB1;wS2 wA1-;bB2 wQ"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 230.37630000180798,
+          "info": [
+            "depth 3 nodes 1606 score 271",
+            "pv;bB2 wQ;wA2 wS1-;bG1 \\bB1"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.44189999927767,
+          "info": [
+            "depth 2 nodes 1366 score 115",
+            "pv;bG1 \\bB1"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 230.27469999942696,
+          "info": [
+            "depth 2 nodes 1319 score 89",
+            "pv;bG2 bG1/;wG1 bS1-"
+          ]
+        },
+        {
+          "ply": 31,
+          "move_ms": 230.47159999987343,
+          "info": [
+            "depth 3 nodes 1052 score 248",
+            "pv;bA3 wG1-;wG2 /wS2;bS2 \\bS1"
+          ]
+        },
+        {
+          "ply": 33,
+          "move_ms": 51.44540000037523,
+          "info": [
+            "depth 2 nodes 383 score -99998",
+            "pv;bS2 \\bS1;wG2 bS1-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 8,
+      "opening_seed": 71008,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 234.5537000001059,
+      "moves": [
+        "wB1",
+        "bB1 wB1-",
+        "wQ \\wB1",
+        "bB2 bB1-",
+        "wQ wB1/",
+        "bQ bB2\\",
+        "wA1 wQ/",
+        "bA1 bB1\\",
+        "wA1 /bA1",
+        "bA2 bB2/",
+        "wB1 bB1",
+        "bA2 -wQ",
+        "wB1 bB2",
+        "bG1 -bA2",
+        "wA2 wB1/",
+        "bG1 -wA2",
+        "wA2 bQ\\",
+        "bA3 bG1/",
+        "wB1 bB1",
+        "bA3 -bA3",
+        "wB1 bB2",
+        "bB1 wQ",
+        "wA1 \\bA3",
+        "bG2 bA2\\",
+        "wB1 bA1",
+        "bG3 /bA2",
+        "wA3 /wB1",
+        "bG3 /wA1",
+        "wB1 bQ",
+        "bS1 bB1\\"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 230.3366999985883,
+          "info": [
+            "depth 4 nodes 9928 score -1",
+            "pv;wQ wB1/;bQ bB1\\;wG1 \\wB1;bB2 bB1"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.2854000008665,
+          "info": [
+            "depth 4 nodes 8301 score 18",
+            "pv;wA1 wQ/;bA1 bB2/;wA1 bQ\\;bA1 wQ-"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.21739999967394,
+          "info": [
+            "depth 3 nodes 5671 score 116",
+            "pv;wA1 /bA1;bA2 bB2/;wB1 bB1"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.175100001361,
+          "info": [
+            "depth 3 nodes 5501 score 78",
+            "pv;wB1 bB1;bA2 -wQ;wB1 bB2"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.1630000001751,
+          "info": [
+            "depth 3 nodes 6503 score 77",
+            "pv;wB1 bB2;bQ wB1-;wB1 bQ"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.41200000079698,
+          "info": [
+            "depth 3 nodes 5095 score 107",
+            "pv;wA2 wB1/;bG1 wQ-;wA2 bQ\\"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.233499998576,
+          "info": [
+            "depth 3 nodes 4704 score 59",
+            "pv;wA2 bQ\\;bB1 wB1;wA1 bB1-"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.3460000002815,
+          "info": [
+            "depth 2 nodes 2106 score -11",
+            "pv;wB1 bB1;bB2 wB1"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.41569999986677,
+          "info": [
+            "depth 2 nodes 1885 score -57",
+            "pv;wB1 bB2;bB1 wB1"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.352499998844,
+          "info": [
+            "depth 2 nodes 2553 score -122",
+            "pv;wA1 \\bA3;bA1 -wA1"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.34919999918202,
+          "info": [
+            "depth 2 nodes 2158 score -250",
+            "pv;wB1 bA1;bB1 bG2-"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.22710000077495,
+          "info": [
+            "depth 2 nodes 1898 score -317",
+            "pv;wA3 /wB1;bG3 bG2-"
+          ]
+        },
+        {
+          "ply": 28,
+          "move_ms": 44.8526000000129,
+          "info": [
+            "depth 2 nodes 336 score -99998",
+            "pv;wB1 bQ;bS1 bG2-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 8,
+      "opening_seed": 71008,
+      "nu_color": "black",
+      "score": 0.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 233.98880000240752,
+      "moves": [
+        "wB1",
+        "bB1 wB1-",
+        "wQ \\wB1",
+        "bB2 bB1-",
+        "wA1 /wB1",
+        "bA1 bB1\\",
+        "wA1 /bA1",
+        "bQ bB1/",
+        "wA2 /wB1",
+        "bB2 bQ",
+        "wA2 -bB2",
+        "bB2 wA2",
+        "wA3 -wA1",
+        "bG1 bB2/",
+        "wA3 bG1/",
+        "bA2 bB1-",
+        "wS1 wA3/",
+        "bB1 wB1",
+        "wS1 bA2/",
+        "bB2 wQ",
+        "wA3 wA3\\",
+        "bA3 -bB2",
+        "wG1 wA3/",
+        "bA3 wG1/",
+        "wG2 -wA1",
+        "bG2 \\bB2",
+        "wG2 bA1\\",
+        "bG1 wA3-",
+        "wA1 -wA3",
+        "bS1 /bG2",
+        "wG2 wA2\\"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 230.32809999858728,
+          "info": [
+            "depth 4 nodes 6791 score -69",
+            "pv;bA1 bB1\\;wA2 -wQ;bQ bB1/;wA2 bA1\\"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.17470000195317,
+          "info": [
+            "depth 4 nodes 6312 score -35",
+            "pv;bQ bB1/;wA2 /wB1;bB2 bQ;wA1 bA1\\"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.3987999985111,
+          "info": [
+            "depth 3 nodes 5791 score 29",
+            "pv;bB2 bQ"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.17540000000736,
+          "info": [
+            "depth 4 nodes 6057 score -75",
+            "pv;bB2 wA2;wB1 bB2;bA2 bB1-;wA1 bQ/"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.2088000033109,
+          "info": [
+            "depth 3 nodes 5290 score 98",
+            "pv;bG1 bB2/;wA3 bQ-;bG1 bB1-"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.28859999976703,
+          "info": [
+            "depth 3 nodes 5287 score 45",
+            "pv;bA2 bB1-;wB1 bB2;bA2 -wQ"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.41039999952773,
+          "info": [
+            "depth 3 nodes 2243 score 125",
+            "pv;bB1 wB1;wS1 bQ-;bB2 wQ"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.31999999875552,
+          "info": [
+            "depth 3 nodes 2433 score 136",
+            "pv;bB2 wQ;wA3 bG1-;bG1 wA3-"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.38530000121682,
+          "info": [
+            "depth 2 nodes 1757 score 54",
+            "pv;bA3 -bB2"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 230.3847000002861,
+          "info": [
+            "depth 2 nodes 1903 score 66",
+            "pv;bA3 wG1/;wA1 \\bA3"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 230.44459999800893,
+          "info": [
+            "depth 2 nodes 1574 score 162",
+            "pv;bG2 \\bB2;wG2 wA1-"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.43959999995423,
+          "info": [
+            "depth 3 nodes 1386 score 197",
+            "pv;bG1 wA3-;wA1 wA2/;bS1 /bG2"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 33.24770000108401,
+          "info": [
+            "depth 2 nodes 209 score -99998",
+            "pv;bS1 /bG2;wG2 bB1-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 9,
+      "opening_seed": 71009,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 243.4675000004063,
+      "moves": [
+        "wA1",
+        "bS1 /wA1",
+        "wS1 wA1-",
+        "bS2 bS1\\",
+        "wQ \\wA1",
+        "bQ -bS1",
+        "wS1 bS2\\",
+        "bA1 bQ\\",
+        "wA2 wA1-",
+        "bA1 \\wQ",
+        "wA3 /wS1",
+        "bA2 bA1/",
+        "wA3 /bQ",
+        "bA2 wA2-",
+        "wB1 wQ-",
+        "bA1 wB1/",
+        "wQ \\wB1",
+        "bA3 bA1-",
+        "wQ \\bA1",
+        "bA3 /wQ",
+        "wQ bA1/",
+        "bA3 wQ/",
+        "wB2 \\wA1",
+        "bG1 \\bA3",
+        "wB2 wB1",
+        "bG1 bA3\\",
+        "wB2 wB1-",
+        "bG2 bG1-",
+        "wS2 \\wA1",
+        "bG2 -wQ",
+        "wB2 bA2",
+        "bG3 bG1/",
+        "wG1 wB2/",
+        "bB1 \\bG2",
+        "wS2 -bB1",
+        "bG3 -bA3",
+        "wG2 \\wA1",
+        "bB2 bG1/",
+        "wG2 wB1-",
+        "bB2 bG1",
+        "wG3 -wS2",
+        "bB2 wQ\\"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 230.31879999689409,
+          "info": [
+            "depth 4 nodes 8834 score -6",
+            "pv;wQ \\wA1;bQ /bS2;wA2 wS1\\;bA1 -bS1"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.25350000170874,
+          "info": [
+            "depth 3 nodes 6473 score 92",
+            "pv;wS1 bS2\\"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.34710000138148,
+          "info": [
+            "depth 3 nodes 5949 score 22",
+            "pv;wA2 wA1-;bA1 wA2/;wS1 /bQ"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.2916999979061,
+          "info": [
+            "depth 3 nodes 4904 score 114",
+            "pv;wA3 /wS1;bG1 bQ\\;wA3 \\bQ"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.27799999908893,
+          "info": [
+            "depth 2 nodes 4370 score 31",
+            "pv;wA3 /bQ;bA2 wA2-"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.2915000000212,
+          "info": [
+            "depth 3 nodes 4107 score 72",
+            "pv;wB1 wQ-;bA1 wB1/;wS2 /wS1"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.3853999983403,
+          "info": [
+            "depth 2 nodes 1980 score -33",
+            "pv;wQ \\wB1"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.49510000055307,
+          "info": [
+            "depth 2 nodes 1358 score -5",
+            "pv;wQ \\bA1;bA3 \\wB1"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.35539999909815,
+          "info": [
+            "depth 2 nodes 1849 score -12",
+            "pv;wQ bA1/;bA3 wQ-"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.3033999996842,
+          "info": [
+            "depth 2 nodes 1443 score 57",
+            "pv;wB2 \\wA1;bA3 wQ-"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.41329999978188,
+          "info": [
+            "depth 2 nodes 1565 score 2",
+            "pv;wB2 wB1;bG1 wQ-"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.2672999976494,
+          "info": [
+            "depth 2 nodes 1234 score 59",
+            "pv;wB2 wB1-;bA2 \\bA1"
+          ]
+        },
+        {
+          "ply": 28,
+          "move_ms": 230.37219999969238,
+          "info": [
+            "depth 2 nodes 1142 score 20",
+            "pv;wS2 \\wA1;bG3 bA3-"
+          ]
+        },
+        {
+          "ply": 30,
+          "move_ms": 230.457400000887,
+          "info": [
+            "depth 2 nodes 1123 score 2",
+            "pv;wB2 bA2;bG3 bA3-"
+          ]
+        },
+        {
+          "ply": 32,
+          "move_ms": 230.39409999910276,
+          "info": [
+            "depth 2 nodes 1000 score -110",
+            "pv;wG1 wB2/;bG3 bG2/"
+          ]
+        },
+        {
+          "ply": 34,
+          "move_ms": 230.4470000017318,
+          "info": [
+            "depth 2 nodes 990 score -89",
+            "pv;wS2 -bB1;bG3 bB1-"
+          ]
+        },
+        {
+          "ply": 36,
+          "move_ms": 230.32579999926384,
+          "info": [
+            "depth 2 nodes 903 score -92",
+            "pv;wG2 \\wA1;bB2 bB1/"
+          ]
+        },
+        {
+          "ply": 38,
+          "move_ms": 230.3150999978243,
+          "info": [
+            "depth 2 nodes 1023 score 20",
+            "pv;wG2 wB1-;bB2 bG1"
+          ]
+        },
+        {
+          "ply": 40,
+          "move_ms": 76.85510000010254,
+          "info": [
+            "depth 2 nodes 375 score -99998",
+            "pv;wG3 -wS2;bB2 bA1-"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 9,
+      "opening_seed": 71009,
+      "nu_color": "black",
+      "score": 0.5,
+      "result": "Draw",
+      "termination": "repetition",
+      "max_move_ms": 234.4059000024572,
+      "moves": [
+        "wA1",
+        "bS1 /wA1",
+        "wS1 wA1-",
+        "bS2 bS1\\",
+        "wQ \\wA1",
+        "bQ /bS2",
+        "wS1 bS2\\",
+        "bB1 \\bQ",
+        "wQ /wQ",
+        "bS2 wA1/",
+        "wQ -bS2",
+        "bA1 bS2-",
+        "wQ \\bS2",
+        "bA2 \\bB1",
+        "wA2 wS1-",
+        "bA2 wQ/",
+        "wA2 /bQ",
+        "bA3 \\bB1",
+        "wB1 wA2\\",
+        "bG1 /bA3",
+        "wA3 /wA2",
+        "bA3 /wA3",
+        "wB1 bQ\\",
+        "bA1 wB1\\",
+        "wB2 wS1/",
+        "bB2 bG1/",
+        "wB2 wS1",
+        "bG2 \\bG1",
+        "wS2 -wA2",
+        "bA1 -wQ",
+        "wS2 /bA3",
+        "bG3 /bG2",
+        "wB2 bQ",
+        "bA1 \\wA1",
+        "wG1 wA2\\",
+        "bA1 -wQ",
+        "wG2 -wA2",
+        "bA1 \\wA1",
+        "wG2 wA3\\",
+        "bA1 \\wA3",
+        "wB1 wG1",
+        "bA2 -wQ",
+        "wG3 wB2\\",
+        "bA2 wQ/",
+        "wB1 wA3",
+        "bA1 -wQ",
+        "wB1 bA3",
+        "bA1 \\wA3",
+        "wS2 -bA1",
+        "bG2 \\wS2",
+        "wS2 -bG3",
+        "bG2 bG3/",
+        "wS2 -bA1",
+        "bG2 \\wS2",
+        "wB2 bB1",
+        "bB2 wB2",
+        "wG1 bG1\\",
+        "bA2 -wQ",
+        "wG2 -wB1",
+        "bG3 /bG2",
+        "wB1 wG2",
+        "bA2 wQ/",
+        "wB1 bA3",
+        "bA2 -wQ",
+        "wB1 wG2",
+        "bA2 wQ/",
+        "wB1 bA3",
+        "bA2 -wQ"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 230.4069999991043,
+          "info": [
+            "depth 3 nodes 8040 score 6",
+            "pv;bQ /bS2;wA2 wS1\\;bA1 -bS1"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.35370000070543,
+          "info": [
+            "depth 3 nodes 6102 score 38",
+            "pv;bB1 \\bQ;wA2 wS1-;bA1 \\bB1"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.387100000371,
+          "info": [
+            "depth 4 nodes 5508 score -111",
+            "pv;bS2 wA1/;wA2 wS1-;bA1 -bB1;wA2 \\bA1"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.2984000016295,
+          "info": [
+            "depth 4 nodes 5101 score -42",
+            "pv;bA1 bS2-;wQ \\bS2;bG1 -bB1;wA2 wS1\\"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.37099999783095,
+          "info": [
+            "depth 3 nodes 4283 score 64",
+            "pv;bA2 \\bB1;wA2 wS1\\;bA2 wQ/"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.34299999926588,
+          "info": [
+            "depth 2 nodes 3804 score -30",
+            "pv;bA2 wQ/;wA2 /bQ"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.45359999741777,
+          "info": [
+            "depth 2 nodes 1394 score -1",
+            "pv;bA3 \\bB1;wA3 wS1\\"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.42390000045998,
+          "info": [
+            "depth 2 nodes 1961 score 110",
+            "pv;bG1 /bA3;wB1 wA2-"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.55110000132117,
+          "info": [
+            "depth 2 nodes 1714 score 147",
+            "pv;bA3 /wA3;wB1 wA2"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 230.35109999909764,
+          "info": [
+            "depth 2 nodes 1559 score 106",
+            "pv;bA1 wB1\\;wB2 \\wA3"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 230.52529999768012,
+          "info": [
+            "depth 2 nodes 1149 score 22",
+            "pv;bB2 bG1/;wB2 bB1-"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.61429999870597,
+          "info": [
+            "depth 2 nodes 1008 score 94",
+            "pv;bG2 \\bG1;wB2 bB1-"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 230.63550000006217,
+          "info": [
+            "depth 2 nodes 716 score 169",
+            "pv;bA1 -wQ;wG1 wA3-"
+          ]
+        },
+        {
+          "ply": 31,
+          "move_ms": 230.42630000054487,
+          "info": [
+            "depth 2 nodes 885 score 108",
+            "pv;bG3 /bG2;wG1 wA3-"
+          ]
+        },
+        {
+          "ply": 33,
+          "move_ms": 230.30800000196905,
+          "info": [
+            "depth 2 nodes 959 score 104",
+            "pv;bA1 \\wA1;wG1 wA3-"
+          ]
+        },
+        {
+          "ply": 35,
+          "move_ms": 230.6285000013304,
+          "info": [
+            "depth 2 nodes 593 score 35",
+            "pv;bA1 -wQ;wB2 bB1-"
+          ]
+        },
+        {
+          "ply": 37,
+          "move_ms": 230.4102000016428,
+          "info": [
+            "depth 2 nodes 748 score -8",
+            "pv;bA1 \\wA1;wG2 bA3-"
+          ]
+        },
+        {
+          "ply": 39,
+          "move_ms": 230.56089999954565,
+          "info": [
+            "depth 2 nodes 543 score -68",
+            "pv;bA1 \\wA3;wB2 bA1/"
+          ]
+        },
+        {
+          "ply": 41,
+          "move_ms": 230.60280000208877,
+          "info": [
+            "depth 2 nodes 804 score -15",
+            "pv;bA2 -wQ;wG3 wA2-"
+          ]
+        },
+        {
+          "ply": 43,
+          "move_ms": 230.53359999903478,
+          "info": [
+            "depth 2 nodes 699 score -106",
+            "pv;bA2 wQ/;wB2 bA1/"
+          ]
+        },
+        {
+          "ply": 45,
+          "move_ms": 230.47820000283537,
+          "info": [
+            "depth 2 nodes 908 score -99",
+            "pv;bA1 -wQ;wB1 bA3"
+          ]
+        },
+        {
+          "ply": 47,
+          "move_ms": 230.44699999809382,
+          "info": [
+            "depth 2 nodes 545 score -192",
+            "pv;bA1 \\wA3;wS2 -bA1"
+          ]
+        },
+        {
+          "ply": 49,
+          "move_ms": 230.5065000000468,
+          "info": [
+            "depth 2 nodes 863 score -290",
+            "pv;bG2 \\wS2;wB2 bA1/"
+          ]
+        },
+        {
+          "ply": 51,
+          "move_ms": 230.35689999960596,
+          "info": [
+            "depth 2 nodes 677 score -228",
+            "pv;bG2 bG3/;wB2 bA1/"
+          ]
+        },
+        {
+          "ply": 53,
+          "move_ms": 230.36280000087572,
+          "info": [
+            "depth 2 nodes 652 score -290",
+            "pv;bG2 \\wS2;wB2 bA1/"
+          ]
+        },
+        {
+          "ply": 55,
+          "move_ms": 230.48879999987548,
+          "info": [
+            "depth 2 nodes 839 score -236",
+            "pv;bB2 wB2;wG1 bA1/"
+          ]
+        },
+        {
+          "ply": 57,
+          "move_ms": 230.4468000002089,
+          "info": [
+            "depth 2 nodes 1119 score -285",
+            "pv;bA2 -wQ;wG2 bG2-"
+          ]
+        },
+        {
+          "ply": 59,
+          "move_ms": 230.3003000015451,
+          "info": [
+            "depth 2 nodes 1084 score -231",
+            "pv;bG3 /bG2;wG2 wB1-"
+          ]
+        },
+        {
+          "ply": 61,
+          "move_ms": 230.4459000006318,
+          "info": [
+            "depth 2 nodes 1068 score -242",
+            "pv;bA2 wQ/;wB1 bA3"
+          ]
+        },
+        {
+          "ply": 63,
+          "move_ms": 230.60280000208877,
+          "info": [
+            "depth 2 nodes 1124 score -231",
+            "pv;bA2 -wQ;wG2 wB1-"
+          ]
+        },
+        {
+          "ply": 65,
+          "move_ms": 230.350300000282,
+          "info": [
+            "depth 2 nodes 1248 score -242",
+            "pv;bA2 wQ/;wB1 bA3"
+          ]
+        },
+        {
+          "ply": 67,
+          "move_ms": 230.31410000112373,
+          "info": [
+            "depth 2 nodes 1121 score 0",
+            "pv;bA2 -wQ"
+          ]
+        }
+      ],
+      "timeout_side": null
+    }
+  ],
+  "points": 1.0,
+  "expected_games": 20,
+  "completed": true,
+  "rejected": false,
+  "model_sha256": "1a0124bab1cd43cdf1bf3e3ccd3e242e29ed4d60ca681b7c59d1040e30f7f55e",
+  "engine_sha256": "ffb851ecc55decab7e9cdfc5594ed075dcceb57e25bd41b283a92272fdf41456",
+  "opponent_sha256": "4936c30a84df62589b1902a0fe3c4fbdd71674f2c16461e6c5a4887352990d13",
+  "milliseconds": 250,
+  "internal_ms": 230,
+  "threads": 1,
+  "cap": 160,
+  "repetition_policy": "nokamute-1.0.3-stride4-window32-v1",
+  "threat_plies": 0,
+  "lmr": false,
+  "seed_base": 71000,
+  "invocation": [
+    ".tmp\\nu-nokamute\\target\\release\\nokamute.exe"
+  ],
+  "opponent_model_sha256": null,
+  "opponent_version": "1.0.3",
+  "opponent_revision": "c9ab65e0d9f496fd8735096ae37babc8bb50a57c",
+  "table_mib": 16,
+  "background_pondering": false,
+  "random_opening": false
+}

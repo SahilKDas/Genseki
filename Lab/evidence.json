@@ -1,0 +1,516 @@
+{
+  "scope": "Existing frozen evidence only; no new strength test",
+  "inputs": {
+    "Nu\\work\\campaign-v6\\models\\training.json": "0832b41ea41ff87dcc735b2d656657b074e830c899ceb4b04e3197e91436207b",
+    "Nu\\work\\campaign-v6\\nu-128-linear-development.json": "cc6bc28f651b2c8276c4c610cbdfc20587f8d06f88754c05e7fc516e850b5aac",
+    "Nu\\work\\campaign-v6\\nu-128-nonlinear-development.json": "dea0ff006a5219a5f91dd890aaf9377964c782a449c147c0830940f50c778a06",
+    "Nu\\work\\campaign-v6\\nu-64-linear-development.json": "74149561c8362cf8ec1812c07c33ae790ecefe6ca8a8858f726bd07efb82ae7b",
+    "Nu\\work\\campaign-v6\\nu-64-nonlinear-development.json": "f6215278ed1917627156c404e639ae618b1e52a72bd5a904ab835d1c75fbd491",
+    "Nu\\work\\campaign-v6\\final-thread-timing.json": "cac5d870926773d431777b54bd985c75f8d30543d179c868dc72faf29762b232",
+    ".tmp/nu-nokamute/src/eval.rs": "4cf815422c6ab8acbdce3cf7dbb5857aab6fd1c7f8d6ecec253dfd2df645c049",
+    ".tmp/nu-nokamute/src/player.rs": "9c6952577f656a376e9c176b2651bfe08dd841e24c652c6ffa00775c4cf7be9c",
+    "Nu/src/features.hpp": "d4585ea17c20697df5d2083c4fd944d70c74e4c84a51e62f58cb1c705470a662",
+    "Nu/src/model.hpp": "5cffed6cc3009373b3a8a583db97dc6a488a00c6cb5d64e24ed20ac13ce45b19",
+    "Nu/src/state.hpp": "38a5b110ce0b1c5a13c3b0d2fa045254a8a98d78ce4873d08ebca431a83bba30",
+    "Nu/src/search.hpp": "bfd160f2c8e01e06404ee6ae91131956060415e5287e4e98c803c14211c11db8",
+    "Nu/tools/collect.py": "36d10ae3ff10e423d5115ef35f7baff6fc035a9b3b95ae9fba0e46ee95ef2ec3",
+    "Nu/tools/learning.py": "d5dd9780b0a2b567dbba25ea13ede8bbc6c4e3335e3a7c896753024d307eb316",
+    "Nu/tools/teacher/src/main.rs": "6b4feff24cd93d28dfda406b79e67c29a3684db1cd800fcca2184e6628114ff7",
+    ".tmp/nu-nokamute/src/board.rs": "a68710195bf6a6c9f9a4976f23517e90a2237faf69e3b4c6afd68d28cb28dab3",
+    ".tmp/nu-nokamute/src/hex_grid.rs": "ab876b7dfaa9afd20ca9da8d7cd21be7169ff0a525367bf5a5301ec98137fe5b",
+    "Alpha/vendor/minimax-rs/src/strategies/iterative.rs": "6d90e668a1105b6261f6bc296667babf939f16184036dd8923835d46f46cfda4",
+    "Alpha/vendor/minimax-rs/src/strategies/table.rs": "74cc92a1a1ec6aa5cbc8119a09bffb72e9d91da0614467cd873a4b5edca8a8fa",
+    ".tmp/nu-nokamute/LICENSE.md": "8ef52e059f771eccbe86a7c1d0356ca450c6113b27c83d1fb9a66c2537276ba4",
+    "Alpha/vendor/minimax-rs/LICENSE": "269aca6e2caff7068c6634982ed45806d1df5a500c4b4177701d0d350122d231",
+    "LICENSE": "313e6b8cc72a15336e1afc039ee5177270f88b69e473694dcff375d4dd4b9590",
+    "Nu/work/campaign-v6/corpus/manifest.json": "a008c78d49d990de0814da4606ed30f950d1de552def533d242ccd2e0daacaaa"
+  },
+  "training": [
+    {
+      "corpus_id": "17cfc558d240d26c51e38ae95477701db5c2693dd50281478b7eaa5798d2e97d",
+      "width": 64,
+      "head": "linear",
+      "schema": 4,
+      "seed": 1701,
+      "batch": 128,
+      "accumulation": 1,
+      "epochs": 24,
+      "learning_rate": 0.001,
+      "ablate": null,
+      "outcome_only": false,
+      "initialize_sha256": null,
+      "updates": 1968,
+      "completed": true,
+      "validation_mse": 0.062194450028174746,
+      "selected_epoch": 1,
+      "train_positions": 10387,
+      "validation_positions": 2260,
+      "natural_games": [
+        216,
+        36
+      ],
+      "sha256": "f826ff2dbac640df6218d7cb2317f0dfb7bfabdd14d8a700ba28fa09f380e0ed",
+      "peak_cuda_bytes": 14836736
+    },
+    {
+      "corpus_id": "17cfc558d240d26c51e38ae95477701db5c2693dd50281478b7eaa5798d2e97d",
+      "width": 64,
+      "head": "nonlinear",
+      "schema": 4,
+      "seed": 1701,
+      "batch": 128,
+      "accumulation": 1,
+      "epochs": 24,
+      "learning_rate": 0.001,
+      "ablate": null,
+      "outcome_only": false,
+      "initialize_sha256": null,
+      "updates": 1968,
+      "completed": true,
+      "validation_mse": 0.06299926960362798,
+      "selected_epoch": 1,
+      "train_positions": 10387,
+      "validation_positions": 2260,
+      "natural_games": [
+        216,
+        36
+      ],
+      "sha256": "1a0124bab1cd43cdf1bf3e3ccd3e242e29ed4d60ca681b7c59d1040e30f7f55e",
+      "peak_cuda_bytes": 31943680
+    },
+    {
+      "corpus_id": "17cfc558d240d26c51e38ae95477701db5c2693dd50281478b7eaa5798d2e97d",
+      "width": 128,
+      "head": "linear",
+      "schema": 4,
+      "seed": 1701,
+      "batch": 128,
+      "accumulation": 1,
+      "epochs": 24,
+      "learning_rate": 0.001,
+      "ablate": null,
+      "outcome_only": false,
+      "initialize_sha256": null,
+      "updates": 1968,
+      "completed": true,
+      "validation_mse": 0.0642099609417198,
+      "selected_epoch": 1,
+      "train_positions": 10387,
+      "validation_positions": 2260,
+      "natural_games": [
+        216,
+        36
+      ],
+      "sha256": "178390953545fa1caf7321344f4a7ddeef22350a5af73430abd8b701d08fac71",
+      "peak_cuda_bytes": 45190144
+    },
+    {
+      "corpus_id": "17cfc558d240d26c51e38ae95477701db5c2693dd50281478b7eaa5798d2e97d",
+      "width": 128,
+      "head": "nonlinear",
+      "schema": 4,
+      "seed": 1701,
+      "batch": 128,
+      "accumulation": 1,
+      "epochs": 24,
+      "learning_rate": 0.001,
+      "ablate": null,
+      "outcome_only": false,
+      "initialize_sha256": null,
+      "updates": 1968,
+      "completed": true,
+      "validation_mse": 0.061451775732293594,
+      "selected_epoch": 1,
+      "train_positions": 10387,
+      "validation_positions": 2260,
+      "natural_games": [
+        216,
+        36
+      ],
+      "sha256": "01f88898a2c0e8b23696d9de80050869fc4f0326ce43b3071dcd440e7e8c6780",
+      "peak_cuda_bytes": 45323264
+    }
+  ],
+  "arenas": [
+    {
+      "file": "Nu\\work\\campaign-v6\\nu-128-linear-development.json",
+      "games": 20,
+      "points": 0.0,
+      "terminations": {
+        "natural": 20
+      },
+      "results": {
+        "BlackWins": 10,
+        "WhiteWins": 10
+      },
+      "completed_depth": {
+        "n": 350,
+        "minimum": 1,
+        "median": 2.0,
+        "mean": 2.46,
+        "p90": 3,
+        "maximum": 4
+      },
+      "nodes": {
+        "n": 350,
+        "minimum": 3,
+        "median": 2031.0,
+        "mean": 2529.1657142857143,
+        "p90": 5055,
+        "maximum": 7975
+      },
+      "score": {
+        "n": 350,
+        "minimum": -99998,
+        "median": 0.5,
+        "mean": -5733.351428571428,
+        "p90": 101,
+        "maximum": 202
+      },
+      "late_loss_nonterminal_score": {
+        "n": 40,
+        "minimum": -778,
+        "median": -125.0,
+        "mean": -156.65,
+        "p90": 0,
+        "maximum": 71
+      },
+      "late_loss_positive": 4
+    },
+    {
+      "file": "Nu\\work\\campaign-v6\\nu-128-nonlinear-development.json",
+      "games": 20,
+      "points": 2.0,
+      "terminations": {
+        "natural": 20
+      },
+      "results": {
+        "BlackWins": 10,
+        "WhiteWins": 10
+      },
+      "completed_depth": {
+        "n": 439,
+        "minimum": 1,
+        "median": 2,
+        "mean": 2.44874715261959,
+        "p90": 3,
+        "maximum": 4
+      },
+      "nodes": {
+        "n": 439,
+        "minimum": 5,
+        "median": 1417,
+        "mean": 2127.4054669703874,
+        "p90": 4868,
+        "maximum": 7821
+      },
+      "score": {
+        "n": 439,
+        "minimum": -99998,
+        "median": -2,
+        "mean": -3426.865603644647,
+        "p90": 203,
+        "maximum": 99999
+      },
+      "late_loss_nonterminal_score": {
+        "n": 37,
+        "minimum": -597,
+        "median": -278,
+        "mean": -202.75675675675674,
+        "p90": 128,
+        "maximum": 170
+      },
+      "late_loss_positive": 8
+    },
+    {
+      "file": "Nu\\work\\campaign-v6\\nu-64-linear-development.json",
+      "games": 20,
+      "points": 2.0,
+      "terminations": {
+        "natural": 20
+      },
+      "results": {
+        "BlackWins": 10,
+        "WhiteWins": 10
+      },
+      "completed_depth": {
+        "n": 388,
+        "minimum": 1,
+        "median": 2.0,
+        "mean": 2.481958762886598,
+        "p90": 3,
+        "maximum": 4
+      },
+      "nodes": {
+        "n": 388,
+        "minimum": 14,
+        "median": 1165.5,
+        "mean": 2306.1984536082473,
+        "p90": 5625,
+        "maximum": 9086
+      },
+      "score": {
+        "n": 388,
+        "minimum": -99998,
+        "median": -8.0,
+        "mean": -3893.3170103092784,
+        "p90": 151,
+        "maximum": 99999
+      },
+      "late_loss_nonterminal_score": {
+        "n": 37,
+        "minimum": -643,
+        "median": -188,
+        "mean": -172.1891891891892,
+        "p90": 60,
+        "maximum": 178
+      },
+      "late_loss_positive": 12
+    },
+    {
+      "file": "Nu\\work\\campaign-v6\\nu-64-nonlinear-development.json",
+      "games": 20,
+      "points": 1.0,
+      "terminations": {
+        "natural": 18,
+        "repetition": 2
+      },
+      "results": {
+        "BlackWins": 10,
+        "WhiteWins": 8,
+        "Draw": 2
+      },
+      "completed_depth": {
+        "n": 386,
+        "minimum": 1,
+        "median": 2.0,
+        "mean": 2.650259067357513,
+        "p90": 3,
+        "maximum": 64
+      },
+      "nodes": {
+        "n": 386,
+        "minimum": 64,
+        "median": 1143.5,
+        "mean": 2308.9948186528495,
+        "p90": 5788,
+        "maximum": 9928
+      },
+      "score": {
+        "n": 386,
+        "minimum": -99998,
+        "median": -26.5,
+        "mean": -4720.329015544042,
+        "p90": 106,
+        "maximum": 298
+      },
+      "late_loss_nonterminal_score": {
+        "n": 36,
+        "minimum": -523,
+        "median": -110.5,
+        "mean": -121.44444444444444,
+        "p90": 79,
+        "maximum": 248
+      },
+      "late_loss_positive": 11
+    }
+  ],
+  "profile": {
+    "1": {
+      "samples": 18,
+      "wall_ms": {
+        "n": 18,
+        "minimum": 230.2229000015359,
+        "median": 230.28755000086676,
+        "mean": 230.32777222235583,
+        "p90": 230.42100000020582,
+        "maximum": 230.65869999845745
+      },
+      "depth": {
+        "n": 18,
+        "minimum": 2,
+        "median": 3.0,
+        "mean": 3.2222222222222223,
+        "p90": 5,
+        "maximum": 5
+      },
+      "nodes": {
+        "n": 18,
+        "minimum": 2581,
+        "median": 4341.5,
+        "mean": 7086.944444444444,
+        "p90": 19961,
+        "maximum": 20131
+      },
+      "feature_ns_sum": 3293076700,
+      "wall_ns_sum": 4145899900.002405,
+      "feature_worker_time_over_wall": 0.7942972043290504
+    },
+    "2": {
+      "samples": 18,
+      "wall_ms": {
+        "n": 18,
+        "minimum": 230.3089999986696,
+        "median": 230.4228500015597,
+        "mean": 230.43111111170825,
+        "p90": 230.48259999995935,
+        "maximum": 230.643400002009
+      },
+      "depth": {
+        "n": 18,
+        "minimum": 2,
+        "median": 3.0,
+        "mean": 3.1666666666666665,
+        "p90": 5,
+        "maximum": 5
+      },
+      "nodes": {
+        "n": 18,
+        "minimum": 5933,
+        "median": 7797.5,
+        "mean": 14079.888888888889,
+        "p90": 34911,
+        "maximum": 38901
+      },
+      "feature_ns_sum": 6479498400,
+      "wall_ns_sum": 4147760000.010749,
+      "feature_worker_time_over_wall": 1.5621681100119602
+    },
+    "4": {
+      "samples": 18,
+      "wall_ms": {
+        "n": 18,
+        "minimum": 230.45359999741777,
+        "median": 230.56780000115396,
+        "mean": 230.59557222243004,
+        "p90": 230.7003000023542,
+        "maximum": 230.87909999958356
+      },
+      "depth": {
+        "n": 18,
+        "minimum": 2,
+        "median": 3.0,
+        "mean": 3.1666666666666665,
+        "p90": 5,
+        "maximum": 5
+      },
+      "nodes": {
+        "n": 18,
+        "minimum": 8946,
+        "median": 13420.5,
+        "mean": 20521.722222222223,
+        "p90": 48700,
+        "maximum": 55718
+      },
+      "feature_ns_sum": 12956626600,
+      "wall_ns_sum": 4150720300.003741,
+      "feature_worker_time_over_wall": 3.1215369052904682
+    },
+    "8": {
+      "samples": 18,
+      "wall_ms": {
+        "n": 18,
+        "minimum": 230.61649999726797,
+        "median": 230.72610000053828,
+        "mean": 230.76161666681907,
+        "p90": 230.9201000025496,
+        "maximum": 231.01450000103796
+      },
+      "depth": {
+        "n": 18,
+        "minimum": 2,
+        "median": 3.0,
+        "mean": 3.1666666666666665,
+        "p90": 5,
+        "maximum": 5
+      },
+      "nodes": {
+        "n": 18,
+        "minimum": 11278,
+        "median": 20291.5,
+        "mean": 25493.444444444445,
+        "p90": 46471,
+        "maximum": 52420
+      },
+      "feature_ns_sum": 23958732800,
+      "wall_ns_sum": 4153709100.0027432,
+      "feature_worker_time_over_wall": 5.7680333945350615
+    },
+    "12": {
+      "samples": 18,
+      "wall_ms": {
+        "n": 18,
+        "minimum": 230.6797999990522,
+        "median": 231.2991000017064,
+        "mean": 231.29598888913785,
+        "p90": 231.6138000023784,
+        "maximum": 231.83699999935925
+      },
+      "depth": {
+        "n": 18,
+        "minimum": 2,
+        "median": 3.0,
+        "mean": 3.1666666666666665,
+        "p90": 5,
+        "maximum": 5
+      },
+      "nodes": {
+        "n": 18,
+        "minimum": 10178,
+        "median": 17477.0,
+        "mean": 22270.222222222223,
+        "p90": 40197,
+        "maximum": 51303
+      },
+      "feature_ns_sum": 33515143500,
+      "wall_ns_sum": 4163327800.0044813,
+      "feature_worker_time_over_wall": 8.050085198663417
+    }
+  },
+  "corpus": {
+    "positions": 13032,
+    "games_by_termination": {
+      "natural": 252,
+      "ply_cap": 17,
+      "repetition": 2
+    },
+    "search_score": {
+      "n": 13032,
+      "minimum": -6000,
+      "median": 40.0,
+      "mean": 91.18600368324125,
+      "p90": 324,
+      "maximum": 6000
+    },
+    "static_score": {
+      "n": 13032,
+      "minimum": -976,
+      "median": 40.0,
+      "mean": 33.451197053407,
+      "p90": 272,
+      "maximum": 832
+    },
+    "search_pv_length": {
+      "n": 13032,
+      "minimum": 1,
+      "median": 4.0,
+      "mean": 3.7790055248618786,
+      "p90": 5,
+      "maximum": 16
+    },
+    "ply": {
+      "n": 13032,
+      "minimum": 4,
+      "median": 28.0,
+      "mean": 39.35612338858195,
+      "p90": 94,
+      "maximum": 159
+    },
+    "static_search_opposite_sign": 2183,
+    "abs_search_over_1200": 807,
+    "abs_search_over_2400": 807,
+    "active_feature_count": 2511948,
+    "repeated_active_indices": 255265,
+    "ordered_file_content_sha256": "af4bc0211a2ee38c4c4a78f7ea8b47650d046be26fe36c4e225c1f19ec42c482"
+  }
+}
