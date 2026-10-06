@@ -20,6 +20,7 @@
 #include <vector>
 #include <cstring>
 #include <future>
+#include <fstream>
 #include "tiny_raster.hpp"
 #include "audio_player.hpp"
 #include "svg_icons.hpp"
@@ -458,11 +459,29 @@ private:
     std::string game_string_ = "Base";
 };
 
+using SpectatorFrame = std::array<std::string,7>;
+
+std::optional<SpectatorFrame> read_spectator_frame(const std::filesystem::path& path) {
+    std::error_code error;
+    const auto bytes=std::filesystem::file_size(path,error);
+    if(error||bytes>1024*1024)return std::nullopt;
+    std::ifstream input(path,std::ios::binary);
+    SpectatorFrame lines;
+    for(auto& line:lines) {
+        if(!std::getline(input,line))return std::nullopt;
+        if(!line.empty()&&line.back()=='\r')line.pop_back();
+    }
+    if(lines[0]!="GENSEKI_SPECTATOR_V1")return std::nullopt;
+    return lines;
+}
+
 class App {
 public:
-    int run(HINSTANCE instance, int show, std::filesystem::path engine_path) {
+    int run(HINSTANCE instance, int show, std::filesystem::path engine_path,
+            std::filesystem::path spectator_path = {}) {
         instance_ = instance;
         engine_path_ = std::move(engine_path);
+        spectator_path_ = std::move(spectator_path);
         WNDCLASSW wc{};
         wc.lpfnWndProc = App::window_proc;
         wc.hInstance = instance_;
@@ -526,7 +545,8 @@ private:
             case WM_MOUSELEAVE:
                 hover_={-1,-1};InvalidateRect(hwnd_,nullptr,FALSE);return 0;
             case WM_TIMER:
-                maybe_engine_move();
+                if (!spectator_path_.empty()) poll_spectator();
+                else maybe_engine_move();
                 {
                     auto second=std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
                     if(animation_||!audio_cues_.empty()||easing_||thinking_||second!=paint_second_)InvalidateRect(hwnd_, nullptr, FALSE);
@@ -574,7 +594,12 @@ private:
         reserve_font_=CreateFontW(-12,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,
                          OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,CLEARTYPE_QUALITY,DEFAULT_PITCH,L"Nunito");
         if(!icons_.load(instance_))MessageBoxW(hwnd_,L"Unable to load insect artwork.",L"Genseki",MB_ICONERROR);
-        if (!engine_.start(engine_path_)) {
+        if (!spectator_path_.empty()) {
+            status_ = L"Waiting for gauntlet";
+            white_mode_ = black_mode_ = Mode::engine;
+            sound_ = false;
+            poll_spectator();
+        } else if (!engine_.start(engine_path_)) {
             status_ = L"Engine launch failed: " + engine_path_.wstring();
         } else {
             status_ = L"Engine ready";
@@ -593,6 +618,13 @@ private:
         panel_rect_ = {rc.right - kPanelWidth, kToolbarHeight, rc.right, rc.bottom};
         buttons_.clear();
         int x = 6;
+        if (!spectator_path_.empty()) {
+            add_button(111, x, 12, 64, L"Rules");
+            add_button(112, x+72, 12, 94, motion_?L"Motion: on":L"Motion: off");
+            add_button(113, x+174, 12, 94, sound_?L"Sound: on":L"Sound: off");
+            if(board_.history().empty()){origin_x_=(board_rect_.left+board_rect_.right)/2.0;origin_y_=(board_rect_.top+board_rect_.bottom)/2.0;}
+            return;
+        }
         add_button(101, x, 12, 86, L"New game"); x += 94;
         add_button(102, x, 12, 64, L"Undo"); x += 72;
         add_button(108, x, 12, 104, L"Play White"); x += 112;
@@ -608,6 +640,29 @@ private:
 
     void add_button(int id, int x, int y, int width, std::wstring text) {
         buttons_.push_back(Button{id, {x, y, x + width, y + 26}, std::move(text)});
+    }
+
+    void poll_spectator() {
+        const auto now = std::chrono::steady_clock::now();
+        if(now-spectator_poll_<std::chrono::milliseconds(100))return;
+        spectator_poll_=now;
+        const auto frame=read_spectator_frame(spectator_path_);
+        if(!frame)return;
+        const auto& lines=*frame;
+        // Each snapshot is replaced atomically by the runner. No engine is
+        // launched here, and spectator controls cannot submit moves.
+        if(lines[6]!=spectator_game_) {
+            MirrorBoard candidate;std::wstring error;
+            if(!candidate.load_game_string(lines[6],error)){status_=L"Invalid spectator position: "+error;return;}
+            consume_engine_response({lines[6]});
+            spectator_game_=lines[6];
+        }
+        SetWindowTextW(hwnd_,widen(lines[1]).c_str());
+        status_=widen(lines[2]);
+        spectator_white_=widen(lines[3]);
+        spectator_black_=widen(lines[4]);
+        spectator_score_=widen(lines[5]);
+        InvalidateRect(hwnd_,nullptr,FALSE);
     }
 
     void send_options() {
@@ -775,6 +830,12 @@ private:
                 return;
             }
         }
+        if(!spectator_path_.empty()) {
+            if(x<panel_rect_.left&&y>=board_rect_.top){
+                dragging_=true;last_mouse_={x,y};SetCapture(hwnd_);
+            }
+            return;
+        }
         if (x >= panel_rect_.left) {
             handle_panel_click(x, y);
             return;
@@ -844,6 +905,7 @@ private:
     }
 
     void on_command(int id) {
+        if(!spectator_path_.empty()&&id!=111&&id!=112&&id!=113)return;
         if(thinking_&&id!=112&&id!=113)return;
         if(id==112){motion_=!motion_;if(!motion_){animation_.reset();for(auto& cue:audio_cues_)cue.due=std::chrono::steady_clock::now();}layout();}
         if(id==113){sound_=!sound_;if(!sound_){audio_cues_.clear();audio_.silence();}layout();}
@@ -1069,12 +1131,18 @@ private:
         SetTextColor(hdc,RGB(246,225,199));
         draw_line(hdc, 10, y, color_name(board_.side()) + L" to play"); y += 24;
         draw_line(hdc, 10, y, board_.result()==L"NotStarted"?L"New game":board_.result()); y += 22;
-        draw_line(hdc, 10, y, L"Clock W/B: " + clock_text(white_elapsed_) + L" / " + clock_text(black_elapsed_)); y += 22;
+        if(spectator_path_.empty())draw_line(hdc, 10, y, L"Clock W/B: " + clock_text(white_elapsed_) + L" / " + clock_text(black_elapsed_));
+        else draw_line(hdc,10,y,L"Live gauntlet spectator");
+        y += 22;
         draw_line(hdc, 10, y, L"Status: " + status_); y += 22;
-        draw_line(hdc, 10, y, L"Engine: " + bot_name()); y += 42;
+        if(!spectator_path_.empty()) {
+            draw_line(hdc,10,y,L"White: "+spectator_white_);y+=22;
+            draw_line(hdc,10,y,L"Black: "+spectator_black_);y+=22;
+            draw_line(hdc,10,y,spectator_score_);y+=24;
+        } else {draw_line(hdc, 10, y, L"Engine: " + bot_name()); y += 42;}
         y = draw_reserve(hdc, y, Color::white);
         y = draw_reserve(hdc, y, Color::black);
-        draw_line(hdc, 10, y, L"Legal moves: " + std::to_wstring(legal_.size())); y += 24;
+        if(spectator_path_.empty()){draw_line(hdc, 10, y, L"Legal moves: " + std::to_wstring(legal_.size())); y += 24;}
         draw_line(hdc, 10, y, L"Move history"); y += 22;
         RECT hist{panel_rect_.left + 10, y, panel_rect_.right - 10, panel_rect_.bottom - 10};
         std::wstring text;
@@ -1153,6 +1221,10 @@ private:
     HFONT reserve_font_=nullptr;
     HWND hwnd_ = nullptr;
     std::filesystem::path engine_path_{L"genseki.exe"};
+    std::filesystem::path spectator_path_;
+    std::string spectator_game_;
+    std::wstring spectator_white_,spectator_black_,spectator_score_;
+    std::chrono::steady_clock::time_point spectator_poll_{};
     EngineProcess engine_{};
     MirrorBoard board_{};
     RECT toolbar_{};
@@ -1193,6 +1265,14 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR command_line, int show)
     (void)command_line;
     int argc = 0;
     wchar_t** argv = CommandLineToArgvW(GetCommandLineW(), &argc);
+    if(argv&&argc>1&&std::wstring_view(argv[1])==L"--check-spectator") {
+        bool valid=false;
+        if(argc==3) {
+            auto frame=read_spectator_frame(argv[2]);
+            if(frame){MirrorBoard board;std::wstring error;valid=board.load_game_string((*frame)[6],error);}
+        }
+        LocalFree(argv);if(SUCCEEDED(com))CoUninitialize();return valid?0:1;
+    }
     if(argv&&argc>1&&std::wstring_view(argv[1])==L"--check-font") {
         bool valid=nunito().ready();HDC dc=CreateCompatibleDC(nullptr);
         HFONT font=CreateFontW(-16,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,
@@ -1231,10 +1311,16 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR command_line, int show)
         SelectObject(dc,old);DeleteObject(bitmap);DeleteDC(dc);LocalFree(argv);
         if(SUCCEEDED(com))CoUninitialize();return valid?0:1;
     }
-    std::filesystem::path engine = argc > 1 ? std::filesystem::path(argv[1]) : default_engine_path(argv[0]);
+    std::filesystem::path spectator;
+    if(argv&&argc>1&&std::wstring_view(argv[1])==L"--spectate") {
+        if(argc!=3){LocalFree(argv);if(SUCCEEDED(com))CoUninitialize();return 2;}
+        spectator=argv[2];
+    }
+    std::filesystem::path engine = !spectator.empty()?std::filesystem::path{}:
+        (argc > 1 ? std::filesystem::path(argv[1]) : default_engine_path(argv[0]));
     if (argv) LocalFree(argv);
     App app;
-    int result=app.run(instance, show, engine);
+    int result=app.run(instance, show, engine, spectator);
     if(SUCCEEDED(com))CoUninitialize();
     return result;
 }

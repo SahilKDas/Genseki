@@ -25,6 +25,16 @@ The GUI launches its sibling `genseki.exe` by default. Engine controls use
 Alpha with a 230 ms search request. There is no Greek bot selector or Kappa
 profile. A custom UHP executable may still be supplied as a GUI argument.
 
+To run a terminal-controlled gauntlet with a live native spectator:
+
+```powershell
+cmake --build build --target genseki_spectator -j1
+python -m genseki.gauntlet --engine-b ._\path\to\opponent.exe --games 20
+```
+
+See [docs/GAUNTLET.md](docs/GAUNTLET.md) for engine arguments, neural options,
+limits, saved game records, and reconnecting the viewer.
+
 Alpha derives from attributed MIT-licensed Nokamute and minimax-rs snapshots.
 Required licenses are retained under Alpha. See
 [Alpha/README.md](Alpha/README.md), [Alpha/STATUS.md](Alpha/STATUS.md), and
