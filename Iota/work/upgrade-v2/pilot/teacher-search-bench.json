@@ -1,0 +1,957 @@
+{
+  "model_sha256": "fb3ac3113b4258f7e3e5673d6fe258b194e62c261506cd8120856a705c6f2240",
+  "engine_sha256": "0bd2932ad3c36daabddd8f7f4506b067c096912ffc91060d7adbc8a329857b58",
+  "positions": [
+    "Base;InProgress;White[3];wA1;bS1 wA1\\;wB1 \\wA1;bB1 bS1\\",
+    "Base;InProgress;Black[5];wA1;bG1 /wA1;wA2 \\wA1;bB1 -bG1;wQ wA1-;bQ /bB1;wA2 bG1\\;bA1 \\bB1;wA2 bQ\\",
+    "Base;InProgress;White[4];wB1;bA1 wB1/;wS1 -wB1;bB1 bA1-;wA1 \\wS1;bA2 bA1/",
+    "Base;InProgress;Black[6];wS1;bB1 -wS1;wB1 wS1/;bG1 /bB1;wQ wS1\\;bQ -bG1;wA1 wS1-;bA1 bQ/;wA1 \\bA1;bA2 bG1\\;wB1 wS1",
+    "Base;InProgress;White[5];wB1;bA1 wB1-;wS1 -wB1;bA2 bA1-;wA1 wS1\\;bQ bA1\\;wQ wS1/;bA2 /wA1",
+    "Base;InProgress;Black[3];wS1;bG1 wS1/;wB1 /wS1;bQ \\bG1;wQ -wB1",
+    "Base;InProgress;White[6];wA1;bA1 wA1/;wQ -wA1;bB1 bA1-;wQ \\wA1;bQ bB1/;wA1 \\bQ;bA2 bA1\\;wA2 \\wA1;bA2 -wQ",
+    "Base;InProgress;Black[4];wA1;bB1 /wA1;wB1 \\wA1;bA1 bB1\\;wQ wA1-;bQ -bB1;wA2 wB1/",
+    "Base;InProgress;White[3];wA1;bS1 -wA1;wG1 wA1/;bA1 -bS1",
+    "Base;InProgress;Black[5];wB1;bA1 wB1/;wQ -wB1;bS1 \\bA1;wA1 wB1\\;bQ bS1-;wA1 -bS1;bA2 bA1-;wS1 wB1\\",
+    "Base;InProgress;White[4];wB1;bA1 /wB1;wG1 \\wB1;bS1 -bA1;wQ wB1-;bQ bA1\\",
+    "Base;InProgress;Black[6];wA1;bB1 wA1/;wB1 -wA1;bS1 \\bB1;wQ wA1\\;bQ bB1-;wS1 wQ-;bS1 -wB1;wA2 wB1\\;bA1 \\bB1;wS1 bQ-"
+  ],
+  "samples": [
+    {
+      "threads": 1,
+      "position": 0,
+      "repeat": 0,
+      "inference_seconds": 0.0005930999905103818,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23025790000974666,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 687 depth 2 value 6.65593147"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23036250000586733,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 488 depth 0 value 15.9463511"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 0,
+      "repeat": 1,
+      "inference_seconds": 0.0005012999899918213,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23022599999967497,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 601 depth 3 value -18.1081886"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23037279999698512,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 473 depth 0 value 15.9463511"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 0,
+      "repeat": 2,
+      "inference_seconds": 0.0006150999979581684,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23058899999887217,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 405 depth 3 value -18.1081886"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.2302514000039082,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 468 depth 0 value 16.3801498"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 1,
+      "repeat": 0,
+      "inference_seconds": 0.001269699991098605,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23026879999088123,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 287 depth 1 value 29.0454636"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23040729999775067,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 275 depth 0 value -21.9892063"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 1,
+      "repeat": 1,
+      "inference_seconds": 0.0009480000007897615,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23042619999614544,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 251 depth 1 value 29.0454636"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.2305449999985285,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 183 depth 0 value -17.7534904"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 1,
+      "repeat": 2,
+      "inference_seconds": 0.0017271999968215823,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23032690001127776,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 239 depth 1 value 29.0454636"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23043520000646822,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 150 depth 0 value -16.2065563"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 2,
+      "repeat": 0,
+      "inference_seconds": 0.0022804999898653477,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23047270000097342,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 108 depth 2 value -23.0200882"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23093510000035167,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 67 depth 0 value -4.68010616"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 2,
+      "repeat": 1,
+      "inference_seconds": 0.0015693999885115772,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.2306051000050502,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 68 depth 2 value -23.0200882"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23071930000151042,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 60 depth 0 value -8.3543787"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 2,
+      "repeat": 2,
+      "inference_seconds": 0.0027489000058267266,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23077290000219364,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 66 depth 2 value -23.0200882"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23080219999246765,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 91 depth 0 value 3.00580955"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 3,
+      "repeat": 0,
+      "inference_seconds": 0.0021739999938290566,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.2304182999941986,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 130 depth 1 value 35.5007057"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23081819999788422,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 83 depth 0 value -9.63915443"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 3,
+      "repeat": 1,
+      "inference_seconds": 0.005423099995823577,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23031769999943208,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 131 depth 1 value 35.5007057"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23066020000260323,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 161 depth 0 value -20.0924435"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 3,
+      "repeat": 2,
+      "inference_seconds": 0.004721599994809367,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.2308368999947561,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 75 depth 1 value 35.5007057"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23041899999952875,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 78 depth 0 value -9.63915443"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 4,
+      "repeat": 0,
+      "inference_seconds": 0.0015140000032261014,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.2304232000024058,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 160 depth 1 value 42.5808716"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23035640000307467,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 133 depth 0 value -22.1817532"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 4,
+      "repeat": 1,
+      "inference_seconds": 0.001501899998402223,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23026179999578744,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 134 depth 1 value 42.5808716"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23066830000607297,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 128 depth 0 value -22.1817532"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 4,
+      "repeat": 2,
+      "inference_seconds": 0.001597599999513477,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23030729999300092,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 171 depth 1 value 42.5808716"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23052409999945667,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 137 depth 0 value -23.9185886"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 5,
+      "repeat": 0,
+      "inference_seconds": 0.0007824999920558184,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23055539999040775,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 198 depth 1 value 16.9785614"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23060330000589602,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 183 depth 0 value -15.423975"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 5,
+      "repeat": 1,
+      "inference_seconds": 0.0018804999999701977,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23035640000307467,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 167 depth 1 value 16.9785614"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23045509999792557,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 178 depth 0 value -15.2658501"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 5,
+      "repeat": 2,
+      "inference_seconds": 0.0006371999916154891,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23023169999942183,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 322 depth 2 value -10.2481546"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23041409999132156,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 296 depth 0 value -15.4230947"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 6,
+      "repeat": 0,
+      "inference_seconds": 0.0024800000101095065,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23043589999724645,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 117 depth 1 value 35.7501526"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23035579999850597,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 135 depth 0 value -21.1555958"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 6,
+      "repeat": 1,
+      "inference_seconds": 0.0022361999872373417,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23045459999411833,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 209 depth 1 value 35.7501526"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.2303838999941945,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 248 depth 0 value -23.8887844"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 6,
+      "repeat": 2,
+      "inference_seconds": 0.0011836000048788264,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23030779999680817,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 233 depth 1 value 35.7501526"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.2307441999873845,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 173 depth 0 value -17.9543095"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 7,
+      "repeat": 0,
+      "inference_seconds": 0.0024455000093439594,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23046579999208916,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 226 depth 1 value 26.5402203"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23044740001205355,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 249 depth 0 value -18.393919"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 7,
+      "repeat": 1,
+      "inference_seconds": 0.00243429999682121,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23041390000435058,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 231 depth 1 value 26.5402203"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23043899999174755,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 183 depth 0 value -16.4180393"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 7,
+      "repeat": 2,
+      "inference_seconds": 0.0015289000002667308,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23039779999817256,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 138 depth 1 value 26.5402203"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.2303702999925008,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 159 depth 0 value -15.1759033"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 8,
+      "repeat": 0,
+      "inference_seconds": 0.0007879999902797863,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23028509999858215,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 365 depth 2 value -3.49229574"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23042799999529961,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 360 depth 0 value 6.39805651"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 8,
+      "repeat": 1,
+      "inference_seconds": 0.0005738999898312613,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23028010000416543,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 340 depth 2 value -3.49229574"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23031800000171643,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 343 depth 0 value 5.08612251"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 8,
+      "repeat": 2,
+      "inference_seconds": 0.0008298000029753894,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23029540000425186,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 381 depth 2 value -3.49229574"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23044230000232346,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 359 depth 0 value 6.39805651"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 9,
+      "repeat": 0,
+      "inference_seconds": 0.001027200007229112,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23024819999409374,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 241 depth 1 value 39.6795273"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.2305079000070691,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 226 depth 0 value -12.7745867"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 9,
+      "repeat": 1,
+      "inference_seconds": 0.0022266000014496967,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23039320000680164,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 238 depth 1 value 39.6795273"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.2304143999936059,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 194 depth 0 value -9.78954124"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 9,
+      "repeat": 2,
+      "inference_seconds": 0.0025194000045303255,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23043509999115486,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 140 depth 1 value 39.6795273"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23050530000182334,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 136 depth 0 value -6.51282072"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 10,
+      "repeat": 0,
+      "inference_seconds": 0.0007848999957786873,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23031579999951646,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 207 depth 1 value 13.1004753"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23039029999927152,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 177 depth 0 value -10.0182447"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 10,
+      "repeat": 1,
+      "inference_seconds": 0.0015236999897751957,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23039939999580383,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 174 depth 1 value 13.1004753"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23037140000087675,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 179 depth 0 value -10.0182447"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 10,
+      "repeat": 2,
+      "inference_seconds": 0.0015981000033207238,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.2303981000004569,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 171 depth 2 value -13.3823452"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23050030000740662,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 169 depth 0 value -12.8956375"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 11,
+      "repeat": 0,
+      "inference_seconds": 0.0022686000011162832,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23035679999156855,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 124 depth 1 value 23.3510742"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.2305045999964932,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 109 depth 0 value -7.41746998"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 11,
+      "repeat": 1,
+      "inference_seconds": 0.004818000001250766,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.2304701999964891,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 114 depth 1 value 23.3510742"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.2304705999995349,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 98 depth 0 value -7.41746998"
+          ]
+        }
+      ]
+    },
+    {
+      "threads": 1,
+      "position": 11,
+      "repeat": 2,
+      "inference_seconds": 0.0024979000008897856,
+      "search": [
+        {
+          "mode": "alphabeta",
+          "seconds": 0.23059310000098776,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 124 depth 1 value 23.3510742"
+          ]
+        },
+        {
+          "mode": "mcts",
+          "seconds": 0.23055210000893567,
+          "timeout": false,
+          "legal": true,
+          "stats": [
+            "nodes 97 depth 0 value -7.41746998"
+          ]
+        }
+      ]
+    }
+  ],
+  "complete": true
+}

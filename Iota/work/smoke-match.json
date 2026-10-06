@@ -1,0 +1,108 @@
+{
+  "identity": {
+    "model": "286ad2e6a94d7b7d46909e231df6d2e70cdc8430edbd955e939a19d16806e78e",
+    "iota": "c0311772dd06333342f23d27332ded27e6e9ad657897651daf435378b4e88745",
+    "alpha": "80d1cc75571c2e3266e0246b2cec00d3657e3ba94029e5ca4635cfe0eaf12ef6",
+    "mode": "alphabeta",
+    "move_ms": 250,
+    "threads": 1,
+    "cap": 160,
+    "repetition": 3,
+    "ponder": false
+  },
+  "seed": 2701,
+  "qualification": false,
+  "games": [
+    {
+      "pair": 0,
+      "opening_seed": 2701,
+      "iota_color": "w",
+      "moves": [
+        "wA1",
+        "bS1 wA1-",
+        "wG1 -wA1",
+        "bB1 bS1/",
+        "wG2 wG1\\"
+      ],
+      "times": [
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0.23037950000434648
+        }
+      ],
+      "reason": "timeout",
+      "score": 1,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;12;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;InProgress;Black[3];wA1;bS1 wA1-;wG1 -wA1;bB1 bS1/;wG2 wG1\\"
+    },
+    {
+      "pair": 0,
+      "opening_seed": 2701,
+      "iota_color": "b",
+      "moves": [
+        "wA1",
+        "bS1 wA1-",
+        "wG1 -wA1",
+        "bB1 bS1/"
+      ],
+      "times": [
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        },
+        {
+          "actor": "alpha",
+          "seconds": 0
+        },
+        {
+          "actor": "iota",
+          "seconds": 0
+        }
+      ],
+      "reason": "timeout",
+      "score": 1,
+      "alpha_options": [
+        "Aggression;int;3;3;1;5",
+        "BackgroundPondering;bool;False;False",
+        "NumThreads;int;12;12;1;12",
+        "RandomOpening;bool;False;False",
+        "TableSizeMiB;int;100;100;1;256",
+        "Verbose;bool;False;False"
+      ],
+      "final_game": "Base;InProgress;White[3];wA1;bS1 wA1-;wG1 -wA1;bB1 bS1/"
+    }
+  ],
+  "complete": true,
+  "points": 2,
+  "valid": true,
+  "passed": false,
+  "natural_games": 0,
+  "natural_points": 0
+}

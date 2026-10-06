@@ -1,0 +1,27 @@
+{
+  "config": {
+    "architecture": "gnn",
+    "width": 32,
+    "blocks": 4,
+    "batch_size": 2,
+    "seed": 1701
+  },
+  "corpus": "869f7eeb78d14ac4fd73e50e711fc2390e7af7e30fc67e45a14a8bada3792ac9",
+  "updates": 3,
+  "history": [
+    {
+      "update": 2,
+      "loss": 3.6769039630889893,
+      "validation": 3.438089966773987
+    },
+    {
+      "update": 3,
+      "loss": 2.7675018310546875,
+      "validation": 3.437545895576477
+    }
+  ],
+  "model_sha256": "286ad2e6a94d7b7d46909e231df6d2e70cdc8430edbd955e939a19d16806e78e",
+  "complete": true,
+  "device": "cuda",
+  "peak_gpu_allocated": 17759232
+}

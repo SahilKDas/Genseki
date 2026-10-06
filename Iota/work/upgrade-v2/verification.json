@@ -1,0 +1,43 @@
+{
+  "completed": false,
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "engine_sha256": "0bd2932ad3c36daabddd8f7f4506b067c096912ffc91060d7adbc8a329857b58",
+  "sources": {
+    "src\\encoding.hpp": "ddbd01dcaff9eea0e5e203a3c2f5301ea5e5aef065d0181edde72f09c6d3aab5",
+    "src\\main.cpp": "f39fdf0bc3fff0b8d3435800b862a6bc546218b4dbc39c5a87a7b3eb6cd2d275",
+    "src\\model.hpp": "1af687c9d47979b49aed44ef70c77a3f3988cbb036ee2b97d24d33156fb51cb2",
+    "src\\search.hpp": "a1796efe9ec177a46031c75cc410f2fce2097febb77d846df367b02b9001e923",
+    "tools\\bench.py": "f1921051d4f7111d9088306bd29c637180e53367e28227b912736788c8bdbd6c",
+    "tools\\campaign.py": "58fbbcc7f69fd7e6b8f89851626b2ebd28f1e82026e7f042264d70ab265c5cd3",
+    "tools\\common.py": "eb5e1a54902ab00dde21fb9e855f43f7f6664deac56d1a470546fee547fb7d52",
+    "tools\\corpus.py": "d9900a1dcb5125b160615061d1caaa7d4ba15a22b45787a7e81ea3d752c07a37",
+    "tools\\distill.py": "ecaff22757c41d671be06dbddb3dda54a7f9189701e4669a030008b5eb121641",
+    "tools\\learning.py": "be715c793b7fa5631b546bf8ae571c6b8ca4de153b7bf0ea257f7f1581f31c99",
+    "tools\\match.py": "8527cfc0aaedb439b0b68af409d5747c62a2afaf1f6c24e88da37425ffdff106",
+    "tools\\models.py": "961429d7f18a3da79fd644cbc65cb6902c31894f30254a82464b6ea8dc032f42",
+    "tools\\supervision.py": "7ba82a2d8311c314da897b6a53e780e5715323c6c2a11fd533c3468842a5ca2a",
+    "tools\\symmetry.py": "787dbd774ccb7d7eb60fb7de464d7a4ed6f7dea6bcab978dc371e5c7429190e6",
+    "tools\\symmetry_trial.py": "2173f6fb52102e210aba0a592503c3f1f6281951e83b8707e4a13948f10d817f",
+    "tools\\train.py": "7793a18f44ea16b16daf7176a3be1993d90980ccd815ed7487ef51c01bca4731",
+    "tools\\verify.py": "922892c1d855e55b644c3793813ca4fa6d967e97b85964dd1929d6b4275364cd",
+    "tests\\test_encoding.py": "07e0c0f61963281cc85033869cb5e97c6123cc2baeefa1528ff4ffd254228749",
+    "tests\\test_models.py": "5d5dbc514be824cf76e0d98ec2d06e286ad7bef1f0f41719a7603324480e32ee",
+    "tests\\test_runner.py": "ad4fdbff07186e6987205ac1eea5b43a53ccc89db6ba98aa8163fec63811d652",
+    "tests\\test_strength.py": "bb5a1391388bff4eeeb874d571f0e02c0650b00c1df948fc40124bea99bf4149"
+  },
+  "checks": [
+    {
+      "command": [
+        "ctest",
+        "--test-dir",
+        "._\\Workspace_______\\Genseki\\Iota\\build",
+        "--output-on-failure"
+      ],
+      "returncode": 0,
+      "seconds": 0.6720000000059372,
+      "stdout": "Internal ctest changing into directory: ._/Workspace_______/Genseki/Iota/build\nTest project ._/Workspace_______/Genseki/Iota/build\n    Start 1: iota_native\n1/1 Test #1: iota_native ......................   Passed    0.41 sec\n\n100% tests passed, 0 tests failed out of 1\n\nTotal Test time (real) =   0.43 sec\n",
+      "stderr": ""
+    }
+  ]
+}
