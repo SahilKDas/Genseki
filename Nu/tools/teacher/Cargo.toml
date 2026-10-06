@@ -1,0 +1,12 @@
+[package]
+name = "nu_offline_teacher"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.9"
+git-version = "0.3"
+minimax = { git = "http._//github.com/edre/minimax-rs", rev = "be1867b38bd80a7ccdf2188f025525997a87437f" }
+
+[features]
+smaller-grid = []

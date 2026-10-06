@@ -50,6 +50,8 @@ if(Python3_Interpreter_FOUND)
             ${CMAKE_BINARY_DIR}/rust-target/release/alpha_nokamute_mit${CMAKE_EXECUTABLE_SUFFIX})
 endif()
 
+add_subdirectory(Nu)
+
 if(WIN32)
     add_executable(genseki_gui WIN32 src/gui/win32_gui.cpp)
     target_compile_definitions(genseki_gui PRIVATE

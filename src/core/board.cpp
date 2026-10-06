@@ -13,6 +13,12 @@
 namespace genseki {
 namespace {
 
+void generation_checkpoint() {
+#ifdef GENSEKI_NU_CANCELLATION
+    check_nu_generation();
+#endif
+}
+
 constexpr std::array<std::uint8_t, 5> inventory{1, 2, 2, 3, 3};
 
 std::size_t index(Color color) {
@@ -96,6 +102,13 @@ bool contains(const std::vector<Hex>& cells, Hex cell) {
     return std::ranges::find(cells, cell) != cells.end();
 }
 
+#ifdef GENSEKI_NU_CANCELLATION
+unsigned cell_bucket(Hex cell,unsigned mask) {
+    auto value=std::uint32_t(std::uint16_t(cell.q))*0x9e3779b1u+std::uint32_t(std::uint16_t(cell.r))*0x85ebca77u;
+    return (value^(value>>16))&mask;
+}
+#endif
+
 }  // namespace
 
 std::string_view name(GameResult result) {
@@ -177,14 +190,43 @@ const std::vector<Stack>& Board::stacks() const { return stacks_; }
 const std::vector<Move>& Board::history() const { return history_; }
 
 const Stack* Board::stack_at(Hex cell) const {
+#ifdef GENSEKI_NU_CANCELLATION
+    auto found=indexed_cell(cell);return found?&stacks_[*found]:nullptr;
+#else
     const auto it = std::ranges::find_if(stacks_, [cell](const Stack& stack) { return stack.cell == cell; });
     return it == stacks_.end() ? nullptr : &*it;
+#endif
 }
 
 Stack* Board::stack_at(Hex cell) {
+#ifdef GENSEKI_NU_CANCELLATION
+    auto found=indexed_cell(cell);return found?&stacks_[*found]:nullptr;
+#else
     const auto it = std::ranges::find_if(stacks_, [cell](const Stack& stack) { return stack.cell == cell; });
     return it == stacks_.end() ? nullptr : &*it;
+#endif
 }
+
+#ifdef GENSEKI_NU_CANCELLATION
+std::optional<std::size_t> Board::indexed_cell(Hex cell) const {
+    if(!index_ready_||indexed_size_!=stacks_.size()) {
+        cell_index_.fill(-1);
+        for(unsigned i=0;i<stacks_.size();++i) {
+            auto bucket=cell_bucket(stacks_[i].cell,63);
+            while(cell_index_[bucket]>=0)bucket=(bucket+1)&63;
+            cell_index_[bucket]=int(i);
+        }
+        indexed_size_=stacks_.size();index_ready_=true;
+    }
+    auto bucket=cell_bucket(cell,63);
+    while(cell_index_[bucket]>=0) {
+        auto found=std::size_t(cell_index_[bucket]);
+        if(stacks_[found].cell==cell)return found;
+        bucket=(bucket+1)&63;
+    }
+    return std::nullopt;
+}
+#endif
 
 bool Board::occupied(Hex cell) const { return stack_at(cell) != nullptr; }
 std::size_t Board::height(Hex cell) const {
@@ -194,6 +236,9 @@ std::size_t Board::height(Hex cell) const {
 
 void Board::normalize_stacks() {
     std::ranges::sort(stacks_, {}, &Stack::cell);
+#ifdef GENSEKI_NU_CANCELLATION
+    index_ready_=false;
+#endif
 }
 
 bool Board::queen_played(Color color) const {
@@ -239,6 +284,7 @@ std::vector<Hex> Board::placement_cells() const {
     std::vector<Hex> candidates;
     for (const auto& stack : stacks_) {
         for (const auto direction : directions) {
+            generation_checkpoint();
             const auto cell = add(stack.cell, direction);
             if (!occupied(cell) && !contains(candidates, cell)) {
                 candidates.push_back(cell);
@@ -281,6 +327,7 @@ bool Board::hive_connected_after_lift(Hex cell) const {
     pending.push(*remaining.begin());
     reached.insert(*remaining.begin());
     while (!pending.empty()) {
+        generation_checkpoint();
         const auto current = pending.front();
         pending.pop();
         for (const auto direction : directions) {
@@ -324,10 +371,30 @@ bool Board::beetle_gate_open(Hex from, Hex to, std::size_t source_height) const 
 }
 
 std::vector<Hex> Board::ground_crawl(Hex start, bool exactly_three) const {
+#ifdef GENSEKI_NU_CANCELLATION
+    if(!exactly_three) {
+        // At most 22 occupied cells expose at most 132 adjacent empty cells.
+        std::array<Hex,256> keys{};std::array<bool,256> used{};
+        auto locate=[&](Hex cell){auto slot=cell_bucket(cell,255);while(used[slot]&&keys[slot]!=cell)slot=(slot+1)&255;return slot;};
+        auto first=locate(start);used[first]=true;keys[first]=start;
+        std::vector<Hex> pending{start},destinations;pending.reserve(144);destinations.reserve(144);
+        for(unsigned cursor=0;cursor<pending.size();++cursor) {
+            generation_checkpoint();auto current=pending[cursor];
+            for(auto direction:directions) {
+                auto next=add(current,direction);auto slot=locate(next);
+                if(!used[slot]&&can_slide(current,next)) {
+                    used[slot]=true;keys[slot]=next;pending.push_back(next);destinations.push_back(next);
+                }
+            }
+        }
+        std::ranges::sort(destinations);return destinations;
+    }
+#endif
     std::set<Hex> results;
     if (exactly_three) {
         std::vector<Hex> path{start};
         const auto visit = [&](const auto& self, Hex current, unsigned depth) -> void {
+            generation_checkpoint();
             if (depth == 3) {
                 results.insert(current);
                 return;
@@ -347,6 +414,7 @@ std::vector<Hex> Board::ground_crawl(Hex start, bool exactly_three) const {
         std::set<Hex> visited{start};
         pending.push(start);
         while (!pending.empty()) {
+            generation_checkpoint();
             const auto current = pending.front();
             pending.pop();
             for (const auto direction : directions) {
@@ -363,7 +431,12 @@ std::vector<Hex> Board::ground_crawl(Hex start, bool exactly_three) const {
 }
 
 std::vector<Hex> Board::movement_destinations(Hex from, const Piece& piece) const {
+    generation_checkpoint();
+#ifdef GENSEKI_NU_CANCELLATION
+    Board lifted;lifted.stacks_=stacks_;
+#else
     Board lifted = *this;
+#endif
     const auto source_height = lifted.height(from);
     auto* source = lifted.stack_at(from);
     source->pieces.pop_back();
@@ -418,6 +491,7 @@ std::vector<Hex> Board::movement_destinations(Hex from, const Piece& piece) cons
 }
 
 std::vector<Move> Board::legal_moves() const {
+    generation_checkpoint();
     if (is_terminal()) {
         return {};
     }
@@ -436,6 +510,7 @@ std::vector<Move> Board::legal_moves() const {
     }
     if (queen_played(side_to_move_)) {
         for (const auto& stack : stacks_) {
+            generation_checkpoint();
             const auto piece = stack.pieces.back();
             if (piece.color != side_to_move_ || !hive_connected_after_lift(stack.cell)) {
                 continue;
@@ -451,6 +526,25 @@ std::vector<Move> Board::legal_moves() const {
     }
     return moves;
 }
+
+#ifdef GENSEKI_NU_CANCELLATION
+std::vector<Move> Board::movement_moves(Color color, std::optional<Hex> only) const {
+    std::vector<Move> moves;
+    if(is_terminal()||!queen_played(color))return moves;
+    for(const auto& stack:stacks_) {
+        generation_checkpoint();
+        if(only&&stack.cell!=*only)continue;
+        auto piece=stack.pieces.back();
+        if(piece.color!=color||!hive_connected_after_lift(stack.cell))continue;
+        for(auto cell:movement_destinations(stack.cell,piece))
+            moves.push_back(Move{MoveKind::movement,stack.cell,cell,piece});
+    }
+    std::ranges::sort(moves);return moves;
+}
+Board Board::with_side_to_move(Color color) const {
+    Board copy=*this;copy.side_to_move_=color;return copy;
+}
+#endif
 
 bool Board::is_legal(const Move& move) const {
     const auto moves = legal_moves();
@@ -503,6 +597,10 @@ std::expected<Undo, MoveError> Board::make_move(const Move& move) {
     if (!is_legal(move)) {
         return std::unexpected(MoveError::illegal_move);
     }
+    return make_generated_move(move);
+}
+
+Undo Board::make_generated_move(const Move& move) {
     Undo undo{move, side_to_move_, ply_, turns_taken_, history_.size()};
     apply_unchecked(move);
     return undo;
