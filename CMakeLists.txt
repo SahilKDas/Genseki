@@ -56,7 +56,18 @@ endif()
 add_subdirectory(Nu)
 
 if(WIN32)
-    add_executable(genseki_gui WIN32 src/gui/win32_gui.cpp)
+    enable_language(RC)
+    set(GENSEKI_RASTER_DLL ${CMAKE_BINARY_DIR}/genseki_raster.dll)
+    add_custom_command(OUTPUT ${GENSEKI_RASTER_DLL}
+        COMMAND ${CARGO_EXECUTABLE} build --release --locked -j 1
+            --manifest-path ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/raster/Cargo.toml
+            --target-dir ${CMAKE_BINARY_DIR}/gui-rust-target
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_BINARY_DIR}/gui-rust-target/release/genseki_raster.dll ${GENSEKI_RASTER_DLL}
+        DEPENDS src/gui/raster/Cargo.toml src/gui/raster/Cargo.lock src/gui/raster/src/lib.rs)
+    add_custom_target(genseki_raster DEPENDS ${GENSEKI_RASTER_DLL})
+    add_executable(genseki_gui WIN32 src/gui/win32_gui.cpp src/gui/assets/icons.rc)
+    target_include_directories(genseki_gui PRIVATE src/gui/assets)
     target_compile_definitions(genseki_gui PRIVATE
         UNICODE
         _UNICODE
@@ -64,6 +75,19 @@ if(WIN32)
         WIN32_LEAN_AND_MEAN
     )
     set_target_properties(genseki_gui PROPERTIES CXX_SCAN_FOR_MODULES OFF)
-    target_link_libraries(genseki_gui PRIVATE gdi32 user32 comdlg32 shell32)
-    add_dependencies(genseki_gui genseki)
+    target_link_libraries(genseki_gui PRIVATE gdi32 user32 comdlg32 shell32 ole32 oleaut32 msimg32 winmm)
+    add_dependencies(genseki_gui genseki genseki_raster)
+    add_custom_command(TARGET genseki_gui POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/raster/licenses ${CMAKE_BINARY_DIR}/gui-licenses
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/assets/sounds/NOTICE.md ${CMAKE_BINARY_DIR}/gui-licenses/Chess-Master.md)
+    add_custom_command(TARGET genseki_gui POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/assets/fonts/OFL.txt ${CMAKE_BINARY_DIR}/gui-licenses/Nunito-OFL.txt
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/assets/fonts/NOTICE.md ${CMAKE_BINARY_DIR}/gui-licenses/Nunito.md)
+    add_test(NAME genseki_svg_icons COMMAND genseki_gui --check-icons)
+    add_test(NAME genseki_sound_assets COMMAND genseki_gui --check-sounds)
+    add_test(NAME genseki_nunito_font COMMAND genseki_gui --check-font)
 endif()
