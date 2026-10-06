@@ -29,7 +29,7 @@ class Search {
             generation_checks=0;nu_generation_context=&search;
             nu_generation_check=[](void* p){
                 auto& search=*static_cast<Search*>(p);
-                if((++generation_checks&15)==0||search.stopped.load(std::memory_order_relaxed))search.checkpoint();
+                if((++generation_checks&3)==0||search.stopped.load(std::memory_order_relaxed))search.checkpoint();
             };metrics=profile;
         }
         ~GenerationScope(){nu_generation_check=previous;nu_generation_context=context;metrics=previous_metrics;}
@@ -183,12 +183,16 @@ public:
         std::min(bucket_limit?bucket_limit:std::numeric_limits<std::size_t>::max(),std::size_t(std::clamp(mib,1u,256u))*1024*1024/sizeof(Bucket)))){}
     void cancel(){stopped.store(true,std::memory_order_relaxed);}
     SearchResult run(const State& initial,unsigned max_depth,double milliseconds,unsigned threads=1,std::atomic<bool>* entered=nullptr,SearchOptions settings={}) {
+        auto started=std::chrono::steady_clock::now();
+        if(!std::isfinite(milliseconds)||milliseconds<0||milliseconds>60000)throw std::runtime_error("invalid search time");
         if(settings.threat_plies>4||max_depth>64)throw std::runtime_error("search bounds exceeded");
         if(age&&(table_model!=initial.model||settings.threat_plies!=options.threat_plies||settings.lmr!=options.lmr)) {
             for(auto& bucket:table)for(auto& entry:bucket)entry.depth=-1;
         }
         table_model=initial.model;options=settings;stopped=false;nodes=0;++age;
-        deadline=std::chrono::steady_clock::now()+std::chrono::microseconds(std::int64_t(std::max(0.0,milliseconds)*1000));
+        // Account for setup and reserve bounded time for unwinding and response preparation.
+        auto reserve=std::min(10.0,milliseconds*.05);
+        deadline=started+std::chrono::microseconds(std::int64_t(std::max(0.0,milliseconds-reserve)*1000));
         if(entered)entered->store(true);
         State root=initial;auto moves=root.legal();if(moves.empty())throw std::runtime_error("game over");
         SearchResult completed;completed.move=moves.front();completed.pv={completed.move};

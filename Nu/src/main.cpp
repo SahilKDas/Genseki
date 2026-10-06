@@ -153,6 +153,7 @@ int main(int argc,char** argv) {
                     state=nu::State(model,*parsed);history.clear();std::cout<<state.board.position_string()<<'\n';
                 }else if(command=="nu-position")std::cout<<state.board.position_string()<<'\n';
                 else if(command=="nu-features") {
+                    state.ensure_features();
                     for(unsigned p=0;p<2;++p){std::cout<<p<<':';for(auto id:state.active[p])std::cout<<' '<<id;std::cout<<'\n';}
                     std::cout<<"score "<<state.evaluate()<<'\n';
                 }else if(command=="nu-searchinfo") {

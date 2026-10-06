@@ -106,7 +106,7 @@ def main():
                         result=results[0];termination='natural'
                         score=.5 if result=='Draw' else float((result=='WhiteWins') == (color==0));break
             except MoveDeadline:
-                termination='timeout';score=float(current is not nu);result='Forfeit';timeout_side='Nu' if current is nu else 'Nokamute'
+                termination='timeout';score=float(current is not nu);result='Forfeit';timeout_side='Nu' if current is nu else ('Opponent' if args.opponent_model else 'Nokamute')
             except BaseException as error:
                 failure=dict(pair=pair,opening_seed=args.seed_base+pair,nu_color='white' if color==0 else 'black',
                              moves=moves,searches=searches,error=repr(error),termination='rejected')

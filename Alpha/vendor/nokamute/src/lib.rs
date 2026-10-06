@@ -8,6 +8,8 @@ mod cli;
 pub use cli::*;
 mod eval;
 pub use eval::*;
+mod neural;
+pub use neural::*;
 #[cfg(not(target_arch = "wasm32"))]
 mod profile;
 #[cfg(not(target_arch = "wasm32"))]

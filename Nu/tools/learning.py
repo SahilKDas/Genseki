@@ -111,7 +111,25 @@ def cpu_tree(value):
     if isinstance(value,tuple):return tuple(cpu_tree(v) for v in value)
     return value
 
+def decision_metrics(batch, predictions):
+    if len(batch)!=len(predictions):raise ValueError('decision prediction count mismatch')
+    regrets=[];agreements=0
+    for row, values in zip(batch,predictions):
+        candidates=row.get('alternatives',[])
+        if len(candidates)<2:continue
+        if row['mover'] not in (-1,1) or len(values)!=len(candidates):raise ValueError('invalid decision descriptors')
+        if not all(math.isfinite(float(v)) for v in values) or not all(math.isfinite(float(c['cp'])) for c in candidates):
+            raise ValueError('nonfinite decision values')
+        teacher=[float(c['cp'])*row['mover'] for c in candidates]
+        chosen=max(range(len(values)),key=lambda i:values[i]*row['mover'])
+        regret=max(teacher)-teacher[chosen];regrets.append(regret)
+        agreements+=regret==0
+    return dict(decisions=len(regrets),regret_cp=sum(regrets)/len(regrets) if regrets else None,
+                top_choice_agreement=agreements/len(regrets) if regrets else None)
+
 def run(args):
+    args.ranking_weight=getattr(args,'ranking_weight',.05)
+    args.selection=getattr(args,'selection','mse')
     import torch
     torch.set_num_threads(4)
     if args.data_manifest:args.data=[Path(path) for path in json.loads(args.data_manifest.read_text())]
@@ -166,14 +184,18 @@ def run(args):
             config=dict(corpus_id=corpus_id,width=width,head=head,schema=schema,seed=args.seed,batch=args.batch,
                         accumulation=args.accumulation,epochs=args.epochs,learning_rate=args.learning_rate,
                         ablate=args.ablate,outcome_only=args.outcome_only,
-                        initialize_sha256=digest(args.initialize) if args.initialize else None)
+                        initialize_sha256=digest(args.initialize) if args.initialize else None,
+                        ranking_weight=args.ranking_weight,selection=args.selection)
             epoch=cursor=updates=0;best_loss=float('inf');best_state=None;best_optimizer=None;selected=0
+            best_decision=None;curves=[]
             if checkpoint.exists():
                 saved=torch.load(checkpoint,map_location='cpu',weights_only=True)
-                if saved['config']!=config:raise RuntimeError('resume configuration mismatch')
+                saved_config=dict(saved['config']);saved_config.setdefault('ranking_weight',.05);saved_config.setdefault('selection','mse')
+                if saved_config!=config:raise RuntimeError('resume configuration mismatch')
                 net.load_state_dict(saved['state']);optimizer.load_state_dict(saved['optimizer'])
                 epoch=saved['epoch'];cursor=saved['cursor'];updates=saved['updates']
                 best_loss=saved['best_loss'];best_state=saved['best_state'];best_optimizer=saved['best_optimizer'];selected=saved['selected']
+                best_decision=saved.get('best_decision');curves=saved.get('curves',[])
                 torch.set_rng_state(saved['torch_rng'])
                 if device.type=='cuda' and saved['cuda_rng'] is not None:torch.cuda.set_rng_state(saved['cuda_rng'],device)
             elif args.initialize:
@@ -185,7 +207,7 @@ def run(args):
             def save():
                 atomic_checkpoint(checkpoint,dict(config=config,state=cpu_tree(net.state_dict()),optimizer=cpu_tree(optimizer.state_dict()),
                     epoch=epoch,cursor=cursor,updates=updates,best_loss=best_loss,best_state=best_state,best_optimizer=best_optimizer,
-                    selected=selected,torch_rng=torch.get_rng_state(),cuda_rng=torch.cuda.get_rng_state(device) if device.type=='cuda' else None))
+                    selected=selected,best_decision=best_decision,curves=curves,torch_rng=torch.get_rng_state(),cuda_rng=torch.cuda.get_rng_state(device) if device.type=='cuda' else None))
             while epoch<args.epochs:
                 resource_guard();order=array('I',train_ids);random.Random(args.seed+epoch).shuffle(order)
                 while cursor<len(order):
@@ -206,7 +228,7 @@ def run(args):
                         if preferences:
                             px,po,_,_=tensors(preferences,'preferred_features');ax,ao,_,_=tensors(preferences,'alternative_features')
                             signs=torch.tensor([r['mover'] for r in preferences],device=device)
-                            loss+=.05*torch.nn.functional.softplus(-signs*(net(px,po)-net(ax,ao))/.25).sum()/len(batch)
+                            loss+=args.ranking_weight*torch.nn.functional.softplus(-signs*(net(px,po)-net(ax,ao))/.25).sum()/len(batch)
                         if not torch.isfinite(loss):raise RuntimeError('nonfinite training loss; last checkpoint preserved')
                         loss.backward()
                     torch.nn.utils.clip_grad_norm_(net.parameters(),1.0,error_if_nonfinite=True);optimizer.step();updates+=1;cursor=end
@@ -214,20 +236,32 @@ def run(args):
                     if args.wall_seconds and time.monotonic()-started>=args.wall_seconds:
                         save();atomic_json(args.output/'progress.json',dict(completed=False,model=name,epoch=epoch,cursor=cursor,updates=updates));db.close();return False
                 with torch.no_grad():
-                    total=count=0
+                    total=count=0;decision_rows=[];decision_predictions=[]
                     for start in range(0,len(valid_ids),args.batch):
-                        ids,offsets,target,eligible=tensors(rows(valid_ids[start:start+args.batch]))
+                        heldout=rows(valid_ids[start:start+args.batch]);ids,offsets,target,eligible=tensors(heldout)
                         total+=(((net(ids,offsets).tanh()-target).square())*eligible).sum().item();count+=eligible.sum().item()
+                        for row in heldout:
+                            candidates=row.get('alternatives',[])
+                            if len(candidates)<2:continue
+                            child_rows=[dict(row,features=c['features']) for c in candidates]
+                            x,o,_,_=tensors(child_rows)
+                            decision_rows.append(row);decision_predictions.append(net(x,o).cpu().tolist())
                 if not count:raise RuntimeError('no eligible held-out targets')
-                if total/count<best_loss:
+                decision=decision_metrics(decision_rows,decision_predictions)
+                if args.selection=='regret' and not decision['decisions']:raise RuntimeError('regret selection requires held-out alternatives')
+                curves.append(dict(epoch=epoch+1,validation_mse=total/count,**decision))
+                improved=(total/count<best_loss) if args.selection=='mse' else (
+                    best_decision is None or (decision['regret_cp'],total/count)<(best_decision['regret_cp'],best_loss))
+                if improved:
                     best_loss=total/count;best_state=cpu_tree(net.state_dict());best_optimizer=cpu_tree(optimizer.state_dict());selected=epoch+1
+                    best_decision=decision
                 epoch+=1;cursor=0;save()
-                print(f'{name} epoch={epoch}/{args.epochs} updates={updates} validation_mse={total/count:.6f}',flush=True)
+                print(f'{name} epoch={epoch}/{args.epochs} updates={updates} validation_mse={total/count:.6f} decision={decision}',flush=True)
             net.load_state_dict(best_state);path=args.output/(name+'.nnue');export(net,path)
             atomic_checkpoint(path.with_suffix('.pt'),dict(state=best_state,optimizer=best_optimizer,config=config,selected_epoch=selected))
             report=dict(**config,updates=updates,completed=True,validation_mse=best_loss,selected_epoch=selected,
                         train_positions=len(train_ids),validation_positions=len(valid_ids),natural_games=natural,
-                        sha256=digest(path),peak_cuda_bytes=torch.cuda.max_memory_allocated(device) if device.type=='cuda' else 0)
+                        decision=best_decision,curves=curves,sha256=digest(path),peak_cuda_bytes=torch.cuda.max_memory_allocated(device) if device.type=='cuda' else 0)
             atomic_json(args.output/(name+'.json'),report);reports.append(report)
             del net,optimizer,best_optimizer,best_state
             if device.type=='cuda':torch.cuda.empty_cache()
@@ -246,8 +280,10 @@ def main():
     p.add_argument('--learning-rate',type=float,default=.001);p.add_argument('--wall-seconds',type=int,default=0)
     p.add_argument('--ablate',choices=tuple(GROUPS));p.add_argument('--outcome-only',action='store_true')
     p.add_argument('--initialize',type=Path)
+    p.add_argument('--ranking-weight',type=float,default=.05)
+    p.add_argument('--selection',choices=('mse','regret'),default='mse')
     args=p.parse_args()
-    if not 1<=args.batch<=512 or not 1<=args.accumulation<=16 or not 1<=args.epochs<=100 or args.wall_seconds<0 or not 0<args.learning_rate<=.01:p.error('invalid bounded training settings')
+    if not 1<=args.batch<=512 or not 1<=args.accumulation<=16 or not 1<=args.epochs<=100 or args.wall_seconds<0 or not 0<args.learning_rate<=.01 or not math.isfinite(args.ranking_weight) or not 0<=args.ranking_weight<=1:p.error('invalid bounded training settings')
     run(args)
 
 if __name__=='__main__':main()

@@ -9,6 +9,8 @@ use crate::uhp_client::UhpPlayer;
 use crate::{nokamute_version, BasicEvaluator, Board, Bug, Rules, Turn};
 use minimax::*;
 use std::time::Duration;
+use crate::{NeuralModel, SelectedEvaluator};
+use std::sync::Arc;
 
 // A player that can play one color's moves.
 pub(crate) trait Player {
@@ -77,6 +79,7 @@ pub fn play_game(
     config: PlayerConfig, game_type: &str, name1: &str, name2: &str, depth: Option<u8>,
     timeout: Option<String>,
 ) {
+    if config.neural_enabled && game_type!="Base" {exit("neural mode supports Base only".into());}
     let mut player1 = get_player(name1, &config);
     let mut player2 = get_player(name2, &config);
     if let Some(depth) = depth {
@@ -105,6 +108,7 @@ struct NokamutePlayer {
     strategy: Box<dyn Strategy<Rules> + Send>,
     random_opening: bool,
     name: String,
+    neural_hashing: bool,
 }
 
 impl NokamutePlayer {
@@ -116,8 +120,9 @@ impl NokamutePlayer {
         name: &str, mut strategy: Box<dyn Strategy<Rules> + Send>, random_opening: bool,
     ) -> Self {
         strategy.set_timeout(Duration::from_secs(5));
-        NokamutePlayer { board: Board::default(), strategy, random_opening, name: name.to_owned() }
+        NokamutePlayer { board: Board::default(), strategy, random_opening, name: name.to_owned(),neural_hashing:false }
     }
+    fn with_hash_mode(mut self,enabled:bool)->Self {self.neural_hashing=enabled;self.board.neural_hashing=enabled;self}
 }
 
 impl Player for NokamutePlayer {
@@ -127,6 +132,7 @@ impl Player for NokamutePlayer {
 
     fn new_game(&mut self, game_string: &str) {
         self.board = Board::from_game_string(game_string).unwrap();
+        self.board.neural_hashing=self.neural_hashing;
     }
 
     fn play_move(&mut self, m: Turn) {
@@ -205,6 +211,9 @@ pub struct PlayerConfig {
     #[cfg(not(target_arch = "wasm32"))]
     pub(crate) strategy: PlayerStrategy,
     pub(crate) eval: BasicEvaluator,
+    pub(crate) neural: Option<Arc<NeuralModel>>,
+    pub(crate) model_path: String,
+    pub(crate) neural_enabled: bool,
     pub(crate) random_opening: bool,
 }
 
@@ -213,6 +222,10 @@ pub fn configure_player() -> Result<(PlayerConfig, Vec<String>), pico_args::Erro
     let mut args = pico_args::Arguments::from_env();
 
     let mut config = PlayerConfig::new();
+    let evaluator:Option<String> = args.opt_value_from_str("--evaluator")?;
+    let model:Option<String> = args.opt_value_from_str("--model")?;
+    if let Some(path)=model {config.neural=Some(NeuralModel::load(&path).unwrap_or_else(|e|exit(e)));config.model_path=path;}
+    if let Some(mode)=evaluator {match mode.as_str() {"gen1"=>{},"neural"=>{if config.neural.is_none(){exit("neural evaluator requires --model".into())}config.neural_enabled=true;},_=>exit("evaluator must be gen1 or neural".into())}}
 
     // Configure common minimax options.
     if args.contains(["-v", "--verbose"]) {
@@ -275,6 +288,9 @@ pub fn configure_player() -> Result<(PlayerConfig, Vec<String>), pico_args::Erro
         }
         _ => exit(format!("Unrecognized strategy: {}", strategy.unwrap_or_default())),
     };
+    if config.num_threads.is_some_and(|n|n>12) {exit("NumThreads cannot exceed 12".into());}
+    if config.neural.as_ref().is_some_and(|m|m.bytes+1024*1024+256*1024>config.opts.table_byte_size) {exit("memory budget too small for model".into());}
+    if config.neural_enabled && !matches!(config.strategy,PlayerStrategy::Iterative(_)) {exit("neural evaluator requires iterative search".into());}
     Ok((config, args.finish().into_iter().map(|s| s.into_string().unwrap()).collect::<Vec<_>>()))
 }
 
@@ -285,6 +301,7 @@ impl Default for PlayerConfig {
 }
 
 impl PlayerConfig {
+    pub fn is_neural(&self)->bool {self.neural_enabled}
     pub fn new() -> Self {
         Self {
             #[cfg(not(target_arch = "wasm32"))]
@@ -296,6 +313,9 @@ impl PlayerConfig {
             #[cfg(not(target_arch = "wasm32"))]
             strategy: PlayerStrategy::Iterative(ParallelOptions::new()),
             eval: BasicEvaluator::default(),
+            neural: None,
+            model_path: String::new(),
+            neural_enabled: false,
             random_opening: false,
         }
     }
@@ -303,14 +323,14 @@ impl PlayerConfig {
     #[cfg(target_arch = "wasm32")]
     pub(crate) fn new_player(&self) -> Box<dyn Player + Send> {
         Box::new(NokamutePlayer::new(
-            Box::new(IterativeSearch::new(self.eval, self.opts)),
+            Box::new(IterativeSearch::new(self.selected(), self.search_options())),
             self.random_opening,
-        ))
+        ).with_hash_mode(self.neural_enabled))
     }
 
     #[cfg(not(target_arch = "wasm32"))]
     pub(crate) fn new_player(&self) -> Box<dyn Player + Send> {
-        Box::new(match &self.strategy {
+        Box::new((match &self.strategy {
             PlayerStrategy::Random => NokamutePlayer::new_with_name(
                 "random",
                 Box::<Random<Rules>>::default(),
@@ -318,7 +338,7 @@ impl PlayerConfig {
             ),
             PlayerStrategy::Mcts(opts) => {
                 let mut opts = opts.clone();
-                let num_threads = self.num_threads.unwrap_or(0);
+                let num_threads = self.thread_count();
                 if num_threads > 0 {
                     opts = opts.with_num_threads(num_threads);
                 }
@@ -332,19 +352,38 @@ impl PlayerConfig {
             }
             PlayerStrategy::Iterative(parallel_opts) => {
                 let mut parallel_opts = *parallel_opts;
-                let num_threads = self.num_threads.unwrap_or(0);
+                let num_threads = self.thread_count();
                 if num_threads > 0 {
                     parallel_opts = parallel_opts.with_num_threads(num_threads);
                 }
                 NokamutePlayer::new(
                     if num_threads == 1 {
-                        Box::new(IterativeSearch::new(self.eval, self.opts))
+                        Box::new(IterativeSearch::new(self.selected(), self.search_options()))
                     } else {
-                        Box::new(ParallelSearch::new(self.eval, self.opts, parallel_opts))
+                        Box::new(ParallelSearch::new(self.selected(), self.search_options(), parallel_opts))
                     },
                     self.random_opening,
                 )
             }
-        })
+        }).with_hash_mode(self.neural_enabled))
+    }
+}
+
+impl PlayerConfig {
+    #[cfg(not(target_arch = "wasm32"))]
+    fn thread_count(&self)->usize {
+        self.num_threads.filter(|n|*n>0).unwrap_or_else(||std::thread::available_parallelism().map_or(1,|n|n.get().min(12)))
+    }
+    pub(crate) fn selected(&self)->SelectedEvaluator {SelectedEvaluator{basic:self.eval,model:if self.neural_enabled {self.neural.clone()}else{None}}}
+    pub(crate) fn search_options(&self)->IterativeOptions {
+        let mut opts=self.opts;
+        if let Some(model)=self.neural.as_ref() {
+            // Tables round upward to a power of two. Request a lower power of two
+            // so model+TT fit the same configured budget as the Gen 1 table.
+            let available=opts.table_byte_size.saturating_sub(model.bytes+256*1024);
+            assert!(available>=1024*1024,"memory budget too small for model");
+            opts.table_byte_size=1usize << (usize::BITS-1-available.leading_zeros());
+        }
+        opts
     }
 }

@@ -17,6 +17,11 @@ def args(data, output, index, wall=0):
 def main():
     import torch
     torch.set_num_threads(1)
+    decisions=[dict(mover=1,alternatives=[dict(cp=100),dict(cp=40)]),
+               dict(mover=-1,alternatives=[dict(cp=-100),dict(cp=-40)])]
+    measured=learning.decision_metrics(decisions,[[0,1],[0,-1]])
+    assert measured==dict(decisions=2,regret_cp=60,top_choice_agreement=0)
+    assert learning.decision_metrics(decisions,[[1,0],[-1,0]])['top_choice_agreement']==1
     net=learning.make_network(64,'nonlinear',4)
     ids=torch.tensor([1,2,3,4,5]);offsets=torch.tensor([0,2,5])
     own=net(ids,offsets);swap=net(torch.tensor([3,4,5,1,2]),torch.tensor([0,3,5]))

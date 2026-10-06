@@ -36,7 +36,7 @@ def main():
     p.add_argument('--threads',type=int,nargs='+',default=[1,2,4,8,12]);p.add_argument('--load-workers',type=int,default=0)
     p.add_argument('--suite',type=Path);p.add_argument('--threat-plies',type=int,default=0);p.add_argument('--lmr',action='store_true')
     args=p.parse_args()
-    if not 0<=args.load_workers<=2 or not 1<=args.repeats<=10 or not all(1<=n<=12 for n in args.threads):p.error('invalid bounded benchmark settings')
+    if not 0<=args.load_workers<=2 or not 1<=args.repeats<=30 or not all(1<=n<=12 for n in args.threads):p.error('invalid bounded benchmark settings')
     resource_guard();rng=random.Random(823);positions=[]
     engine=UhpProcess([str(args.engine),'--model',str(args.model)])
     try:
@@ -72,6 +72,10 @@ def main():
                                          memory=working_set(engine.process.pid),
                                          profile={profile[i]:int(profile[i+1]) for i in range(0,len(profile),2)}))
                 finally:engine.close()
+    except BaseException as error:
+        atomic_json(args.output,dict(completed=False,error=repr(error),measurements=rows,
+                    engine_sha256=digest(args.engine),model_sha256=digest(args.model)))
+        raise
     finally:
         for loader in loaders:
             if loader.poll() is None:loader.terminate()
@@ -85,7 +89,7 @@ def main():
     selected=max(eligible,key=lambda s:(s['total_depth'],-s['max_ms']))['threads'] if eligible else None
     report=dict(engine_sha256=digest(args.engine),model_sha256=digest(args.model),positions=positions,measurements=rows,
                 summaries=summaries,selected_threads=selected,load_workers=args.load_workers,
-                threat_plies=args.threat_plies,lmr=args.lmr,selection_is_performance_only=True)
+                threat_plies=args.threat_plies,lmr=args.lmr,selection_is_performance_only=True,completed=True)
     atomic_json(args.output,report);print(json.dumps(summaries))
 
 if __name__=='__main__':main()

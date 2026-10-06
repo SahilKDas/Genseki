@@ -120,6 +120,18 @@ made, and no Rho work was modified.
 
 ## Remaining work
 
+### Gen 2 challenger (2026-10-06)
+
+The current production Alpha is designated **Gen 1** and remains the default.
+An isolated native neural challenger, calibrated Nu adapter, and Alpha-specific
+bootstrap model are implemented. Neither earned promotion: the clean Gen 1
+screens scored 1.5/20 and 0/20 respectively. No sealed qualification was run.
+The trained model's Nokamute screen stopped after 18 games under resource pressure;
+its seven points were opponent timeouts, not natural wins. Completed games and
+failure evidence are retained for a matching resume when no competing heavy job
+is active. See `GEN2.md` and `reports/gen2/` for exact verification scope, gates,
+resource-contamination notes, and remaining limitations. No Iota content was used.
+
 - Resolve Base+MLP behavior against the exact pinned revision.
 - Improve the independent C++ evaluator/search if that implementation remains
   a research target; its clean gauntlet decisively failed.

@@ -2,6 +2,7 @@
 #include "model.hpp"
 #include <memory>
 #include <chrono>
+#include <unordered_map>
 
 namespace nu {
 struct Metrics {std::uint64_t features_ns=0,generation_ns=0,ordering_ns=0,tt_ns=0;};
@@ -9,15 +10,22 @@ inline thread_local Metrics* metrics=nullptr;
 struct State {
     Board board;
     const Model* model;
-    Mobility mobility{};
-    Features active;
-    Accumulator accumulator;
+    mutable Mobility mobility{};
+    mutable Features active;
+    mutable Accumulator accumulator;
+    mutable bool features_dirty=false;
+    bool eager_features=false;
+    struct CachedFeatures {Features active;Mobility mobility;};
+    static auto& feature_cache() {
+        static thread_local std::unordered_map<std::string,CachedFeatures> cache;
+        return cache;
+    }
     std::uint64_t hash;
     std::uint64_t history_key;
     std::vector<std::uint64_t> path;
     std::vector<std::uint64_t> repeat_path;
     std::shared_ptr<const std::vector<Move>> move_cache;
-    struct Undo { genseki::Undo board; Features previous; std::uint64_t hash,history_key; std::shared_ptr<const std::vector<Move>> moves; Mobility mobility; };
+    struct Undo { genseki::Undo board; Features previous; std::uint64_t hash,history_key; std::shared_ptr<const std::vector<Move>> moves; Mobility mobility; bool dirty; };
     explicit State(const Model& m,Board b={}):board(std::move(b)),model(&m),mobility(m.feature_schema==4?movement_counts(board):Mobility{}),active(features(board,m.feature_schema,&mobility)),accumulator(m),hash(position_hash(board)),history_key(mix(hash)),path{hash} {
         accumulator.refresh(m,active);
         repeat_path.push_back(repetition_hash(board));
@@ -46,29 +54,51 @@ struct State {
         genseki::Undo undo;
         if(generated)undo=board.make_generated_move(move);
         else {auto checked=board.make_move(move);if(!checked)throw std::runtime_error("attempted illegal move");undo=*checked;}
-        Features next;
-        Mobility next_mobility{};
-        auto started=metrics?std::chrono::steady_clock::now():std::chrono::steady_clock::time_point{};
-        try {
-            if(model->feature_schema==4)next_mobility=update_movement_counts(board,mobility,move,unchanged_occupancy);
-            next=features(board,model->feature_schema,&next_mobility);
-        }
-        catch(...) {board.unmake_move(undo);throw;}
-        if(metrics)metrics->features_ns+=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-started).count();
-        accumulator.update(*model,active,next);
-        auto before=std::move(active);active=std::move(next);
+        auto before=active;auto old_mobility=mobility;auto old_dirty=features_dirty;
+        features_dirty=true;
+        try {if(eager_features)ensure_features(old_dirty?nullptr:&move,unchanged_occupancy);}
+        catch(...) {board.unmake_move(undo);features_dirty=old_dirty;throw;}
         auto cached=std::move(move_cache);move_cache.reset();
         hash=old^delta;path.push_back(hash);history_key=mix(history_key^hash);
         repeat_path.push_back(repeat_path.back()^repeat_delta);
-        auto old_mobility=mobility;mobility=next_mobility;
-        return {undo,std::move(before),old,previous_history,std::move(cached),old_mobility};
+        return {undo,std::move(before),old,previous_history,std::move(cached),old_mobility,old_dirty};
     }
     void unmake(const Undo& undo) {
         board.unmake_move(undo.board);
         accumulator.update(*model,active,undo.previous);
-        active=undo.previous;hash=undo.hash;history_key=undo.history_key;path.pop_back();repeat_path.pop_back();move_cache=undo.moves;mobility=undo.mobility;
+        active=undo.previous;hash=undo.hash;history_key=undo.history_key;path.pop_back();repeat_path.pop_back();move_cache=undo.moves;mobility=undo.mobility;features_dirty=undo.dirty;
     }
-    int evaluate() const {return accumulator.score(*model,board.side_to_move());}
+    void ensure_features(const Move* move=nullptr,bool unchanged_occupancy=false) const {
+        if(!features_dirty)return;
+        auto started=metrics?std::chrono::steady_clock::now():std::chrono::steady_clock::time_point{};
+        // Thread-local and bounded: full serialized keys avoid hash aliasing and locks.
+        // Inputs depend on the schema and board, not network weights or search history.
+        auto& cache=feature_cache();
+        std::string identity;
+        if(!eager_features) {
+            identity=std::to_string(model->feature_schema)+":"+board.position_string();
+            auto found=cache.find(identity);
+            if(found!=cache.end()) {
+                auto next=found->second.active;
+                accumulator.update(*model,active,next);
+                active=std::move(next);mobility=found->second.mobility;features_dirty=false;
+                if(metrics)metrics->features_ns+=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-started).count();
+                return;
+            }
+        }
+        // Build into temporaries so cancellation leaves the cached ancestor intact.
+        auto next_mobility=model->feature_schema==4?
+            (move?update_movement_counts(board,mobility,*move,unchanged_occupancy):movement_counts(board)):Mobility{};
+        auto next=features(board,model->feature_schema,&next_mobility);
+        if(!eager_features) {
+            if(cache.size()>=256)cache.erase(cache.begin());
+            cache.emplace(std::move(identity),CachedFeatures{next,next_mobility});
+        }
+        accumulator.update(*model,active,next);
+        active=std::move(next);mobility=next_mobility;features_dirty=false;
+        if(metrics)metrics->features_ns+=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-started).count();
+    }
+    int evaluate() const {ensure_features();return accumulator.score(*model,board.side_to_move());}
     const std::vector<Move>& legal() {
         if(!move_cache) {
             auto started=metrics?std::chrono::steady_clock::now():std::chrono::steady_clock::time_point{};
@@ -79,6 +109,7 @@ struct State {
     }
     bool repetition()const{return match_repetition(repeat_path);}
     bool equivalent() const {
+        ensure_features();
         auto refreshed=model->feature_schema==4?movement_counts(board):Mobility{};
         Accumulator reference(*model);reference.refresh(*model,features(board,model->feature_schema,&refreshed));
         auto history=mix(path.front());for(unsigned i=1;i<path.size();++i)history=mix(history^path[i]);

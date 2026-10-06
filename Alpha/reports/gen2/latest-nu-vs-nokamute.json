@@ -1,0 +1,2902 @@
+{
+  "config": {
+    "candidate_sha256": "2491e161a85b5e3bed862e055d25d8aecfeea57aa8250ad585e450b6b0965ffd",
+    "model_sha256": "2cb26dd0e360384fda3f2d833faa1620ff1181d012f42c6e7d5ad6906ececc7c",
+    "sidecar_sha256": "f7f274ef4239e59c4d15039a8438e90e0f73d8e244244f8956c7d82219655902",
+    "opponent_sha256": "4936c30a84df62589b1902a0fe3c4fbdd71674f2c16461e6c5a4887352990d13",
+    "games": 20,
+    "threads": 1,
+    "internal_ms": 230,
+    "external_ms": 250,
+    "cap": 160,
+    "total_budget_mib": 32,
+    "seed": 220700,
+    "stage": "development",
+    "opponent_path": "._\\Workspace_______\\Genseki\\.tmp\\nu-nokamute\\target\\release\\nokamute.exe",
+    "opening_manifest": [
+      {
+        "seed": 220700,
+        "candidate_color": 0
+      },
+      {
+        "seed": 220700,
+        "candidate_color": 1
+      },
+      {
+        "seed": 220701,
+        "candidate_color": 0
+      },
+      {
+        "seed": 220701,
+        "candidate_color": 1
+      },
+      {
+        "seed": 220702,
+        "candidate_color": 0
+      },
+      {
+        "seed": 220702,
+        "candidate_color": 1
+      },
+      {
+        "seed": 220703,
+        "candidate_color": 0
+      },
+      {
+        "seed": 220703,
+        "candidate_color": 1
+      },
+      {
+        "seed": 220704,
+        "candidate_color": 0
+      },
+      {
+        "seed": 220704,
+        "candidate_color": 1
+      },
+      {
+        "seed": 220705,
+        "candidate_color": 0
+      },
+      {
+        "seed": 220705,
+        "candidate_color": 1
+      },
+      {
+        "seed": 220706,
+        "candidate_color": 0
+      },
+      {
+        "seed": 220706,
+        "candidate_color": 1
+      },
+      {
+        "seed": 220707,
+        "candidate_color": 0
+      },
+      {
+        "seed": 220707,
+        "candidate_color": 1
+      },
+      {
+        "seed": 220708,
+        "candidate_color": 0
+      },
+      {
+        "seed": 220708,
+        "candidate_color": 1
+      },
+      {
+        "seed": 220709,
+        "candidate_color": 0
+      },
+      {
+        "seed": 220709,
+        "candidate_color": 1
+      }
+    ]
+  },
+  "games": [
+    {
+      "index": 0,
+      "opening_seed": 220700,
+      "candidate_color": 0,
+      "moves": [
+        "wG1",
+        "bA1 \\wG1",
+        "wQ /wG1",
+        "bG1 -bA1",
+        "wB1 wG1-",
+        "bQ bA1/",
+        "wA1 wB1/",
+        "bG1 bQ\\",
+        "wA2 wG1\\",
+        "bG1 wA1-",
+        "wA2 bQ/",
+        "bA2 -bA1",
+        "wS1 wA2-",
+        "bA3 -bQ",
+        "wS1 -wA2",
+        "bA2 /wQ",
+        "wA3 \\wS1",
+        "bA3 -wQ",
+        "wG2 \\wA2",
+        "bG2 /bA3",
+        "wG3 wA2/",
+        "bG2 wQ\\",
+        "wS2 wB1\\",
+        "bB1 bG1/",
+        "wS2 bG2\\",
+        "bB2 \\bA3",
+        "wA3 \\bB2",
+        "bS1 /bB2",
+        "wB2 -wG2",
+        "bS1 \\wA3",
+        "wB2 wG2",
+        "bB1 bG1",
+        "wB2 wS1",
+        "bG3 /bB2",
+        "wB2 bQ",
+        "bG3 wG1\\",
+        "wB2 bA1",
+        "bA2 \\wG2",
+        "wA2 wA2\\",
+        "bG3 /wS1",
+        "wG3 /bA2",
+        "bS2 /bA3",
+        "wG3 bQ\\",
+        "bS2 /wS2",
+        "wA2 wG2\\",
+        "bB1 wA1",
+        "wB1 bB1",
+        "bG3 wG1\\",
+        "wB1 wA2\\",
+        "bB1 wB1",
+        "wB2 /wS1"
+      ],
+      "score": 1.0,
+      "termination": "natural",
+      "max_ms": [
+        230.53339999751188,
+        231.73890000907704
+      ],
+      "search": [
+        {
+          "ply": 4,
+          "move_ms": 230.25649999908637,
+          "pv": [
+            "wB1 wG1-",
+            "bQ \\bG1",
+            "wB1 wG1",
+            "bA2 /bG1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 5,
+          "move_ms": 231.10229999292642,
+          "pv": [
+            "bQ bA1/",
+            "wS1 wB1/",
+            "bS1 /bG1",
+            "wS1 bQ/",
+            "bS1 /wQ",
+            "wB1 wG1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.2029999991646,
+          "pv": [
+            "wA1 wB1/",
+            "bG1 bQ\\",
+            "wS1 wA1\\",
+            "bG1 /wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.8919000060996,
+          "pv": [
+            "bG1 bQ\\",
+            "wA1 bQ/",
+            "bA1 -wQ",
+            "wA2 \\wA1",
+            "bA2 \\bA1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.21960000914987,
+          "pv": [
+            "wA2 wG1\\",
+            "bG1 /wQ",
+            "wA2 bQ/",
+            "bA2 /bG1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.97589999088086,
+          "pv": [
+            "bG1 wA1-",
+            "wA3 wB1\\",
+            "bS1 -bA1",
+            "wA2 -bS1",
+            "bA2 bG1/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.14070000499487,
+          "pv": [
+            "wA2 bQ/",
+            "bA2 bG1-",
+            "wA3 wG1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.91480000584852,
+          "pv": [
+            "bA2 -bA1",
+            "wA3 wB1\\",
+            "bA2 /wA3",
+            "wB2 \\wA2",
+            "bA2 -wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.16639999696054,
+          "pv": [
+            "wS1 wA2-",
+            "bA2 /wQ",
+            "wS1 -wA2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.7847999909427,
+          "pv": [
+            "bA3 -bQ",
+            "wS1 -wA2",
+            "bA2 wQ\\",
+            "wB2 wA2-",
+            "bQ wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.1829999923939,
+          "pv": [
+            "wS1 -wA2",
+            "bA3 -wQ",
+            "wA2 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.5087000131607,
+          "pv": [
+            "bA2 /wQ",
+            "wG2 \\wS1",
+            "bA3 -wQ",
+            "wA3 wA2-",
+            "bB1 \\bA3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.24099999747705,
+          "pv": [
+            "wA3 \\wS1",
+            "bQ wA2\\",
+            "wB1 wG1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.7552999991458,
+          "pv": [
+            "bA3 -wQ",
+            "wA3 wA1\\",
+            "bB1 /bA3",
+            "wA1 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.25439999764785,
+          "pv": [
+            "wG2 \\wA2",
+            "bS1 /bA3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.68799999600742,
+          "pv": [
+            "bG2 /bA3",
+            "wA3 /bG2",
+            "bB1 -bA3",
+            "wG2 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.22180001134984,
+          "pv": [
+            "wG3 wA2/",
+            "bG3 -bA3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.55800001020543,
+          "pv": [
+            "bG2 wQ\\",
+            "wA3 -bA1",
+            "bA2 \\wG2",
+            "wA3 wA1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.28830000839662,
+          "pv": [
+            "wS2 wB1\\",
+            "bS1 bA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 23,
+          "move_ms": 230.86400001193397,
+          "pv": [
+            "bB1 bG1/",
+            "wA3 /wS2",
+            "bB1 bG1",
+            "wG2 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.1990999985719,
+          "pv": [
+            "wS2 bG2\\",
+            "bB1 -bB1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 25,
+          "move_ms": 231.0812000068836,
+          "pv": [
+            "bB2 \\bA3",
+            "wA3 bB1-",
+            "bB2 /bA1",
+            "wG2 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.22409999975935,
+          "pv": [
+            "wA3 \\bB2",
+            "bB1 -bB1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.86579999653623,
+          "pv": [
+            "bS1 /bB2",
+            "wB2 wG3\\",
+            "bS1 \\wA3",
+            "wG2 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 28,
+          "move_ms": 230.2860000054352,
+          "pv": [
+            "wB2 -wG2",
+            "bB1 -bB1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 29,
+          "move_ms": 230.96559999976307,
+          "pv": [
+            "bS1 \\wA3",
+            "wG2 /wS1",
+            "bB1 bG1",
+            "wG2 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 30,
+          "move_ms": 230.37940000358503,
+          "pv": [
+            "wB2 wG2",
+            "bB1 -bB1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 31,
+          "move_ms": 231.73890000907704,
+          "pv": [
+            "bB1 bG1",
+            "wB2 wG3",
+            "bB1 wA1",
+            "wG2 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 32,
+          "move_ms": 230.17139999137726,
+          "pv": [
+            "wB2 wS1",
+            "bB1 wA1",
+            "wB2 bQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 33,
+          "move_ms": 231.23109999869484,
+          "pv": [
+            "bG3 /bB2",
+            "wB2 bQ",
+            "bA2 \\wG2",
+            "wG3 /bA2",
+            "bG3 wG1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 34,
+          "move_ms": 230.53339999751188,
+          "pv": [
+            "wB2 bQ",
+            "bB1 wA1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 35,
+          "move_ms": 231.63039999781176,
+          "pv": [
+            "bG3 wG1\\",
+            "wG2 /wS1",
+            "bB1 wA1",
+            "wS2 bB1\\",
+            "bS2 bA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 36,
+          "move_ms": 230.19230000500102,
+          "pv": [
+            "wB2 bA1",
+            "bB1 wA1",
+            "wG2 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 37,
+          "move_ms": 230.98330000357237,
+          "pv": [
+            "bA2 \\wG2",
+            "wG3 /bA2",
+            "bB1 wA1",
+            "wG2 wA2\\",
+            "bB1 wG2",
+            "wG1 /wS1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 38,
+          "move_ms": 230.27690000890289,
+          "pv": [
+            "wA2 wA2\\",
+            "bB1 wA1",
+            "wG1 /wS1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 39,
+          "move_ms": 230.75620000599883,
+          "pv": [
+            "bG3 /wS1",
+            "wB1 wG1",
+            "bG3 wB1\\",
+            "wB2 /wS1",
+            "bA2 /wA1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 40,
+          "move_ms": 230.20389999146573,
+          "pv": [
+            "wG3 /bA2",
+            "bA2 -bA2",
+            "wB2 bQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 41,
+          "move_ms": 230.72590000811033,
+          "pv": [
+            "bS2 /bA3",
+            "wB1 wG1",
+            "bG3 wB1\\",
+            "wG3 bQ\\",
+            "bA2 bA3\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 42,
+          "move_ms": 230.21520000474993,
+          "pv": [
+            "wG3 bQ\\",
+            "bG3 wG2/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 43,
+          "move_ms": 230.52090000419412,
+          "pv": [
+            "bS2 /wS2",
+            "wA2 wG2\\",
+            "bA2 wG2/",
+            "wB1 wG1",
+            "bG3 wB1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 44,
+          "move_ms": 230.2371999976458,
+          "pv": [
+            "wA2 wG2\\",
+            "bG3 wG2/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 45,
+          "move_ms": 230.5737999995472,
+          "pv": [
+            "bB1 wA1",
+            "wB1 bB1",
+            "bG3 wG1\\",
+            "wA2 -bA2",
+            "bS2 /bA3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 46,
+          "move_ms": 230.2268999919761,
+          "pv": [
+            "wB1 bB1",
+            "bG3 wG2/",
+            "wB1 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 47,
+          "move_ms": 0.2640000020619482,
+          "pv": [
+            "bG3 wG1\\",
+            "wB1 wA2\\",
+            "bA2 -wB2",
+            "wB2 /wS1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 48,
+          "move_ms": 177.85539999022149,
+          "pv": [
+            "wB1 wA2\\",
+            "bG1 -wB2",
+            "wG1 /wS1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 49,
+          "move_ms": 0.29340000764932483,
+          "pv": [
+            "bB1 wB1",
+            "wB2 /wS1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 50,
+          "move_ms": 5.517099998542108,
+          "pv": [
+            "wB2 /wS1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "opening_seed": 220700,
+      "candidate_color": 1,
+      "moves": [
+        "wG1",
+        "bA1 \\wG1",
+        "wQ /wG1",
+        "bG1 -bA1",
+        "wA1 wG1-",
+        "bA2 /bG1",
+        "wA1 -bA2",
+        "bQ bA1/",
+        "wA2 wG1-",
+        "bA3 \\bG1",
+        "wA2 bA3/",
+        "bS1 -bA3"
+      ],
+      "score": 1.0,
+      "termination": "timeout",
+      "max_ms": [
+        250.0,
+        230.65289999067318
+      ],
+      "search": [
+        {
+          "ply": 4,
+          "move_ms": 245.55060001148377,
+          "pv": [
+            "wA1 wG1-",
+            "bQ \\bG1",
+            "wA2 wA1/",
+            "bA2 \\bA1",
+            "wA2 \\bQ",
+            "bA2 wQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 5,
+          "move_ms": 230.65289999067318,
+          "pv": [
+            "bA2 /bG1",
+            "wA1 \\bA1",
+            "bQ -bG1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 6,
+          "move_ms": 233.40009999810718,
+          "pv": [
+            "wA1 -bA2",
+            "bQ bA1/",
+            "wS1 wG1-",
+            "bA3 \\bG1",
+            "wS1 bQ/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.43899999174755,
+          "pv": [
+            "bQ bA1/",
+            "wA2 wG1-",
+            "bA3 \\bG1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 8,
+          "move_ms": 240.07600000186358,
+          "pv": [
+            "wA2 wG1-",
+            "bA3 \\bG1",
+            "wA2 \\bA3",
+            "bB1 -bQ",
+            "wA1 bQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.36689999571536,
+          "pv": [
+            "bA3 \\bG1",
+            "wA2 bA3/",
+            "bS1 -bA3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 10,
+          "move_ms": 235.66930000379216,
+          "pv": [
+            "wA2 bA3/",
+            "bS1 bQ-",
+            "wA2 \\bQ",
+            "bS1 wG1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.3929000045173,
+          "pv": [
+            "bS1 -bA3",
+            "wA3 wG1-",
+            "bS1 wA2/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        }
+      ],
+      "timeout_side": 0
+    },
+    {
+      "index": 2,
+      "opening_seed": 220701,
+      "candidate_color": 0,
+      "moves": [
+        "wS1",
+        "bG1 wS1/",
+        "wQ wS1\\",
+        "bQ bG1/",
+        "wA1 -wS1",
+        "bA1 -bQ",
+        "wA1 -bA1",
+        "bG2 bQ\\",
+        "wA2 /wA1",
+        "bG2 wA1\\",
+        "wA2 \\bA1",
+        "bA2 bQ\\",
+        "wA1 bA2-",
+        "bA3 -bG2",
+        "wA2 bQ/",
+        "bA3 /wQ",
+        "wA3 wA1/",
+        "bA1 wA3/",
+        "wB1 \\wA2",
+        "bG2 wQ\\",
+        "wB1 /wB1",
+        "bG3 /bA3",
+        "wS2 \\wA2",
+        "bG3 bG1\\",
+        "wS1 /bA3",
+        "bB1 -bG1",
+        "wG1 wA3\\",
+        "bB1 bB1\\",
+        "wS2 /wB1",
+        "bG1 bG3\\",
+        "wA2 bA1/",
+        "bB1 wQ",
+        "wG2 -wB1",
+        "bS1 -bB1",
+        "wA2 bQ/",
+        "bB2 -bG3"
+      ],
+      "score": 0.0,
+      "termination": "natural",
+      "max_ms": [
+        230.4837999981828,
+        231.32299999997485
+      ],
+      "search": [
+        {
+          "ply": 4,
+          "move_ms": 230.36909999791533,
+          "pv": [
+            "wA1 -wS1",
+            "bA1 bQ\\",
+            "wA1 bA1\\",
+            "bQ bA1/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 5,
+          "move_ms": 231.0184000089066,
+          "pv": [
+            "bA1 -bQ",
+            "wA1 \\bA1",
+            "bS1 bQ\\",
+            "wS2 wA1/",
+            "bS1 wQ\\",
+            "wS2 bQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.16500000085216,
+          "pv": [
+            "wA1 -bA1",
+            "bA2 bQ\\",
+            "wS2 -wS1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.88380000262987,
+          "pv": [
+            "bG2 bQ\\",
+            "wA2 -wS1",
+            "bG2 wA1\\",
+            "wA2 \\bQ",
+            "bG2 wQ\\",
+            "wA2 bQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.1928999950178,
+          "pv": [
+            "wA2 /wA1",
+            "bG2 wA1\\",
+            "wA1 bQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.5144999991171,
+          "pv": [
+            "bG2 wA1\\",
+            "wA1 \\bA1",
+            "bA2 bQ\\",
+            "wA2 bA2-",
+            "bG2 wQ\\",
+            "wA1 bQ/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.32420000527054,
+          "pv": [
+            "wA2 \\bA1",
+            "bG2 wQ\\",
+            "wA1 bQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.58380000293255,
+          "pv": [
+            "bA2 bQ\\",
+            "wA1 bA2\\",
+            "bG2 wQ\\",
+            "wA2 bQ/",
+            "bA1 /wA1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.32750000129454,
+          "pv": [
+            "wA1 bA2-",
+            "bG2 wQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 13,
+          "move_ms": 231.32299999997485,
+          "pv": [
+            "bA3 -bG2",
+            "wA3 wA1-",
+            "bA3 wA3\\",
+            "wA2 bQ/",
+            "bA1 /wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.4837999981828,
+          "pv": [
+            "wA2 bQ/",
+            "bA1 /wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.735300006927,
+          "pv": [
+            "bA3 /wQ",
+            "wS2 \\wA2",
+            "bB1 -bA3",
+            "wA3 wA2/",
+            "bA1 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.2027999976417,
+          "pv": [
+            "wA3 wA1/",
+            "bA1 wQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.81530000490602,
+          "pv": [
+            "bA1 wA3/",
+            "wB1 \\wA2",
+            "bG2 wQ\\",
+            "wB1 /wB1",
+            "bA1 bG2/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.20170000381768,
+          "pv": [
+            "wB1 \\wA2",
+            "bA1 wQ-",
+            "wB1 /wB1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.65979999955744,
+          "pv": [
+            "bG2 wQ\\",
+            "wB1 /wB1",
+            "bS1 bG2\\",
+            "wB2 \\wA2",
+            "bS1 bG1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.1486000069417,
+          "pv": [
+            "wB1 /wB1",
+            "bS1 bA3\\",
+            "wS2 wA1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.549300002167,
+          "pv": [
+            "bG3 /bA3",
+            "wB1 bQ",
+            "bG3 bG1\\",
+            "wS1 -wA2",
+            "bG1 bG3\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.1898000005167,
+          "pv": [
+            "wS2 \\wA2",
+            "bS1 bA3\\",
+            "wS2 /wB1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 23,
+          "move_ms": 231.03660000197124,
+          "pv": [
+            "bG3 bG1\\",
+            "wS1 /bA3",
+            "bA1 /bG1",
+            "wA3 /wB1",
+            "bG1 bG3\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.1766000018688,
+          "pv": [
+            "wS1 /bA3",
+            "bG1 wA2/",
+            "wS2 /wB1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 25,
+          "move_ms": 230.6222000042908,
+          "pv": [
+            "bB1 -bG1",
+            "wS2 /wB1",
+            "bB1 bB1\\",
+            "wG1 \\wA2",
+            "bG1 bG3\\",
+            "wG1 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.18290000618435,
+          "pv": [
+            "wG1 wA3\\",
+            "bB1 bB1\\",
+            "wS2 /wB1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.73500000464264,
+          "pv": [
+            "bB1 bB1\\",
+            "wS2 \\bA1",
+            "bB2 -bB1",
+            "wA2 wA2\\",
+            "bG1 bG3\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 28,
+          "move_ms": 230.18139999476261,
+          "pv": [
+            "wS2 /wB1",
+            "bG1 /bB1",
+            "wG1 -bA1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 29,
+          "move_ms": 230.75729999982286,
+          "pv": [
+            "bG1 bG3\\",
+            "wA2 \\bA1",
+            "bB2 -bB1",
+            "wS1 /bB2",
+            "bG1 bB2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 30,
+          "move_ms": 230.1587000110885,
+          "pv": [
+            "wA2 bA1/",
+            "bB2 -bB1",
+            "wS2 \\bB2",
+            "bG1 bB2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 31,
+          "move_ms": 32.62230000109412,
+          "pv": [
+            "bB1 wQ",
+            "wA2 -wA3",
+            "bB2 -bG3",
+            "wG1 -bA1",
+            "bA1 /bB2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 32,
+          "move_ms": 230.16079999797512,
+          "pv": [
+            "wG2 -wB1",
+            "bB2 -bG3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 33,
+          "move_ms": 0.516500003868714,
+          "pv": [
+            "bS1 -bB1",
+            "wG1 -bA1",
+            "bB1 -bG3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 34,
+          "move_ms": 5.73749998875428,
+          "pv": [
+            "wA2 bQ/",
+            "bA1 -bG3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 35,
+          "move_ms": 0.27040000713896006,
+          "pv": [
+            "bB2 -bG3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "opening_seed": 220701,
+      "candidate_color": 1,
+      "moves": [
+        "wS1",
+        "bG1 wS1/",
+        "wQ wS1\\",
+        "bQ bG1/",
+        "wA1 -wS1",
+        "bA1 bQ\\",
+        "wA1 bA1-",
+        "bA2 -bQ",
+        "wS2 -wS1",
+        "bA2 \\wS2",
+        "wA2 wA1/",
+        "bA3 -bQ",
+        "wA2 \\bA3",
+        "bQ \\wA1",
+        "wA3 /wS2",
+        "bQ wA1/"
+      ],
+      "score": 1.0,
+      "termination": "timeout",
+      "max_ms": [
+        266.00000000325963,
+        230.4532999987714
+      ],
+      "search": [
+        {
+          "ply": 4,
+          "move_ms": 231.1757999996189,
+          "pv": [
+            "wA1 -wS1",
+            "bA1 -bQ",
+            "wA1 \\bA1",
+            "bS1 bQ\\",
+            "wA1 bQ/",
+            "bS1 wQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 5,
+          "move_ms": 230.28380000323523,
+          "pv": [
+            "bA1 bQ\\",
+            "wA1 bA1\\",
+            "bQ bA1/",
+            "wA1 bQ/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.70160001225304,
+          "pv": [
+            "wA1 bA1-",
+            "bA2 -bQ",
+            "wS2 -wS1",
+            "bA2 /wQ",
+            "wS2 \\bQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.30860000289977,
+          "pv": [
+            "bA2 -bQ",
+            "wS2 -wS1",
+            "bA2 wQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 8,
+          "move_ms": 234.0583999903174,
+          "pv": [
+            "wS2 -wS1",
+            "bA2 -wS2",
+            "wA2 wA1\\",
+            "bA2 /wQ",
+            "wA2 bQ/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.36190000129864,
+          "pv": [
+            "bA2 \\wS2",
+            "wB1 wS2\\",
+            "bQ -bQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.77979999652598,
+          "pv": [
+            "wA2 wA1/",
+            "bA3 -bQ",
+            "wA2 \\bA3",
+            "bA2 /wQ",
+            "wA1 bQ/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.2860000054352,
+          "pv": [
+            "bA3 -bQ",
+            "wA2 bQ/",
+            "bA3 /wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.74859999178443,
+          "pv": [
+            "wA2 \\bA3",
+            "bA2 /wQ",
+            "wA3 \\wS2",
+            "bQ \\wA1",
+            "wA3 bQ/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.24619999341667,
+          "pv": [
+            "bQ \\wA1",
+            "wA1 bQ/",
+            "bA2 wQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.98639999807347,
+          "pv": [
+            "wA3 /wS2",
+            "bQ wA1/",
+            "wA3 \\bA2",
+            "bB1 \\bA1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.4532999987714,
+          "pv": [
+            "bQ wA1/",
+            "wA3 -bA2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        }
+      ],
+      "timeout_side": 0
+    },
+    {
+      "index": 4,
+      "opening_seed": 220702,
+      "candidate_color": 0,
+      "moves": [
+        "wA1",
+        "bS1 wA1\\",
+        "wA2 -wA1",
+        "bQ bS1-",
+        "wQ wA1/",
+        "bA1 bS1\\",
+        "wA2 /bA1",
+        "bA2 bQ\\",
+        "wA2 bA2-",
+        "bS2 bQ/",
+        "wA2 bS2-",
+        "bA2 \\wQ",
+        "wS1 wA2/",
+        "bA3 bA2/",
+        "wA3 wA2\\",
+        "bA1 /wA3",
+        "wB1 wA3-",
+        "bA3 wB1/",
+        "wS2 wB1\\",
+        "bG1 -bA2",
+        "wS2 /bA1",
+        "bG1 wQ/",
+        "wG1 \\wS1",
+        "bB1 /bS1",
+        "wG1 wS1\\",
+        "bB1 bS1",
+        "wB1 bA3",
+        "bG2 \\bG1",
+        "wB2 wG1\\",
+        "bB1 wA1",
+        "wG2 wS2\\",
+        "bG2 bG1\\",
+        "wG2 bQ\\",
+        "bS1 /bA2",
+        "wS2 bB1\\",
+        "bB1 wQ\\"
+      ],
+      "score": 0.0,
+      "termination": "natural",
+      "max_ms": [
+        230.93829999561422,
+        235.03470000287052
+      ],
+      "search": [
+        {
+          "ply": 4,
+          "move_ms": 230.56079998787027,
+          "pv": [
+            "wQ wA1/",
+            "bA1 bS1\\",
+            "wA2 /bA1",
+            "bA2 bQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 5,
+          "move_ms": 235.03470000287052,
+          "pv": [
+            "bA1 bS1\\",
+            "wA2 /bA1",
+            "bS2 bQ/",
+            "wA2 bS2-",
+            "bA1 \\wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.4767999885371,
+          "pv": [
+            "wA2 /bA1",
+            "bA2 bQ/",
+            "wA3 -wA2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 7,
+          "move_ms": 231.59039999882225,
+          "pv": [
+            "bA2 bQ\\",
+            "wA2 bA2\\",
+            "bA3 /bS1",
+            "wA3 -wA1",
+            "bA3 wQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.4199000063818,
+          "pv": [
+            "wA2 bA2-",
+            "bA1 wQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 9,
+          "move_ms": 232.98950000025798,
+          "pv": [
+            "bS2 bQ/",
+            "wB1 -wA1",
+            "bA1 -wB1",
+            "wA2 /bA2",
+            "bS2 wQ/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.68989999592304,
+          "pv": [
+            "wA2 bS2-",
+            "bA2 wQ/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.8978999935789,
+          "pv": [
+            "bA2 \\wQ",
+            "wA3 wA2/",
+            "bA1 \\wA3",
+            "wB1 wA3\\",
+            "bA1 \\bS2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.23509999620728,
+          "pv": [
+            "wS1 wA2/",
+            "bA1 wQ/",
+            "wA3 wA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.8710999932373,
+          "pv": [
+            "bA3 bA2/",
+            "wS1 bS2\\",
+            "bA1 wA2/",
+            "wS1 bA1-",
+            "bA3 \\bS2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.18359999696258,
+          "pv": [
+            "wA3 wA2\\",
+            "bA1 bA3\\",
+            "wS2 wS1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.57619998871814,
+          "pv": [
+            "bA1 /wA3",
+            "wS2 wS1\\",
+            "bB1 -bA3",
+            "wS2 bA1\\",
+            "bA3 \\bS2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.25629999756347,
+          "pv": [
+            "wB1 wA3-",
+            "bA3 wB1\\",
+            "wG1 wB1/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.679100000998,
+          "pv": [
+            "bA3 wB1/",
+            "wG1 \\wS1",
+            "bA3 wQ/",
+            "wB1 wA3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.26120000577066,
+          "pv": [
+            "wS2 wB1\\",
+            "bA1 /wS2",
+            "wG1 /wA3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.55209999438375,
+          "pv": [
+            "bG1 -bA2",
+            "wS1 bA3/",
+            "bG1 wQ/",
+            "wS2 /bA1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.25149999011774,
+          "pv": [
+            "wS2 /bA1",
+            "bG1 wQ/",
+            "wG1 wB1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 21,
+          "move_ms": 231.24369999277405,
+          "pv": [
+            "bG1 wQ/",
+            "wG1 wS1/",
+            "bB1 /bS1",
+            "wG1 bS2\\",
+            "bB1 bS1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 22,
+          "move_ms": 230.93829999561422,
+          "pv": [
+            "wG1 \\wS1",
+            "bG2 \\bG1",
+            "wG1 wS1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 23,
+          "move_ms": 231.60009999992326,
+          "pv": [
+            "bB1 /bS1",
+            "wG1 wS1\\",
+            "bB1 bS1",
+            "wB1 bA3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 24,
+          "move_ms": 230.40870000841096,
+          "pv": [
+            "wG1 wS1\\",
+            "bA3 bG1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 25,
+          "move_ms": 231.03419999824837,
+          "pv": [
+            "bB1 bS1",
+            "wB1 bA3",
+            "bB2 \\bG1",
+            "wB2 \\wB1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.30280000239145,
+          "pv": [
+            "wB1 bA3",
+            "bG2 \\bG1",
+            "wB2 wG1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 27,
+          "move_ms": 233.57219999888912,
+          "pv": [
+            "bG2 \\bG1",
+            "wG2 wG1\\",
+            "bB2 /bB1",
+            "wG2 bS2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 28,
+          "move_ms": 230.406500006211,
+          "pv": [
+            "wB2 wG1\\",
+            "bG2 bG1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 29,
+          "move_ms": 230.89099999924656,
+          "pv": [
+            "bB1 wA1",
+            "wS2 /bS1",
+            "bG2 bG1\\",
+            "wB2 wG1",
+            "bA1 /bA2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 30,
+          "move_ms": 230.22169999603648,
+          "pv": [
+            "wG2 wS2\\",
+            "bB1 wQ",
+            "wG2 bQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 31,
+          "move_ms": 138.40139999228995,
+          "pv": [
+            "bG2 bG1\\",
+            "wG2 bQ\\",
+            "bS1 /bA2",
+            "wG2 wA3\\",
+            "bB1 wQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 32,
+          "move_ms": 230.24289999739267,
+          "pv": [
+            "wG2 bQ\\",
+            "bS1 /bA2",
+            "wS2 bB1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 33,
+          "move_ms": 0.5253999988781288,
+          "pv": [
+            "bS1 /bA2",
+            "wG2 wA3\\",
+            "bB1 wQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 34,
+          "move_ms": 2.361499995458871,
+          "pv": [
+            "wS2 bB1\\",
+            "bB1 wQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 35,
+          "move_ms": 0.40669999725650996,
+          "pv": [
+            "bB1 wQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "opening_seed": 220702,
+      "candidate_color": 1,
+      "moves": [
+        "wA1",
+        "bS1 wA1\\",
+        "wA2 -wA1",
+        "bQ bS1-",
+        "wQ wA1/",
+        "bA1 bS1\\",
+        "wA2 /bA1",
+        "bA2 bQ\\",
+        "wA3 -wA1",
+        "bA2 \\wA3",
+        "wS1 wQ-",
+        "bA3 bQ\\",
+        "wS1 bA3/",
+        "bA3 \\wQ",
+        "wB1 wS1/",
+        "bA2 wQ-",
+        "wB2 wB1\\",
+        "bG1 bA3/",
+        "wA3 wA3\\",
+        "bG2 -bA3",
+        "wB1 bA2\\",
+        "bG1 bG2\\",
+        "wA3 \\bG2",
+        "bS1 /bG2",
+        "wA1 /bS1",
+        "bG3 bA2/",
+        "wG1 wB2-",
+        "bS2 bG3/",
+        "wG1 -bQ",
+        "bB1 -bS2",
+        "wS2 wB2-",
+        "bB2 bS2\\",
+        "wS2 bQ\\",
+        "bB1 bG3",
+        "wG2 \\wB2",
+        "bB2 bS2",
+        "wG2 wQ\\"
+      ],
+      "score": 0.0,
+      "termination": "natural",
+      "max_ms": [
+        234.79129999759607,
+        230.57139999582432
+      ],
+      "search": [
+        {
+          "ply": 4,
+          "move_ms": 231.13970000122208,
+          "pv": [
+            "wQ wA1/",
+            "bA1 bS1\\",
+            "wA2 /bA1",
+            "bS2 bQ/",
+            "wA2 bS2-",
+            "bA1 \\wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 5,
+          "move_ms": 230.57139999582432,
+          "pv": [
+            "bA1 bS1\\",
+            "wA2 /bA1",
+            "bA2 bQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 6,
+          "move_ms": 231.3710999878822,
+          "pv": [
+            "wA2 /bA1",
+            "bS2 bQ/",
+            "wG1 /wA2",
+            "bS2 wQ/",
+            "wG1 bQ/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.2862000069581,
+          "pv": [
+            "bA2 bQ\\",
+            "wA2 bA2-",
+            "bA1 wQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 8,
+          "move_ms": 233.27189999690745,
+          "pv": [
+            "wA3 -wA1",
+            "bA2 \\wQ",
+            "wA3 bQ/",
+            "bA3 bA2/",
+            "wB1 -wA1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.327600002056,
+          "pv": [
+            "bA2 \\wA3",
+            "wQ -wQ",
+            "bA2 wQ/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 10,
+          "move_ms": 234.79129999759607,
+          "pv": [
+            "wS1 wQ-",
+            "bS2 \\bA2",
+            "wS1 bQ-",
+            "bS2 \\wQ",
+            "wA2 -bS2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.33439999562688,
+          "pv": [
+            "bA3 bQ\\",
+            "wS1 bA3/",
+            "bA3 wQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 12,
+          "move_ms": 231.0313999914797,
+          "pv": [
+            "wS1 bA3/",
+            "bA3 /bS1",
+            "wA2 bA1\\",
+            "bA3 wQ-",
+            "wB1 /wA3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.20160000305623,
+          "pv": [
+            "bA3 \\wQ",
+            "wA2 -bA3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.92229999019764,
+          "pv": [
+            "wB1 wS1/",
+            "bB1 bA3/",
+            "wB1 -wB1",
+            "bB1 bB1\\",
+            "wA2 -bA3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.18369999772403,
+          "pv": [
+            "bA2 wQ-",
+            "wB1 bA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 16,
+          "move_ms": 230.92950000136625,
+          "pv": [
+            "wB2 wB1\\",
+            "bS2 \\bA3",
+            "wA3 bS2/",
+            "bA2 /bS1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 17,
+          "move_ms": 230.31930001161527,
+          "pv": [
+            "bG1 bA3/",
+            "wB1 bA2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 18,
+          "move_ms": 231.0698999935994,
+          "pv": [
+            "wA3 wA3\\",
+            "bB1 -bA3",
+            "wB1 bA2\\",
+            "bG1 bB1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 19,
+          "move_ms": 230.2452000003541,
+          "pv": [
+            "bG2 -bA3",
+            "wG1 wS1\\",
+            "bG1 bG2\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 20,
+          "move_ms": 232.04819999227766,
+          "pv": [
+            "wB1 bA2\\",
+            "bG1 bG2\\",
+            "wA3 \\bG2",
+            "bS1 /wA2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 21,
+          "move_ms": 230.27020000154153,
+          "pv": [
+            "bG1 bG2\\",
+            "wS2 \\wB2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 22,
+          "move_ms": 231.1628000024939,
+          "pv": [
+            "wA3 \\bG2",
+            "bS1 /wA2",
+            "wA1 wA1\\",
+            "bA3 /wA1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 23,
+          "move_ms": 230.32259999308735,
+          "pv": [
+            "bS1 /bG2",
+            "wA1 wA1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 24,
+          "move_ms": 232.14439999719616,
+          "pv": [
+            "wA1 /bS1",
+            "bB1 bA2/",
+            "wA1 -bQ",
+            "bS1 \\wA3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 25,
+          "move_ms": 230.3859000094235,
+          "pv": [
+            "bG3 bA2/",
+            "wS2 \\wB2",
+            "bS2 bG3/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 26,
+          "move_ms": 230.99379999621306,
+          "pv": [
+            "wG1 wB2-",
+            "bA3 wG1/",
+            "wA1 bA3-",
+            "bG3 wQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 27,
+          "move_ms": 230.34799999732058,
+          "pv": [
+            "bS2 bG3/",
+            "wS2 \\wB2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 28,
+          "move_ms": 232.55190000054426,
+          "pv": [
+            "wG1 -bQ",
+            "bA3 wB2/",
+            "wA1 bS2-",
+            "bA3 /wG1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 29,
+          "move_ms": 230.21769999468233,
+          "pv": [
+            "bB1 -bS2",
+            "wA3 bQ\\",
+            "bB1 bG3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 30,
+          "move_ms": 230.68189999321476,
+          "pv": [
+            "wS2 wB2-",
+            "bA3 wS2/",
+            "wA3 bQ\\",
+            "bB1 /bB1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 31,
+          "move_ms": 230.1865000044927,
+          "pv": [
+            "bB2 bS2\\",
+            "wS2 bQ\\",
+            "bB1 bG3"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 32,
+          "move_ms": 230.8257999975467,
+          "pv": [
+            "wS2 bQ\\",
+            "bB1 bG3",
+            "wG2 \\wB2",
+            "bB2 bS2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 33,
+          "move_ms": 230.16429999552201,
+          "pv": [
+            "bB1 bG3",
+            "wG2 \\wB2",
+            "bB2 bS2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 34,
+          "move_ms": 0.4726000042865053,
+          "pv": [
+            "wG2 \\wB2",
+            "bB2 bS2",
+            "wG2 wQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 35,
+          "move_ms": 5.423399998107925,
+          "pv": [
+            "bB2 bS2",
+            "wG2 wQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 36,
+          "move_ms": 0.3465999907348305,
+          "pv": [
+            "wG2 wQ\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "opening_seed": 220703,
+      "candidate_color": 0,
+      "moves": [
+        "wG1",
+        "bS1 wG1\\",
+        "wG2 -wG1",
+        "bA1 bS1-",
+        "wQ \\wG2",
+        "bQ /bS1",
+        "wA1 \\wG1",
+        "bA1 wA1/",
+        "wA2 /wG2",
+        "bA2 bS1-",
+        "wA2 bA2\\",
+        "bA3 bA1-",
+        "wG2 \\bA3",
+        "bA3 wG2/",
+        "wA3 /wA2",
+        "bA3 /wQ",
+        "wA3 bQ\\",
+        "bB1 -bA3",
+        "wG3 \\wG2",
+        "bB1 -wQ",
+        "wS1 wG2/"
+      ],
+      "score": 1.0,
+      "termination": "timeout",
+      "max_ms": [
+        232.7635000110604,
+        250.0
+      ],
+      "search": [
+        {
+          "ply": 4,
+          "move_ms": 230.3576999984216,
+          "pv": [
+            "wQ \\wG2",
+            "bQ bS1\\",
+            "wA1 \\wG1",
+            "bA1 -wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 5,
+          "move_ms": 230.83449999103323,
+          "pv": [
+            "bQ /bS1",
+            "wA1 \\wG1",
+            "bA1 -wQ",
+            "wS1 /wG2",
+            "bA2 bS1-",
+            "wS1 /bQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 6,
+          "move_ms": 230.2960999950301,
+          "pv": [
+            "wA1 \\wG1",
+            "bA2 bS1\\",
+            "wA1 -bQ",
+            "bA2 wQ/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.72230000980198,
+          "pv": [
+            "bA1 wA1/",
+            "wS1 /wG2",
+            "bS2 bA1/",
+            "wS1 /bQ",
+            "bS2 \\wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.21239999798127,
+          "pv": [
+            "wA2 /wG2",
+            "bA2 bA1-",
+            "wA2 bA2-",
+            "bA3 \\bA1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.86330000660382,
+          "pv": [
+            "bA2 bS1-",
+            "wA2 wA2\\",
+            "bS2 \\bA1",
+            "wG2 bA1/",
+            "bS2 -wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 10,
+          "move_ms": 230.3247000090778,
+          "pv": [
+            "wA2 bA2\\",
+            "bA1 -wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 11,
+          "move_ms": 233.42019999108743,
+          "pv": [
+            "bA3 bA1-",
+            "wG2 \\bA2",
+            "bA3 bA3\\",
+            "wA2 bQ\\",
+            "bA1 \\wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 12,
+          "move_ms": 230.59920000378042,
+          "pv": [
+            "wG2 \\bA3",
+            "bA3 \\wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 13,
+          "move_ms": 231.03140000603162,
+          "pv": [
+            "bA3 wG2/",
+            "wA2 bQ\\",
+            "bA2 -wQ",
+            "wA3 wA2-",
+            "bA3 \\wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 14,
+          "move_ms": 230.24160000204574,
+          "pv": [
+            "wA3 /wA2",
+            "bA3 wA3\\",
+            "wS1 wA2-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 15,
+          "move_ms": 231.0289000015473,
+          "pv": [
+            "bA3 /wQ",
+            "wA3 /bA3",
+            "bB1 bA2/",
+            "wA3 bQ\\",
+            "bB1 bA2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 16,
+          "move_ms": 232.7635000110604,
+          "pv": [
+            "wA3 bQ\\",
+            "bG1 bA2/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 17,
+          "move_ms": 232.64729999937117,
+          "pv": [
+            "bB1 -bA3",
+            "wS1 wA3\\",
+            "bB2 bA3\\",
+            "wS1 bB2\\",
+            "bB2 wS1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 18,
+          "move_ms": 230.28920000069775,
+          "pv": [
+            "wG3 \\wG2",
+            "bS2 bB1\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 19,
+          "move_ms": 245.09359999501612,
+          "pv": [
+            "bB1 -wQ",
+            "wS1 wA3\\",
+            "bG1 /bB1",
+            "wS1 -bQ",
+            "bG1 \\wQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 20,
+          "move_ms": 230.33760000544135,
+          "pv": [
+            "wS1 wG2/",
+            "bA3 /wA2"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        }
+      ],
+      "timeout_side": 1
+    },
+    {
+      "index": 7,
+      "opening_seed": 220703,
+      "candidate_color": 1,
+      "moves": [
+        "wG1",
+        "bS1 wG1\\",
+        "wG2 -wG1",
+        "bA1 bS1-",
+        "wQ \\wG2",
+        "bQ bS1\\",
+        "wG3 \\wG1",
+        "bA1 -wQ",
+        "wG3 bQ\\",
+        "bA2 -bA1",
+        "wA1 \\wG1",
+        "bA2 \\wA1",
+        "wS1 /wG3",
+        "bA3 -bA1",
+        "wS1 wG3/",
+        "bA3 bA1\\"
+      ],
+      "score": 1.0,
+      "termination": "timeout",
+      "max_ms": [
+        250.0,
+        230.529700012994
+      ],
+      "search": [
+        {
+          "ply": 4,
+          "move_ms": 231.14199998963159,
+          "pv": [
+            "wQ \\wG2",
+            "bQ /bS1",
+            "wA1 \\wG1",
+            "bA1 -wQ",
+            "wS1 /wG2",
+            "bA2 bS1-",
+            "wS1 /bQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 5,
+          "move_ms": 230.38609999639448,
+          "pv": [
+            "bQ bS1\\",
+            "wA1 \\wG1",
+            "bA1 -wQ",
+            "wA1 bQ-"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 6,
+          "move_ms": 233.19199999968987,
+          "pv": [
+            "wG3 \\wG1",
+            "bA1 -wQ",
+            "wG3 bQ\\",
+            "bA2 \\bA1",
+            "wA1 \\wG1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 7,
+          "move_ms": 230.38350000570063,
+          "pv": [
+            "bA1 -wQ",
+            "wG3 bQ\\",
+            "bA2 -bA1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 8,
+          "move_ms": 230.98279999976512,
+          "pv": [
+            "wG3 bQ\\",
+            "bA2 \\bA1",
+            "wB1 \\wG1",
+            "bG1 /bA2",
+            "wB1 wG2",
+            "bG1 \\wG1"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 9,
+          "move_ms": 230.47619999852031,
+          "pv": [
+            "bA2 -bA1",
+            "wA1 \\wG1",
+            "bA2 wA1/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 10,
+          "move_ms": 244.9849999975413,
+          "pv": [
+            "wA1 \\wG1",
+            "bG1 bA2\\",
+            "wS1 wG3-",
+            "bG1 \\wQ",
+            "wS1 /bQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 11,
+          "move_ms": 230.43219999817666,
+          "pv": [
+            "bA2 \\wA1",
+            "wS1 wG3\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 12,
+          "move_ms": 233.0060000094818,
+          "pv": [
+            "wS1 /wG3",
+            "bG1 /bA1",
+            "wA1 -bG1",
+            "bA3 \\bA1",
+            "wS1 wG3/"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 13,
+          "move_ms": 230.529700012994,
+          "pv": [
+            "bA3 -bA1",
+            "wS2 wG3\\"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 14,
+          "move_ms": 234.542699996382,
+          "pv": [
+            "wS1 wG3/",
+            "bA3 wG1/",
+            "wS2 /wG2",
+            "bB1 \\bA2",
+            "wS2 /bQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        },
+        {
+          "ply": 15,
+          "move_ms": 230.43009999673814,
+          "pv": [
+            "bA3 bA1\\",
+            "wA1 /bQ"
+          ],
+          "nodes": null,
+          "completed_depth": null,
+          "telemetry": "pinned UHP exposes PV only"
+        }
+      ],
+      "timeout_side": 0
+    }
+  ],
+  "complete": false,
+  "valid": true,
+  "points": 5.0,
+  "failure": "RuntimeError('RAM below 2 GiB; resumable stop')"
+}

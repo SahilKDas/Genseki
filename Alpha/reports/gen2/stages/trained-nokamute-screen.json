@@ -1,0 +1,16 @@
+{
+  "config": {
+    "mode": "arena",
+    "name": "trained-vs-nokamute",
+    "model": "Alpha/work/gen2/trained/nu-64-linear.nnue",
+    "opponent": ".tmp/nu-nokamute/target/release/nokamute.exe",
+    "games": 20,
+    "threads": 1,
+    "corpus": "corpus",
+    "binary_sha256": "c6f214f66c0e71190a6b445d0d7c9672af7f28a5c444800ad20b9a17729417b7"
+  },
+  "started": 1791305543.2652752,
+  "deadline": 1791306143.2652752,
+  "status": "failed",
+  "error": "RuntimeError('RAM below 2 GiB; resumable stop')"
+}

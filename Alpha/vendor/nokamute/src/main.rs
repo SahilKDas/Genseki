@@ -39,6 +39,10 @@ engine flags:
 #[cfg(not(target_arch = "wasm32"))]
 fn main() {
     let (config, args) = configure_player().unwrap();
+    if config.is_neural() && matches!(args.first().map(String::as_str),Some("profile"|"profile-search"|"cli"|"uhp-debug")) {
+        eprintln!("this auxiliary mode supports Gen 1 only; use neural UHP diagnostics instead");
+        std::process::exit(2);
+    }
     match args.first().unwrap_or(&"uhp".to_owned()).as_ref() {
         "profile-search" => {
             let game = args.get(1).map(String::as_str).unwrap_or("Base");

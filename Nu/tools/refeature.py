@@ -24,6 +24,12 @@ def main():
                     row['alternative_features']=features(row['alternative_position'])
                 else:
                     row.pop('preferred_features',None);row.pop('alternative_features',None)
+                candidates=row.get('alternatives',[])
+                if all('position' in candidate for candidate in candidates):
+                    for candidate in candidates:
+                        candidate['features']=features(candidate['position'])
+                else:
+                    row.pop('alternatives',None)
                 output.write(json.dumps(row)+'\n')
     finally:engine.close()
 if __name__=='__main__':main()

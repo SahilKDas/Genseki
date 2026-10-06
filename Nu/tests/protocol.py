@@ -43,6 +43,14 @@ try:
     command('undo')
     assert command('nu-position') == initial
     command('options set BackgroundPondering False')
+    command('newgame Base')
+    before_features=command('nu-features')
+    first=command('validmoves')[0].split(';')[0]
+    game=command('play '+first)[0]
+    lazy_features=command('nu-features')
+    assert lazy_features!=before_features
+    command('newgame '+game)
+    assert command('nu-features')==lazy_features
 finally:
     p.stdin.write('exit\n');p.stdin.flush();p.wait(timeout=5)
 with tempfile.TemporaryDirectory() as directory:

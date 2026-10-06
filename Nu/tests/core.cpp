@@ -65,9 +65,27 @@ int main(){
     auto exact_before=exact_state.board.position_string();auto generated=exact_state.legal().front();
     genseki::nu_generation_check=[](void*){throw std::runtime_error("test cancellation");};
     bool cancelled=false;
-    try{exact_state.make(generated,true);}catch(const std::runtime_error&){cancelled=true;}
+    try{nu::Applied applied(exact_state,generated);exact_state.evaluate();}catch(const std::runtime_error&){cancelled=true;}
     genseki::nu_generation_check=nullptr;genseki::nu_generation_context=nullptr;
     check(cancelled&&exact_state.board.position_string()==exact_before&&exact_state.equivalent());
+    for(unsigned version:{3u,4u}) {
+        nu::Model reference_model;reference_model.feature_schema=version;
+        nu::State lazy(reference_model),eager(reference_model);eager.eager_features=true;
+        std::mt19937 random(881);std::vector<nu::State::Undo> lazy_undo,eager_undo;
+        for(unsigned ply=0;ply<100&&!lazy.board.is_terminal();++ply) {
+            auto moves=lazy.legal();auto move=moves[random()%moves.size()];
+            lazy_undo.push_back(lazy.make(move,true));eager_undo.push_back(eager.make(move,true));
+            // Deliberately skip evaluations across multiple moves.
+            if(ply%7==0)check(lazy.evaluate()==eager.evaluate()&&lazy.active==eager.active&&lazy.mobility==eager.mobility);
+        }
+        while(!lazy_undo.empty()) {
+            lazy.unmake(lazy_undo.back());lazy_undo.pop_back();eager.unmake(eager_undo.back());eager_undo.pop_back();
+            check(lazy.evaluate()==eager.evaluate()&&lazy.equivalent());
+        }
+        nu::Search lazy_search(1),eager_search(1);
+        auto lazy_result=lazy_search.run(lazy,3,60000),eager_result=eager_search.run(eager,3,60000);
+        check(lazy_result.depth==3&&eager_result.depth==3&&lazy_result.score==eager_result.score&&lazy_result.move==eager_result.move);
+    }
     auto bridge=nu::Board::from_position_string("G1|w|8|4|4|0,0=wQ;1,0=wA1;2,0=bQ");check(bool(bridge));
     auto bridge_features=nu::features(*bridge,3);
     check(std::binary_search(bridge_features[0].begin(),bridge_features[0].end(),6213));

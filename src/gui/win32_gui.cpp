@@ -278,6 +278,7 @@ public:
     }
 
     std::vector<std::string> command(std::string text) {
+        if (!in_ || !out_) return {"err Engine connection is closed; restart the engine"};
         send_only(text);
         return read_until_ok();
     }
@@ -310,7 +311,11 @@ private:
         const auto deadline=GetTickCount64()+5000;
         for (;;) {
             auto line = read_line(deadline);
-            if(!line){lines.push_back("err Engine response deadline or pipe failure");break;}
+            if(!line){
+                lines.push_back("err Engine response deadline or pipe failure; restart the engine");
+                stop();
+                break;
+            }
             if (*line == "ok") break;
             if(!line->empty())lines.push_back(*line);
         }

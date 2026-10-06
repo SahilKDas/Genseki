@@ -29,11 +29,15 @@ impl<W: Write> UhpServer<W> {
     fn info(&mut self) -> Result<()> {
         writeln!(self.output, "id {} {}", env!("CARGO_PKG_NAME"), nokamute_version())?;
         // Capabilities
-        writeln!(self.output, "Mosquito;Ladybug;Pillbug")?;
+        writeln!(self.output, "{}",if self.config.neural_enabled {""}else{"Mosquito;Ladybug;Pillbug"})?;
         Ok(())
     }
 
     fn reset_engine(&mut self) {
+        // Drop the old strategy first: this joins/cancels its pondering workers
+        // before constructing tables or exposing a different evaluator.
+        self.engine.take();
+        self.pv_dirty = true;
         if let Some(board) = &self.board {
             let mut engine = self.config.new_player();
             engine.new_game(&board.game_type());
@@ -47,7 +51,9 @@ impl<W: Write> UhpServer<W> {
     fn new_game(&mut self, args: &str) -> Result<()> {
         self.pv_dirty = true;
         let args = if args.is_empty() { "Base" } else { args };
-        self.board = Some(Board::from_game_string(args)?);
+        let board=Board::from_game_string(args)?;
+        if self.config.neural_enabled && board.game_type()!="Base" {return Err(UhpError::EngineError("neural mode supports Base only".into()));}
+        self.board = Some(board);
         self.reset_engine();
         writeln!(self.output, "{}", self.board.as_mut().unwrap().game_string())?;
         Ok(())
@@ -202,11 +208,18 @@ impl<W: Write> UhpServer<W> {
             "RandomOpening" => self.get_option_bool::<RandomOpeningOption>(),
             "TableSizeMiB" => self.get_option_int::<TableSizeOption>(),
             "Verbose" => self.get_option_bool::<VerboseOption>(),
+            "Evaluator" => {writeln!(self.output,"Evaluator;string;{};gen1;gen1;neural",if self.config.neural_enabled {"neural"}else{"gen1"})?;Ok(())},
+            "ModelPath" => {writeln!(self.output,"ModelPath;string;{};",self.config.model_path)?;Ok(())},
             _ => Err(UhpError::InvalidOption(option.into())),
         }
     }
 
     fn options(&mut self, args: &str) -> Result<()> {
+        if let Some(path)=args.strip_prefix("set ModelPath ") {
+            let model=NeuralModel::load(path).map_err(UhpError::EngineError)?;
+            if model.bytes+1024*1024+256*1024>self.config.opts.table_byte_size {return Err(UhpError::EngineError("memory budget too small for model".into()));}
+            self.config.neural=Some(model);self.config.model_path=path.into();self.reset_engine();return self.get_option("ModelPath");
+        }
         let tokens = args.split(' ').collect::<Vec<_>>();
         if args.is_empty() {
             self.get_option_int::<AggressionOption>()?;
@@ -217,10 +230,18 @@ impl<W: Write> UhpServer<W> {
             self.get_option_bool::<RandomOpeningOption>()?;
             self.get_option_int::<TableSizeOption>()?;
             self.get_option_bool::<VerboseOption>()?;
+            self.get_option("Evaluator")?;self.get_option("ModelPath")?;
         } else if tokens.len() == 2 && tokens[0] == "get" {
             self.get_option(tokens[1])?;
         } else if tokens.len() == 3 && tokens[0] == "set" {
             match tokens[1] {
+                "Evaluator" => {match tokens[2] {
+                    "gen1"=>self.config.neural_enabled=false,
+                    "neural"=>{if self.config.neural.is_none() {return Err(UhpError::EngineError("load trained ModelPath first".into()));}
+                        if !matches!(self.config.strategy,PlayerStrategy::Iterative(_)) {return Err(UhpError::EngineError("neural mode requires iterative search".into()));}
+                        if self.board.as_ref().is_some_and(|b|b.game_type()!="Base") {return Err(UhpError::EngineError("neural mode supports Base only".into()));}
+                        if self.config.neural.as_ref().unwrap().bytes+1024*1024+256*1024>self.config.opts.table_byte_size {return Err(UhpError::EngineError("memory budget too small".into()));}
+                        self.config.neural_enabled=true;},_=>return Err(UhpError::InvalidOption(args.into()))}self.get_option("Evaluator")?;},
                 "Aggression" => self.set_option_int::<AggressionOption>(tokens[2])?,
                 #[cfg(not(target_arch = "wasm32"))]
                 "BackgroundPondering" => {
@@ -229,7 +250,9 @@ impl<W: Write> UhpServer<W> {
                 #[cfg(not(target_arch = "wasm32"))]
                 "NumThreads" => self.set_option_int::<NumThreadsOption>(tokens[2])?,
                 "RandomOpening" => self.set_option_bool::<RandomOpeningOption>(tokens[2])?,
-                "TableSizeMiB" => self.set_option_int::<TableSizeOption>(tokens[2])?,
+                "TableSizeMiB" => {let v=tokens[2].parse::<usize>().map_err(|_|UhpError::InvalidOption(args.into()))?;
+                    if self.config.neural.as_ref().is_some_and(|m|v.saturating_mul(1<<20)<m.bytes+1024*1024+256*1024) {return Err(UhpError::EngineError("memory budget too small".into()));}
+                    self.set_option_int::<TableSizeOption>(tokens[2])?;},
                 "Verbose" => self.set_option_bool::<VerboseOption>(tokens[2])?,
                 _ => return Err(UhpError::InvalidOption(args.into())),
             }
@@ -263,6 +286,11 @@ impl<W: Write> UhpServer<W> {
             "pv" => self.pv(),
             "undo" => self.undo(args),
             "options" => self.options(args),
+            "alpha-eval" => {if let Some(b)=&self.board {use minimax::Evaluator;writeln!(self.output,"score {}",self.config.selected().evaluate(b)).map_err(UhpError::from)}else{Err(UhpError::GameNotStarted)}},
+            "alpha-neural" => self.neural_diagnostics(),
+            "alpha-neural-bench" => self.neural_benchmark(),
+            "alpha-search" => self.teacher_search(args),
+            "alpha-moveid" => {if let Some(b)=&self.board {match b.from_move_string(args) {Ok(m)=>writeln!(self.output,"{m:?}").map_err(UhpError::from),Err(e)=>Err(e)}}else{Err(UhpError::GameNotStarted)}},
             "perft" => self.perft(args),
             "exit" => return true,
             _ => Err(UhpError::UnrecognizedCommand(command.to_string())),
@@ -275,6 +303,42 @@ impl<W: Write> UhpServer<W> {
             }
         }
         false
+    }
+}
+
+impl<W:Write> UhpServer<W> {
+    fn neural_benchmark(&mut self)->Result<()> {
+        let b=self.board.as_ref().ok_or(UhpError::GameNotStarted)?;
+        if b.game_type()!="Base" {return Err(UhpError::EngineError("Base only".into()))}
+        let model=self.config.neural.as_ref().ok_or_else(||UhpError::EngineError("no model".into()))?;
+        let ns=model.costs(b);
+        writeln!(self.output,"feature_ns {} reconstruction_ns {} incremental_ns {} inference_ns {}",ns[0],ns[1],ns[2],ns[3])?;Ok(())
+    }
+    fn neural_diagnostics(&mut self)->Result<()> {
+        let b=self.board.as_ref().ok_or(UhpError::GameNotStarted)?;
+        let model=self.config.neural.as_ref().ok_or_else(||UhpError::EngineError("no model".into()))?;
+        if b.game_type()!="Base" {return Err(UhpError::EngineError("Base only".into()))}
+        if !model.verify_accumulator(b) {return Err(UhpError::EngineError("incremental accumulator mismatch".into()))}
+        for (p,f) in crate::neural::neural_features(b,model.schema).iter().enumerate() {write!(self.output,"{p}:")?;for id in f {write!(self.output," {id}")?;}writeln!(self.output)?;}
+        writeln!(self.output,"raw {}",model.reference(b))?;
+        writeln!(self.output,"sha256 {} schema {} scale {} model_bytes {} tt_request_bytes {}",model.hash,model.schema,model.scale,model.bytes,self.config.search_options().table_byte_size)?;Ok(())
+    }
+    fn teacher_search(&mut self,args:&str)->Result<()> {
+        use minimax::{Strategy,IterativeSearch,Evaluator};
+        let tokens:Vec<_>=args.split_whitespace().collect();
+        if tokens.is_empty() || tokens.len()>2 {return Err(UhpError::InvalidOption(args.into()))}
+        let depth=tokens[0].parse::<u8>().map_err(|_|UhpError::InvalidOption(args.into()))?;
+        let ms=if tokens.len()==2 {tokens[1].parse::<u64>().map_err(|_|UhpError::InvalidOption(args.into()))?}else{2000};
+        if !(1..=2000).contains(&ms) {return Err(UhpError::InvalidOption(args.into()))}
+        if !(1..=8).contains(&depth) {return Err(UhpError::InvalidOption(args.into()))}
+        let mut prepared=self.board.as_ref().ok_or(UhpError::GameNotStarted)?.clone();
+        self.config.selected().prepare_board(&mut prepared);
+        let board=&prepared;
+        let mut search=IterativeSearch::new(self.config.selected(),self.config.search_options());
+        search.set_depth_or_timeout(depth,Duration::from_millis(ms));
+        let m=search.choose_move(board).ok_or_else(||UhpError::EngineError("no move".into()))?;
+        writeln!(self.output,"score {} static {} move {}",search.root_value(),self.config.selected().evaluate(board),board.to_move_string(m))?;
+        writeln!(self.output,"{}",search.stats(&mut board.clone()))?;Ok(())
     }
 }
 

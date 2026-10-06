@@ -31,6 +31,19 @@ def persist(root, state):
     write_json(root/'state.json', state)
 
 
+def reconcile_replay(root, state, replay):
+    """Recover counters from a replay commit interrupted before state persistence."""
+    import gzip
+    for item in reversed(replay.items):
+        saved = json.loads(gzip.decompress((replay.root/item['file']).read_bytes()))
+        totals = saved['metadata'].get('campaign_totals')
+        if totals is not None:
+            if totals['selfplay_games'] > state['totals']['selfplay_games']:
+                state['totals'] = totals
+                persist(root, state)
+            break
+
+
 def environment():
     try:
         commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
@@ -137,6 +150,9 @@ def run_campaign(root, config, smoke=False, resume=False):
         else:
             write_json(root/'config.json', config)
         replay = Replay(root/'replay', config['replay_positions'])
+        # The replay manifest commits first. Recover counters from its latest
+        # transaction if a crash interrupted the subsequent state write.
+        reconcile_replay(root, state, replay)
         while True:
             guard.check()
             generation = state['next_generation']
@@ -160,13 +176,15 @@ def run_campaign(root, config, smoke=False, resume=False):
                         game['champion_sha256'] = state['champion']['sha256']
                         for example in examples:
                             example['game_id'] = str(game['seed'])
-                        replay.add(examples, game)
-                        collected += len(examples)
-                        totals = state['totals']
+                        totals = dict(state['totals'])
                         totals['selfplay_games'] += 1
                         totals['positions'] += len(examples)
                         totals['natural_games'] += int(game['natural'])
                         totals['capped_games'] += int(not game['natural'])
+                        game['campaign_totals'] = totals
+                        replay.add(examples, game)
+                        collected += len(examples)
+                        state['totals'] = totals
                         persist(root, state)
                         print(f"self-play game {totals['selfplay_games']}: {len(examples)} positions, {game['reason']}", flush=True)
             state['phase'] = 'training'

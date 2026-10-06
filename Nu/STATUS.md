@@ -119,6 +119,67 @@ completed development reports, conformance and final timing reports.
 
 ## Remaining Work
 
+### Deadline And Decision-Quality Experiment
+
+- Search timing now starts before setup, reserves up to ten milliseconds for
+  cleanup/response preparation, and checks generation cancellation every four
+  callbacks rather than sixteen. Search remains full width with a legal fallback
+  and last completed depth; no new selective pruning was enabled.
+- Candidate timing passed 180 idle and 180 two-load-worker responses on six fixed
+  development positions, one search thread: zero 250 ms misses. Maxima were
+  226.469 ms idle and 224.155 ms loaded. This is sampled evidence, not a hard
+  real-time guarantee or proof across all positions/thread counts.
+- The trainer records held-out sampled-action regret, top-choice agreement and
+  validation curves, and supports regret-based selection with resume identity
+  checks. Defaults retain the previous MSE selection and ranking weight.
+- A three-minute CUDA fine-tune used existing corpus/model, batch 128, learning
+  rate 0.0002 and ranking weight 0.25. It stopped at 177 resume updates; the
+  selected fully validated epoch-two artifact contains 164 fine-tuning updates.
+  Eight requested epochs did not complete; evidence explicitly records this.
+- Across 569 held-out partial-action decisions, regret fell from 146.573 to
+  115.220 score units; top-choice agreement changed from 74.165% to 74.868%.
+  Validation MSE worsened from 0.061452 to 0.068413. No strength conclusion or
+  candidate promotion follows from these mixed offline metrics.
+- Candidate export passed 400 exact native integer inference comparisons;
+  maximum sampled float deviation was 9.255 cp. Reports/checkpoints/timing:
+  `Nu/work/reliability-v8/`. Final qualification remains unused.
+- Native quantized ranking audit on the same 569 partial-action lists:
+  incumbent regret 146.362, candidate 114.735; agreement 74.341% versus 75.220%.
+  These static-evaluator metrics are not search-choice or strength guarantees.
+- Same-engine mirrored candidate/incumbent development match, seeds 73000-73009,
+  one thread and 250 ms external deadline: candidate **11.5/20**, seven natural
+  wins, four natural losses, nine adjudicated draws, zero timeouts. This is
+  promising small-sample evidence only; the candidate remains unpromoted.
+- Subsequent pinned-Nokamute development match, seeds 74000-74009: **0/20**,
+  all natural losses, zero timeouts, completed without rejection. The candidate
+  fails the external strength gate despite better sampled-action regret and an
+  internal match edge. Retain the incumbent; no champion/default model change.
+  This does not isolate the evaluator from Nu's independent search limitations.
+
+### October 6 Exact-Feature Performance Repair
+
+- Features are now rebuilt only on evaluation, not on every search make.
+  Terminal/repetition/TT returns do not need neural input reconstruction.
+- A 256-entry per-thread cache stores complete features and mobility under
+  exact serialized state/schema keys. It does not cache history-dependent
+  search scores, change model weights, or introduce heuristic evaluation.
+- Eager-reference versus lazy/cache tests cover skipped evaluations, nested
+  make/unmake, cancellation, feature/accumulator equality and shallow search.
+  All four CTest groups passed. Feature diagnostics force refresh before output.
+- Thirty-six paired cold-cache depth-two samples per nonlinear model returned
+  identical moves, scores and node counts. Measured speed factors: 64-wide
+  1.26037 and 128-wide 1.254. This is not evidence of improved match strength.
+  Evidence: `Nu/work/performance-v7/feature-benchmark.json`; reproducer:
+  `nu_feature_bench MODEL_PATH`. The 80% bottleneck is reduced, not eliminated.
+- New mirrored twenty-game development run, seeds 72000-72009, pinned Nokamute,
+  one thread, 230 ms internal/250 ms external: **4/20 total**, consisting of
+  one natural win among thirteen natural finishes, three opponent timeouts,
+  and four Nu timeouts. Report completed without rules/protocol rejection.
+  Evidence: `Nu/work/performance-v7/nu-128-nonlinear-development.json`.
+  Different openings and timeout contamination prevent a paired strength
+  conclusion against the older campaign. Deadline reliability remains a
+  blocking gate; no model or champion was promoted, and final seeds stay unused.
+
 - This is a trained, playable initial Nu implementation, **not the entire
   ambitious research plan completed or a qualified champion**.
 - Run the 50,000 and 200,000 accepted-position stages, diverse Nu self-play,

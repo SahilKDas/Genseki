@@ -97,6 +97,7 @@ impl UnderNode {
     pub fn hex(&self) -> Hex {
         self.hex
     }
+    pub(crate) fn height(&self) -> u8 { self.height }
 }
 
 #[derive(Clone)]
@@ -119,6 +120,7 @@ pub struct Board {
     pub(super) turn_history: Vec<Turn>,
 
     pub(super) game_type_bits: u8,
+    pub(crate) neural_hashing: bool,
 }
 
 impl Board {
@@ -238,7 +240,7 @@ impl Board {
         }
     }
 
-    fn height(&self, hex: Hex) -> u8 {
+    pub(crate) fn height(&self, hex: Hex) -> u8 {
         self.underworld_height(hex, self.node(hex))
     }
 
@@ -314,6 +316,7 @@ impl Board {
             zobrist_history: Vec::new(),
             turn_history: Vec::new(),
             game_type_bits,
+            neural_hashing: false,
         }
     }
 
@@ -910,6 +913,7 @@ impl minimax::Game for Rules {
         if let Some(Turn::Move(_, end)) = board.turn_history.last() {
             hash ^= *end as u64
         }
+        if board.neural_hashing { hash ^= crate::neural::identity_hash(board); }
         hash
     }
 
