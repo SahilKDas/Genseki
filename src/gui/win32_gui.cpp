@@ -524,7 +524,7 @@ private:
                 maybe_engine_move();
                 {
                     auto second=std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-                    if(animation_||easing_||thinking_||second!=paint_second_)InvalidateRect(hwnd_, nullptr, FALSE);
+                    if(animation_||!audio_cues_.empty()||easing_||thinking_||second!=paint_second_)InvalidateRect(hwnd_, nullptr, FALSE);
                     paint_second_=second;
                 }
                 return 0;
@@ -613,6 +613,7 @@ private:
     }
 
     void send_newgame(const std::string& game) {
+        audio_cues_.clear();
         animation_.reset();
         selected_.reset();
         legal_.clear();
@@ -649,7 +650,11 @@ private:
                             if(!motion_)animation_.reset();
                             unsigned effect=602;
                             if(board_.result()!=L"InProgress"&&board_.result()!=L"NotStarted")effect=604;
-                            if(sound_&&effect)audio_.play(effect);
+                            if(sound_&&effect) {
+                                auto due=std::chrono::steady_clock::now();
+                                if(animation_)due=animation_->started+std::chrono::milliseconds(animation_->terminal?1400:850);
+                                if(audio_cues_.size()<16)audio_cues_.push_back({effect,due});
+                            }
                         }
                     }else if(board_.history().size()!=previous)animation_.reset();
                 }
@@ -835,10 +840,11 @@ private:
 
     void on_command(int id) {
         if(thinking_&&id!=112&&id!=113)return;
-        if(id==112){motion_=!motion_;if(!motion_)animation_.reset();layout();}
-        if(id==113){sound_=!sound_;if(!sound_)audio_.silence();layout();}
+        if(id==112){motion_=!motion_;if(!motion_){animation_.reset();for(auto& cue:audio_cues_)cue.due=std::chrono::steady_clock::now();}layout();}
+        if(id==113){sound_=!sound_;if(!sound_){audio_cues_.clear();audio_.silence();}layout();}
         if (id == 101) send_newgame("Base");
         if (id == 102) {
+            audio_cues_.clear();
             selected_.reset();
             const bool versus_bot=white_mode_!=black_mode_;
             const bool human_turn=(board_.side()==Color::white?white_mode_:black_mode_)==Mode::human;
@@ -911,6 +917,8 @@ private:
         paint_panel(hdc);
         SelectObject(hdc,old_font);
         BitBlt(target,0,0,rc.right,rc.bottom,hdc,0,0,SRCCOPY);EndPaint(hwnd_, &ps);
+        const auto now=std::chrono::steady_clock::now();
+        std::erase_if(audio_cues_,[&](const AudioCue& cue){if(cue.due>now)return false;if(sound_)audio_.play(cue.id);return true;});
     }
 
     void release_buffer() {
@@ -1125,6 +1133,8 @@ private:
     HINSTANCE instance_ = nullptr;
     struct Animation {Move move;POINT reserve;std::chrono::steady_clock::time_point started;bool terminal=false;};
     std::optional<Animation> animation_;
+    struct AudioCue {unsigned id;std::chrono::steady_clock::time_point due;};
+    std::vector<AudioCue> audio_cues_;
     POINT hover_{-1,-1};
     std::map<int,std::pair<double,std::chrono::steady_clock::time_point>> hover_values_;
     std::future<std::vector<std::string>> reply_;

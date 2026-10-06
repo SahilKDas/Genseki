@@ -67,6 +67,11 @@ if(WIN32)
         DEPENDS src/gui/raster/Cargo.toml src/gui/raster/Cargo.lock src/gui/raster/src/lib.rs)
     add_custom_target(genseki_raster DEPENDS ${GENSEKI_RASTER_DLL})
     add_executable(genseki_gui WIN32 src/gui/win32_gui.cpp src/gui/assets/icons.rc)
+    file(GLOB_RECURSE GENSEKI_GUI_ASSETS CONFIGURE_DEPENDS
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/assets/*.svg
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/assets/*.wav
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/assets/*.ttf)
+    set_source_files_properties(src/gui/assets/icons.rc PROPERTIES OBJECT_DEPENDS "${GENSEKI_GUI_ASSETS}")
     target_include_directories(genseki_gui PRIVATE src/gui/assets)
     target_compile_definitions(genseki_gui PRIVATE
         UNICODE

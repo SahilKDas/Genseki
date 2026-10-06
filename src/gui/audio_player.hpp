@@ -1,4 +1,5 @@
 #pragma once
+#include <mmreg.h>
 #include <condition_variable>
 #include <mutex>
 #include <thread>
@@ -42,6 +43,11 @@ class AudioPlayer {
                 format.wFormatTag=u16(data);format.nChannels=u16(data+2);
                 format.nSamplesPerSec=u32(data+4);format.nAvgBytesPerSec=u32(data+8);
                 format.nBlockAlign=u16(data+12);format.wBitsPerSample=u16(data+14);
+                if(format.wFormatTag==WAVE_FORMAT_EXTENSIBLE&&chunk>=40) {
+                    const unsigned char pcm_guid[16]={1,0,0,0,0,0,16,0,128,0,0,170,0,56,155,113};
+                    if(!std::memcmp(bytes+data+24,pcm_guid,16)&&u16(data+18)==format.wBitsPerSample)
+                        format.wFormatTag=WAVE_FORMAT_PCM;
+                }
             }else if(!std::memcmp(bytes+at,"data",4)){samples=bytes+data;length=chunk;}
             at=data+chunk+(chunk&1);
         }

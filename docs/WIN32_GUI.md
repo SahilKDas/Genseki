@@ -74,6 +74,11 @@ bounded at sixteen; excess bursts are dropped rather than cutting an existing
 voice. Muting cancels queued and active voices; closing joins the worker.
 Playback is asynchronous and non-looping, triggered only by newly received completed
 moves, never by repainting. Move and check cues are not embedded in the GUI.
+Each cue is submitted after its complete visual effect: 850 ms for moves and
+deployments, 1400 ms for terminal effects, immediately when motion is disabled.
+Independent cue deadlines preserve rapid moves. Undo, New Game and Mute cancel
+pending cues. The WAVs are 48 kHz, 24-bit stereo PCM, resampled with SoX through
+FFmpeg; this is a format upgrade, not recovery of missing recording detail.
 The upstream license is retained in `src/gui/assets/sounds/NOTICE.md`.
 
 Automated checks validate all five SVG rasters, the embedded WAV headers,

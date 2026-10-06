@@ -2,8 +2,11 @@
 
 Source: http._//github.com/Aqibahmed12/Chess-Master
 Revision: a15d4248fb4bd3487b8af0839a0d26a4fa8e5958
-GUI sounds copied without modification from sounds/: capture.wav and
-game_over.wav. No separate audio-license file was present.
+GUI sounds derived from sounds/: capture.wav and game_over.wav. Both were
+resampled to 48 kHz, 24-bit stereo PCM with FFmpeg's SoX resampler; no volume,
+pitch, duration or content changes were requested. This increases output format
+precision but does not restore missing source detail. No separate audio-license
+file was present.
 The repository's accompanying license is retained below.
 
 MIT License
