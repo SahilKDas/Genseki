@@ -17,6 +17,7 @@ if(CARGO_EXECUTABLE)
             --target-dir ${CMAKE_BINARY_DIR}/rust-target
     DEPENDS ${ALPHA_MIT_SOURCES}
             ${CMAKE_CURRENT_SOURCE_DIR}/vendor/nokamute/Cargo.toml
+            ${CMAKE_CURRENT_SOURCE_DIR}/vendor/nokamute/Cargo.lock
             ${CMAKE_CURRENT_SOURCE_DIR}/vendor/minimax-rs/Cargo.toml
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Building MIT-derived Alpha strength backend")

@@ -21,13 +21,19 @@ class UhpProcess:
         self.lines: queue.Queue[str | None] = queue.Queue()
         self.reader = threading.Thread(target=self._read_lines, daemon=True)
         self.reader.start()
-        self.read_response(5.0)
+        try:
+            self.read_response(5.0)
+        except BaseException:
+            self.kill()
+            raise
 
     def _read_lines(self) -> None:
         assert self.process.stdout is not None
-        for line in self.process.stdout:
-            self.lines.put(line.rstrip("\r\n"))
-        self.lines.put(None)
+        try:
+            for line in self.process.stdout:
+                self.lines.put(line.rstrip("\r\n"))
+        finally:
+            self.lines.put(None)
 
     def read_response(self, timeout: float) -> list[str]:
         deadline = time.perf_counter() + timeout
@@ -62,7 +68,11 @@ class UhpProcess:
     def kill(self) -> None:
         if self.process.poll() is None:
             self.process.kill()
-            self.process.wait(timeout=3)
+        self.process.wait(timeout=3)
+        self.reader.join(timeout=3)
+        for stream in (self.process.stdin, self.process.stdout):
+            if stream is not None:
+                stream.close()
 
     def close(self) -> None:
         if self.process.poll() is None:
@@ -73,3 +83,4 @@ class UhpProcess:
                 self.process.wait(timeout=3)
             except (BrokenPipeError, subprocess.TimeoutExpired):
                 self.kill()
+        self.kill()

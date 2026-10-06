@@ -182,10 +182,16 @@ public:
         HANDLE child_stdout_write = nullptr;
         HANDLE child_stdin_read = nullptr;
         HANDLE child_stdin_write = nullptr;
+        const auto cleanup_pipes = [&] {
+            for (HANDLE handle : {child_stdout_read, child_stdout_write,
+                                  child_stdin_read, child_stdin_write}) {
+                if (handle) CloseHandle(handle);
+            }
+        };
         if (!CreatePipe(&child_stdout_read, &child_stdout_write, &sa, 0)) return false;
-        if (!SetHandleInformation(child_stdout_read, HANDLE_FLAG_INHERIT, 0)) return false;
-        if (!CreatePipe(&child_stdin_read, &child_stdin_write, &sa, 0)) return false;
-        if (!SetHandleInformation(child_stdin_write, HANDLE_FLAG_INHERIT, 0)) return false;
+        if (!SetHandleInformation(child_stdout_read, HANDLE_FLAG_INHERIT, 0)) { cleanup_pipes(); return false; }
+        if (!CreatePipe(&child_stdin_read, &child_stdin_write, &sa, 0)) { cleanup_pipes(); return false; }
+        if (!SetHandleInformation(child_stdin_write, HANDLE_FLAG_INHERIT, 0)) { cleanup_pipes(); return false; }
 
         std::wstring command = L"\"" + path.wstring() + L"\"";
         STARTUPINFOW si{};
@@ -235,7 +241,10 @@ public:
             out_ = nullptr;
         }
         if (process_) {
-            WaitForSingleObject(process_, 250);
+            if (WaitForSingleObject(process_, 250) == WAIT_TIMEOUT) {
+                TerminateProcess(process_, 1);
+                WaitForSingleObject(process_, INFINITE);
+            }
             CloseHandle(process_);
             process_ = nullptr;
         }

@@ -3,18 +3,26 @@
 #include <sstream>
 #include <memory>
 #include <cmath>
+#include <charconv>
+
+static unsigned parse_unsigned(std::string_view text) {
+    unsigned value=0;
+    const auto [end,error]=std::from_chars(text.data(),text.data()+text.size(),value);
+    if(error!=std::errc{}||end!=text.data()+text.size())throw std::runtime_error("invalid unsigned integer");
+    return value;
+}
 
 int main(int argc,char** argv) {
     try {
         nu::Model model;
         for(int i=1;i<argc;++i)if(std::string(argv[i])=="--model"&&i+1<argc)model.load(argv[++i]);
         for(int i=1;i<argc;++i)if(std::string(argv[i])=="--feature-schema"&&i+1<argc) {
-            auto version=std::stoul(argv[++i]);if(version<1||version>4)throw std::runtime_error("invalid feature schema");
+            auto version=parse_unsigned(argv[++i]);if(version<1||version>4)throw std::runtime_error("invalid feature schema");
             if(model.identity!="untrained-seed-1701")throw std::runtime_error("cannot override trained model schema");
             model.feature_schema=unsigned(version);
         }
         if(argc>2&&std::string(argv[1])=="perft") {
-            nu::Board board;auto depth=std::stoul(argv[2]);if(depth>16)throw std::runtime_error("perft depth exceeds 16");
+            nu::Board board;auto depth=parse_unsigned(argv[2]);if(depth>16)throw std::runtime_error("perft depth exceeds 16");
             if(argc>3&&std::string(argv[3])=="--divide"&&depth) {
                 for(auto move:board.legal_moves()) {
                     auto notation=board.uhp_move_string(move);auto undo=board.make_move(move);
@@ -37,7 +45,7 @@ int main(int argc,char** argv) {
             std::cout<<board.game_string()<<'\n';return 0;
         }
         if(argc>2&&std::string(argv[1])=="stress") {
-            auto games=std::stoul(argv[2]);if(!games||games>10000)throw std::runtime_error("invalid stress count");
+            auto games=parse_unsigned(argv[2]);if(!games||games>10000)throw std::runtime_error("invalid stress count");
             std::mt19937 rng(1701);unsigned plies=0;
             for(unsigned game=0;game<games;++game) {
                 nu::State state(model);std::vector<nu::State::Undo> undo;
@@ -77,7 +85,7 @@ int main(int argc,char** argv) {
                     history.push_back(state.make(*move));std::cout<<state.board.game_string()<<'\n';
                     (void)state.legal();
                 }else if(command=="undo") {
-                    unsigned count=argument.empty()?1:std::stoul(argument);
+                    unsigned count=argument.empty()?1:parse_unsigned(argument);
                     if(!count||count>history.size())throw std::runtime_error("invalid undo count");
                     while(count--) {state.unmake(history.back());history.pop_back();}std::cout<<state.board.game_string()<<'\n';
                 }else if(command=="validmoves") {

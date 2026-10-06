@@ -26,6 +26,8 @@ def matches(args, model, output, games, seed, incumbent=False):
                       milliseconds=250,internal_ms=230,cap=160,threat_plies=0,lmr=False)
         if any(report.get(key)!=value for key,value in expected.items()):
             raise RuntimeError('match evidence opponent/configuration mismatch')
+        if report.get('opponent_model_sha256')!=(digest(args.incumbent) if incumbent else None):
+            raise RuntimeError('match evidence incumbent model mismatch')
         return report
     extra=['--opponent-model',args.incumbent] if incumbent else []
     invoke('arena.py','--engine',args.engine,'--model',model,'--opponent',args.engine if incumbent else args.opponent,

@@ -13,7 +13,35 @@ from genseki.rho.core import (Board, Guard, Network, Replay, StopWork, atomic, d
 
 
 class RhoTests(unittest.TestCase):
+    def test_invalid_encoder_identities_rejected(self):
+        for piece in ('xQ', 'wQ1', 'wS3', 'wA0', 'bB9', 'wA10'):
+            with self.subTest(piece=piece), self.assertRaises(ValueError):
+                encode('G1|w|0|0|0|0,0=' + piece)
+        with self.assertRaises(ValueError):
+            encode('G1|w|0|0|0|0,0=wQ;1,0=wQ')
+
+    def test_readonly_replay_preserves_orphans(self):
+        replay = Replay(self.root/'replay', 10)
+        orphan = replay.root/'evidence.gz'
+        orphan.write_bytes(b'failure evidence')
+        Replay(replay.root, 10, cleanup=False)
+        self.assertTrue(orphan.exists())
+        write_json(replay.manifest, [{'file': '../escape', 'positions': 1, 'sha256': 'bad'}])
+        with self.assertRaises(ValueError):
+            Replay(replay.root, 10)
+        self.assertTrue(orphan.exists())
+
+    def test_nonfinite_promotion_rejected(self):
+        for score in (float('nan'), float('inf'), -1., 2.):
+            self.assertFalse(promote(self.root, {}, self.root/'absent.pt',
+                                     {'complete': True, 'score': score}, .6))
+
     def setUp(self):
+        # Resource-floor behavior has dedicated mocks; unrelated tests must not
+        # depend on which foreground apps happen to be open on the test host.
+        memory = patch('genseki.rho.core.available_ram', return_value=8*1024**3)
+        memory.start()
+        self.addCleanup(memory.stop)
         torch.set_num_threads(1)
         torch.manual_seed(1)
         self.temp = tempfile.TemporaryDirectory(dir='Rho')
@@ -245,7 +273,7 @@ class RhoTests(unittest.TestCase):
                       train_positions=16, sample_positions=16, arena_games=2,
                       batch_size=2, epochs=1, device='cpu')
         before = []
-        def abort(*args):
+        def abort(*args, **kwargs):
             before.append(digest(self.root/'champion'/'rho.pt'))
             raise StopWork('test interrupted arena')
         with patch('genseki.rho.campaign.arena', abort):

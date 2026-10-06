@@ -13,7 +13,7 @@ def main():
     state['canonical_sha256'] = digest(args.workspace/'champion'/'rho.pt')
     state['canonical_matches_manifest'] = state['canonical_sha256'] == state['champion']['sha256']
     state['workspace_bytes'] = folder_bytes(args.workspace)
-    index = json.loads((args.workspace/'replay'/'index.json').read_text())
+    index = Replay(args.workspace/'replay', 200000, cleanup=False).items
     state['replay_positions'] = sum(s['positions'] for s in index)
     print(json.dumps(state, indent=2))
 

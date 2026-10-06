@@ -112,16 +112,13 @@ impl<W: Write> UhpServer<W> {
 
     fn pv(&mut self) -> Result<()> {
         let pv = self.engine.as_ref().ok_or(UhpError::GameNotStarted)?.principal_variation();
-        let board = self.board.as_mut().unwrap();
+        let mut board = self.board.as_ref().unwrap().clone();
         if self.pv_dirty {
             return Err(UhpError::EngineError("Board changed since last engine move".into()));
         }
         for &m in &pv {
             writeln!(self.output, "{}", board.to_move_string(m))?;
             board.apply(m);
-        }
-        for &m in pv.iter().rev() {
-            board.undo(m);
         }
         Ok(())
     }

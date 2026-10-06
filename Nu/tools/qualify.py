@@ -30,7 +30,7 @@ def main():
                   opponent_sha256=digest(args.opponent), milliseconds=250, threads=report['threads'], cap=160,
                   repetition_policy=REPETITION_POLICY,threat_plies=report.get('threat_plies',0),lmr=report.get('lmr',False))
     incumbent=json.loads(args.incumbent_match.read_text())
-    if not incumbent.get('completed') or incumbent.get('rejected') or len(incumbent['games'])<20 or incumbent['points']/len(incumbent['games'])<.5:
+    if not incumbent.get('completed') or incumbent.get('rejected') or len(incumbent['games'])!=incumbent.get('expected_games') or len(incumbent['games'])<20 or incumbent['points']/len(incumbent['games'])<.5:
         raise RuntimeError('incumbent confirmation gate failed')
     if incumbent['model_sha256']!=frozen['model_sha256'] or incumbent['engine_sha256']!=frozen['engine_sha256'] or not incumbent.get('opponent_model_sha256'):
         raise RuntimeError('incumbent match artifact mismatch')
@@ -38,6 +38,12 @@ def main():
         if frozen[key] != report[key]: raise RuntimeError('development artifact mismatch')
     if report['milliseconds'] != 250 or not 1<=report['threads']<=12 or report['cap'] != 160 or report.get('repetition_policy')!=REPETITION_POLICY:
         raise RuntimeError('development configuration mismatch')
+    for evidence in (report, incumbent):
+        expected=dict(milliseconds=250,internal_ms=230,threads=frozen['threads'],cap=160,
+                      repetition_policy=REPETITION_POLICY,threat_plies=frozen['threat_plies'],
+                      lmr=frozen['lmr'],table_mib=16,background_pondering=False,random_opening=False)
+        if any(evidence.get(key)!=value for key,value in expected.items()):
+            raise RuntimeError('confirmation search configuration mismatch')
     args.directory.mkdir(parents=True, exist_ok=True)
     # Exclusive creation consumes this candidate's single attempt before seeds are revealed.
     registry = Path(__file__).resolve().parents[1] / 'work' / 'qualification-attempts'

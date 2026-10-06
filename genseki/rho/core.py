@@ -48,10 +48,21 @@ def encode(position):
     fields = position.split('|')
     if len(fields) != 6 or fields[0] != 'G1':
         raise ValueError('invalid native position')
+    if fields[1] not in ('w', 'b') or any(int(v) < 0 for v in fields[2:5]):
+        raise ValueError('invalid native position header')
     stacks = []
+    seen_pieces, seen_cells = set(), set()
     for cell in fields[5].split(';') if fields[5] else []:
         coords, pieces = cell.split('=')
         q, r = map(int, coords.split(','))
+        if (q, r) in seen_cells:
+            raise ValueError('duplicate position cell')
+        seen_cells.add((q, r))
+        for token in pieces.split(','):
+            piece_slot(token)
+            if token in seen_pieces:
+                raise ValueError('duplicate piece identity')
+            seen_pieces.add(token)
         stacks.append((q, r, pieces.split(',')))
     cq = sum(s[0] for s in stacks) / max(1, len(stacks))
     cr = sum(s[1] for s in stacks) / max(1, len(stacks))
@@ -367,20 +378,28 @@ def play_game(executable, models, config, seed, guard, exploration=True, opening
 
 class Replay:
     """One compressed game per shard; FIFO eviction. Manifest hashes detect corruption."""
-    def __init__(self, root, capacity):
+    def __init__(self, root, capacity, cleanup=True):
+        if capacity <= 0:
+            raise ValueError('replay capacity must be positive')
         self.root, self.capacity = Path(root), capacity
-        self.root.mkdir(parents=True, exist_ok=True)
+        if cleanup:
+            self.root.mkdir(parents=True, exist_ok=True)
         self.manifest = self.root / 'index.json'
         self.items = json.loads(self.manifest.read_text()) if self.manifest.exists() else []
-        if not self.manifest.exists():
+        if not self.manifest.exists() and cleanup:
             write_json(self.manifest, self.items)
         known = {i['file'] for i in self.items}
-        for p in self.root.glob('*.gz'):
-            if p.name not in known:
-                p.unlink()  # Uncommitted shard from interrupted transaction.
+        if len(known) != len(self.items):
+            raise ValueError('duplicate replay shard')
         for item in self.items:
+            if Path(item['file']).name != item['file'] or item['positions'] <= 0:
+                raise ValueError('invalid replay manifest entry')
             if digest(self.root/item['file']) != item['sha256']:
                 raise ValueError('replay corruption: ' + item['file'])
+        if cleanup:
+            for p in self.root.glob('*.gz'):
+                if p.name not in known:
+                    p.unlink()  # Only clean after the authoritative manifest verifies.
 
     @property
     def size(self):
@@ -443,7 +462,11 @@ def train(model, examples, executable, config, guard, seed):
         torch.cuda.set_per_process_memory_fraction(min(1., 1.5*1024**3/torch.cuda.get_device_properties(0).total_memory))
     model.to(device).train()
     optimizer = torch.optim.AdamW(model.parameters(), lr=config['learning_rate'])
-    board = Board(executable, guard)
+    try:
+        board = Board(executable, guard)
+    except BaseException:
+        model.cpu().eval()
+        raise
     history = []
     batch_size = config['batch_size']
 
@@ -498,6 +521,7 @@ def train(model, examples, executable, config, guard, seed):
             val = []
             with torch.no_grad():
                 for offset in range(0, len(validation), batch_size):
+                    guard.check()
                     p, v = loss_batch(validation[offset:offset+batch_size])
                     val.append([p.item(), v.item()])
             history.append({'epoch': epoch, 'policy_loss': sums[0]/updates,
@@ -515,7 +539,7 @@ def train(model, examples, executable, config, guard, seed):
         board.close()
 
 
-def arena(executable, champion, challenger, config, seed, guard):
+def arena(executable, champion, challenger, config, seed, guard, progress=None):
     records = []
     for pair in range(config['arena_games']//2):
         rng = np.random.default_rng(seed+pair)
@@ -536,6 +560,8 @@ def arena(executable, champion, challenger, config, seed, guard):
             record.update(challenger_color=color, opening_seed=seed+pair, opening=opening)
             record['score'] = .5 if record['winner'] is None else float(record['winner'] == color)
             records.append(record)
+            if progress is not None:
+                progress(records)
     score = sum(r['score'] for r in records)/len(records)
     wins = sum(r['score'] == 1 for r in records)
     losses = sum(r['score'] == 0 for r in records)
@@ -545,7 +571,9 @@ def arena(executable, champion, challenger, config, seed, guard):
 
 
 def promote(root, state, candidate, report, threshold):
-    if not report.get('complete') or report['score'] < threshold:
+    if not math.isfinite(threshold) or not .5 < threshold <= 1:
+        raise ValueError('invalid promotion threshold')
+    if not report.get('complete') or not math.isfinite(report['score']) or not 0 <= report['score'] <= 1 or report['score'] < threshold:
         return False
     model, metadata = load_model(candidate)
     generation = metadata['generation']

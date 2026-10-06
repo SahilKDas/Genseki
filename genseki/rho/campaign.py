@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import concurrent.futures
 import json
+import math
 import os
 import platform
 import subprocess
@@ -49,7 +50,7 @@ def report(root, state, run):
     run['attempts'] = state['attempts']
     run['totals'] = state['totals']
     try:
-        run['replay_positions'] = Replay(root/'replay', run['config']['replay_positions']).size
+        run['replay_positions'] = Replay(root/'replay', run['config']['replay_positions'], cleanup=False).size
     except Exception as error:
         run['replay_positions'] = None
         run['replay_integrity_error'] = str(error)
@@ -66,6 +67,8 @@ def report(root, state, run):
 
 
 def run_campaign(root, config, smoke=False, resume=False):
+    # Fail before acquiring a workspace lock when the rules binary is absent.
+    engine_hash = digest(config['engine'])
     root = Path(root).resolve()
     root.mkdir(parents=True, exist_ok=True)
     for folder in ('champion', 'challenger', 'replay', 'checkpoints', 'reports', 'models', 'logs'):
@@ -96,7 +99,7 @@ def run_campaign(root, config, smoke=False, resume=False):
     run = dict(id=f"campaign-{time.time_ns()}", label='smoke' if smoke else 'development',
                config=config, command=sys.argv, environment=environment(), status='running',
                aborted_work=[], resources=guard.metrics)
-    run['environment']['engine_sha256'] = digest(config['engine'])
+    run['environment']['engine_sha256'] = engine_hash
     snapshot = {str(p): p.read_text(encoding='utf-8') for p in Path('genseki/rho').glob('*.py')}
     import gzip
     snapshot_path = root/'reports'/f"{run['id']}-source.json.gz"
@@ -203,7 +206,15 @@ def run_campaign(root, config, smoke=False, resume=False):
             state['attempts'].append(attempt)
             persist(root, state)
             write_json(root/'reports'/f'G{generation}-training.json', attempt)
-            result = arena(config['engine'], champion, candidate, config, config['seed']+100000+generation, guard)
+            def arena_progress(records):
+                write_json(root/'reports'/f'G{generation}-arena-progress.json',
+                           dict(generation=generation, complete=False, games=records,
+                                candidate_sha256=candidate_hash,
+                                champion_sha256=state['champion']['sha256']))
+                print(f"G{generation}: arena {len(records)}/{config['arena_games']}", flush=True)
+
+            result = arena(config['engine'], champion, candidate, config, config['seed']+100000+generation,
+                           guard, progress=arena_progress)
             attempt['arena'] = result
             guard.check()
             promoted = promote(root, state, candidate_path, result, config['promotion_threshold'])
@@ -266,7 +277,7 @@ def main():
         parser.error('workers must be 1 or 2; arena-games must be positive and even')
     for key in ('hours', 'simulations', 'replay_positions', 'max_plies', 'train_positions',
                 'sample_positions', 'epochs', 'batch_size', 'cpuct', 'learning_rate', 'move_seconds'):
-        if config[key] <= 0:
+        if not math.isfinite(config[key]) or config[key] <= 0:
             parser.error(key+' must be positive')
     if config['disk_cap'] > 2_000_000_000 or config['disk_cap'] < 32_000_000:
         parser.error('disk cap must be between 32 MB and 2 GB')
