@@ -1102,10 +1102,11 @@
         "engine": "build/genseki.exe",
         "move_seconds": 120.0
       },
-      "status": "arena_pending"
+      "status": "aborted",
+      "reason": "resume after interrupted arena; no promotion"
     }
   ],
-  "next_generation": 9,
+  "next_generation": 10,
   "phase": "stopped",
   "seed": 1701,
   "recoveries": [
@@ -1136,13 +1137,17 @@
     {
       "phase": "stopped",
       "time": 1791160740.6156912
+    },
+    {
+      "phase": "stopped",
+      "time": 1791262787.0612113
     }
   ],
   "totals": {
-    "selfplay_games": 60,
-    "positions": 6412,
-    "natural_games": 26,
-    "capped_games": 34
+    "selfplay_games": 92,
+    "positions": 9266,
+    "natural_games": 49,
+    "capped_games": 43
   },
   "model": {
     "generation": 0,
@@ -1164,5 +1169,5 @@
   },
   "last_successful_operation": "begin generation",
   "bootstrap_trained": true,
-  "phase_at_stop": "arena"
+  "phase_at_stop": "selfplay"
 }
