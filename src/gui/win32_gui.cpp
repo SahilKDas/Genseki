@@ -23,11 +23,12 @@
 #include "tiny_raster.hpp"
 #include "audio_player.hpp"
 #include "svg_icons.hpp"
+#include "review_window.hpp"
 
 namespace {
 
 constexpr int kPanelWidth = 360;
-constexpr int kToolbarHeight = 52;
+constexpr int kToolbarHeight = 94;
 constexpr double kRoot3 = 1.7320508075688772;
 
 class BundledNunito {
@@ -460,6 +461,46 @@ private:
 
 class App {
 public:
+    static int review_flow_smoke(HINSTANCE instance,const std::filesystem::path& engine,const std::filesystem::path& replay_file,const std::filesystem::path& output){
+        App app;app.instance_=instance;app.engine_path_=engine;app.review_testing_hidden_=true;
+        app.hwnd_=CreateWindowExW(0,L"STATIC",L"Review flow test",WS_OVERLAPPEDWINDOW,0,0,900,640,nullptr,nullptr,instance,nullptr);
+        if(!app.hwnd_||!app.engine_.start(engine))return 20;
+        for(auto option:{"options set BackgroundPondering False","options set RandomOpening False","options set NumThreads 1","options set TableSizeMiB 32"})(void)app.engine_.command(option);
+        std::ifstream input(replay_file);std::string game(std::istreambuf_iterator<char>(input),{});
+        while(!game.empty()&&(game.back()=='\n'||game.back()=='\r'))game.pop_back();
+        if(!app.import_replay(game))return 21;
+        const auto original=app.board_.game_string();
+        app.on_command(114);
+        if(!app.review_window_||!app.review_window_->active())return 22;
+        int result=app.review_window_->acceptance(output/"completed");
+        app.update_clock();app.maybe_engine_move();
+        if(result==0&&(app.board_.game_string()!=original||app.white_elapsed_!=std::chrono::seconds(0)||app.black_elapsed_!=std::chrono::seconds(0)||!app.audio_cues_.empty()))result=23;
+        app.review_window_.reset();
+        if(result==0){
+            if(app.import_replay("Base;InProgress;White[2];wS1;bS1 missing")||app.board_.game_string()!=original)return 26;
+            if(!app.import_replay("Base;InProgress;White[3];wS1;bS1 wS1-;wQ -wS1;bQ bS1-"))return 24;
+            const auto partial=app.board_.game_string();app.on_command(114);
+            auto white=app.white_elapsed_,black=app.black_elapsed_;
+            result=app.review_window_->acceptance(output/"cancelled",true);
+            app.update_clock();app.maybe_engine_move();
+            if(result==0&&(!app.review_window_->report().partial_game||app.board_.game_string()!=partial||app.white_elapsed_!=white||app.black_elapsed_!=black||!app.audio_cues_.empty()))result=25;
+            app.review_window_.reset();
+        }
+        app.engine_.stop();DestroyWindow(app.hwnd_);app.hwnd_=nullptr;return result;
+    }
+    static int review_isolation_smoke(HINSTANCE instance) {
+        App app;std::wstring error;
+        if(!app.board_.load_game_string("Base;InProgress;White[3];wS1;bS1 wS1-;wQ -wS1;bQ bS1-",error))return 1;
+        const auto original=app.board_.game_string();
+        app.white_elapsed_=std::chrono::seconds(3);app.black_elapsed_=std::chrono::seconds(4);
+        app.last_tick_=std::chrono::steady_clock::now()-std::chrono::seconds(10);
+        app.review_window_=std::make_unique<genseki::review::ReviewWindow>();
+        if(!app.review_window_->open(instance,nullptr,original,{},true))return 2;
+        app.update_clock();app.maybe_engine_move();
+        if(app.white_elapsed_!=std::chrono::seconds(3)||app.black_elapsed_!=std::chrono::seconds(4))return 3;
+        if(app.board_.game_string()!=original||app.thinking_||app.reply_.valid()||!app.audio_cues_.empty())return 4;
+        app.review_window_.reset();return 0;
+    }
     int run(HINSTANCE instance, int show, std::filesystem::path engine_path) {
         instance_ = instance;
         engine_path_ = std::move(engine_path);
@@ -554,6 +595,7 @@ private:
                 return 0;
             case WM_DESTROY:
                 KillTimer(hwnd_, 1);
+                review_window_.reset();
                 if(reply_.valid())reply_.wait();
                 engine_.stop();
                 audio_.stop();
@@ -603,6 +645,11 @@ private:
         add_button(111, x, 12, 64, L"Rules");
         x+=72;add_button(112,x,12,94,motion_?L"Motion: on":L"Motion: off");
         x+=102;add_button(113,x,12,94,sound_?L"Sound: on":L"Sound: off");
+        add_button(114,8,54,114,L"Review Game");
+        int second_row=130;
+        for(auto& button:buttons_)if(button.rect.right>rc.right-8&&button.id!=114){
+            auto width=button.rect.right-button.rect.left;button.rect={second_row,54,second_row+width,80};second_row+=width+8;
+        }
         if(board_.history().empty()){origin_x_=(board_rect_.left+board_rect_.right)/2.0;origin_y_=(board_rect_.top+board_rect_.bottom)/2.0;}
     }
 
@@ -618,6 +665,7 @@ private:
     }
 
     void send_newgame(const std::string& game) {
+        imported_game_=game!="Base";
         audio_cues_.clear();
         animation_.reset();
         selected_.reset();
@@ -711,6 +759,7 @@ private:
 
     void update_clock() {
         const auto now = std::chrono::steady_clock::now();
+        if(review_window_&&review_window_->active()){last_tick_=now;return;}
         const auto delta = now - last_tick_;
         if (board_.result() == L"InProgress") {
             if (board_.side() == Color::white) white_elapsed_ += delta;
@@ -721,6 +770,7 @@ private:
 
     void maybe_engine_move() {
         update_clock();
+        if(review_window_&&review_window_->active())return;
         if(reply_.valid()) {
             if(reply_.wait_for(std::chrono::seconds(0))!=std::future_status::ready)return;
             try {auto lines=reply_.get();if(!lines.empty()&&!lines.front().starts_with("err "))play_move(widen(lines.front()));else consume_engine_response(lines);}
@@ -845,6 +895,13 @@ private:
 
     void on_command(int id) {
         if(thinking_&&id!=112&&id!=113)return;
+        if(id==114){
+            if(board_.history().empty()||(!imported_game_&&(board_.result()==L"InProgress"||board_.result()==L"NotStarted"))){status_=L"Finish the game or load a replay to review it.";InvalidateRect(hwnd_,nullptr,FALSE);return;}
+            update_clock();animation_.reset();audio_cues_.clear();audio_.silence();
+            review_window_=std::make_unique<genseki::review::ReviewWindow>();
+            if(!review_window_->open(instance_,hwnd_,board_.game_string(),engine_path_,false,review_testing_hidden_))status_=L"Could not open game review.";
+            return;
+        }
         if(id==112){motion_=!motion_;if(!motion_){animation_.reset();for(auto& cue:audio_cues_)cue.due=std::chrono::steady_clock::now();}layout();}
         if(id==113){sound_=!sound_;if(!sound_){audio_cues_.clear();audio_.silence();}layout();}
         if (id == 101) send_newgame("Base");
@@ -884,21 +941,33 @@ private:
     }
 
     void load_game_dialog() {
-        wchar_t buffer[4096] = L"Base;NotStarted;White[1]";
         const int result = MessageBoxW(hwnd_, L"Load the Hive game from clipboard text?", L"Load game", MB_OKCANCEL);
         if (result != IDOK) return;
+        std::wstring replay;
         if (OpenClipboard(hwnd_)) {
             HANDLE data = GetClipboardData(CF_UNICODETEXT);
             if (data) {
-                auto* text = static_cast<const wchar_t*>(GlobalLock(data));
-                if (text) {
-                    wcsncpy_s(buffer, text, _TRUNCATE);
-                    GlobalUnlock(data);
+                auto bytes=GlobalSize(data);
+                if(bytes>=sizeof(wchar_t)&&bytes<=524288){
+                    auto* text = static_cast<const wchar_t*>(GlobalLock(data));
+                    if(text){auto end=std::find(text,text+bytes/sizeof(wchar_t),L'\0');
+                        if(end!=text+bytes/sizeof(wchar_t))replay.assign(text,end);
+                        GlobalUnlock(data);
+                    }
                 }
             }
             CloseClipboard();
         }
-        send_newgame(narrow(buffer));
+        if(replay.empty()){status_=L"The clipboard has no valid replay, or it exceeds the size limit.";InvalidateRect(hwnd_,nullptr,FALSE);return;}
+        (void)import_replay(narrow(replay));
+    }
+
+    bool import_replay(std::string_view replay){
+        auto valid=genseki::review::prepare(replay);
+        if(!valid){status_=widen(valid.error());return false;}
+        send_newgame(valid->replay);
+        auto loaded=genseki::Board::from_game_string(board_.game_string());
+        return loaded&&loaded->game_string()==valid->replay;
     }
 
     void paint() {
@@ -1154,6 +1223,9 @@ private:
     HWND hwnd_ = nullptr;
     std::filesystem::path engine_path_{L"genseki.exe"};
     EngineProcess engine_{};
+    std::unique_ptr<genseki::review::ReviewWindow> review_window_;
+    bool imported_game_=false;
+    bool review_testing_hidden_=false;
     MirrorBoard board_{};
     RECT toolbar_{};
     RECT board_rect_{};
@@ -1193,6 +1265,27 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR command_line, int show)
     (void)command_line;
     int argc = 0;
     wchar_t** argv = CommandLineToArgvW(GetCommandLineW(), &argc);
+    if(argv&&argc==5&&std::wstring_view(argv[1])==L"--check-review-flow"){
+        bool ready=nunito().ready()&&tiny_raster().ready();
+        int result=ready?App::review_flow_smoke(instance,argv[2],argv[3],argv[4]):10;
+        LocalFree(argv);if(SUCCEEDED(com))CoUninitialize();return result;
+    }
+    if(argv&&argc==2&&std::wstring_view(argv[1])==L"--check-review-isolation"){
+        int result=App::review_isolation_smoke(instance);
+        LocalFree(argv);if(SUCCEEDED(com))CoUninitialize();return result;
+    }
+    if(argv&&(argc==3||argc==4)&&std::wstring_view(argv[1])==L"--check-review"){
+        bool ready=nunito().ready()&&tiny_raster().ready();
+        int result=10;
+        if(ready&&argc==3)result=genseki::review::ReviewWindow::smoke(instance,argv[2]);
+        else if(ready){
+            std::ifstream input{std::filesystem::path(argv[3])};
+            std::string replay(std::istreambuf_iterator<char>(input),{});
+            while(!replay.empty()&&(replay.back()=='\n'||replay.back()=='\r'))replay.pop_back();
+            if(input)result=genseki::review::ReviewWindow::smoke(instance,argv[2],replay);
+        }
+        LocalFree(argv);if(SUCCEEDED(com))CoUninitialize();return result;
+    }
     if(argv&&argc>1&&std::wstring_view(argv[1])==L"--check-font") {
         bool valid=nunito().ready();HDC dc=CreateCompatibleDC(nullptr);
         HFONT font=CreateFontW(-16,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,

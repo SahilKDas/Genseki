@@ -25,6 +25,11 @@ The GUI launches its sibling `genseki.exe` by default. Engine controls use
 Alpha with a 230 ms search request. There is no Greek bot selector or Kappa
 profile. A custom UHP executable may still be supplied as a GUI argument.
 
+**Review Game** opens a separate English review of a completed game or an
+imported Base-Hive replay. Review navigation does not play sounds or advance
+the original game's clocks. See [Game Review](docs/GAME_REVIEW.md) for budgets,
+evidence limits, export details, and the command-line reviewer.
+
 Alpha derives from attributed MIT-licensed Nokamute and minimax-rs snapshots.
 Required licenses are retained under Alpha. See
 [Alpha/README.md](Alpha/README.md), [Alpha/STATUS.md](Alpha/STATUS.md), and
