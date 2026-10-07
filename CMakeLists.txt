@@ -71,6 +71,8 @@ endif()
 if(Python3_Interpreter_FOUND)
     add_test(NAME genseki_transport_tests
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/transport_tests.py)
+    add_test(NAME genseki_resource_tests
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/resource_tests.py)
     add_test(NAME genseki_gauntlet_tests
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/gauntlet_tests.py)
     add_test(NAME genseki_default_engine

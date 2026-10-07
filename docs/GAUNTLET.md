@@ -75,6 +75,14 @@ provided the two-GUI device limit is respected:
 
 Use `--no-gui` for a headless gauntlet. This runner currently plays Base Hive.
 
+The Python gauntlet and Alpha Gen 2/Lab stages acquire the same OS-backed
+`reports/work/heavy-job.lock` before starting work, in addition to their legacy
+locks. A competing job is rejected, not terminated. Lock files may remain after
+exit; ownership belongs to the live process, not the file's existence. Process
+checks also detect older runners that do not yet use the shared lock. Native
+review keeps its separate conservative process guard; this is not a global
+lock for arbitrary programs.
+
 ## Checks
 
 ```powershell

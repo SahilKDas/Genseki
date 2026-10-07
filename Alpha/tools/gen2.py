@@ -17,6 +17,7 @@ from types import SimpleNamespace
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT))
 from genseki.uhp import UhpProcess
+from genseki.resources import HEAVY_PROCESS_PATTERNS, available_ram, heavy_job_path, job_lock
 WORK=ROOT/'Alpha/work/gen2'
 REPORT=ROOT/'Alpha/reports/gen2'
 ENGINE=ROOT/'Alpha/build/gen2-target/release/alpha_nokamute_mit.exe'
@@ -95,7 +96,6 @@ def features(e,command):
     lines,_=cmd(e,command)
     return [list(map(int,x.split(':',1)[1].split())) for x in lines[:2]],lines
 def floors():
-    from genseki.rho.core import available_ram
     if available_ram()<2*1024**3:raise RuntimeError('RAM below 2 GiB; resumable stop')
     if shutil.disk_usage(ROOT).free<512*1024**2:raise RuntimeError('disk reserve')
 def heavy_conflict():
@@ -104,7 +104,7 @@ def heavy_conflict():
     processes=json.loads(output or '[]');processes=processes if isinstance(processes,list) else [processes]
     for process in processes:
         line=(process.get('CommandLine') or '').replace('\\','/').lower()
-        if process['ProcessId']!=os.getpid() and any(pattern in line for pattern in ('campaign','gauntlet','genseki.arena','gen2.py arena','gen2.py train','gen2.py collect','gen2.py benchmark','gen2_lab.py','learning.py','train.py','arena.py','benchmark.py','tournament','selfplay','training.py')):return True
+        if process['ProcessId']!=os.getpid() and any(pattern in line for pattern in HEAVY_PROCESS_PATTERNS):return True
     return False
 def guard():
     floors()
@@ -487,13 +487,14 @@ def main():
     if args.engine:ENGINE=Path(args.engine).resolve()
     if not 1<=args.seconds<=7200 or args.games<2 or args.games%2 or not 1<=args.threads<=12:p.error('bounded even games, 1..12 threads, stages <=2 hours required')
     WORK.mkdir(parents=True,exist_ok=True)
-    lock=(WORK/'stage.lock').open('a+b');lock.write(b'0');lock.flush();lock.seek(0)
-    if os.name=='nt':
-        import msvcrt,ctypes
-        msvcrt.locking(lock.fileno(),msvcrt.LK_NBLCK,1)
-        ctypes.windll.kernel32.SetPriorityClass(ctypes.windll.kernel32.GetCurrentProcess(),0x40)
-        if args.mode in ('collect','train','calibrate','arena','benchmark') and heavy_conflict():raise RuntimeError('conflicting heavy campaign')
+    jobs=contextlib.ExitStack()
     try:
+        jobs.enter_context(job_lock(heavy_job_path(ROOT)))
+        jobs.enter_context(job_lock(WORK/'stage.lock'))
+        if os.name=='nt':
+            import ctypes
+            ctypes.windll.kernel32.SetPriorityClass(ctypes.windll.kernel32.GetCurrentProcess(),0x40)
+        if heavy_conflict():raise RuntimeError('conflicting heavy campaign')
         stage=REPORT/'stages'/((args.stage_id or str(time.time_ns()))+'.json')
         identity=dict(mode=args.mode,name=args.name,model=args.model,opponent=args.opponent,games=args.games,threads=args.threads,corpus=args.corpus,binary_sha256=digest(ENGINE))
         if args.mode=='train':identity.update(selection=args.selection,ranking_weight=args.ranking_weight)
@@ -515,5 +516,5 @@ def main():
                     atomic(path,state)
             raise
         progress.update(status='returned',finished=time.time());atomic(stage,progress)
-    finally:lock.close()
+    finally:jobs.close()
 if __name__=='__main__':main()

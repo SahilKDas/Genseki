@@ -1,6 +1,7 @@
 """Lab-driven, full-width Gen 2 development. Never promotes an engine."""
 import argparse
 import collections
+import contextlib
 import hashlib
 import json
 import math
@@ -252,11 +253,12 @@ def main():
         if 'iota' in [s.lower() for s in path.resolve().parts]: p.error('Iota is excluded')
     if not (1<=args.seconds<=7200 and 1<=args.positions<=10000 and 1<=args.stride<=160 and 1<=args.depth<=8 and 1<=args.teacher_ms<=2000 and 1<=args.threads<=12): p.error('bounded stage settings required')
     if args.threads!=1: p.error('paired diagnostic search is serial; use one thread for all modes')
-    lock=(g.WORK/'stage.lock').open('a+b'); lock.write(b'0'); lock.flush(); lock.seek(0)
+    jobs=contextlib.ExitStack()
     try:
+        jobs.enter_context(g.job_lock(g.heavy_job_path(g.ROOT)))
+        jobs.enter_context(g.job_lock(g.WORK/'stage.lock'))
         if os.name=='nt':
-            import ctypes,msvcrt
-            msvcrt.locking(lock.fileno(),msvcrt.LK_NBLCK,1)
+            import ctypes
             ctypes.windll.kernel32.SetPriorityClass(ctypes.windll.kernel32.GetCurrentProcess(),0x40)
         if g.heavy_conflict(): raise RuntimeError('conflicting heavy campaign')
         g.guard(); g.freeze_search()
@@ -270,7 +272,7 @@ def main():
             progress.setdefault('failures',[]).append(dict(time=time.time(),error=repr(error)))
             progress.update(status='failed',error=repr(error)); raise
         finally: g.atomic(path,progress)
-    finally: lock.close()
+    finally: jobs.close()
 
 
 if __name__=='__main__': main()
