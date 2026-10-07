@@ -1,0 +1,57 @@
+{
+  "generation": 11,
+  "candidate_sha256": "b8afed9283035356bc8b2bd1b4c058f6a1a11a1db0a1bdc7738e88df0af0c68c",
+  "champion_sha256": "bbe8b1b65acf0932a2074b18d8cc854dd4f410ecd7c687e0c5de884be80619d1",
+  "training": {
+    "history": [
+      {
+        "epoch": 0,
+        "policy_loss": 3.773472588509321,
+        "value_loss": 0.9972778195515275,
+        "optimizer_updates": 64,
+        "validation": [
+          3.6985391934712726,
+          0.9901864886283874
+        ]
+      },
+      {
+        "epoch": 1,
+        "policy_loss": 3.7735092379152775,
+        "value_loss": 0.7570565454661846,
+        "optimizer_updates": 64,
+        "validation": [
+          3.698549254735311,
+          0.9695008585850398
+        ]
+      }
+    ],
+    "training_positions": 8131,
+    "validation_positions": 1869,
+    "effective_batch_size": 128,
+    "value_labeled_positions": 3608,
+    "training_value_positions": 2932,
+    "validation_value_positions": 676,
+    "device": "cuda"
+  },
+  "config": {
+    "hours": 7.622345570388889,
+    "workers": 2,
+    "simulations": 64,
+    "replay_positions": 200000,
+    "max_plies": 160,
+    "train_positions": 5000,
+    "sample_positions": 10000,
+    "epochs": 2,
+    "batch_size": 128,
+    "device": "cuda",
+    "cpuct": 1.5,
+    "learning_rate": 0.001,
+    "arena_games": 40,
+    "promotion_threshold": 0.6,
+    "seed": 1701,
+    "disk_cap": 2000000000,
+    "engine": "build/genseki_rules.exe",
+    "move_seconds": 120.0
+  },
+  "status": "arena_pending"
+}

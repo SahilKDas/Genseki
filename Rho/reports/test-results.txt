@@ -1,0 +1,52 @@
+{
+  "status": "stopped",
+  "elapsed_seconds": 1.0619999999762513,
+  "aborted_work": [
+    {
+      "phase": "initialized",
+      "reason": "test deadline"
+    }
+  ]
+}
+test_campaign_timeout_preserves_champion_and_reports (test_rho.RhoTests.test_campaign_timeout_preserves_champion_and_reports) ... ok
+test_checkpoint_roundtrip_and_nonfinite_rejected (test_rho.RhoTests.test_checkpoint_roundtrip_and_nonfinite_rejected) ... ok
+test_disk_guard_stops_before_cap (test_rho.RhoTests.test_disk_guard_stops_before_cap) ... ok
+test_encoding_translation_and_no_clipping (test_rho.RhoTests.test_encoding_translation_and_no_clipping) ... ok
+test_guards (test_rho.RhoTests.test_guards) ... ok
+self-play game 1: 8 positions, ply_cap
+self-play game 2: 8 positions, ply_cap
+{
+  "status": "stopped",
+  "elapsed_seconds": 1.7650000000139698,
+  "aborted_work": [
+    {
+      "phase": "arena",
+      "reason": "test interrupted arena"
+    }
+  ]
+}
+test_interrupted_arena_cannot_promote (test_rho.RhoTests.test_interrupted_arena_cannot_promote) ... ok
+test_mcts_all_legal_visits_and_board_restored (test_rho.RhoTests.test_mcts_all_legal_visits_and_board_restored) ... ok
+test_mcts_backup_prefers_immediate_win (test_rho.RhoTests.test_mcts_backup_prefers_immediate_win) ... ok
+test_parallel_resource_guard (test_rho.RhoTests.test_parallel_resource_guard) ... ok
+test_promotion_requires_complete_pass_and_recovery (test_rho.RhoTests.test_promotion_requires_complete_pass_and_recovery) ... ok
+test_real_deadline_closes_native_worker (test_rho.RhoTests.test_real_deadline_closes_native_worker) ... ok
+test_replay_capacity_hash_and_partial (test_rho.RhoTests.test_replay_capacity_hash_and_partial) ... ok
+test_seeded_selfplay_and_cap_excluded_value (test_rho.RhoTests.test_seeded_selfplay_and_cap_excluded_value) ... ok
+test_terminal_perspective (test_rho.RhoTests.test_terminal_perspective) ... ok
+self-play game 1: 8 positions, ply_cap
+self-play game 2: 8 positions, ply_cap
+G1: score 0.500, rejected
+{
+  "status": "smoke_complete",
+  "elapsed_seconds": 0.9529999999795109,
+  "aborted_work": []
+}
+test_tiny_end_to_end_training_arena_reports (test_rho.RhoTests.test_tiny_end_to_end_training_arena_reports) ... ok
+test_training_oom_reduces_batch (test_rho.RhoTests.test_training_oom_reduces_batch) ... ok
+test_variable_legal_policy_and_value_bounds (test_rho.RhoTests.test_variable_legal_policy_and_value_bounds) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 6.795s
+
+OK

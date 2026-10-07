@@ -1,0 +1,125 @@
+{
+  "generation": 5,
+  "candidate_sha256": "563ac6b0c34b0c55172e5c1e1a127442d1f0ed6124b2a7086eab5158e55f28b7",
+  "champion_sha256": "bbe8b1b65acf0932a2074b18d8cc854dd4f410ecd7c687e0c5de884be80619d1",
+  "training": {
+    "history": [
+      {
+        "epoch": 0,
+        "policy_loss": 3.540705978870392,
+        "value_loss": 0.0,
+        "optimizer_updates": 4,
+        "validation": [
+          3.72963547706604,
+          0.9979240298271179
+        ]
+      }
+    ],
+    "training_positions": 421,
+    "validation_positions": 91,
+    "effective_batch_size": 128,
+    "value_labeled_positions": 86,
+    "training_value_positions": 0,
+    "validation_value_positions": 86,
+    "device": "cuda"
+  },
+  "config": {
+    "hours": 0.05,
+    "workers": 2,
+    "simulations": 64,
+    "replay_positions": 200000,
+    "max_plies": 8,
+    "train_positions": 16,
+    "sample_positions": 512,
+    "epochs": 1,
+    "batch_size": 128,
+    "device": "cuda",
+    "cpuct": 1.5,
+    "learning_rate": 0.001,
+    "arena_games": 2,
+    "promotion_threshold": 0.6,
+    "seed": 1701,
+    "disk_cap": 2000000000,
+    "engine": "build/genseki.exe",
+    "move_seconds": 30.0
+  },
+  "status": "rejected",
+  "arena": {
+    "games": [
+      {
+        "seed": 101706,
+        "moves": [
+          "wA1",
+          "bB1 \\wA1",
+          "wS1 wA1-",
+          "bQ bB1/",
+          "wQ /wA1",
+          "bS1 -bB1",
+          "wS2 -wQ",
+          "bA1 -bS1"
+        ],
+        "final_game": "Base;InProgress;White[5];wA1;bB1 \\wA1;wS1 wA1-;bQ bB1/;wQ /wA1;bS1 -bB1;wS2 -wQ;bA1 -bS1",
+        "natural": false,
+        "reason": "ply_cap",
+        "winner": null,
+        "elapsed_seconds": 1.125,
+        "move_seconds": [
+          0.21799999999348074,
+          0.28200000000651926,
+          0.2970000000204891,
+          0.3279999999795109
+        ],
+        "maximum_move_seconds": 0.3279999999795109,
+        "challenger_color": "w",
+        "opening_seed": 101706,
+        "opening": [
+          "wA1",
+          "bB1 \\wA1",
+          "wS1 wA1-",
+          "bQ bB1/"
+        ],
+        "score": 0.5
+      },
+      {
+        "seed": 101706,
+        "moves": [
+          "wA1",
+          "bB1 \\wA1",
+          "wS1 wA1-",
+          "bQ bB1/",
+          "wQ /wA1",
+          "bS1 -bB1",
+          "wS2 -wQ",
+          "bA1 -bS1"
+        ],
+        "final_game": "Base;InProgress;White[5];wA1;bB1 \\wA1;wS1 wA1-;bQ bB1/;wQ /wA1;bS1 -bB1;wS2 -wQ;bA1 -bS1",
+        "natural": false,
+        "reason": "ply_cap",
+        "winner": null,
+        "elapsed_seconds": 1.1089999999967404,
+        "move_seconds": [
+          0.25,
+          0.28100000001722947,
+          0.29699999996228144,
+          0.26500000001396984
+        ],
+        "maximum_move_seconds": 0.29699999996228144,
+        "challenger_color": "b",
+        "opening_seed": 101706,
+        "opening": [
+          "wA1",
+          "bB1 \\wA1",
+          "wS1 wA1-",
+          "bQ bB1/"
+        ],
+        "score": 0.5
+      }
+    ],
+    "wins": 0,
+    "losses": 0,
+    "draws": 2,
+    "score": 0.5,
+    "complete": true,
+    "promotion_heuristic": "development only; no statistical strength claim"
+  }
+}

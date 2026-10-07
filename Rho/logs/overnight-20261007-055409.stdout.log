@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "elapsed_seconds": 1.25,
+  "aborted_work": [
+    {
+      "phase": "preflight",
+      "reason": "authoritative champion corrupt; refusing fallback",
+      "traceback": "Traceback (most recent call last):\n  File \"<local-path>", line 128, in run_campaign\n    state = recover(root)\n            ^^^^^^^^^^^^^\n  File \"<local-path>", line 609, in recover\n    raise ValueError('authoritative champion corrupt; refusing fallback')\nValueError: authoritative champion corrupt; refusing fallback\n"
+    }
+  ]
+}

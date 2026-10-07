@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "<local-path>", line 55, in <module>
+    main()
+  File "<local-path>", line 45, in main
+    report.update(arena(config['engine'], champion, candidate, config,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local-path>", line 559, in arena
+    _, record = play_game(executable, models, config, seed+pair, guard, False, opening)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local-path>", line 347, in play_game
+    legal, visits, children = search(board, models[side], rng, config['simulations'],
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local-path>", line 309, in search
+    board.guard.check()
+  File "<local-path>", line 178, in check
+    raise StopWork('RAM below 2 GiB; resume when memory is available')
+genseki.rho.core.StopWork: RAM below 2 GiB; resume when memory is available

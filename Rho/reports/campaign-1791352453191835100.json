@@ -1,0 +1,93 @@
+{
+  "id": "campaign-1791352453191835100",
+  "label": "development",
+  "config": {
+    "hours": 8.0,
+    "workers": 2,
+    "simulations": 64,
+    "replay_positions": 200000,
+    "max_plies": 160,
+    "train_positions": 5000,
+    "sample_positions": 10000,
+    "epochs": 2,
+    "batch_size": 128,
+    "device": "cuda",
+    "cpuct": 1.5,
+    "learning_rate": 0.001,
+    "arena_games": 40,
+    "promotion_threshold": 0.6,
+    "seed": 1701,
+    "disk_cap": 2000000000,
+    "engine": "build/genseki_rules.exe",
+    "move_seconds": 120.0
+  },
+  "command": [
+    "<local-path>",
+    "--workspace",
+    "Rho",
+    "--resume",
+    "--hours",
+    "8",
+    "--workers",
+    "2",
+    "--simulations",
+    "64",
+    "--replay-positions",
+    "200000",
+    "--max-plies",
+    "160",
+    "--train-positions",
+    "5000",
+    "--sample-positions",
+    "10000",
+    "--epochs",
+    "2",
+    "--batch-size",
+    "128",
+    "--arena-games",
+    "40",
+    "--device",
+    "cuda",
+    "--engine",
+    "build/genseki_rules.exe",
+    "--move-seconds",
+    "120"
+  ],
+  "environment": {
+    "source_commit": "5e18555f33b2fc23f059bac5a2e4b35f5971d2e0",
+    "source_dirty": true,
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "torch": "2.12.1+cu130",
+    "cuda": "13.0",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "gpu": "NVIDIA GeForce MX550",
+    "engine_sha256": "7d9f2528065b6b7694fcf4f21aeacfd986bd49ed96b28d22e2858329eb6a9197",
+    "source_files": {
+      "genseki\\rho\\campaign.py": "8a745264c38ca85f0d93364baae32ae2616d378f86cd731cdc1476c8abc9f8cc",
+      "genseki\\rho\\core.py": "717ecab0fb27cf5699ee7c8f89f9d02ce272ee61f949d39c40d24e779065f55c",
+      "genseki\\rho\\encoding.py": "3ec4577b44e2aea08e8e183289ef13cf3f35d138805757ac078fab9873c2f735",
+      "genseki\\rho\\status.py": "ca08c9a3751456bd3c4457d6f8b5efdd036ed9dbbf931a32894cc1ae6ad304db",
+      "genseki\\rho\\__init__.py": "2d914f40ab574fcdddc071d8ab9eee44b41f9e7ebc134118670272de0c996406"
+    }
+  },
+  "status": "failed",
+  "aborted_work": [
+    {
+      "phase": "preflight",
+      "reason": "authoritative champion corrupt; refusing fallback",
+      "traceback": "Traceback (most recent call last):\n  File \"<local-path>", line 128, in run_campaign\n    state = recover(root)\n            ^^^^^^^^^^^^^\n  File \"<local-path>", line 609, in recover\n    raise ValueError('authoritative champion corrupt; refusing fallback')\nValueError: authoritative champion corrupt; refusing fallback\n"
+    }
+  ],
+  "resources": {
+    "peak_disk_bytes": 4460161,
+    "minimum_available_ram_bytes": 5510299648,
+    "peak_gpu_allocated_bytes": 0,
+    "peak_gpu_reserved_bytes": 0,
+    "peak_process_ram_bytes": 534077440,
+    "peak_native_process_count": 0
+  },
+  "source_snapshot": "reports\\campaign-1791352453191835100-source.json.gz",
+  "source_snapshot_sha256": "b67728a9eccc55da683406b5fe2d7861f684fe97160744e050e7f4878719831d",
+  "elapsed_seconds": 1.25
+}

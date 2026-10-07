@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "<local-path>", line 153, in <module>
+    main()
+  File "<local-path>", line 108, in main
+    legal, visits, _ = search(board, model, rng, 64, 1.5, False)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local-path>", line 328, in search
+    board.undo()
+  File "<local-path>", line 259, in undo
+    self.game = self.command('undo')[0]
+                ^^^^^^^^^^^^^^^^^^^^
+  File "<local-path>", line 229, in command
+    self.guard.check()
+  File "<local-path>", line 178, in check
+    raise StopWork('RAM below 2 GiB; resume when memory is available')
+genseki.rho.core.StopWork: RAM below 2 GiB; resume when memory is available
