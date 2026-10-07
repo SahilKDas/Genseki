@@ -1,7 +1,7 @@
 # Genseki
 
-Genseki is now the Alpha Hive engine, with a native GUI, UHP interfaces, and
-Rho's independent policy/value research. The retired Greek bot league is no
+Genseki is now the Alpha Hive engine, with a native GUI and UHP interfaces.
+Rho research is discontinued and preserved on `archive`. The retired Greek bot league is no
 longer part of the active codebase.
 
 ## Build and run
@@ -46,22 +46,18 @@ Required licenses are retained under Alpha. See
 [Alpha/THIRD_PARTY_NOTICES.md](Alpha/THIRD_PARTY_NOTICES.md). Timed strength
 parity and expansion conformance are not assumed; STATUS records the evidence.
 
-## Rho and rules support
+## Rules support
 
-Rho's models, replay data and campaign remain separate. Its default native
-service is now `build/genseki_rules.exe`: a rules-only Base-Hive UHP process
-with `genseki-position` and `genseki-children` for Rho's encoder and PUCT.
+`build/genseki_rules.exe` is a rules-only Base-Hive UHP process
+with `genseki-position` and `genseki-children` for diagnostic tools.
 It has no learned evaluator, old bot roster, pressure chooser or search engine.
-Use Alpha for `bestmove`. Existing campaign configs naming the former default
-rules executable are migrated on resume; Rho checkpoints are not retrained.
+Use Alpha for `bestmove`.
 
 ```powershell
-python -m genseki.rho.status --workspace Rho
-python -m genseki.rho.campaign --workspace Rho --resume --dry-run
 .\build\genseki_rules.exe --perft 3
 ```
 
-See [Rho/README.md](Rho/README.md), [docs/WIN32_GUI.md](docs/WIN32_GUI.md),
+See [docs/WIN32_GUI.md](docs/WIN32_GUI.md),
 [docs/HIVE_ENGINE.md](docs/HIVE_ENGINE.md), and the unchanged
 [device constraints](constraints_on_SahilKDas_device.md).
 

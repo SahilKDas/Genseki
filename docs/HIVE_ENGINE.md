@@ -1,6 +1,6 @@
 # Hive Engine
 
-This document describes the regular, expansion-free rules service used by Rho:
+This document describes the regular, expansion-free diagnostic rules service:
 `genseki_rules.exe`. The production `genseki.exe` and GUI use Alpha's independent
 MIT-derived engine; see Alpha/STATUS.md for its verified capabilities.
 
@@ -43,7 +43,7 @@ move, state field, or turn field is inconsistent. Expansion game types are
 rejected because Genseki currently advertises no expansion capabilities.
 
 The rules-only service rejects `bestmove`; use Alpha (`genseki.exe`) for search.
-Rho consumes `genseki-position` and full-width `genseki-children` instead.
+Diagnostic tools can consume `genseki-position` and full-width `genseki-children`.
 
 The UHP grammar follows the [Universal Hive Protocol specification](http._//github.com/jonthysell/Mzinga/wiki/UniversalHiveProtocol).
 

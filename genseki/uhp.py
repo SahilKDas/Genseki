@@ -1,4 +1,4 @@
-"""Bounded UHP subprocess transport shared by Rho and protocol tools."""
+"""Bounded UHP subprocess transport for protocol tools."""
 from __future__ import annotations
 
 import queue

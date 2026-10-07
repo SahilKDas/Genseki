@@ -124,7 +124,7 @@ class Guard:
                 raise StageStopped('available RAM below 0.5 GiB')
         if time.monotonic()-self.last_storage >= 60:
             paths = list(ROOT.glob('build*')) + list(ROOT.glob('cmake-build-*')) + [ROOT/p for p in (
-                'Alpha/work', 'Nu/work', 'Iota/work', 'Rho', 'Lab/work', '.tmp', 'reports/work',
+                'Alpha/work', 'Nu/work', 'Iota/work', 'Lab/work', '.tmp', 'reports/work',
                 'data/generated', 'models/work')]
             if not any(self.output == p or p in self.output.parents for p in paths):
                 paths.append(self.output)

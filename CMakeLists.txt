@@ -36,7 +36,7 @@ add_custom_command(OUTPUT ${GENSEKI_ALPHA_EXE}
 )
 add_custom_target(genseki ALL DEPENDS ${GENSEKI_ALPHA_EXE})
 
-# Rho uses position/child enumeration, not a second evaluation/search engine.
+# Diagnostic tools use position/child enumeration from the rules service.
 add_executable(genseki_rules src/main.cpp)
 target_link_libraries(genseki_rules PRIVATE genseki_core)
 

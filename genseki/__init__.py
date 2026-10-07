@@ -1,2 +1,2 @@
-"""Rho research and shared UHP tooling for Alpha."""
+"""Shared UHP tooling for Alpha."""
 
