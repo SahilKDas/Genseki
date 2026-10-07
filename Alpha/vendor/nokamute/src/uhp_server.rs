@@ -217,7 +217,7 @@ impl<W: Write> UhpServer<W> {
     fn options(&mut self, args: &str) -> Result<()> {
         if let Some(path)=args.strip_prefix("set ModelPath ") {
             let model=NeuralModel::load(path).map_err(UhpError::EngineError)?;
-            if model.bytes+1024*1024+256*1024>self.config.opts.table_byte_size {return Err(UhpError::EngineError("memory budget too small for model".into()));}
+            if model.bytes+1024*1024+crate::neural::CACHE_RESERVE>self.config.opts.table_byte_size {return Err(UhpError::EngineError("memory budget too small for model".into()));}
             self.config.neural=Some(model);self.config.model_path=path.into();self.reset_engine();return self.get_option("ModelPath");
         }
         let tokens = args.split(' ').collect::<Vec<_>>();
@@ -240,7 +240,7 @@ impl<W: Write> UhpServer<W> {
                     "neural"=>{if self.config.neural.is_none() {return Err(UhpError::EngineError("load trained ModelPath first".into()));}
                         if !matches!(self.config.strategy,PlayerStrategy::Iterative(_)) {return Err(UhpError::EngineError("neural mode requires iterative search".into()));}
                         if self.board.as_ref().is_some_and(|b|b.game_type()!="Base") {return Err(UhpError::EngineError("neural mode supports Base only".into()));}
-                        if self.config.neural.as_ref().unwrap().bytes+1024*1024+256*1024>self.config.opts.table_byte_size {return Err(UhpError::EngineError("memory budget too small".into()));}
+                        if self.config.neural.as_ref().unwrap().bytes+1024*1024+crate::neural::CACHE_RESERVE>self.config.opts.table_byte_size {return Err(UhpError::EngineError("memory budget too small".into()));}
                         self.config.neural_enabled=true;},_=>return Err(UhpError::InvalidOption(args.into()))}self.get_option("Evaluator")?;},
                 "Aggression" => self.set_option_int::<AggressionOption>(tokens[2])?,
                 #[cfg(not(target_arch = "wasm32"))]
@@ -251,7 +251,7 @@ impl<W: Write> UhpServer<W> {
                 "NumThreads" => self.set_option_int::<NumThreadsOption>(tokens[2])?,
                 "RandomOpening" => self.set_option_bool::<RandomOpeningOption>(tokens[2])?,
                 "TableSizeMiB" => {let v=tokens[2].parse::<usize>().map_err(|_|UhpError::InvalidOption(args.into()))?;
-                    if self.config.neural.as_ref().is_some_and(|m|v.saturating_mul(1<<20)<m.bytes+1024*1024+256*1024) {return Err(UhpError::EngineError("memory budget too small".into()));}
+                    if self.config.neural.as_ref().is_some_and(|m|v.saturating_mul(1<<20)<m.bytes+1024*1024+crate::neural::CACHE_RESERVE) {return Err(UhpError::EngineError("memory budget too small".into()));}
                     self.set_option_int::<TableSizeOption>(tokens[2])?;},
                 "Verbose" => self.set_option_bool::<VerboseOption>(tokens[2])?,
                 _ => return Err(UhpError::InvalidOption(args.into())),
@@ -289,6 +289,7 @@ impl<W: Write> UhpServer<W> {
             "alpha-eval" => {if let Some(b)=&self.board {use minimax::Evaluator;writeln!(self.output,"score {}",self.config.selected().evaluate(b)).map_err(UhpError::from)}else{Err(UhpError::GameNotStarted)}},
             "alpha-neural" => self.neural_diagnostics(),
             "alpha-neural-bench" => self.neural_benchmark(),
+            "alpha-feature-cache" => {let m=crate::neural::feature_cache_metrics();writeln!(self.output,"hits {} misses {} retained_bytes {} entries {} reserve_bytes {}",m[0],m[1],m[2],m[3],crate::neural::CACHE_RESERVE).map_err(UhpError::from)},
             "alpha-search" => self.teacher_search(args),
             "alpha-moveid" => {if let Some(b)=&self.board {match b.from_move_string(args) {Ok(m)=>writeln!(self.output,"{m:?}").map_err(UhpError::from),Err(e)=>Err(e)}}else{Err(UhpError::GameNotStarted)}},
             "perft" => self.perft(args),

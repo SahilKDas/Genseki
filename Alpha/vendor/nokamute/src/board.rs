@@ -32,6 +32,7 @@ impl Color {
 pub struct Node(u8);
 
 impl Node {
+    pub(crate) fn bits(self) -> u8 { self.0 }
     fn empty() -> Self {
         Node(0)
     }

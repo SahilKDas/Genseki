@@ -122,6 +122,19 @@ made, and no Rho work was modified.
 
 ### Gen 2 challenger (2026-10-06)
 
+Lab-driven redevelopment adds full-width decision collection, paired fixed-depth
+and fixed-time diagnostics, held-out move regret, rule-aware checkpoint selection,
+exact-state bounded feature caching, and single-traversal articulation extraction
+checked against the old flood-fill reference. Thirty native tests pass after the
+branch return. The pilot's two held-out decisions measured 14.5 Gen 1 units mean
+regret and 50% top-choice agreement; this is not a strength claim. Source and
+reports returned; 68 ignored artifact files were subsequently recovered from
+GitHub Desktop's `history` stash and verified against their Git blobs. All eight
+Lab pipeline tests pass with the restored corpus. The pinned Nokamute executable
+remains missing; post-optimization model benchmarks and training remain
+unverified. See
+`GEN2_LAB.md`. No production evaluator, GUI default or promotion was changed.
+
 The current production Alpha is designated **Gen 1** and remains the default.
 An isolated native neural challenger, calibrated Nu adapter, and Alpha-specific
 bootstrap model are implemented. Neither earned promotion: historical Gen 1

@@ -71,6 +71,8 @@ endif()
 if(Python3_Interpreter_FOUND)
     add_test(NAME genseki_transport_tests
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/transport_tests.py)
+    add_test(NAME genseki_gauntlet_tests
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/gauntlet_tests.py)
     add_test(NAME genseki_default_engine
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/default_engine.py
             ${GENSEKI_ALPHA_EXE}
@@ -106,6 +108,18 @@ if(WIN32)
     set_target_properties(genseki_gui PROPERTIES CXX_SCAN_FOR_MODULES OFF)
     target_link_libraries(genseki_gui PRIVATE gdi32 user32 comdlg32 comctl32 shell32 ole32 oleaut32 msimg32 winmm genseki_review_core)
     add_dependencies(genseki_gui genseki genseki_raster)
+    # Build the same native board as a spectator without rebuilding Alpha.
+    add_executable(genseki_spectator WIN32 src/gui/win32_gui.cpp src/gui/assets/icons.rc)
+    target_include_directories(genseki_spectator PRIVATE src/gui/assets)
+    target_compile_definitions(genseki_spectator PRIVATE UNICODE _UNICODE NOMINMAX WIN32_LEAN_AND_MEAN)
+    target_link_libraries(genseki_spectator PRIVATE gdi32 user32 comdlg32 comctl32 shell32 ole32 oleaut32 msimg32 winmm genseki_review_core)
+    set_target_properties(genseki_spectator PROPERTIES CXX_SCAN_FOR_MODULES OFF)
+    add_dependencies(genseki_spectator genseki_raster)
+    if(Python3_Interpreter_FOUND)
+        add_test(NAME genseki_spectator_tests
+            COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/spectator_tests.py
+                $<TARGET_FILE:genseki_spectator>)
+    endif()
     add_custom_command(TARGET genseki_gui POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/raster/licenses ${CMAKE_BINARY_DIR}/gui-licenses

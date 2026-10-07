@@ -1,0 +1,56 @@
+{
+  "binary_sha256": "61b4fed3e14825c6496bb4ad259fe661be2aa20372d30e0807ca5a2543914c8a",
+  "model_sha256": "2cb26dd0e360384fda3f2d833faa1620ff1181d012f42c6e7d5ad6906ececc7c",
+  "split": "held-out opening families",
+  "tactical_exclusions": "6d195a462ac9cb14dbd977e7eb0c55c646977bc25497d35d7dd7ddf84ea8fa85",
+  "decisions": [
+    {
+      "id": "756e8a6723e0ec979f0454d59f545ea2694ad08d80aa99708a150743c7d62580:18:20",
+      "chosen": "wA3 bQ\\",
+      "regret_gen1_units": 2.0,
+      "agreement": false,
+      "slices": [
+        "queen_pressure",
+        "reserve_deployment",
+        "student_loss_line"
+      ]
+    },
+    {
+      "id": "756e8a6723e0ec979f0454d59f545ea2694ad08d80aa99708a150743c7d62580:16:36",
+      "chosen": "wS2 bQ\\",
+      "regret_gen1_units": 0.0,
+      "agreement": true,
+      "slices": [
+        "queen_pressure"
+      ]
+    },
+    {
+      "id": "756e8a6723e0ec979f0454d59f545ea2694ad08d80aa99708a150743c7d62580:16:76",
+      "chosen": "pass",
+      "regret_gen1_units": 0.0,
+      "agreement": true,
+      "slices": [
+        "stacks"
+      ]
+    },
+    {
+      "id": "756e8a6723e0ec979f0454d59f545ea2694ad08d80aa99708a150743c7d62580:16:20",
+      "chosen": "wA1 bQ\\",
+      "regret_gen1_units": 56.0,
+      "agreement": false,
+      "slices": [
+        "queen_pressure",
+        "reserve_deployment"
+      ]
+    }
+  ],
+  "mean_regret_gen1_units": 14.5,
+  "top_choice_agreement": 0.5,
+  "slice_counts": {
+    "queen_pressure": 3,
+    "reserve_deployment": 2,
+    "student_loss_line": 1,
+    "stacks": 1
+  },
+  "complete": true
+}

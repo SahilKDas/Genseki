@@ -46,6 +46,84 @@ pub(crate) fn identity_hash(board: &Board) -> u64 {
     hash
 }
 type Features = [Vec<usize>; 2];
+pub(crate) const CACHE_RESERVE: usize = 13 * 256 * 1024;
+const FEATURE_CACHE_BYTES: usize = 128 * 1024;
+
+fn feature_key(b: &Board, schema: u32) -> Vec<u8> {
+    let mut key = schema.to_le_bytes().to_vec();
+    key.extend(b.nodes.iter().map(|n| n.bits()));
+    key.extend(b.turn_num.to_le_bytes());
+    key.push(b.game_type_bits);
+    for reserve in b.remaining { key.extend(reserve); }
+    for queen in b.queens { key.extend(queen.to_le_bytes()); }
+    for hexes in &b.occupied_hexes {
+        key.extend((hexes.len() as u32).to_le_bytes());
+        for h in hexes { key.extend(h.to_le_bytes()); }
+    }
+    key.push(b.get_underworld().len() as u8);
+    for stone in b.get_underworld() {
+        key.extend(stone.hex().to_le_bytes());
+        key.extend([stone.node().bits(), stone.height()]);
+    }
+    // Full replay disambiguates opening anchors and move-dependent mobility.
+    for turn in &b.turn_history {
+        match *turn {
+            Turn::Place(h, bug) => { key.push(0); key.extend(h.to_le_bytes()); key.push(bug as u8); }
+            Turn::Move(a, z) => { key.push(1); key.extend(a.to_le_bytes()); key.extend(z.to_le_bytes()); }
+            Turn::Pass => key.push(2),
+        }
+    }
+    key
+}
+
+#[derive(Default)]
+struct FeatureCache { entries: VecDeque<(Vec<u8>, Features, usize)>, bytes: usize, hits: u64, misses: u64 }
+impl FeatureCache {
+    fn get(&mut self, b: &Board, schema: u32) -> Features {
+        let key = feature_key(b, schema);
+        if let Some(i) = self.entries.iter().position(|e| e.0 == key) {
+            self.hits += 1;
+            let entry = self.entries.remove(i).unwrap();
+            let result = entry.1.clone(); self.entries.push_front(entry); return result;
+        }
+        self.misses += 1;
+        let f = neural_features(b, schema);
+        let bytes = key.capacity() + f.iter().map(|v| v.capacity() * std::mem::size_of::<usize>()).sum::<usize>() + 128;
+        if bytes <= FEATURE_CACHE_BYTES {
+            while self.bytes + bytes > FEATURE_CACHE_BYTES || self.entries.len() >= 32 {
+                self.bytes -= self.entries.pop_back().unwrap().2;
+            }
+            self.bytes += bytes; self.entries.push_front((key, f.clone(), bytes));
+        }
+        f
+    }
+}
+thread_local! {static FEATURE_CACHE:RefCell<FeatureCache>=RefCell::new(FeatureCache::default());}
+pub(crate) fn feature_cache_metrics() -> [u64;4] {
+    FEATURE_CACHE.with(|c| {let c=c.borrow(); [c.hits,c.misses,c.bytes as u64,c.entries.len() as u64]})
+}
+
+#[cfg(test)]
+#[test]
+fn exact_feature_cache_reference_and_budget() {
+    use minimax::Game;
+    let mut b=Board::new_core_set(); let mut cache=FeatureCache::default();
+    for ply in 0..160 {
+        assert_eq!(feature_impl(&b,4,true),feature_impl(&b,4,false));
+        assert_eq!(cache.get(&b,4),neural_features(&b,4));
+        assert_eq!(cache.get(&b,4),neural_features(&b,4));
+        assert!(cache.bytes<=FEATURE_CACHE_BYTES && cache.entries.len()<=32);
+        let mut moves=Vec::new(); crate::Rules::generate_moves(&b,&mut moves);
+        if moves.is_empty() || crate::Rules::get_winner(&b).is_some() { break; }
+        let m=moves[(ply*37+11)%moves.len()]; b.apply(m);
+        assert_eq!(feature_impl(&b,4,true),feature_impl(&b,4,false));
+        assert_eq!(cache.get(&b,4),neural_features(&b,4));
+        b.undo(m); assert_eq!(cache.get(&b,4),neural_features(&b,4)); b.apply(m);
+    }
+    let mut changed=b.clone(); changed.turn_history.push(Turn::Pass);
+    assert_ne!(feature_key(&b,4),feature_key(&changed,4));
+    assert_ne!(feature_key(&b,3),feature_key(&b,4));
+}
 
 // Lift the occupied connected hive from the toroidal representation into axial coordinates.
 // Before both queens exist, preserve the opening origin through move history.
@@ -124,6 +202,9 @@ fn cells(board: &Board) -> Vec<((i32, i32), Vec<Node>)> {
 }
 
 pub(crate) fn neural_features(b: &Board, version: u32) -> Features {
+    feature_impl(b,version,true)
+}
+fn feature_impl(b: &Board, version: u32, fast: bool) -> Features {
     let stacks = cells(b);
     let mut anchors = [(0, 0); 2];
     let mut present = [false; 2];
@@ -138,9 +219,15 @@ pub(crate) fn neural_features(b: &Board, version: u32) -> Features {
     let height = |xy: (i32, i32)| stacks.iter().find(|s| s.0 == xy).map_or(0, |s| s.1.len());
     let mut articulation = vec![false; stacks.len()];
     let mut access = vec![0; stacks.len()];
+    let cuts=if fast && version>=3 && stacks.len()>2 {Some(b.find_cut_vertexes())} else {None};
+    let mut top_hex=[0;22];
+    if cuts.is_some() {for &hex in b.occupied_hexes.iter().flatten() {top_hex[slot(b.node(hex))]=hex;}}
     if version >= 3 {
         for (i, (xy, s)) in stacks.iter().enumerate() {
             if s.len() == 1 && stacks.len() > 2 {
+                if let Some(cuts)=&cuts {
+                    articulation[i]=cuts.get(top_hex[slot(s[0])]);
+                } else {
                 let start = if i == 0 { 1 } else { 0 };
                 let mut seen = vec![false; stacks.len()];
                 seen[i] = true;
@@ -157,6 +244,7 @@ pub(crate) fn neural_features(b: &Board, version: u32) -> Features {
                     }
                 }
                 articulation[i] = seen.iter().any(|x| !*x);
+                }
             }
             for d in 0..6 {
                 let to = (xy.0 + DIR[d].0, xy.1 + DIR[d].1);
@@ -464,7 +552,7 @@ impl NeuralModel {
     }
     pub(crate) fn reference(&self, b: &Board) -> i32 {
         self.output(
-            &self.refresh(&neural_features(b, self.schema)),
+            &self.refresh(&feature_impl(b, self.schema, false)),
             b.to_move() as usize,
         )
     }
@@ -499,7 +587,7 @@ impl NeuralModel {
         ns
     }
     fn incremental(&self, b: &Board) -> i32 {
-        let f = neural_features(b, self.schema);
+        let f = FEATURE_CACHE.with(|cache| cache.borrow_mut().get(b, self.schema));
         CACHE.with(|cache| {
             let mut c = cache.borrow_mut();
             if c.hash != self.hash {

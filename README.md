@@ -30,6 +30,16 @@ imported Base-Hive replay. Review navigation does not play sounds or advance
 the original game's clocks. See [Game Review](docs/GAME_REVIEW.md) for budgets,
 evidence limits, export details, and the command-line reviewer.
 
+To run a terminal-controlled gauntlet with a live native spectator:
+
+```powershell
+cmake --build build --target genseki_spectator -j1
+python -m genseki.gauntlet --engine-b .\path\to\opponent.exe --games 20
+```
+
+See [docs/GAUNTLET.md](docs/GAUNTLET.md) for engine arguments, neural options,
+limits, saved game records, and reconnecting the viewer.
+
 Alpha derives from attributed MIT-licensed Nokamute and minimax-rs snapshots.
 Required licenses are retained under Alpha. See
 [Alpha/README.md](Alpha/README.md), [Alpha/STATUS.md](Alpha/STATUS.md), and
