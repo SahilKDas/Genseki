@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import argparse
-from contextlib import ExitStack, contextmanager
+from contextlib import ExitStack
 import ctypes
 import hashlib
 import json
@@ -14,6 +14,7 @@ import subprocess
 import time
 
 from .uhp import UhpProcess
+from .resources import HEAVY_PROCESS_PATTERNS, available_ram, heavy_job_path, job_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 INITIAL = 'Base;NotStarted;White[1]'
@@ -46,23 +47,6 @@ def digest(path):
     return h.hexdigest()
 
 
-@contextmanager
-def job_lock(path):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open('a+b') as handle:
-        handle.seek(0)
-        handle.write(b'0')
-        handle.flush()
-        handle.seek(0)
-        if os.name == 'nt':
-            import msvcrt
-            msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
-        else:
-            import fcntl
-            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        yield
-
-
 def windows_processes():
     script = ("$ErrorActionPreference='Stop'; @(Get-CimInstance Win32_Process | "
               "Select-Object ProcessId,Name,CommandLine) | ConvertTo-Json -Compress")
@@ -79,9 +63,7 @@ def preflight(gui):
             raise RuntimeError('the native spectator requires Windows; use --no-gui elsewhere')
         return
     processes = windows_processes()
-    heavy = ('campaign', 'gauntlet', 'genseki.arena', 'gen2.py arena',
-             'gen2.py train', 'gen2.py collect', 'gen2.py benchmark', 'learning.py',
-             'train.py', 'arena.py', 'benchmark.py', 'tournament', 'selfplay', 'training.py')
+    heavy = HEAVY_PROCESS_PATTERNS
     guis = controllers = 0
     for process in processes:
         if process['ProcessId'] == os.getpid():
@@ -112,15 +94,11 @@ class Guard:
         if time.monotonic() >= self.deadline:
             raise StageStopped('stage time limit reached')
         if os.name == 'nt':
-            class Memory(ctypes.Structure):
-                _fields_ = [('length', ctypes.c_ulong), ('load', ctypes.c_ulong)] + [
-                    (name, ctypes.c_ulonglong) for name in
-                    ('total', 'available', 'total_page', 'available_page', 'total_virtual', 'available_virtual', 'extended')]
-            memory = Memory()
-            memory.length = ctypes.sizeof(memory)
-            if not ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(memory)):
-                raise StageStopped('cannot measure available RAM')
-            if memory.available < 512*1024**2:
+            try:
+                free_ram = available_ram()
+            except OSError as error:
+                raise StageStopped('cannot measure available RAM') from error
+            if free_ram < 512*1024**2:
                 raise StageStopped('available RAM below 0.5 GiB')
         if time.monotonic()-self.last_storage >= 60:
             paths = list(ROOT.glob('build*')) + list(ROOT.glob('cmake-build-*')) + [ROOT/p for p in (
@@ -309,7 +287,7 @@ def main(argv=None):
     guard = Guard(args.hours, args.output)
     gui = None
     try:
-        with job_lock(ROOT/'reports/work/gauntlet.lock'):
+        with job_lock(heavy_job_path(ROOT)), job_lock(ROOT/'reports/work/gauntlet.lock'):
             preflight(not args.no_gui)
             guard.check()
             if os.name == 'nt':

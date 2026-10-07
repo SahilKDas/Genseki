@@ -66,6 +66,11 @@ limited to two hours and restricted to one heavy job. Existing RAM/storage floor
 and the 1.5 GiB training VRAM cap remain in force. New executables require new
 report namespaces; old gauntlets resume only with their original pinned executable.
 
+The Gen 2 and Lab runners share `reports/work/heavy-job.lock` with the Python
+gauntlet and retain their legacy locks. Lock contention rejects the new job;
+OS lock ownership is released on exit, so a leftover file needs no deletion.
+Available-RAM queries live in `genseki.resources`, independently of archived Rho.
+
 ## Commands
 
 Use a hash-frozen model plus its calibrated `.alpha.json` sidecar as `MODEL`.

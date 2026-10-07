@@ -1,7 +1,6 @@
 """Small regression checks without loading models or launching training jobs."""
 import argparse
 import ast
-import gzip
 import json
 from pathlib import Path
 import sqlite3
@@ -76,25 +75,6 @@ class AuditFixTests(unittest.TestCase):
         curate, _, learning, checkpoint = self.holdout(True)
         with self.assertRaises(RuntimeError):
             curate(learning, [], None, checkpoint)
-
-    def test_replay_commit_recovers_counters_and_is_idempotent(self):
-        writes = []
-        reconcile = function('genseki/rho/campaign.py', 'reconcile_replay', dict(
-            json=json, persist=lambda root, state: writes.append(dict(state['totals']))))
-        with tempfile.TemporaryDirectory(dir=ROOT/'Lab') as folder:
-            root = Path(folder)
-            totals = dict(selfplay_games=4, positions=40, natural_games=3, capped_games=1)
-            (root/'game.gz').write_bytes(gzip.compress(json.dumps(dict(metadata=dict(campaign_totals=totals))).encode()))
-            replay = SimpleNamespace(root=root, items=[dict(file='game.gz')])
-            state = dict(totals=dict(selfplay_games=3, positions=30, natural_games=2, capped_games=1))
-            reconcile(root, state, replay)
-            self.assertEqual(state['totals'], totals)
-            reconcile(root, state, replay)
-            self.assertEqual(writes, [totals])
-            state['totals'] = dict(totals, selfplay_games=5)
-            reconcile(root, state, replay)
-            self.assertEqual(state['totals']['selfplay_games'], 5)
-
 
 if __name__ == '__main__':
     unittest.main()
