@@ -53,6 +53,8 @@ class AuditFixTests(unittest.TestCase):
             self.assertNotIn('alternatives', rows[1])
 
     def holdout(self, checkpoint_exists):
+        workspace = tempfile.TemporaryDirectory(dir=ROOT/'Lab')
+        self.addCleanup(workspace.cleanup)
         db = sqlite3.connect(':memory:')
         db.executescript('create table samples(id integer,position text);'
                          'create table exposures(sample integer,position text);'
@@ -60,7 +62,8 @@ class AuditFixTests(unittest.TestCase):
                          "insert into samples values(1,'parent'),(2,'safe');"
                          "insert into exposures values(1,'heldout'),(2,'safe');")
         curate = function('Alpha/tools/gen2.py', 'curated_index', dict(
-            hashlib=hashlib, json=json, tactical_keys=lambda _: ['heldout']))
+            ROOT=Path(workspace.name), hashlib=hashlib, json=json,
+            tactical_keys=lambda _: ['heldout']))
         learning = SimpleNamespace(index_corpus=lambda *_: db, position_key=lambda p: p)
         return curate, db, learning, SimpleNamespace(exists=lambda: checkpoint_exists)
 

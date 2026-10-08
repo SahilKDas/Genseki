@@ -149,7 +149,6 @@ class ResourceTests(unittest.TestCase):
                 result = subprocess.run([sys.executable, '-B', '-c', code, str(ROOT),
                     str(runtime)], cwd=root, capture_output=True, text=True, timeout=10)
                 self.assertEqual(result.returncode, 0, result.stderr)
-
     def test_cross_process_exclusion_and_exception_release(self):
         with tempfile.TemporaryDirectory(dir=ROOT/'tests') as folder:
             path = resources.heavy_job_path(folder)
@@ -181,7 +180,6 @@ class ResourceTests(unittest.TestCase):
                 if child.poll() is None:
                     child.kill()
                 child.communicate(timeout=5)
-
 
 if __name__ == '__main__':
     unittest.main()
