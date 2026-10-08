@@ -15,6 +15,7 @@ class Peer:
     timeout = False
     diverge = False
     fail_start = False
+    replay_diverge = False
 
     def __init__(self, argv):
         if self.fail_start and argv[0] == 'b':
@@ -40,7 +41,10 @@ class Peer:
             return [g.INITIAL, 'ok'], 0
         if text == 'validmoves':
             return ['wA1;wG1', 'ok'], 0
+        if text.startswith('genseki-validate-game '):
+            return ['G1|'+text.split(' ', 1)[1], 'ok'], 0
         if text.startswith('bestmove'):
+            assert text.split()[2] == '64'
             if self.timeout and self.name == 'a':
                 raise TimeoutError
             return ['wQ', 'ok'], .001
@@ -48,7 +52,9 @@ class Peer:
             self.moves.append(text[5:])
             result = 'WhiteWins' if self.diverge and self.name == 'b' else 'InProgress'
             side = 'White' if len(self.moves) % 2 == 0 else 'Black'
-            return [f'Base;{result};{side}[{len(self.moves)//2+1}];'+ ';'.join(self.moves), 'ok'], 0
+            replay = list(self.moves)
+            if self.replay_diverge and self.name == 'b':replay[-1] = 'bA3'
+            return [f'Base;{result};{side}[{len(self.moves)//2+1}];'+ ';'.join(replay), 'ok'], 0
         raise AssertionError(text)
 
     def close(self):
@@ -58,7 +64,7 @@ class Peer:
 class GauntletTests(unittest.TestCase):
     def setUp(self):
         Peer.instances = []
-        Peer.timeout = Peer.diverge = Peer.fail_start = False
+        Peer.timeout = Peer.diverge = Peer.fail_start = Peer.replay_diverge = False
         self.temp = tempfile.TemporaryDirectory(dir=g.ROOT/'Lab')
         self.addCleanup(self.temp.cleanup)
         self.output = Path(self.temp.name)
@@ -102,6 +108,12 @@ class GauntletTests(unittest.TestCase):
             g.play_game(self.args, 0, self.view, self.guard, Peer)
         self.assertEqual(len(Peer.instances), 1)
         self.assertTrue(Peer.instances[0].closed)
+
+    def test_same_header_different_replay_is_rejected(self):
+        Peer.replay_diverge = True
+        with self.assertRaisesRegex(RuntimeError, 'divergence'):
+            g.play_game(self.args, 0, self.view, self.guard, Peer)
+        self.assertTrue(all(p.closed for p in Peer.instances))
 
     def test_guard_deadline_does_not_score_a_forfeit(self):
         self.guard.deadline = 0

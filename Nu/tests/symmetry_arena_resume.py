@@ -20,10 +20,11 @@ class ResumeTests(unittest.TestCase):
             model_sha256=sha,engine_sha256=sha,opponent_sha256=sha,milliseconds=250,internal_ms=230,
             threads=1,cap=160,repetition_policy=arena.REPETITION_POLICY,threat_plies=0,lmr=False,seed_base=71000,
             invocation=[str(artifact),'--model',str(artifact)],opponent_model_sha256=sha,
-            opponent_version=None,opponent_revision=None,table_mib=16,background_pondering=False,random_opening=False)
+            opponent_version=None,opponent_revision=None,table_mib=16,background_pondering=False,random_opening=False,
+            referee_sha256=sha,validation_policy=arena.VALIDATION_POLICY,memory_policy=arena.MEMORY_POLICY,depth_limit=64)
         path=root/'match.json';path.write_text(json.dumps(report))
         args=['arena','--engine',str(artifact),'--model',str(artifact),'--opponent',str(artifact),
-              '--opponent-model',str(artifact),'--output',str(path),'--resume']
+              '--opponent-model',str(artifact),'--referee',str(artifact),'--output',str(path),'--resume']
         return args,path,report
 
     def test_completed_match_is_not_replayed(self):
@@ -34,7 +35,7 @@ class ResumeTests(unittest.TestCase):
             self.assertEqual(path.read_bytes(),before)
 
     def test_changed_identity_or_mirrored_order_rejected(self):
-        for field in ('model_sha256','order','rejected'):
+        for field in ('model_sha256','validation_policy','depth_limit','referee_sha256','order','rejected'):
             with tempfile.TemporaryDirectory() as folder:
                 args,path,report=self.fixture(Path(folder))
                 if field=='order':report['games'][0]['nu_color']='black'
@@ -45,5 +46,14 @@ class ResumeTests(unittest.TestCase):
                     with self.assertRaises(RuntimeError):arena.main()
                     engine.assert_not_called()
                 self.assertEqual(path.read_bytes(),before)
+
+    def test_boards_and_not_notation_must_agree(self):
+        def fake(peer,text):
+            if 'bad' in text:raise RuntimeError('invalid replay')
+            return (['different' if 'divergent' in text else 'same'],0)
+        with patch.object(arena,'command',fake):
+            self.assertEqual(arena.validate_boards(None,['Base;InProgress;White[3];notation-a','Base;InProgress;White[3];notation-b']), 'same')
+            for state in ('Base;InProgress;White[3];divergent','Base;InProgress;White[3];bad','Base;InProgress;Black[3];notation'):
+                with self.assertRaises(RuntimeError):arena.validate_boards(None,['Base;InProgress;White[3];a',state])
 
 if __name__=='__main__':unittest.main()

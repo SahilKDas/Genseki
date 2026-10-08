@@ -32,6 +32,7 @@ def run(args):
     args.output.mkdir(parents=True,exist_ok=True)
     manifest_path=args.output/'series.json'
     config=dict(engine=digest(args.engine),model=digest(args.model),checkpoint=digest(args.model.with_suffix('.pt')),opponents=[dict(name=name,engine=digest(engine),model=digest(model) if model else None) for name,engine,model in candidates],
+                referee=digest(args.referee),validation_policy=arena.VALIDATION_POLICY,
                 games=20,milliseconds=250,internal_ms=230,threads=1,table_mib=16,cap=160,seed_base=82000,
                 arena_sha256=digest(Path(arena.__file__)),runner_sha256=digest(Path(__file__)))
     state=json.loads(manifest_path.read_text()) if manifest_path.exists() else dict(config=config,started=time.time(),deadline=time.time()+7200,status='waiting',completed=[])
@@ -52,6 +53,7 @@ def run(args):
                     kernel.SetPriorityClass(kernel.GetCurrentProcess(),0x40)
                 state['status']='running';atomic_json(manifest_path,state)
                 engine=freeze(args.engine,args.output);model=freeze(args.model,args.output)
+                referee=freeze(args.referee,args.output)
                 checkpoint=model.with_suffix('.pt')
                 if not checkpoint.exists():shutil.copyfile(args.model.with_suffix('.pt'),checkpoint)
                 if digest(checkpoint)!=config['checkpoint']:raise RuntimeError('frozen float checkpoint mismatch')
@@ -72,6 +74,7 @@ def run(args):
                     opponent=freeze(opponent,args.output)
                     opponent_model=freeze(opponent_model,args.output) if opponent_model else None
                     argv=['arena','--engine',str(engine),'--model',str(model),'--opponent',str(opponent),
+                          '--referee',str(referee),
                           '--games','20','--milliseconds','250','--threads','1','--cap','160',
                           '--seed-base','82000','--output',str(args.output/(name+'.json')),'--resume']
                     if opponent_model:argv+=['--opponent-model',str(opponent_model)]
@@ -92,7 +95,7 @@ def run(args):
 
 def main():
     parser=argparse.ArgumentParser()
-    for name in ('source-root','engine','model','output'):parser.add_argument('--'+name,type=Path,required=True)
+    for name in ('source-root','engine','model','referee','output'):parser.add_argument('--'+name,type=Path,required=True)
     args=parser.parse_args()
     run(args)
 

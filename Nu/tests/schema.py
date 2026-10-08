@@ -10,6 +10,8 @@ import tempfile
 import unittest
 
 TOOLS=Path(__file__).resolve().parents[1]/'tools'
+WORK=TOOLS.parent/'work'
+WORK.mkdir(exist_ok=True)
 sys.path.insert(0,str(TOOLS))
 import learning
 
@@ -32,15 +34,15 @@ class SchemaTests(unittest.TestCase):
         namespace=dict(random=random,hashlib=hashlib,UhpProcess=Engine,response=response,
                        resource_guard=lambda:None,json=json,os=os)
         exec(compile(ast.Module(body=[function],type_ignores=[]),'bootstrap','exec'),namespace)
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=WORK) as directory:
             path=Path(directory)/'corpus.jsonl'
             rows=namespace['corpus'](Path('fixture'),path,1,1,1)
             self.assertEqual(rows[0]['feature_schema'],6)
             self.assertEqual(json.loads(path.read_text())['feature_schema'],6)
 
     def test_index_accepts_six_and_rejects_mixed_or_unknown(self):
-        for versions in ([6],[4,6],[5],[7]):
-            with tempfile.TemporaryDirectory() as directory:
+        for versions in ([6],[4,6],[5],[7],[8]):
+            with tempfile.TemporaryDirectory(dir=WORK) as directory:
                 root=Path(directory);source=root/'corpus.jsonl'
                 rows=[dict(source='unit',game=i,ply=0,feature_schema=version,
                            features=[[1],[2]],position=f'G1|w|2|1|1|{i},0=wA1;{i+1},0=bS1')

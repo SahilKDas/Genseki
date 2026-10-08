@@ -19,6 +19,7 @@ def main():
     args = parser.parse_args()
     raw = args.model.read_bytes()
     width = struct.unpack_from('<I', raw, 16)[0]
+    schema = struct.unpack_from('<I', raw, 8)[0]
     bias = np.frombuffer(raw, '<i4', width, 32).astype(np.int64)
     embedding = np.frombuffer(raw, '<i2', 8192 * width, 32 + width * 4).reshape(8192, width).astype(np.int64)
     at=32+width*4+8192*width*2
@@ -44,7 +45,9 @@ def main():
                     activations=[np.clip(np.trunc((head@value+head_bias*256)/256).astype(np.int64),0,256) for value in (pair,swap)]
                     white=int((activations[0]-activations[1])@output)
                 else:white=int((clipped[0]-clipped[1])@output)
-                expected = max(-5000, min(5000, int(white * 600 / (65536*(2 if nonlinear else 1))))) * (1 if ply % 2 == 0 else -1)
+                prior = int(engine.command('nu-prior')[0][0]) if schema in (5,7) else 0
+                expected_white = max(-6800,min(6800,max(-5000, min(5000, int(white * 600 / (65536*(2 if nonlinear else 1)))))+prior))
+                expected = expected_white * (1 if ply % 2 == 0 else -1)
                 native = int(lines[2].split()[1])
                 assert native == expected, (native, expected)
                 floats = [checkpoint['bias'] + checkpoint['embedding.weight'][index].sum(0) for index in ids]
@@ -53,7 +56,8 @@ def main():
                     activated=[torch.nn.functional.linear(value,checkpoint['head.weight'],checkpoint['head.bias']).clamp(0,1) for value in (pair,swap)]
                     reference=((activated[0]-activated[1])*checkpoint['output']).sum().item()*300
                 else:reference = ((floats[0].clamp(0, 1) - floats[1].clamp(0, 1)) * checkpoint['output']).sum().item() * 600
-                maximum = max(maximum, abs(reference - expected * (1 if ply % 2 == 0 else -1)))
+                reference = max(-6800,min(6800,max(-5000,min(5000,reference))+prior))
+                maximum = max(maximum, abs(reference - expected_white))
                 count += 1
                 moves, _ = engine.command('validmoves')
                 if not moves[0]: break

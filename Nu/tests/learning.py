@@ -36,20 +36,20 @@ def main(schema=4):
         for i in range(32):
             split=i%2
             rows.append(dict(game=i,source='unit',seed=17,opening_family=families[split],ply=8,feature_schema=schema,
-                features=[[i+1,7000],[i+100,7128]],position=f'G1|w|8|4|4|0,0=wQ;{i+1},0=bQ' if schema==5 else f'G1|w|8|4|4|{i},0=wQ;{i+1},0=bQ',
+                features=[[i+1,7000],[i+100,7128]],position=f'G1|w|8|4|4|0,0=wQ;{i+1},0=bQ' if schema in (5,7) else f'G1|w|8|4|4|{i},0=wQ;{i+1},0=bQ',
                 teacher_search_cp=100 if split else -100,outcome=None,termination='ply_cap'))
-        if schema==5:
+        if schema in (5,7):
             for row in rows:row.update(strategic_prior_version=1,prior_white=60)
         rows[1]['position']=rows[0]['position']
         # A ranking child crossing into held-out positions must remove its training parent.
         rows[2]['preferred_position']=rows[3]['position'];rows[2]['preferred_features']=rows[3]['features']
         rows[2]['alternative_position']=rows[2]['position'];rows[2]['alternative_features']=rows[2]['features'];rows[2]['mover']=1
-        if schema==5:rows[2].update(preferred_prior_white=60,alternative_prior_white=60)
+        if schema in (5,7):rows[2].update(preferred_prior_white=60,alternative_prior_white=60)
         data.write_text(''.join(json.dumps(row)+'\n' for row in rows))
         db=learning.index_corpus([data],base/'index.sqlite')
         surviving={r[0] for r in db.execute('select position from samples')}
         key=learning.position_key
-        if schema==5:
+        if schema in (5,7):
             from position_keys import position_key as key
         assert key(rows[0]['position']) not in surviving
         assert key(rows[2]['position']) not in surviving
@@ -58,10 +58,10 @@ def main(schema=4):
         assert learning.run(args(data,base/'whole',base/'index.sqlite'))
         assert not learning.run(args(data,base/'resume',base/'index.sqlite',.00001))
         assert learning.run(args(data,base/'resume',base/'index.sqlite'))
-        whole=torch.load(next((base/'whole').glob('nu-64-nonlinear-e*.pt')) if schema==5 else base/'whole/nu-64-nonlinear.pt',weights_only=True)
-        resumed=torch.load(next((base/'resume').glob('nu-64-nonlinear-e*.pt')) if schema==5 else base/'resume/nu-64-nonlinear.pt',weights_only=True)
+        whole=torch.load(next((base/'whole').glob('nu-64-nonlinear-e*.pt')) if schema in (5,7) else base/'whole/nu-64-nonlinear.pt',weights_only=True)
+        resumed=torch.load(next((base/'resume').glob('nu-64-nonlinear-e*.pt')) if schema in (5,7) else base/'resume/nu-64-nonlinear.pt',weights_only=True)
         assert all(torch.equal(value,resumed['state'][name]) for name,value in whole['state'].items())
         assert next((base/'whole').glob('*.nnue')).read_bytes()==next((base/'resume').glob('*.nnue')).read_bytes()
     print('Nu leakage/symmetry/accumulation/resume tests passed')
 
-if __name__=='__main__':main();main(5)
+if __name__=='__main__':main();main(5);main(7)

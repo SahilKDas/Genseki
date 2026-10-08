@@ -56,6 +56,11 @@ std::vector<std::string> UhpEngine::execute(std::string_view line) {
         return {board_->game_string(), "ok"};
     }
     if (command == "options") return {"ok"};
+    if (command == "genseki-validate-game") {
+        auto parsed = Board::from_game_string(args);
+        if (!parsed) return error(parsed.error());
+        return {parsed->position_string(), "ok"};
+    }
     if (!board_) {
         return error("No game in progress. Try 'newgame' to start a new game.");
     }

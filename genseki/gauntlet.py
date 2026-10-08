@@ -19,6 +19,8 @@ from .resources import HEAVY_PROCESS_PATTERNS, available_ram, heavy_job_path, te
 
 ROOT = Path(__file__).resolve().parents[1]
 INITIAL = 'Base;NotStarted;White[1]'
+SEARCH_DEPTH_LIMIT = 64
+VALIDATION_POLICY = 'reconstructed-position-v1'
 
 
 def atomic(path, text):
@@ -204,6 +206,18 @@ def game_state(lines):
     return states[0]
 
 
+def agreed_state(referee, states, guard):
+    positions = []
+    for state in states:
+        lines, _ = command(referee, 'genseki-validate-game ' + state, guard)
+        if len(lines) != 1 or not lines[0].startswith('G1|'):
+            raise RuntimeError('referee did not reconstruct a position')
+        positions.append(lines[0])
+    if len(set(positions)) != 1 or len({tuple(s.split(';')[:3]) for s in states}) != 1:
+        raise RuntimeError(f'protocol/rules divergence: {states}')
+    return states[0]
+
+
 def play_game(args, index, view, guard, factory=UhpProcess):
     frozen = {}
     for side in ('a', 'b'):
@@ -235,9 +249,8 @@ def play_game(args, index, view, guard, factory=UhpProcess):
                 if any(str(actual.get(k, '')).casefold() != str(v).casefold()
                        for k, v in expected.items()):
                     raise RuntimeError('effective settings differ from frozen manifest')
-        state = INITIAL
-        for engine in engines:
-            state = game_state(command(engine, 'newgame Base', guard)[0])
+        states = [game_state(command(engine, 'newgame Base', guard)[0]) for engine in engines]
+        state = agreed_state(referee, states, guard)
         rng = random.Random(seed)
         while len(moves) < args.cap:
             white = state.split(';')[2].startswith('White[')
@@ -252,7 +265,7 @@ def play_game(args, index, view, guard, factory=UhpProcess):
                 view.publish(f'{side} thinking, ply {len(moves)+1}')
                 try:
                     response, elapsed = command(actor,
-                        f'bestmove depthorseconds 99 {args.internal_ms/1000:.3f}',
+                        f'bestmove depthorseconds {SEARCH_DEPTH_LIMIT} {args.internal_ms/1000:.3f}',
                         guard, args.external_ms/1000)
                     if elapsed*1000 > args.external_ms:
                         raise TimeoutError('external move deadline')
@@ -265,9 +278,7 @@ def play_game(args, index, view, guard, factory=UhpProcess):
                 move = response[0]
                 timings.append(dict(ply=len(moves)+1, actor=side, milliseconds=elapsed*1000))
             states = [game_state(command(engine, 'play '+move, guard)[0]) for engine in (referee, a, b)]
-            if len({tuple(s.split(';')[:3]) for s in states}) != 1:
-                raise RuntimeError(f'protocol/rules divergence after {move}: {states}')
-            state = states[0]
+            state = agreed_state(referee, states, guard)
             moves.append(move)
             view.publish(f'ply {len(moves)}: {move}', state)
             result = state.split(';')[1]
@@ -335,6 +346,7 @@ def main(argv=None):
                   engine_a_sha256=digest(args.engine_a), engine_b_sha256=digest(args.engine_b),
                   referee_sha256=digest(args.referee), games=[], points=0)
     report['settings'] = portable_value(ROOT, vars(args))
+    report['settings'].update(search_depth_limit=SEARCH_DEPTH_LIMIT, validation_policy=VALIDATION_POLICY)
     opening_plan = dict(generator='sorted-legal-random-four-plies-v1',
                         seeds=[args.seed+i for i in range(args.games//2)])
     report['opening_plan'] = opening_plan

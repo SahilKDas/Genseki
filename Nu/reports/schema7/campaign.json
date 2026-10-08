@@ -1,0 +1,972 @@
+{
+  "version": 1,
+  "qualification_run": false,
+  "promoted": false,
+  "defaults_changed": false,
+  "corpus": {
+    "config": {
+      "version": 1,
+      "schema": 7,
+      "seed": 300000,
+      "positions": 10000,
+      "parent_depth": 8,
+      "parent_ms": 500,
+      "child_depth": 8,
+      "child_ms": 250,
+      "cap": 160,
+      "exploration": 0.08,
+      "repetition_policy": "nokamute-1.0.3-stride4-window32-v1",
+      "pins": {
+        "engine": "8bae41fa15d10598dfb6c7d8753a935728209efb693b506d2c1ebffae4eeb20d",
+        "teacher": "80d1cc75571c2e3266e0246b2cec00d3657e3ba94029e5ca4635cfe0eaf12ef6",
+        "referee": "8f0616dcf73feccd349c6c5954772dd0be34e20d54a76161f43d664a665a9fdf",
+        "schema5": "c404e52f726afe3444d3284db0fef4f623a4c653d9855267eb6babde96546401",
+        "schema6": "4a6473e6aaaec47e0df13072ec2d5c2af0fd02199c1fc36e27ec4288f66cc874",
+        "teacher-proof": "98c9a29209e25858871ede7c00e932bfdacae7530a1d7400695f7223228ac481",
+        "exclusions": "386edcc667540e512c1ef1b8bde997d46c1e457312c81d7be0c52080e4456462"
+      }
+    },
+    "games": 234,
+    "accepted": 10011,
+    "splits": [
+      7830,
+      2181
+    ],
+    "completed": true
+  },
+  "exclusion_verification": {
+    "accepted": 10011,
+    "splits": {
+      "0": 7830,
+      "1": 2181
+    },
+    "position_exclusion_hits": 0,
+    "opening_exclusion_hits": 0,
+    "child_exclusion_hits": 0,
+    "cross_split_exposures": 0,
+    "termination_records": {
+      "natural": 8256,
+      "ply_cap": 1576,
+      "repetition": 179
+    },
+    "index_sha256": "ed121f3e29335c5dcf2e1b8bb13a0924199d21a42069fb8c23f23b8582baa952"
+  },
+  "training": {
+    "corpus_id": "63b7332b3731792e5215f4019a1a051adbbc3f94924b92e83df1600a469526d8",
+    "width": 64,
+    "head": "linear",
+    "schema": 7,
+    "seed": 1701,
+    "batch": 128,
+    "accumulation": 1,
+    "epochs": 24,
+    "learning_rate": 0.001,
+    "ablate": null,
+    "outcome_only": false,
+    "initialize_sha256": null,
+    "ranking_weight": 0.05,
+    "selection": "mse",
+    "strategic_prior_version": 1,
+    "residual_training": true,
+    "updates": 1488,
+    "completed": true,
+    "validation_mse": 0.04140893913419462,
+    "selected_epoch": 2,
+    "train_positions": 7830,
+    "validation_positions": 2181,
+    "natural_games": [
+      172,
+      48
+    ],
+    "decision": {
+      "decisions": 541,
+      "regret_cp": 33.182994454713494,
+      "top_choice_agreement": 0.6247689463955638
+    },
+    "sha256": "9267591529b13283ae94994b71c7bbf85cb9ea056d33c9a4a60c45ced6cfa27e",
+    "peak_cuda_bytes": 15147520,
+    "device": "cuda:0",
+    "cuda_cap_bytes": 1610612736,
+    "peak_cuda_reserved_bytes": 25165824
+  },
+  "frozen": {
+    "files": {
+      "nu.exe": {
+        "source": ".tmp/nu-schema7-measure-build/nu.exe",
+        "sha256": "f2c4a8ba9a81c5ed13945dabb13712997b0ca7db4c60097c49e3293ed47fe8d1",
+        "bytes": 630397
+      },
+      "rules.exe": {
+        "source": ".tmp/nu-schema7-build/genseki_rules.exe",
+        "sha256": "8f0616dcf73feccd349c6c5954772dd0be34e20d54a76161f43d664a665a9fdf",
+        "bytes": 374298
+      },
+      "gen1.exe": {
+        "source": "Alpha/work/gen2/gen1.exe",
+        "sha256": "80d1cc75571c2e3266e0246b2cec00d3657e3ba94029e5ca4635cfe0eaf12ef6",
+        "bytes": 729600
+      },
+      "schema5.nnue": {
+        "source": "Nu/work/fast-schema5-pilot-v2/training/nu-64-linear-e1-u64.nnue",
+        "sha256": "c404e52f726afe3444d3284db0fef4f623a4c653d9855267eb6babde96546401",
+        "bytes": 1048992
+      },
+      "schema6.nnue": {
+        "source": "Nu/work/incumbents/64-linear/4a6473e6aaaec47e0df13072ec2d5c2af0fd02199c1fc36e27ec4288f66cc874/5798fc3b9204c35480717c994d68a465b9493bea703b49c8b7355be360867d96/nu-64-linear.nnue",
+        "sha256": "4a6473e6aaaec47e0df13072ec2d5c2af0fd02199c1fc36e27ec4288f66cc874",
+        "bytes": 1048992
+      },
+      "schema7.nnue": {
+        "source": "Nu/work/schema7-campaign/training/nu-64-linear-e2-u1488.nnue",
+        "sha256": "9267591529b13283ae94994b71c7bbf85cb9ea056d33c9a4a60c45ced6cfa27e",
+        "bytes": 1048992
+      },
+      "openings.json": {
+        "source": "Nu/work/schema7-campaign/openings/development-openings.json",
+        "sha256": "d19d95103c8beb9efacb6f07ecb1061e7a028877a62cee2fe65e75b41927db26",
+        "bytes": 3800
+      }
+    },
+    "threads": 1,
+    "table_mib": 16,
+    "evaluator_plus_table_mib": 64,
+    "internal_ms": 230,
+    "external_ms": 250,
+    "depth_limit": 64,
+    "cap": 160,
+    "pondering": false,
+    "threat_plies": 0,
+    "lmr": false,
+    "benchmark_sha256": "51551845759faeee7ea095a11bb7513dd4ff046bbb614eee31884ac8b3745cf1"
+  },
+  "benchmark": {
+    "report_sha256": "51551845759faeee7ea095a11bb7513dd4ff046bbb614eee31884ac8b3745cf1",
+    "profiles": [
+      {
+        "model_sha256": "c404e52f726afe3444d3284db0fef4f623a4c653d9855267eb6babde96546401",
+        "threads": 1,
+        "roots": 40,
+        "legal_replies": 40,
+        "timeouts": 0,
+        "engine_exits": 0,
+        "median_latency_ms": 220.50459997262806,
+        "maximum_latency_ms": 221.25450003659353,
+        "completed_depth_sum": 120,
+        "nodes_sum": 324856,
+        "maximum_peak_commit_bytes": 35958784,
+        "maximum_peak_working_bytes": 41222144,
+        "maximum_evaluator_plus_table_bytes": 17826371
+      },
+      {
+        "model_sha256": "c404e52f726afe3444d3284db0fef4f623a4c653d9855267eb6babde96546401",
+        "threads": 2,
+        "roots": 40,
+        "legal_replies": 40,
+        "timeouts": 0,
+        "engine_exits": 0,
+        "median_latency_ms": 220.68909998051822,
+        "maximum_latency_ms": 221.23640001518652,
+        "completed_depth_sum": 99,
+        "nodes_sum": 586251,
+        "maximum_peak_commit_bytes": 35946496,
+        "maximum_peak_working_bytes": 41213952,
+        "maximum_evaluator_plus_table_bytes": 17826371
+      },
+      {
+        "model_sha256": "c404e52f726afe3444d3284db0fef4f623a4c653d9855267eb6babde96546401",
+        "threads": 4,
+        "roots": 40,
+        "legal_replies": 40,
+        "timeouts": 0,
+        "engine_exits": 0,
+        "median_latency_ms": 220.773899985943,
+        "maximum_latency_ms": 221.06200002599508,
+        "completed_depth_sum": 103,
+        "nodes_sum": 799857,
+        "maximum_peak_commit_bytes": 35954688,
+        "maximum_peak_working_bytes": 41218048,
+        "maximum_evaluator_plus_table_bytes": 17826371
+      },
+      {
+        "model_sha256": "4a6473e6aaaec47e0df13072ec2d5c2af0fd02199c1fc36e27ec4288f66cc874",
+        "threads": 1,
+        "roots": 40,
+        "legal_replies": 40,
+        "timeouts": 0,
+        "engine_exits": 0,
+        "median_latency_ms": 220.5421499966178,
+        "maximum_latency_ms": 220.99350002827123,
+        "completed_depth_sum": 101,
+        "nodes_sum": 101512,
+        "maximum_peak_commit_bytes": 35942400,
+        "maximum_peak_working_bytes": 41209856,
+        "maximum_evaluator_plus_table_bytes": 17826484
+      },
+      {
+        "model_sha256": "4a6473e6aaaec47e0df13072ec2d5c2af0fd02199c1fc36e27ec4288f66cc874",
+        "threads": 2,
+        "roots": 40,
+        "legal_replies": 35,
+        "timeouts": 5,
+        "engine_exits": 0,
+        "median_latency_ms": 220.94430000288412,
+        "maximum_latency_ms": 264.33219999307767,
+        "completed_depth_sum": 63,
+        "nodes_sum": 150325,
+        "maximum_peak_commit_bytes": 35954688,
+        "maximum_peak_working_bytes": 41213952,
+        "maximum_evaluator_plus_table_bytes": 17826484
+      },
+      {
+        "model_sha256": "4a6473e6aaaec47e0df13072ec2d5c2af0fd02199c1fc36e27ec4288f66cc874",
+        "threads": 4,
+        "roots": 40,
+        "legal_replies": 23,
+        "timeouts": 14,
+        "engine_exits": 3,
+        "median_latency_ms": 221.68595000403002,
+        "maximum_latency_ms": 265.18069999292493,
+        "completed_depth_sum": 41,
+        "nodes_sum": 136785,
+        "maximum_peak_commit_bytes": 35950592,
+        "maximum_peak_working_bytes": 41209856,
+        "maximum_evaluator_plus_table_bytes": 17826484
+      },
+      {
+        "model_sha256": "9267591529b13283ae94994b71c7bbf85cb9ea056d33c9a4a60c45ced6cfa27e",
+        "threads": 1,
+        "roots": 40,
+        "legal_replies": 40,
+        "timeouts": 0,
+        "engine_exits": 0,
+        "median_latency_ms": 220.5965499742888,
+        "maximum_latency_ms": 221.36560000944883,
+        "completed_depth_sum": 110,
+        "nodes_sum": 201529,
+        "maximum_peak_commit_bytes": 35946496,
+        "maximum_peak_working_bytes": 41213952,
+        "maximum_evaluator_plus_table_bytes": 17826368
+      },
+      {
+        "model_sha256": "9267591529b13283ae94994b71c7bbf85cb9ea056d33c9a4a60c45ced6cfa27e",
+        "threads": 2,
+        "roots": 40,
+        "legal_replies": 40,
+        "timeouts": 0,
+        "engine_exits": 0,
+        "median_latency_ms": 220.81475003506057,
+        "maximum_latency_ms": 221.1325000389479,
+        "completed_depth_sum": 91,
+        "nodes_sum": 351407,
+        "maximum_peak_commit_bytes": 35950592,
+        "maximum_peak_working_bytes": 41218048,
+        "maximum_evaluator_plus_table_bytes": 17826368
+      },
+      {
+        "model_sha256": "9267591529b13283ae94994b71c7bbf85cb9ea056d33c9a4a60c45ced6cfa27e",
+        "threads": 4,
+        "roots": 40,
+        "legal_replies": 40,
+        "timeouts": 0,
+        "engine_exits": 0,
+        "median_latency_ms": 220.91690002707765,
+        "maximum_latency_ms": 221.9078000052832,
+        "completed_depth_sum": 99,
+        "nodes_sum": 539376,
+        "maximum_peak_commit_bytes": 35954688,
+        "maximum_peak_working_bytes": 41218048,
+        "maximum_evaluator_plus_table_bytes": 17826368
+      }
+    ],
+    "costs": [
+      {
+        "schema": 5,
+        "roots": 40,
+        "evaluation_ns": 297900,
+        "make_evaluate_unmake_ns": 8221400,
+        "reconstruction_ns": 1385900,
+        "consumed_checksum": 23743,
+        "model_sha256": "c404e52f726afe3444d3284db0fef4f623a4c653d9855267eb6babde96546401"
+      },
+      {
+        "schema": 6,
+        "roots": 40,
+        "evaluation_ns": 315600,
+        "make_evaluate_unmake_ns": 64642400,
+        "reconstruction_ns": 4496100,
+        "consumed_checksum": 6871,
+        "model_sha256": "4a6473e6aaaec47e0df13072ec2d5c2af0fd02199c1fc36e27ec4288f66cc874"
+      },
+      {
+        "schema": 7,
+        "roots": 40,
+        "evaluation_ns": 447800,
+        "make_evaluate_unmake_ns": 21978100,
+        "reconstruction_ns": 3350500,
+        "consumed_checksum": -110966,
+        "model_sha256": "9267591529b13283ae94994b71c7bbf85cb9ea056d33c9a4a60c45ced6cfa27e"
+      }
+    ],
+    "gen1_roots": 40,
+    "gen1_timeouts": 0,
+    "gen1_diagnostic_failures": 0,
+    "gen1_completed_depth_sum": 203,
+    "gen1_nodes_sum": 5294519,
+    "gen1_verbose_for_diagnostics": true,
+    "gen1_peak_commit_bytes": 17838080
+  },
+  "screens": {
+    "schema5": {
+      "report_sha256": "b8aafeafcc9661d5643878e7b6fb3039a88680f2a96c79dea0e0a73c1338c785",
+      "points": 10.5,
+      "games": 20,
+      "wins": 6,
+      "draws": 9,
+      "losses": 5,
+      "terminations": {
+        "ply_cap": 8,
+        "natural": 12
+      },
+      "maximum_move_ms": 245.5181999830529,
+      "games_summary": [
+        {
+          "pair": 0,
+          "opening_seed": 310000,
+          "nu_color": "white",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 221.70689998893067,
+          "timeout_side": null
+        },
+        {
+          "pair": 0,
+          "opening_seed": 310000,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 221.78139997413382,
+          "timeout_side": null
+        },
+        {
+          "pair": 1,
+          "opening_seed": 310001,
+          "nu_color": "white",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 227.92500001378357,
+          "timeout_side": null
+        },
+        {
+          "pair": 1,
+          "opening_seed": 310001,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 221.351100015454,
+          "timeout_side": null
+        },
+        {
+          "pair": 2,
+          "opening_seed": 310002,
+          "nu_color": "white",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 222.13000000920147,
+          "timeout_side": null
+        },
+        {
+          "pair": 2,
+          "opening_seed": 310002,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 220.80529999220744,
+          "timeout_side": null
+        },
+        {
+          "pair": 3,
+          "opening_seed": 310003,
+          "nu_color": "white",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 221.98490001028404,
+          "timeout_side": null
+        },
+        {
+          "pair": 3,
+          "opening_seed": 310003,
+          "nu_color": "black",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 221.27189999446273,
+          "timeout_side": null
+        },
+        {
+          "pair": 4,
+          "opening_seed": 310004,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 221.04279999621212,
+          "timeout_side": null
+        },
+        {
+          "pair": 4,
+          "opening_seed": 310004,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 221.17919998709112,
+          "timeout_side": null
+        },
+        {
+          "pair": 5,
+          "opening_seed": 310005,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 220.84429999813437,
+          "timeout_side": null
+        },
+        {
+          "pair": 5,
+          "opening_seed": 310005,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 221.83890000451356,
+          "timeout_side": null
+        },
+        {
+          "pair": 6,
+          "opening_seed": 310006,
+          "nu_color": "white",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 221.44379996461794,
+          "timeout_side": null
+        },
+        {
+          "pair": 6,
+          "opening_seed": 310006,
+          "nu_color": "black",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 221.45210002781823,
+          "timeout_side": null
+        },
+        {
+          "pair": 7,
+          "opening_seed": 310007,
+          "nu_color": "white",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 245.5181999830529,
+          "timeout_side": null
+        },
+        {
+          "pair": 7,
+          "opening_seed": 310007,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 229.43050001049414,
+          "timeout_side": null
+        },
+        {
+          "pair": 8,
+          "opening_seed": 310008,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 220.92190000694245,
+          "timeout_side": null
+        },
+        {
+          "pair": 8,
+          "opening_seed": 310008,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 220.5942000146024,
+          "timeout_side": null
+        },
+        {
+          "pair": 9,
+          "opening_seed": 310009,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 220.8793999743648,
+          "timeout_side": null
+        },
+        {
+          "pair": 9,
+          "opening_seed": 310009,
+          "nu_color": "black",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "natural",
+          "max_move_ms": 223.14539999933913,
+          "timeout_side": null
+        }
+      ]
+    },
+    "schema6": {
+      "report_sha256": "c1e3ca1fe99588e7be1e6cd72b75850c12fd343f0e28083596a22163f708a1f9",
+      "points": 19.0,
+      "games": 20,
+      "wins": 18,
+      "draws": 2,
+      "losses": 0,
+      "terminations": {
+        "natural": 18,
+        "ply_cap": 2
+      },
+      "maximum_move_ms": 223.44109998084605,
+      "games_summary": [
+        {
+          "pair": 0,
+          "opening_seed": 310000,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 220.94269999070093,
+          "timeout_side": null
+        },
+        {
+          "pair": 0,
+          "opening_seed": 310000,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 220.81880003679544,
+          "timeout_side": null
+        },
+        {
+          "pair": 1,
+          "opening_seed": 310001,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 221.34369995910674,
+          "timeout_side": null
+        },
+        {
+          "pair": 1,
+          "opening_seed": 310001,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 221.4934999938123,
+          "timeout_side": null
+        },
+        {
+          "pair": 2,
+          "opening_seed": 310002,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 221.4055000222288,
+          "timeout_side": null
+        },
+        {
+          "pair": 2,
+          "opening_seed": 310002,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 220.82539997063577,
+          "timeout_side": null
+        },
+        {
+          "pair": 3,
+          "opening_seed": 310003,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 220.45269998488948,
+          "timeout_side": null
+        },
+        {
+          "pair": 3,
+          "opening_seed": 310003,
+          "nu_color": "black",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 223.44109998084605,
+          "timeout_side": null
+        },
+        {
+          "pair": 4,
+          "opening_seed": 310004,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 221.21859999606386,
+          "timeout_side": null
+        },
+        {
+          "pair": 4,
+          "opening_seed": 310004,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 221.67619998799637,
+          "timeout_side": null
+        },
+        {
+          "pair": 5,
+          "opening_seed": 310005,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 220.73649999219924,
+          "timeout_side": null
+        },
+        {
+          "pair": 5,
+          "opening_seed": 310005,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 221.0310999653302,
+          "timeout_side": null
+        },
+        {
+          "pair": 6,
+          "opening_seed": 310006,
+          "nu_color": "white",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 221.05609998106956,
+          "timeout_side": null
+        },
+        {
+          "pair": 6,
+          "opening_seed": 310006,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 220.9046999923885,
+          "timeout_side": null
+        },
+        {
+          "pair": 7,
+          "opening_seed": 310007,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 221.62759996717796,
+          "timeout_side": null
+        },
+        {
+          "pair": 7,
+          "opening_seed": 310007,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 220.82619997672737,
+          "timeout_side": null
+        },
+        {
+          "pair": 8,
+          "opening_seed": 310008,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 221.56289999838918,
+          "timeout_side": null
+        },
+        {
+          "pair": 8,
+          "opening_seed": 310008,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 221.28349996637553,
+          "timeout_side": null
+        },
+        {
+          "pair": 9,
+          "opening_seed": 310009,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 220.6410999642685,
+          "timeout_side": null
+        },
+        {
+          "pair": 9,
+          "opening_seed": 310009,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 220.572899968829,
+          "timeout_side": null
+        }
+      ]
+    },
+    "gen1": {
+      "report_sha256": "03a7e5a198d361670b0da33e1ee45fccc8415fbf608a1b644fa9d3d5bb4b2678",
+      "points": 1.5,
+      "games": 20,
+      "wins": 1,
+      "draws": 1,
+      "losses": 18,
+      "terminations": {
+        "ply_cap": 1,
+        "natural": 19
+      },
+      "maximum_move_ms": 232.17179998755455,
+      "games_summary": [
+        {
+          "pair": 0,
+          "opening_seed": 310000,
+          "nu_color": "white",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 230.64709996106103,
+          "timeout_side": null
+        },
+        {
+          "pair": 0,
+          "opening_seed": 310000,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.52530002314597,
+          "timeout_side": null
+        },
+        {
+          "pair": 1,
+          "opening_seed": 310001,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.59359996113926,
+          "timeout_side": null
+        },
+        {
+          "pair": 1,
+          "opening_seed": 310001,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.27239996008575,
+          "timeout_side": null
+        },
+        {
+          "pair": 2,
+          "opening_seed": 310002,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.3552000084892,
+          "timeout_side": null
+        },
+        {
+          "pair": 2,
+          "opening_seed": 310002,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.39770004106686,
+          "timeout_side": null
+        },
+        {
+          "pair": 3,
+          "opening_seed": 310003,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.2959999651648,
+          "timeout_side": null
+        },
+        {
+          "pair": 3,
+          "opening_seed": 310003,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.27810000348836,
+          "timeout_side": null
+        },
+        {
+          "pair": 4,
+          "opening_seed": 310004,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 232.17179998755455,
+          "timeout_side": null
+        },
+        {
+          "pair": 4,
+          "opening_seed": 310004,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.40749999927357,
+          "timeout_side": null
+        },
+        {
+          "pair": 5,
+          "opening_seed": 310005,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.36129999672994,
+          "timeout_side": null
+        },
+        {
+          "pair": 5,
+          "opening_seed": 310005,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.37040000781417,
+          "timeout_side": null
+        },
+        {
+          "pair": 6,
+          "opening_seed": 310006,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.43769999640062,
+          "timeout_side": null
+        },
+        {
+          "pair": 6,
+          "opening_seed": 310006,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.24619999341667,
+          "timeout_side": null
+        },
+        {
+          "pair": 7,
+          "opening_seed": 310007,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.45299999648705,
+          "timeout_side": null
+        },
+        {
+          "pair": 7,
+          "opening_seed": 310007,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 231.0723999980837,
+          "timeout_side": null
+        },
+        {
+          "pair": 8,
+          "opening_seed": 310008,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.492000002414,
+          "timeout_side": null
+        },
+        {
+          "pair": 8,
+          "opening_seed": 310008,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.66760000074282,
+          "timeout_side": null
+        },
+        {
+          "pair": 9,
+          "opening_seed": 310009,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.6504999869503,
+          "timeout_side": null
+        },
+        {
+          "pair": 9,
+          "opening_seed": 310009,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.58979999041185,
+          "timeout_side": null
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Development screens are not sealed qualification or promotion.",
+    "Capped draws are adjudications, not natural outcomes.",
+    "Schema 6 multithreaded heap-corruption exits and deadline failures remain unresolved.",
+    "Benchmark attempts before benchmark-v4 are incomplete or have invalid Gen 1 time spelling.",
+    "Gen 1 profiling enables diagnostic verbosity; matches do not."
+  ]
+}

@@ -179,6 +179,7 @@ class Search {
         save({key,context,packed,depth,best<=original?2:best>=beta?1:0,selected,age});return best;
     }
 public:
+    std::size_t allocated_table_bytes()const {return table.capacity()*sizeof(Bucket);}
     explicit Search(unsigned mib=16,std::size_t bucket_limit=0):table(std::max<std::size_t>(1,
         std::min(bucket_limit?bucket_limit:std::numeric_limits<std::size_t>::max(),std::size_t(std::clamp(mib,1u,256u))*1024*1024/sizeof(Bucket)))){}
     void cancel(){stopped.store(true,std::memory_order_relaxed);}

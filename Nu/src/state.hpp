@@ -30,7 +30,7 @@ struct State {
     std::shared_ptr<const std::vector<Move>> move_cache;
     struct Undo { genseki::Undo board; Features previous; std::uint64_t hash,history_key; std::shared_ptr<const std::vector<Move>> moves; Mobility mobility; bool dirty; std::optional<Move> pending; bool unchanged; std::shared_ptr<const FastFeatures> fast; };
     explicit State(const Model& m,Board b={}):board(std::move(b)),model(&m),mobility((m.feature_schema==4||m.feature_schema==6)?movement_counts(board):Mobility{}),active(features(board,m.feature_schema,&mobility)),accumulator(m),hash(position_hash(board)),history_key(mix(hash)),path{hash} {
-        if(m.feature_schema==fast_schema){fast=std::make_shared<FastFeatures>(fast_features(board));active=fast->active;}
+        if(is_fast_schema(m.feature_schema)){fast=std::make_shared<FastFeatures>(fast_features(board,nullptr,model->feature_schema));active=fast->active;}
         accumulator.refresh(m,active);
         repeat_path.push_back(repetition_hash(board));
     }
@@ -77,8 +77,8 @@ struct State {
     void ensure_features(const Move* move=nullptr,bool unchanged_occupancy=false) const {
         if(!features_dirty)return;
         auto started=metrics?std::chrono::steady_clock::now():std::chrono::steady_clock::time_point{};
-        if(model->feature_schema==fast_schema) {
-            auto next=std::make_shared<FastFeatures>(fast_features(board,fast.get()));
+        if(is_fast_schema(model->feature_schema)) {
+            auto next=std::make_shared<FastFeatures>(fast_features(board,fast.get(),model->feature_schema));
             if(metrics)metrics->fast_piece_rebuilds+=next->rebuilt_pieces;
             accumulator.update(*model,active,next->active);
             active=next->active;fast=std::move(next);features_dirty=false;pending_move.reset();
@@ -115,7 +115,7 @@ struct State {
         if(metrics)metrics->features_ns+=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-started).count();
     }
     int strategic_prior(Color side) const {
-        if(model->feature_schema!=fast_schema)return 0;
+        if(!is_fast_schema(model->feature_schema))return 0;
         ensure_features();return side==Color::white?fast->prior_white:-fast->prior_white;
     }
     int evaluate() const {
@@ -138,7 +138,7 @@ struct State {
         auto refreshed=(model->feature_schema==4||model->feature_schema==6)?movement_counts(board):Mobility{};
         Accumulator reference(*model);reference.refresh(*model,features(board,model->feature_schema,&refreshed));
         auto history=mix(path.front());for(unsigned i=1;i<path.size();++i)history=mix(history^path[i]);
-        return reference.sums==accumulator.sums&&(model->feature_schema!=fast_schema||fast->prior_white==fast_features(board).prior_white)&&hash==position_hash(board)&&history==history_key&&repeat_path.back()==repetition_hash(board)
+        return reference.sums==accumulator.sums&&(!is_fast_schema(model->feature_schema)||fast->prior_white==fast_features(board,nullptr,model->feature_schema).prior_white)&&hash==position_hash(board)&&history==history_key&&repeat_path.back()==repetition_hash(board)
             &&((model->feature_schema!=4&&model->feature_schema!=6)||mobility==refreshed);
     }
     std::uint64_t context_key() const {

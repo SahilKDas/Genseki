@@ -14,7 +14,7 @@ namespace nu {
 using namespace genseki;
 constexpr unsigned feature_count = 8192;
 constexpr unsigned schema = 3;
-constexpr unsigned latest_schema = 6;
+constexpr unsigned latest_schema = 7;
 inline std::uint64_t mix(std::uint64_t x) {
     x ^= x >> 30; x *= 0xbf58476d1ce4e5b9ULL;
     x ^= x >> 27; x *= 0x94d049bb133111ebULL;
@@ -32,7 +32,7 @@ inline std::array<int,2> orient(int q,int r,unsigned symmetry) {
     for(unsigned turn=0;turn<symmetry%6;++turn){int next=-r;r=q+r;q=next;}
     return {q,r};
 }
-inline Coordinates canonical_coordinates(const Board& board,Hex anchor,unsigned perspective) {
+inline Coordinates canonical_coordinates(const Board& board,Hex anchor,unsigned perspective,unsigned* frame=nullptr) {
     Coordinates best{};
     std::vector<std::array<int,4>> best_key;
     // Compare whole labeled stacks, not individual distances: relative geometry
@@ -47,7 +47,7 @@ inline Coordinates canonical_coordinates(const Board& board,Hex anchor,unsigned 
             key.push_back({int((identity+11*perspective)%22),int(h),xy[0],xy[1]});
         }
         std::sort(key.begin(),key.end());
-        if(symmetry==0||key<best_key){best_key=std::move(key);best=candidate;}
+        if(symmetry==0||key<best_key){best_key=std::move(key);best=candidate;if(frame)*frame=symmetry;}
     }
     return best;
 }
@@ -75,6 +75,7 @@ inline Mobility update_movement_counts(const Board& board,const Mobility& previo
 // Schema 5 is a separate hybrid contract: cheap local features plus prior v1.
 // No exact mobility or articulation is embedded in the neural input.
 constexpr unsigned fast_schema=5;
+inline bool is_fast_schema(unsigned version){return version==5||version==7;}
 constexpr unsigned strategic_prior_version=1;
 struct FastPiece {
     bool present=false;
@@ -82,6 +83,9 @@ struct FastPiece {
     unsigned layer=0,height=0,top_color=0;
     std::array<unsigned,6> neighbors{};
     std::array<Hex,2> anchors{};
+    bool canonical=false;
+    std::array<std::array<int,2>,2> coordinates{};
+    std::array<std::array<unsigned,6>,2> oriented_neighbors{};
     auto operator<=>(const FastPiece&) const = default;
 };
 struct FastFeatures {
@@ -125,8 +129,8 @@ inline Features encode_fast_piece(const FastPiece& p,unsigned id) {
     unsigned bug=bugs[id%11];
     for(unsigned perspective=0;perspective<2;++perspective) {
         unsigned role=(id/11)^perspective,identity=perspective?(id+11)%22:id;
-        auto q=std::uint32_t(int(p.cell.q)-p.anchors[perspective].q);
-        auto r=std::uint32_t(int(p.cell.r)-p.anchors[perspective].r);
+        auto q=std::uint32_t(p.canonical?p.coordinates[perspective][0]:int(p.cell.q)-p.anchors[perspective].q);
+        auto r=std::uint32_t(p.canonical?p.coordinates[perspective][1]:int(p.cell.r)-p.anchors[perspective].r);
         auto coords=mix((std::uint64_t(q)<<32)|r);
         bool covered=p.layer+1!=p.height;
         result[perspective].push_back(unsigned(mix(coords^mix(identity+32*p.layer+1024*!covered+77))%2048));
@@ -135,7 +139,8 @@ inline Features encode_fast_piece(const FastPiece& p,unsigned id) {
         result[perspective].push_back(4096+role*128+bug*16+flags);
         if(!covered) {
             unsigned occupied=0,gates=0;
-            for(unsigned d=0;d<6;++d){occupied|=unsigned(p.neighbors[d]>0)<<d;gates|=unsigned(p.neighbors[(d+5)%6]>=p.height&&p.neighbors[(d+1)%6]>=p.height)<<d;}
+            const auto& neighbors=p.canonical?p.oriented_neighbors[perspective]:p.neighbors;
+            for(unsigned d=0;d<6;++d){occupied|=unsigned(neighbors[d]>0)<<d;gates|=unsigned(neighbors[(d+5)%6]>=p.height&&neighbors[(d+1)%6]>=p.height)<<d;}
             result[perspective].push_back(4608+role*320+bug*64+occupied);
             result[perspective].push_back(5248+role*320+bug*64+gates);
             result[perspective].push_back(5888+role*128+bug*16+local_exits(p));
@@ -143,12 +148,23 @@ inline Features encode_fast_piece(const FastPiece& p,unsigned id) {
     }
     return result;
 }
-inline FastFeatures fast_features(const Board& board,const FastFeatures* previous=nullptr) {
+inline FastFeatures fast_features(const Board& board,const FastFeatures* previous=nullptr,unsigned version=5) {
     FastFeatures next;
     std::array<Hex,2> anchors{};std::array<bool,2> queens{};
     const auto& stacks=board.stacks();
     auto height=[&](Hex cell){for(const auto& s:stacks)if(s.cell==cell)return unsigned(s.pieces.size());return 0u;};
     for(const auto& s:stacks){next.geometry.push_back(s.cell);for(auto p:s.pieces)if(p.bug==Bug::queen){anchors[unsigned(p.color)]=s.cell;queens[unsigned(p.color)]=true;}}
+    std::array<Coordinates,2> coordinates{};std::array<unsigned,2> frames{};
+    if(version==7)for(unsigned perspective=0;perspective<2;++perspective) {
+        if(!queens[perspective]) {
+            unsigned first=22;
+            for(const auto& stack:stacks)for(auto piece:stack.pieces) {
+                auto id=(slot(piece)+11*perspective)%22;
+                if(id<first){first=id;anchors[perspective]=stack.cell;}
+            }
+        }
+        coordinates[perspective]=canonical_coordinates(board,anchors[perspective],perspective,&frames[perspective]);
+    }
     next.pinned=previous&&next.geometry==previous->geometry?previous->pinned:connectivity_pins(next.geometry);
     constexpr int covered_cost[]{45,65,55,70,145};
     constexpr int pinned_cost[]{25,40,35,45,100};
@@ -159,6 +175,17 @@ inline FastFeatures fast_features(const Board& board,const FastFeatures* previou
         for(unsigned h=0;h<s.pieces.size();++h) {
             auto piece=s.pieces[h];unsigned id=slot(piece);
             FastPiece descriptor{true,s.cell,h,unsigned(s.pieces.size()),unsigned(s.pieces.back().color),neighbors,anchors};
+            if(version==7) {
+                descriptor.canonical=true;
+                for(unsigned p=0;p<2;++p) {
+                    descriptor.coordinates[p]=coordinates[p][id];
+                    for(unsigned d=0;d<6;++d) {
+                        auto xy=orient(directions[d].q,directions[d].r,frames[p]);
+                        for(unsigned k=0;k<6;++k)if(xy==std::array<int,2>{directions[k].q,directions[k].r})
+                            descriptor.oriented_neighbors[p][k]=neighbors[d];
+                    }
+                }
+            }
             next.pieces[id]=descriptor;
             if(previous&&previous->pieces[id]==descriptor)next.encoded[id]=previous->encoded[id];
             else {next.encoded[id]=std::make_shared<Features>(encode_fast_piece(descriptor,id));++next.rebuilt_pieces;}
@@ -183,7 +210,7 @@ inline FastFeatures fast_features(const Board& board,const FastFeatures* previou
 }
 
 inline Features features(const Board& b,unsigned version=schema,const Mobility* cached_mobility=nullptr) {
-    if(version==fast_schema)return fast_features(b).active;
+    if(is_fast_schema(version))return fast_features(b,nullptr,version).active;
     if(version<1||version>latest_schema)throw std::runtime_error("unsupported feature schema");
     std::array<Hex,2> anchors{};
     std::array<bool,2> queen_present{};

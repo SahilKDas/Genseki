@@ -4,7 +4,7 @@
 #include <thread>
 void require(bool v){if(!v)throw std::runtime_error("fast feature integrity failure");}
 int main()try {
- for(unsigned schema:{4u,5u})for(unsigned width:{64u,128u}) {
+ for(unsigned schema:{4u,5u,7u})for(unsigned width:{64u,128u}) {
   nu::Model model(width);model.feature_schema=schema;std::mt19937 rng(941);
   for(unsigned game=0;game<6;++game){nu::State state(model);std::vector<nu::State::Undo> undos;
    for(unsigned ply=0;ply<90&&!state.board.is_terminal();++ply){auto moves=state.board.legal_moves();undos.push_back(state.make(moves[rng()%moves.size()],true));

@@ -22,6 +22,7 @@ def matches(args, model, output, games, seed, incumbent=False):
         if not report.get('completed') or report.get('rejected'):raise RuntimeError('preserved incomplete/rejected match needs a new evidence directory')
         if report['model_sha256']!=digest(model) or report['engine_sha256']!=digest(args.engine):raise RuntimeError('match evidence artifact mismatch')
         expected=dict(opponent_sha256=digest(args.engine if incumbent else args.opponent),
+                      referee_sha256=digest(args.referee),validation_policy=__import__('arena').VALIDATION_POLICY,memory_policy=__import__('arena').MEMORY_POLICY,depth_limit=64,
                       expected_games=games,seed_base=seed,threads=args.threads,
                       milliseconds=250,internal_ms=230,cap=160,threat_plies=0,lmr=False)
         if any(report.get(key)!=value for key,value in expected.items()):
@@ -31,12 +32,13 @@ def matches(args, model, output, games, seed, incumbent=False):
         return report
     extra=['--opponent-model',args.incumbent] if incumbent else []
     invoke('arena.py','--engine',args.engine,'--model',model,'--opponent',args.engine if incumbent else args.opponent,
-           '--games',games,'--seed-base',seed,'--threads',args.threads,'--output',output,*extra)
+           '--referee',args.referee,'--games',games,'--seed-base',seed,'--threads',args.threads,'--output',output,*extra)
     return json.loads(output.read_text())
 
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--engine',type=Path,default=ROOT/'build-nu/nu.exe')
+    p.add_argument('--referee',type=Path,required=True)
     p.add_argument('--teacher',type=Path,default=ROOT/'.tmp/nu-teacher-build/release/nu_offline_teacher.exe')
     p.add_argument('--opponent',type=Path,default=ROOT/'.tmp/nu-nokamute/target/release/nokamute.exe')
     p.add_argument('--incumbent',type=Path,required=True);p.add_argument('--directory',type=Path,required=True)
@@ -47,6 +49,7 @@ def main():
     args=p.parse_args()
     if not 1<=args.threads<=12 or args.stages!=sorted(set(args.stages)) or not all(100<=n<=200000 for n in args.stages):p.error('ordered bounded stages and 1..12 threads required')
     identity=dict(engine=digest(args.engine),teacher=digest(args.teacher),opponent=digest(args.opponent),
+                  referee=digest(args.referee),validation_policy=__import__('arena').VALIDATION_POLICY,
                   incumbent=digest(args.incumbent),threads=args.threads,epochs=args.epochs,stages=args.stages,ablations=args.ablations)
     args.directory.mkdir(parents=True,exist_ok=True);state=args.directory/'campaign.json'
     if state.exists():
@@ -115,6 +118,7 @@ def main():
             incumbent=matches(args,chosen,stage/'incumbent.json',20,112000,True)
             if confirm['points']>55 and incumbent['points']>=10 and not args.no_qualification:
                 invoke('qualify.py','--engine',args.engine,'--model',chosen,'--opponent',args.opponent,
+                       '--referee',args.referee,
                        '--development',stage/'confirmation.json','--incumbent-match',stage/'incumbent.json','--directory',stage/'qualification')
                 result['qualified']=json.loads((stage/'qualification/qualification.json').read_text())['passed']
                 progress['stages'].append(result);progress['completed']=True;atomic_json(state,progress);return

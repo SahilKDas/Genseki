@@ -155,6 +155,13 @@ void uhp_protocol() {
     require(loaded && loaded->ply() == 2, "UHP game string replays");
     require(loaded->game_string() == "Base;InProgress;White[2];wS1;bS1 wS1-",
         "UHP game string round trips");
+    const auto before = engine.execute("genseki-position");
+    require(engine.execute("genseki-validate-game Base;InProgress;White[2];wS1;bS1 wS1-")
+        == std::vector<std::string>({loaded->position_string(), "ok"}),
+        "validation reconstructs a legal game without changing the referee");
+    require(engine.execute("genseki-position") == before, "validation is non-mutating");
+    require(engine.execute("genseki-validate-game Base;WhiteWins;White[2];wS1;bS1 wS1-").front().starts_with("err "),
+        "validation rejects forged replay headers");
 }
 
 }  // namespace

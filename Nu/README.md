@@ -28,6 +28,10 @@ short form are accepted. Debug commands: `nu-position`, `nu-features`, and
 
 ## Models and Features
 
+Opt-in schema 7 combines the inexpensive schema-5 residual feature banks with
+schema-6 D6 frames, including directional masks. See [SCHEMA7.md](SCHEMA7.md)
+for verified repairs, historical validation limitations, and outstanding gates.
+
 8192 x 64 and 8192 x 128 feature transformers, clipped-ReLU,
 paired queen-relative perspectives, and either a linear or nonlinear head. Every stone includes
 identity, relative ownership, coordinates, stack level and top/covered state.

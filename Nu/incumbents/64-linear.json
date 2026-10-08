@@ -19,6 +19,13 @@
   "predecessor_model_sha256": "d4b67b1f867f452fc2ebbdad7a0b3f9ad862645bb0f6bbfc041a5ac91b1e85fd",
   "promotion_authority": "explicit user request",
   "sealed_qualification": false,
+  "validation_limitations": {
+    "status": "pre-canonical-exclusion-repair",
+    "leakage_controlled": false,
+    "index_repair": "Nu/work/canonical-repair-v3/repair.json",
+    "historical_metrics_and_optimizer_not_reused_for_schema7": true,
+    "historical_matches_validation_policy": "metadata-only; not reconstructed-board validation"
+  },
   "evidence": {
     "schema_migration": "canonical-D6-mobility-v1: header 5 -> 6 only",
     "source_model_sha256": "da255c85cf7ec29d07f81e3131c331fc991c40d385e1d0062ead8d2580b39e26",

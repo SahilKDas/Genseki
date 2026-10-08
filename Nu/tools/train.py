@@ -46,7 +46,7 @@ def corpus(engine_path, output, games, cap, milliseconds, source_model=None):
     engine = UhpProcess(invocation)
     records = []
     version=int(response(engine,'nu-feature-schema')[0])
-    if version==5:
+    if version in (5,7):
         engine.close();raise RuntimeError('schema 5 requires refeature.py and learning.py residual training')
     try:
         for game in range(games):

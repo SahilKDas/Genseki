@@ -135,6 +135,7 @@ int main(int argc,char** argv) {
                     }
                 }else if(command=="nu-feature-schema")std::cout<<model.feature_schema<<'\n';
                 else if(command=="nu-prior")std::cout<<state.strategic_prior(nu::Color::white)<<'\n';
+                else if(command=="nu-memory")std::cout<<"model "<<model.allocated_bytes()<<" table "<<search->allocated_table_bytes()<<'\n';
                 else if(command=="nu-moveid") {
                     auto move=state.board.parse_uhp_move(argument);if(!move)throw std::runtime_error(move.error());
                     std::cout<<nu::move_notation(*move)<<'\n';

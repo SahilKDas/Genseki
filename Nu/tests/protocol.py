@@ -62,13 +62,13 @@ with tempfile.TemporaryDirectory() as directory:
     payload=bytes(64*4+8192*64*2+64*2)
     checksum=14695981039346656037
     for byte in payload:checksum=((checksum^byte)*1099511628211)&((1<<64)-1)
-    for schema in (1,2,3,4,5,6,7):
+    for schema in (1,2,3,4,5,6,7,8):
         model.write_bytes(struct.pack('<8sIIIIQ',b'NUNNUE1\0',schema,8192,64,256,checksum)+payload)
         loaded=subprocess.run([sys.argv[1],'--model',str(model)],input='nu-feature-schema\nnu-features\nexit\n',
                               text=True,capture_output=True,timeout=5)
-        if schema==7:
+        if schema==8:
             assert loaded.returncode!=0
         else:
             assert loaded.returncode==0,loaded.stderr
             assert f'\n{schema}\nok\n' in loaded.stdout
-            if schema!=5:assert '\nscore 0\n' in loaded.stdout
+            if schema not in (5,7):assert '\nscore 0\n' in loaded.stdout

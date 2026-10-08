@@ -25,6 +25,11 @@ struct Model {
     std::vector<std::int16_t> head_weights;
     std::vector<std::int32_t> head_bias;
     std::string identity="untrained-seed-1701";
+    std::size_t allocated_bytes()const {
+        return sizeof(*this)+embedding.capacity()*sizeof(std::int16_t)+output.capacity()*sizeof(std::int16_t)
+            +bias.capacity()*sizeof(std::int32_t)+head_weights.capacity()*sizeof(std::int16_t)
+            +head_bias.capacity()*sizeof(std::int32_t)+identity.capacity();
+    }
     explicit Model(unsigned width=64):hidden(width),embedding(feature_count*width),output(width),bias(width) {
         if(width!=64&&width!=128) throw std::runtime_error("unsupported architecture");
         std::mt19937 rng(1701);

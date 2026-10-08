@@ -31,22 +31,22 @@ genseki::Board transformed(const genseki::Board& board,unsigned symmetry,int dq,
 }
 
 void verify(const genseki::Board& board,const nu::Model& model) {
-    auto expected=nu::features(board,6);
+    auto expected=nu::features(board,model.feature_schema);
     nu::State state(model,board);
     for(unsigned symmetry=0;symmetry<12;++symmetry)for(auto offset:std::array<std::array<int,2>,3>{{{0,0},{19,-11},{-23,17}}}) {
         auto rotated=transformed(board,symmetry,offset[0],offset[1]);
-        require(nu::features(rotated,6)==expected);
+        require(nu::features(rotated,model.feature_schema)==expected);
         nu::State equivalent(model,rotated);
         require(equivalent.evaluate()==state.evaluate()&&equivalent.accumulator.sums==state.accumulator.sums);
         auto colors=transformed(board,symmetry,offset[0],offset[1],true);
-        auto swapped=nu::features(colors,6);
+        auto swapped=nu::features(colors,model.feature_schema);
         require(swapped[0]==expected[1]&&swapped[1]==expected[0]);
     }
 }
 
 int main() {
-    for(unsigned width:{64u,128u}) {
-        nu::Model model(width);model.feature_schema=6;
+    for(unsigned version:{6u,7u})for(unsigned width:{64u,128u}) {
+        nu::Model model(width);model.feature_schema=version;
         for(const auto& position:{"G1|w|0|0|0|",
                 "G1|w|2|1|1|0,0=wA1;1,0=bS1",
                 "G1|b|3|2|1|0,0=wA1;1,0=bS1;-1,1=wQ",
@@ -65,7 +65,7 @@ int main() {
         verify(board,model);
     }
     bool rejected=false;
-    try{(void)nu::features(genseki::Board{},7);}catch(const std::runtime_error&){rejected=true;}
+    try{(void)nu::features(genseki::Board{},8);}catch(const std::runtime_error&){rejected=true;}
     require(rejected);
     std::cout<<"Nu D6 symmetry, translation, color-perspective and inference tests passed\n";
 }
