@@ -4,7 +4,19 @@ from collections import Counter
 import json
 from pathlib import Path
 import statistics
+import sys
+ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(ROOT))
+from genseki.artifacts import portable_value
 from evidence import atomic_json, digest
+
+
+def public_report(report):
+    published=portable_value(ROOT,report)
+    for name,entry in report.get('frozen',{}).get('files',{}).items():
+        if isinstance(entry.get('source'),str):
+            published['frozen']['files'][name]['source']=portable_value(ROOT,Path(entry['source']))
+    return published
 
 
 def main():
@@ -75,7 +87,7 @@ def main():
                     'Schema 6 multithreaded heap-corruption exits and deadline failures remain unresolved.',
                     'Benchmark attempts before benchmark-v4 are incomplete or have invalid Gen 1 time spelling.',
                     'Gen 1 profiling enables diagnostic verbosity; matches do not.'])
-    atomic_json(args.output,report)
+    atomic_json(args.output,public_report(report))
     print(json.dumps({name:r['points'] for name,r in screens.items()}))
 
 
