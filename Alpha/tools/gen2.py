@@ -41,7 +41,7 @@ def atomic(p,v):
 def read(p):return json.loads(Path(p).read_text())
 def training_runtime():
     pin=REPORT/'trainer-latest-pin.json'
-    files=['Nu/tools/'+name for name in ('learning.py','train.py','evidence.py','decisions.py')]
+    files=['Nu/tools/'+name for name in ('learning.py','train.py','evidence.py','decisions.py','research_job.py')]
     identities={file:digest(ROOT/file) for file in files}
     revision=hashlib.sha256(json.dumps(identities,sort_keys=True).encode()).hexdigest()
     if pin.exists() and read(pin)['files']!=identities:

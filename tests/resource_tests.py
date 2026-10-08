@@ -92,6 +92,64 @@ class ResourceTests(unittest.TestCase):
         return subprocess.run([sys.executable, '-B', '-c', code, str(path)],
                               cwd=ROOT, capture_output=True, text=True, timeout=10)
 
+    def test_gauntlet_rejects_team_lock_before_work(self):
+        with tempfile.TemporaryDirectory(dir=ROOT/'tests') as folder:
+            root = Path(folder)
+            with resources.job_lock(resources.team_job_path(root)), \
+                    patch.object(gauntlet, 'ROOT', root), \
+                    patch.object(gauntlet, 'preflight') as preflight:
+                result = gauntlet.main(['--engine-a', sys.executable, '--engine-b',
+                    sys.executable, '--referee', sys.executable, '--no-gui',
+                    '--output', str(root/'output')])
+                self.assertEqual(result, 1)
+                preflight.assert_not_called()
+            with resources.job_lock(resources.team_job_path(root)):
+                pass
+
+    def test_trainer_snapshot_includes_required_helper(self):
+        with tempfile.TemporaryDirectory(dir=ROOT/'tests') as folder:
+            root = Path(folder)
+            tools = root/'Nu/tools'
+            tools.mkdir(parents=True)
+            for name in ('learning.py', 'train.py', 'evidence.py', 'decisions.py'):
+                (tools/name).write_text('# fixture\n')
+            (tools/'research_job.py').write_text('def check_deadline(): pass\n')
+            with patch.object(gen2, 'ROOT', root), patch.object(gen2, 'WORK', root/'work'), \
+                    patch.object(gen2, 'REPORT', root/'reports'):
+                runtime = gen2.training_runtime()
+                helper = runtime/'research_job.py'
+                self.assertEqual(helper.read_bytes(), (tools/'research_job.py').read_bytes())
+                helper.unlink()
+                self.assertEqual(gen2.training_runtime(), runtime)
+                helper.write_text('# tampered\n')
+                with self.assertRaisesRegex(RuntimeError, 'pinned trainer changed'):
+                    gen2.training_runtime()
+                helper.write_bytes((tools/'research_job.py').read_bytes())
+                pin = root/'reports/trainer-latest-pin.json'
+                original = pin.read_bytes()
+                (tools/'research_job.py').write_text('# changed source\n')
+                with self.assertRaisesRegex(RuntimeError, 'latest Nu changed'):
+                    gen2.training_runtime()
+                self.assertEqual(pin.read_bytes(), original)
+
+    def test_snapshot_helper_import_without_live_nu_path(self):
+        with tempfile.TemporaryDirectory(dir=ROOT/'tests') as folder:
+            root = Path(folder)
+            tools = root/'Nu/tools'
+            tools.mkdir(parents=True)
+            for name in ('learning.py', 'train.py', 'evidence.py', 'decisions.py', 'research_job.py'):
+                (tools/name).write_bytes((ROOT/'Nu/tools'/name).read_bytes())
+            with patch.object(gen2, 'ROOT', root), patch.object(gen2, 'WORK', root/'work'), \
+                    patch.object(gen2, 'REPORT', root/'reports'):
+                runtime = gen2.training_runtime()
+                code = ('import sys; sys.path.insert(0,sys.argv[1]); '
+                        'sys.path.insert(0,sys.argv[2]); '
+                        'import research_job; research_job.check_deadline(); '
+                        'assert research_job.__file__.startswith(sys.argv[2])')
+                result = subprocess.run([sys.executable, '-B', '-c', code, str(ROOT),
+                    str(runtime)], cwd=root, capture_output=True, text=True, timeout=10)
+                self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_cross_process_exclusion_and_exception_release(self):
         with tempfile.TemporaryDirectory(dir=ROOT/'tests') as folder:
             path = resources.heavy_job_path(folder)

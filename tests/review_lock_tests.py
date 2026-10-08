@@ -3,6 +3,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import shutil
 import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -32,5 +33,24 @@ class LockTests(unittest.TestCase):
         finally:
             child.kill();child.wait(timeout=5);child.stdout.close()
         with job_lock(self.path):pass
+
+    def test_review_finds_executable_workspace_from_external_directory(self):
+        # An isolated workspace avoids contending with actual research jobs.
+        workspace=Path(self.temp.name)/'workspace'
+        binary=workspace/'build'/HELPER.name
+        binary.parent.mkdir(parents=True)
+        shutil.copyfile(HELPER,binary)
+        (workspace/'constraints_on_SahilKDas_device.md').write_text('test workspace\n')
+        outside=Path(self.temp.name)/'outside'
+        outside.mkdir()
+        def claim():
+            return subprocess.run([str(binary),'claim','unused'],cwd=outside,
+                                  timeout=5).returncode
+        self.assertEqual(claim(),0)
+        for path in (workspace/'.tmp/team-genseki/heavy.lock',
+                     workspace/'reports/work/heavy-job.lock'):
+            with job_lock(path):
+                self.assertEqual(claim(),75)
+            self.assertEqual(claim(),0)
 
 if __name__=='__main__':unittest.main()

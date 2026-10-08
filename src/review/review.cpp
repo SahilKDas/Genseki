@@ -439,12 +439,35 @@ std::string file_sha256(const std::filesystem::path& path) {
 bool claim_job() {
     std::lock_guard gate(job_gate);
     if(job_owned)return false;
-    std::error_code error;auto root=std::filesystem::current_path(error);
-    if(error)return false;
-    while(!std::filesystem::exists(root/"constraints_on_SahilKDas_device.md",error)){
-        if(error||root==root.parent_path())return false;
-        root=root.parent_path();
+    auto find_root=[](std::filesystem::path path){
+        std::error_code error;
+        while(!path.empty()){
+            if(std::filesystem::is_regular_file(path/"constraints_on_SahilKDas_device.md",error))return path;
+            if(error==std::errc::no_such_file_or_directory)error.clear();
+            if(error||path==path.parent_path())break;
+            path=path.parent_path();
+        }
+        return std::filesystem::path{};
+    };
+    std::filesystem::path root;
+#ifdef _WIN32
+    std::wstring executable(32768,L'\0');
+    auto length=GetModuleFileNameW(nullptr,executable.data(),static_cast<DWORD>(executable.size()));
+    if(length>0&&length<executable.size()){
+        executable.resize(length);
+        root=find_root(std::filesystem::path(executable).parent_path());
     }
+#elif defined(__linux__)
+    std::error_code link_error;
+    auto executable=std::filesystem::read_symlink("/proc/self/exe",link_error);
+    if(!link_error)root=find_root(executable.parent_path());
+#endif
+    if(root.empty()){
+        std::error_code error;
+        auto current=std::filesystem::current_path(error);
+        if(!error)root=find_root(current);
+    }
+    if(root.empty())return false;
     if(!team_job.acquire(root/".tmp/team-genseki/heavy.lock"))return false;
     if(!application_job.acquire(root/"reports/work/heavy-job.lock")){team_job.release();return false;}
     job_owned=true;

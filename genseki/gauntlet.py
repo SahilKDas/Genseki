@@ -15,7 +15,7 @@ import time
 
 from .uhp import UhpProcess
 from .artifacts import portable_value, verify_manifest
-from .resources import HEAVY_PROCESS_PATTERNS, available_ram, heavy_job_path, job_lock
+from .resources import HEAVY_PROCESS_PATTERNS, available_ram, heavy_job_path, team_job_path, job_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 INITIAL = 'Base;NotStarted;White[1]'
@@ -344,7 +344,7 @@ def main(argv=None):
     guard = Guard(args.hours, args.output)
     gui = None
     try:
-        with job_lock(heavy_job_path(ROOT)), job_lock(ROOT/'reports/work/gauntlet.lock'):
+        with job_lock(team_job_path(ROOT)), job_lock(heavy_job_path(ROOT)), job_lock(ROOT/'reports/work/gauntlet.lock'):
             preflight(not args.no_gui)
             guard.check()
             manifests = {}

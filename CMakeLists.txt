@@ -68,7 +68,7 @@ if(WIN32)
     add_test(NAME genseki_review_transport COMMAND genseki_review_transport_tests $<TARGET_FILE:genseki_review_fake_alpha>)
     set_tests_properties(genseki_review_transport PROPERTIES TIMEOUT 15 RUN_SERIAL TRUE)
     add_executable(genseki_review_lock_helper tests/review_lock_helper.cpp)
-    target_link_libraries(genseki_review_lock_helper PRIVATE genseki_cxx26_flags)
+    target_link_libraries(genseki_review_lock_helper PRIVATE genseki_review_core)
     target_compile_definitions(genseki_review_lock_helper PRIVATE NOMINMAX WIN32_LEAN_AND_MEAN)
     if(Python3_Interpreter_FOUND)
         add_test(NAME genseki_review_lock_tests
