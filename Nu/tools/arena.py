@@ -34,9 +34,11 @@ def main():
     parser.add_argument('--threat-plies', type=int, default=0)
     parser.add_argument('--lmr', action='store_true')
     parser.add_argument('--opponent-model', type=Path)
+    parser.add_argument('--resume',action='store_true')
     args = parser.parse_args()
     if args.games <= 0 or args.games % 2 or args.milliseconds < 25 or not 1<=args.threads<=12 or not 4<=args.cap<=256 or not 0<=args.threat_plies<=4: parser.error('invalid bounded match settings')
-    if args.output.exists():raise RuntimeError('refusing to overwrite match evidence')
+    if args.output.exists() and not args.resume:raise RuntimeError('refusing to overwrite match evidence')
+    saved=json.loads(args.output.read_text()) if args.output.exists() else None
     rows = []
     opponent_hash = hashlib.sha256(args.opponent.read_bytes()).hexdigest()
     model_hash = hashlib.sha256(args.model.read_bytes()).hexdigest()
@@ -52,9 +54,19 @@ def main():
     if args.opponent_model:
         report['invocation']+=['--model',str(args.opponent_model)]
         report['opponent_model_sha256']=hashlib.sha256(args.opponent_model.read_bytes()).hexdigest()
+    if saved is not None:
+        keys=('kind','expected_games','engine_sha256','model_sha256','opponent_sha256','opponent_model_sha256','milliseconds','internal_ms','threads','cap','repetition_policy','threat_plies','lmr','seed_base','table_mib','background_pondering','random_opening')
+        if saved.get('rejected') or any(saved.get(k)!=report.get(k) for k in keys):raise RuntimeError('arena resume identity/settings mismatch or rejected run')
+        rows=saved['games']
+        if len(rows)>args.games or any(g.get('pair')!=i//2 or g.get('opening_seed')!=args.seed_base+i//2 or g.get('nu_color')!=('white' if i%2==0 else 'black') for i,g in enumerate(rows)):raise RuntimeError('arena resume game prefix mismatch')
+        if saved.get('points')!=sum(g['score'] for g in rows):raise RuntimeError('arena resume total mismatch')
+        report.update(games=rows,points=sum(g['score'] for g in rows),completed=len(rows)==args.games)
+        if report['completed']:return
     atomic_json(args.output,report)
     for pair in range(args.games // 2):
         for color in (0, 1):
+            if pair*2+color<len(rows):continue
+            if hashlib.sha256(args.engine.read_bytes()).hexdigest()!=engine_hash or hashlib.sha256(args.model.read_bytes()).hexdigest()!=model_hash or hashlib.sha256(args.opponent.read_bytes()).hexdigest()!=opponent_hash or (args.opponent_model and hashlib.sha256(args.opponent_model.read_bytes()).hexdigest()!=report['opponent_model_sha256']):raise RuntimeError('immutable arena artifact changed')
             from train import resource_guard
             resource_guard()
             nu = UhpProcess([str(args.engine), '--model', str(args.model)])
@@ -69,15 +81,24 @@ def main():
                 for engine in engines:command(engine, 'newgame Base')
                 # Pin the opponent's options and equal single-thread allowance.
                 command(nu, f'options Threads {args.threads}')
+                command(nu, 'options TableMiB 16')
+                command(nu, 'options BackgroundPondering False')
                 command(nu, f'options ThreatPlies {args.threat_plies}')
                 command(nu, f'options LateMoveReductions {"True" if args.lmr else "False"}')
-                if args.opponent_model:command(opponent,f'options Threads {args.threads}')
+                if args.opponent_model:
+                    command(opponent,f'options Threads {args.threads}')
+                    command(opponent,'options TableMiB 16')
+                    command(opponent,'options BackgroundPondering False')
+                    command(opponent,'options ThreatPlies 0')
+                    command(opponent,'options LateMoveReductions False')
                 else:
                     command(opponent, f'options set NumThreads {args.threads}')
                     command(opponent, 'options set BackgroundPondering False')
                     command(opponent, 'options set RandomOpening False')
                     command(opponent, 'options set TableSizeMiB 16')
                 for ply in range(args.cap):
+                    from research_job import check_deadline
+                    check_deadline()
                     current = engines[ply % 2]
                     if ply < 4:
                         legal, _ = command(nu, 'validmoves');move = rng.choice(legal[0].split(';'))

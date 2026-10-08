@@ -26,7 +26,17 @@ def position_key(position):
 def index_corpus(paths, output):
     """Discard every transposition crossing a held-out opening/game group."""
     identities=[dict(path=str(path.resolve()),sha256=digest(path)) for path in paths]
-    signature=hashlib.sha256(json.dumps(identities,sort_keys=True).encode()).hexdigest()
+    versions=set()
+    for path in paths:
+        with path.open(encoding='utf8') as handle:
+            first=next(handle,None)
+            if first:versions.add(json.loads(first).get('feature_schema',1))
+    fast=versions=={5}
+    if fast:
+        from position_keys import position_key as key
+        identity_payload=dict(sources=identities,position_key_version='base-symmetry-v1')
+    else:key=position_key;identity_payload=identities
+    signature=hashlib.sha256(json.dumps(identity_payload,sort_keys=True).encode()).hexdigest()
     if output.exists():
         connection=sqlite3.connect(output)
         if connection.execute('select value from metadata where key="identity"').fetchone()[0]!=signature:
@@ -48,22 +58,23 @@ def index_corpus(paths, output):
                 for line in handle:
                     row=json.loads(line);game=f"{row['source']}:{row.get('seed',0)}:{row['game']}"
                     if row.get('opening_family') is not None:families[game]=str(row['opening_family'])
-                    elif int(row['ply'])==4:families[game]=position_key(row['position'])
+                    elif int(row['ply'])==4:families[game]=key(row['position'])
         schemas=set();seen=0
         for path in paths:
             with path.open(encoding='utf8') as handle:
                 for line in handle:
                     row=json.loads(line);schemas.add(row.get('feature_schema',1))
-                    if len(schemas)!=1 or not schemas.issubset({1,2,3,4}):raise RuntimeError('mixed/unsupported feature schemas')
+                    if len(schemas)!=1 or not schemas.issubset({1,2,3,4,5,6}):raise RuntimeError('mixed/unsupported feature schemas')
+                    if row.get('feature_schema')==5:validate_prior(row)
                     game=f"{row['source']}:{row.get('seed',0)}:{row['game']}"
                     family=families.get(game,game)
                     split=int(hashlib.sha256(family.encode()).hexdigest()[:8],16)%5==0
                     natural=row.get('termination')=='natural' and row.get('outcome') is not None
                     inserted=db.execute('insert into samples(split,position,game,natural,payload) values(?,?,?,?,?)',
-                               (int(split),position_key(row['position']),game,int(natural),line.strip()))
+                               (int(split),key(row['position']),game,int(natural),line.strip()))
                     positions=[row['position']]+[row[k] for k in ('preferred_position','alternative_position') if k in row]
                     positions += [candidate['position'] for candidate in row.get('alternatives',[])]
-                    for position in set(positions):db.execute('insert into exposures values(?,?,?)',(inserted.lastrowid,position_key(position),int(split)))
+                    for position in set(positions):db.execute('insert into exposures values(?,?,?)',(inserted.lastrowid,key(position),int(split)))
                     seen+=1
                     if seen%2000==0:resource_guard();db.commit()
         db.execute('create index sample_positions on samples(position,split)')
@@ -79,6 +90,17 @@ def index_corpus(paths, output):
     except BaseException:
         db.close();raise
     return sqlite3.connect(output)
+
+def validate_prior(row):
+    if type(row.get('strategic_prior_version')) is not int or row.get('strategic_prior_version')!=1:raise RuntimeError('schema 5 requires strategic prior v1')
+    values=[row.get('prior_white')]
+    if 'preferred_features' in row and not all(key in row for key in ('preferred_position','alternative_position')):raise RuntimeError('schema 5 ranking requires saved child positions')
+    if 'preferred_features' in row:values.extend([row.get('preferred_prior_white'),row.get('alternative_prior_white')])
+    values.extend(c.get('prior_white') for c in row.get('alternatives',[]))
+    if any(type(v) is not int or abs(v)>1800 for v in values):raise RuntimeError('missing/invalid residual prior')
+
+def prior_for(row,field='features'):
+    return row[{'features':'prior_white','preferred_features':'preferred_prior_white','alternative_features':'alternative_prior_white'}[field]]/600
 
 def make_network(width, head, schema):
     import torch
@@ -149,7 +171,7 @@ def run(args):
     if not train_ids or not valid_ids:raise RuntimeError('need disjoint nonempty training/validation groups')
     natural=[db.execute('select count(distinct game) from samples where split=? and natural=1',(split,)).fetchone()[0] for split in (0,1)]
     if args.outcome_only and (natural[0]<500 or natural[1]<100):raise RuntimeError('outcome fine-tuning needs 500/100 natural games')
-    if args.ablate and schema!=4:raise RuntimeError('feature ablations require schema 4')
+    if args.ablate and schema not in (4,6):raise RuntimeError('feature ablations require schema 4 or 6')
     excluded=GROUPS.get(args.ablate,(-1,-1))
     def rows(ids):
         values={}
@@ -170,6 +192,10 @@ def run(args):
                             any(k in row for k in ('teacher_search_cp','teacher_cp','search_cp')))
         return (torch.tensor(ids,dtype=torch.long,device=device),torch.tensor(offsets,dtype=torch.long,device=device),
                 torch.tensor(targets,dtype=torch.float32,device=device),torch.tensor(eligible,device=device))
+    def prediction(batch,ids,offsets,field='features'):
+        result=net(ids,offsets)
+        if schema==5:result=result+torch.tensor([prior_for(row,field) for row in batch],dtype=torch.float32,device=device)
+        return result
     args.output.mkdir(parents=True,exist_ok=True);reports=[];started=time.monotonic()
     for width in args.widths:
         for head in args.heads:
@@ -186,6 +212,7 @@ def run(args):
                         ablate=args.ablate,outcome_only=args.outcome_only,
                         initialize_sha256=digest(args.initialize) if args.initialize else None,
                         ranking_weight=args.ranking_weight,selection=args.selection)
+            if schema==5:config.update(strategic_prior_version=1,residual_training=True)
             epoch=cursor=updates=0;best_loss=float('inf');best_state=None;best_optimizer=None;selected=0
             best_decision=None;curves=[]
             if checkpoint.exists():
@@ -215,7 +242,7 @@ def run(args):
                     batch=rows(order[cursor:end]);optimizer.zero_grad(set_to_none=True)
                     for start in range(0,len(batch),args.batch):
                         micro=batch[start:start+args.batch];ids,offsets,target,eligible=tensors(micro)
-                        errors=torch.nn.functional.smooth_l1_loss(net(ids,offsets).tanh(),target,reduction='none')
+                        errors=torch.nn.functional.smooth_l1_loss(prediction(micro,ids,offsets).tanh(),target,reduction='none')
                         loss=(errors*eligible).sum()/max(1,len(batch))
                         preferences=[]
                         for row in micro:
@@ -223,12 +250,12 @@ def run(args):
                             if len(candidates)>1:
                                 for alternative in candidates[1:]:
                                     if candidates[0]['cp']*row['mover']<=alternative['cp']*row['mover']:continue
-                                    preferences.append(dict(row,preferred_features=candidates[0]['features'],alternative_features=alternative['features']))
+                                    preferences.append(dict(row,preferred_features=candidates[0]['features'],alternative_features=alternative['features'],preferred_prior_white=candidates[0].get('prior_white'),alternative_prior_white=alternative.get('prior_white')))
                             elif 'preferred_features' in row:preferences.append(row)
                         if preferences:
                             px,po,_,_=tensors(preferences,'preferred_features');ax,ao,_,_=tensors(preferences,'alternative_features')
                             signs=torch.tensor([r['mover'] for r in preferences],device=device)
-                            loss+=args.ranking_weight*torch.nn.functional.softplus(-signs*(net(px,po)-net(ax,ao))/.25).sum()/len(batch)
+                            loss+=args.ranking_weight*torch.nn.functional.softplus(-signs*(prediction(preferences,px,po,'preferred_features')-prediction(preferences,ax,ao,'alternative_features'))/.25).sum()/len(batch)
                         if not torch.isfinite(loss):raise RuntimeError('nonfinite training loss; last checkpoint preserved')
                         loss.backward()
                     torch.nn.utils.clip_grad_norm_(net.parameters(),1.0,error_if_nonfinite=True);optimizer.step();updates+=1;cursor=end
@@ -239,13 +266,13 @@ def run(args):
                     total=count=0;decision_rows=[];decision_predictions=[]
                     for start in range(0,len(valid_ids),args.batch):
                         heldout=rows(valid_ids[start:start+args.batch]);ids,offsets,target,eligible=tensors(heldout)
-                        total+=(((net(ids,offsets).tanh()-target).square())*eligible).sum().item();count+=eligible.sum().item()
+                        total+=(((prediction(heldout,ids,offsets).tanh()-target).square())*eligible).sum().item();count+=eligible.sum().item()
                         for row in heldout:
                             candidates=row.get('alternatives',[])
                             if len(candidates)<2:continue
-                            child_rows=[dict(row,features=c['features']) for c in candidates]
+                            child_rows=[dict(row,features=c['features'],prior_white=c.get('prior_white')) for c in candidates]
                             x,o,_,_=tensors(child_rows)
-                            decision_rows.append(row);decision_predictions.append(net(x,o).cpu().tolist())
+                            decision_rows.append(row);decision_predictions.append(prediction(child_rows,x,o).cpu().tolist())
                 if not count:raise RuntimeError('no eligible held-out targets')
                 decision=decision_metrics(decision_rows,decision_predictions)
                 if args.selection=='regret' and not decision['decisions']:raise RuntimeError('regret selection requires held-out alternatives')
@@ -257,7 +284,7 @@ def run(args):
                     best_decision=decision
                 epoch+=1;cursor=0;save()
                 print(f'{name} epoch={epoch}/{args.epochs} updates={updates} validation_mse={total/count:.6f} decision={decision}',flush=True)
-            net.load_state_dict(best_state);path=args.output/(name+'.nnue');export(net,path)
+            net.load_state_dict(best_state);path=args.output/(name+(f'-e{selected}-u{updates}' if schema==5 else '')+'.nnue');export(net,path)
             atomic_checkpoint(path.with_suffix('.pt'),dict(state=best_state,optimizer=best_optimizer,config=config,selected_epoch=selected))
             report=dict(**config,updates=updates,completed=True,validation_mse=best_loss,selected_epoch=selected,
                         train_positions=len(train_ids),validation_positions=len(valid_ids),natural_games=natural,

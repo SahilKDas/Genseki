@@ -41,7 +41,7 @@ struct Model {
         auto magic=std::string(reinterpret_cast<char*>(bytes.data()),8);
         bool nonlinear=magic==std::string("NUNNUE2\0",8);
         if((magic!=std::string("NUNNUE1\0",8)&&!nonlinear)
-            ||u32(8)<1||u32(8)>4||u32(12)!=feature_count||u32(20)!=quant_scale) throw std::runtime_error("model schema mismatch");
+            ||u32(8)<1||u32(8)>latest_schema||u32(12)!=feature_count||u32(20)!=quant_scale) throw std::runtime_error("model schema mismatch");
         unsigned width=u32(16);
         if(width!=64&&width!=128)throw std::runtime_error("unsupported model width");
         auto size=32+width*4+feature_count*width*2+(nonlinear?32*2*width*2+32*4+32*2:width*2);

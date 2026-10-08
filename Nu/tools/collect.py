@@ -24,10 +24,12 @@ def storage_guard(root, reserve=64*1024**2):
 
 def collect(args):
     root=Path(__file__).resolve().parents[2]
+    schema=getattr(args,'feature_schema',4)
+    if schema not in (4,6):raise RuntimeError('unsupported collection feature schema')
     resource_guard();storage_guard(root)
     args.directory.mkdir(parents=True,exist_ok=True)
     config=dict(engine_sha256=digest(args.engine),teacher_sha256=digest(args.teacher),seed=args.seed,
-                schema=4,milliseconds=args.milliseconds,alternative_ms=args.alternative_ms,cap=args.cap,
+                schema=schema,milliseconds=args.milliseconds,alternative_ms=args.alternative_ms,cap=args.cap,
                 source_model_sha256=digest(args.source_model) if args.source_model else None,
                 repetition_policy=REPETITION_POLICY)
     manifest=args.directory/'manifest.json'
@@ -38,7 +40,7 @@ def collect(args):
     files=sorted(args.directory.glob('game-*.jsonl'))
     count=sum(sum(1 for _ in file.open(encoding='utf8')) for file in files)
     game=len(files);started=time.monotonic()
-    native=UhpProcess([str(args.engine),'--feature-schema','4'])
+    native=UhpProcess([str(args.engine),'--feature-schema',str(schema)])
     teacher=None;actor=None
     try:
         teacher=UhpProcess([str(args.teacher)])
@@ -55,7 +57,7 @@ def collect(args):
                 else:
                     search=response(teacher,f'search {args.milliseconds} {game_string}')
                     cp=max(-6000,min(6000,int(search[0].split()[1])*4));chosen=search[1][5:]
-                    row=dict(game=game,ply=ply,feature_schema=4,features=active(native),position=response(native,'nu-position')[0],
+                    row=dict(game=game,ply=ply,feature_schema=schema,features=active(native),position=response(native,'nu-position')[0],
                              game_string=game_string,teacher_search_cp=cp,teacher_pv_length=int(search[2].split()[1]),
                              teacher_cp=int(response(teacher,'eval '+game_string)[0].split()[1])*4,
                              mover=1 if ply%2==0 else -1,source=config['teacher_sha256'],seed=args.seed,
@@ -122,6 +124,7 @@ def main():
     p.add_argument('--seed',type=int,default=99173);p.add_argument('--milliseconds',type=int,default=20)
     p.add_argument('--alternative-ms',type=int,default=5);p.add_argument('--cap',type=int,default=160)
     p.add_argument('--source-model',type=Path);p.add_argument('--wall-seconds',type=int,default=3600)
+    p.add_argument('--feature-schema',type=int,choices=(4,6),default=6)
     args=p.parse_args()
     if not 1<=args.positions<=600000 or not 1<=args.milliseconds<=250 or not 1<=args.alternative_ms<=250 or not 4<=args.cap<=256:p.error('invalid bounded corpus settings')
     collect(args)

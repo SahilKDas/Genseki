@@ -17,7 +17,7 @@ int main(int argc,char** argv) {
         nu::Model model;
         for(int i=1;i<argc;++i)if(std::string(argv[i])=="--model"&&i+1<argc)model.load(argv[++i]);
         for(int i=1;i<argc;++i)if(std::string(argv[i])=="--feature-schema"&&i+1<argc) {
-            auto version=parse_unsigned(argv[++i]);if(version<1||version>4)throw std::runtime_error("invalid feature schema");
+            auto version=parse_unsigned(argv[++i]);if(version<1||version>nu::latest_schema)throw std::runtime_error("invalid feature schema");
             if(model.identity!="untrained-seed-1701")throw std::runtime_error("cannot override trained model schema");
             model.feature_schema=unsigned(version);
         }
@@ -134,12 +134,13 @@ int main(int argc,char** argv) {
                         else std::cout<<"ThreatPlies;int;"<<search_options.threat_plies<<";0;0;4\n";
                     }
                 }else if(command=="nu-feature-schema")std::cout<<model.feature_schema<<'\n';
+                else if(command=="nu-prior")std::cout<<state.strategic_prior(nu::Color::white)<<'\n';
                 else if(command=="nu-moveid") {
                     auto move=state.board.parse_uhp_move(argument);if(!move)throw std::runtime_error(move.error());
                     std::cout<<nu::move_notation(*move)<<'\n';
                 }
                 else if(command=="nu-matchdraw")std::cout<<(state.repetition()?"True":"False")<<'\n';
-                else if(command=="nu-profile")std::cout<<"features_ns "<<last.profile.features_ns<<" generation_ns "<<last.profile.generation_ns<<" ordering_ns "<<last.profile.ordering_ns<<" tt_ns "<<last.profile.tt_ns<<'\n';
+                else if(command=="nu-profile")std::cout<<"features_ns "<<last.profile.features_ns<<" generation_ns "<<last.profile.generation_ns<<" ordering_ns "<<last.profile.ordering_ns<<" tt_ns "<<last.profile.tt_ns<<" inference_ns "<<last.profile.inference_ns<<" mobility_full "<<last.profile.mobility_full<<" mobility_incremental "<<last.profile.mobility_incremental<<" fast_piece_rebuilds "<<last.profile.fast_piece_rebuilds<<'\n';
                 else if(command=="nu-repetition") {
                     auto target=nu::repetition_hash(state.board);nu::Board replay;
                     unsigned count=nu::repetition_hash(replay)==target;

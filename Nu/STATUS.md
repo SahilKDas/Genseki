@@ -1,6 +1,19 @@
 # Nu Verified Status
 
-Evidence collected 2026-10-05; no strength/parity claim.
+Initial evidence was collected 2026-10-05. Later verified work is recorded below;
+build and compatibility checks are not strength qualification.
+
+## Combined Schema 5 And 6
+
+Both developers' Nu implementations are integrated in the main checkout.
+Fast/residual schema 5 and canonical-symmetry schema 6 remain separate contracts;
+the untrained default stays schema 3. All 11 standalone Nu suites and all 15
+selected root integration suites passed. The combined root executable matched
+the frozen trained schema-5 evaluator on 379 positions and schema 6 on 384;
+each also matched 12 depth-one searches including move, score, nodes and PV.
+Legacy schemas 1--4 matched 384 positions and 12 searches per schema with seed
+weights. No new training, match, qualification, or production promotion occurred.
+See `COMBINED_INTEGRATION.md` for hashes, reports, full backups and commit scope.
 
 ## Verified
 

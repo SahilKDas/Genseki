@@ -7,11 +7,14 @@
 #include <cstdint>
 #include <vector>
 #include <functional>
+#include <stdexcept>
+#include <memory>
 
 namespace nu {
 using namespace genseki;
 constexpr unsigned feature_count = 8192;
 constexpr unsigned schema = 3;
+constexpr unsigned latest_schema = 6;
 inline std::uint64_t mix(std::uint64_t x) {
     x ^= x >> 30; x *= 0xbf58476d1ce4e5b9ULL;
     x ^= x >> 27; x *= 0x94d049bb133111ebULL;
@@ -23,6 +26,31 @@ inline unsigned slot(Piece p) {
 }
 using Features = std::array<std::vector<unsigned>,2>;
 using Mobility = std::array<unsigned,22>;
+using Coordinates = std::array<std::array<int,2>,22>;
+inline std::array<int,2> orient(int q,int r,unsigned symmetry) {
+    if(symmetry>=6)std::swap(q,r);
+    for(unsigned turn=0;turn<symmetry%6;++turn){int next=-r;r=q+r;q=next;}
+    return {q,r};
+}
+inline Coordinates canonical_coordinates(const Board& board,Hex anchor,unsigned perspective) {
+    Coordinates best{};
+    std::vector<std::array<int,4>> best_key;
+    // Compare whole labeled stacks, not individual distances: relative geometry
+    // must survive normalization, including reflection and covered pieces.
+    for(unsigned symmetry=0;symmetry<12;++symmetry) {
+        Coordinates candidate{};
+        std::vector<std::array<int,4>> key;
+        for(const auto& stack:board.stacks())for(unsigned h=0;h<stack.pieces.size();++h) {
+            auto identity=slot(stack.pieces[h]);
+            auto xy=orient(int(stack.cell.q)-int(anchor.q),int(stack.cell.r)-int(anchor.r),symmetry);
+            candidate[identity]=xy;
+            key.push_back({int((identity+11*perspective)%22),int(h),xy[0],xy[1]});
+        }
+        std::sort(key.begin(),key.end());
+        if(symmetry==0||key<best_key){best_key=std::move(key);best=candidate;}
+    }
+    return best;
+}
 inline Mobility movement_counts(const Board& board) {
     Mobility counts{};
     for(unsigned color=0;color<2;++color)for(auto move:board.movement_moves(Color(color)))++counts[slot(move.piece)];
@@ -44,12 +72,135 @@ inline Mobility update_movement_counts(const Board& board,const Mobility& previo
     }
     return next;
 }
+// Schema 5 is a separate hybrid contract: cheap local features plus prior v1.
+// No exact mobility or articulation is embedded in the neural input.
+constexpr unsigned fast_schema=5;
+constexpr unsigned strategic_prior_version=1;
+struct FastPiece {
+    bool present=false;
+    Hex cell{};
+    unsigned layer=0,height=0,top_color=0;
+    std::array<unsigned,6> neighbors{};
+    std::array<Hex,2> anchors{};
+    auto operator<=>(const FastPiece&) const = default;
+};
+struct FastFeatures {
+    std::array<FastPiece,22> pieces{};
+    std::array<std::shared_ptr<const Features>,22> encoded{};
+    std::vector<Hex> geometry;
+    std::vector<bool> pinned;
+    Features active;
+    int prior_white=0;
+    unsigned rebuilt_pieces=0;
+};
+inline std::vector<bool> connectivity_pins(const std::vector<Hex>& cells) {
+    std::vector<bool> pins(cells.size());
+    std::array<std::array<unsigned,6>,22> edges{};std::array<unsigned,22> degree{};
+    for(unsigned i=0;i<cells.size();++i)for(unsigned j=i+1;j<cells.size();++j)
+        if(adjacent(cells[i],cells[j])){edges[i][degree[i]++]=j;edges[j][degree[j]++]=i;}
+    std::array<int,22> entered{},low{};entered.fill(-1);int clock=0;
+    auto visit=[&](auto&& self,unsigned v,int parent)->void {
+        entered[v]=low[v]=clock++;unsigned children=0;
+        for(unsigned i=0;i<degree[v];++i){auto w=edges[v][i];
+            if(entered[w]<0){++children;self(self,w,int(v));low[v]=std::min(low[v],low[w]);if(parent>=0&&low[w]>=entered[v])pins[v]=true;}
+            else if(int(w)!=parent)low[v]=std::min(low[v],entered[w]);}
+        if(parent<0&&children>1)pins[v]=true;
+    };
+    for(unsigned i=0;i<cells.size();++i)if(entered[i]<0)visit(visit,i,-1);
+    return pins;
+}
+inline unsigned local_exits(const FastPiece& p) {
+    unsigned exits=0;
+    for(unsigned d=0;d<6;++d) {
+        bool gate=p.neighbors[(d+5)%6]>=p.height&&p.neighbors[(d+1)%6]>=p.height;
+        // A necessary local departure condition, not exact movement legality.
+        if(!gate&&(p.neighbors[d]==0||p.layer>0))++exits;
+    }
+    return exits;
+}
+inline Features encode_fast_piece(const FastPiece& p,unsigned id) {
+    Features result;
+    // Slot ranges match the existing Base Hive identity layout.
+    constexpr unsigned bugs[]{0,1,1,2,2,3,3,3,4,4,4};
+    unsigned bug=bugs[id%11];
+    for(unsigned perspective=0;perspective<2;++perspective) {
+        unsigned role=(id/11)^perspective,identity=perspective?(id+11)%22:id;
+        auto q=std::uint32_t(int(p.cell.q)-p.anchors[perspective].q);
+        auto r=std::uint32_t(int(p.cell.r)-p.anchors[perspective].r);
+        auto coords=mix((std::uint64_t(q)<<32)|r);
+        bool covered=p.layer+1!=p.height;
+        result[perspective].push_back(unsigned(mix(coords^mix(identity+32*p.layer+1024*!covered+77))%2048));
+        result[perspective].push_back(2048+unsigned(mix(coords^mix(bug+8*role+32*p.layer+1024*!covered+91))%2048));
+        unsigned flags=unsigned(covered)+2*unsigned(p.top_color!=(id/11));
+        result[perspective].push_back(4096+role*128+bug*16+flags);
+        if(!covered) {
+            unsigned occupied=0,gates=0;
+            for(unsigned d=0;d<6;++d){occupied|=unsigned(p.neighbors[d]>0)<<d;gates|=unsigned(p.neighbors[(d+5)%6]>=p.height&&p.neighbors[(d+1)%6]>=p.height)<<d;}
+            result[perspective].push_back(4608+role*320+bug*64+occupied);
+            result[perspective].push_back(5248+role*320+bug*64+gates);
+            result[perspective].push_back(5888+role*128+bug*16+local_exits(p));
+        }
+    }
+    return result;
+}
+inline FastFeatures fast_features(const Board& board,const FastFeatures* previous=nullptr) {
+    FastFeatures next;
+    std::array<Hex,2> anchors{};std::array<bool,2> queens{};
+    const auto& stacks=board.stacks();
+    auto height=[&](Hex cell){for(const auto& s:stacks)if(s.cell==cell)return unsigned(s.pieces.size());return 0u;};
+    for(const auto& s:stacks){next.geometry.push_back(s.cell);for(auto p:s.pieces)if(p.bug==Bug::queen){anchors[unsigned(p.color)]=s.cell;queens[unsigned(p.color)]=true;}}
+    next.pinned=previous&&next.geometry==previous->geometry?previous->pinned:connectivity_pins(next.geometry);
+    constexpr int covered_cost[]{45,65,55,70,145};
+    constexpr int pinned_cost[]{25,40,35,45,100};
+    constexpr int gated_cost[]{12,18,16,20,30};
+    for(unsigned i=0;i<stacks.size();++i) {
+        const auto& s=stacks[i];std::array<unsigned,6> neighbors{};
+        for(unsigned d=0;d<6;++d)neighbors[d]=height(add(s.cell,directions[d]));
+        for(unsigned h=0;h<s.pieces.size();++h) {
+            auto piece=s.pieces[h];unsigned id=slot(piece);
+            FastPiece descriptor{true,s.cell,h,unsigned(s.pieces.size()),unsigned(s.pieces.back().color),neighbors,anchors};
+            next.pieces[id]=descriptor;
+            if(previous&&previous->pieces[id]==descriptor)next.encoded[id]=previous->encoded[id];
+            else {next.encoded[id]=std::make_shared<Features>(encode_fast_piece(descriptor,id));++next.rebuilt_pieces;}
+            for(unsigned p=0;p<2;++p)next.active[p].insert(next.active[p].end(),(*next.encoded[id])[p].begin(),(*next.encoded[id])[p].end());
+            int cost=0;unsigned bug=unsigned(piece.bug);
+            // Mutually exclusive reasons avoid double-counting immobilization.
+            if(h+1!=s.pieces.size())cost=covered_cost[bug];
+            else if(s.pieces.size()==1&&next.pinned[i])cost=pinned_cost[bug];
+            else if(queens[unsigned(piece.color)]&&local_exits(descriptor)==0)cost=gated_cost[bug];
+            next.prior_white+=(piece.color==Color::white?-cost:cost);
+        }
+    }
+    for(unsigned color=0;color<2;++color) {
+        unsigned liberties=7;
+        if(queens[color]){liberties=0;for(auto direction:directions)liberties+=height(add(anchors[color],direction))==0;}
+        for(unsigned p=0;p<2;++p)next.active[p].push_back(6208+(color^p)*16+liberties);
+        if(queens[color])next.prior_white+=(color==0?-1:1)*int((6-liberties)*(6-liberties)*18);
+    }
+    next.prior_white=std::clamp(next.prior_white,-1800,1800);
+    for(auto& perspective:next.active)std::sort(perspective.begin(),perspective.end());
+    return next;
+}
+
 inline Features features(const Board& b,unsigned version=schema,const Mobility* cached_mobility=nullptr) {
+    if(version==fast_schema)return fast_features(b).active;
+    if(version<1||version>latest_schema)throw std::runtime_error("unsupported feature schema");
     std::array<Hex,2> anchors{};
     std::array<bool,2> queen_present{};
     for (const auto& s:b.stacks()) for (auto p:s.pieces)
         if(p.bug==Bug::queen) {anchors[unsigned(p.color)]=s.cell;queen_present[unsigned(p.color)]=true;}
     const auto& stacks=b.stacks();
+    std::array<Coordinates,2> canonical{};
+    if(version==6)for(unsigned perspective=0;perspective<2;++perspective) {
+        if(!queen_present[perspective]) {
+            unsigned first=22;
+            for(const auto& stack:stacks)for(auto piece:stack.pieces) {
+                auto identity=(slot(piece)+11*perspective)%22;
+                if(identity<first){first=identity;anchors[perspective]=stack.cell;}
+            }
+        }
+        canonical[perspective]=canonical_coordinates(b,anchors[perspective],perspective);
+    }
     std::array<bool,22> articulation{};std::array<unsigned,22> access{};
     auto height=[&](Hex cell){for(const auto& stack:stacks)if(stack.cell==cell)return unsigned(stack.pieces.size());return 0u;};
     constexpr std::array<Hex,6> adjacent{{{1,0},{0,1},{-1,1},{-1,0},{0,-1},{1,-1}}};
@@ -83,7 +234,7 @@ inline Features features(const Board& b,unsigned version=schema,const Mobility* 
     }
     Features out;
     Mobility mobility{};
-    if(version==4)mobility=cached_mobility?*cached_mobility:movement_counts(b);
+    if(version>=4)mobility=cached_mobility?*cached_mobility:movement_counts(b);
     for(unsigned perspective=0;perspective<2;++perspective) {
         out[perspective].reserve(5*22+2);
         for(unsigned cell_index=0;cell_index<stacks.size();++cell_index) {
@@ -92,8 +243,10 @@ inline Features features(const Board& b,unsigned version=schema,const Mobility* 
             unsigned identity=slot(p);
             if(perspective) identity=(identity+11)%22;
             // Hash full signed relative coordinates; never clip the hive to a window.
-            auto q=std::uint32_t(int(s.cell.q)-int(anchors[perspective].q));
-            auto r=std::uint32_t(int(s.cell.r)-int(anchors[perspective].r));
+            auto relative=version==6?canonical[perspective][slot(p)]:
+                std::array<int,2>{int(s.cell.q)-int(anchors[perspective].q),int(s.cell.r)-int(anchors[perspective].r)};
+            auto q=std::uint32_t(relative[0]);
+            auto r=std::uint32_t(relative[1]);
             auto v=mix((std::uint64_t(q)<<32)|r);
             v^=mix(0x91e10da5c79e7b1dULL+identity+32*h+1024*(h+1==s.pieces.size()));
             out[perspective].push_back(unsigned(mix(v)%(version==1?feature_count:version==2?4096:2048)));
@@ -106,7 +259,7 @@ inline Features features(const Board& b,unsigned version=schema,const Mobility* 
                     int local=-1,index=0;
                     for(int dq=-2;dq<=2;++dq)for(int dr=-2;dr<=2;++dr) {
                         if(std::max({std::abs(dq),std::abs(dr),std::abs(dq+dr)})>2)continue;
-                        if(int(s.cell.q)-int(anchors[perspective].q)==dq&&int(s.cell.r)-int(anchors[perspective].r)==dr)local=index;
+                        if(relative[0]==dq&&relative[1]==dr)local=index;
                         ++index;
                     }
                     unsigned base=version==2?6144:4096;
@@ -118,7 +271,7 @@ inline Features features(const Board& b,unsigned version=schema,const Mobility* 
                         +4*(s.pieces.size()==1&&articulation[cell_index])+8*(access[cell_index]==0);
                     out[perspective].push_back(6144+role*128+unsigned(p.bug)*16+flags);
                     out[perspective].push_back(6400+role*128+unsigned(p.bug)*16+(covered?7:access[cell_index]));
-                    if(version==4) {
+                    if(version>=4) {
                         out[perspective].push_back(7000+role*128+unsigned(p.bug)*16+std::min(15u,mobility[slot(p)]));
                         if(p.bug==Bug::queen) {
                             unsigned control=unsigned(covered)+2*unsigned(s.pieces.back().color!=p.color);

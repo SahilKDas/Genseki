@@ -229,7 +229,8 @@ public:
                 }catch(Interrupted&){interrupted=true;}
                 nodes.fetch_add(ordering.visited-before,std::memory_order_relaxed);
                 std::lock_guard guard(profile_lock);aggregate.features_ns+=profile.features_ns;aggregate.generation_ns+=profile.generation_ns;
-                aggregate.ordering_ns+=profile.ordering_ns;aggregate.tt_ns+=profile.tt_ns;
+                aggregate.ordering_ns+=profile.ordering_ns;aggregate.tt_ns+=profile.tt_ns;aggregate.inference_ns+=profile.inference_ns;
+                aggregate.mobility_full+=profile.mobility_full;aggregate.mobility_incremental+=profile.mobility_incremental;aggregate.fast_piece_rebuilds+=profile.fast_piece_rebuilds;
               } catch(...) {std::lock_guard guard(failure_lock);failure=std::current_exception();stopped=true;}
             };
             std::vector<std::jthread> workers;

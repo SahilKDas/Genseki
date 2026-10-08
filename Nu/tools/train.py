@@ -45,6 +45,9 @@ def corpus(engine_path, output, games, cap, milliseconds, source_model=None):
     provenance = hashlib.sha256(source_model.read_bytes()).hexdigest() if source_model else 'untrained-seed-1701'
     engine = UhpProcess(invocation)
     records = []
+    version=int(response(engine,'nu-feature-schema')[0])
+    if version==5:
+        engine.close();raise RuntimeError('schema 5 requires refeature.py and learning.py residual training')
     try:
         for game in range(games):
             resource_guard()
@@ -57,7 +60,7 @@ def corpus(engine_path, output, games, cap, milliseconds, source_model=None):
                 move = response(engine, f'bestmove depthorseconds 4 {milliseconds / 1000}')[0]
                 info = response(engine, 'nu-searchinfo')[0].split()
                 score = int(info[5]) * (1 if ply % 2 == 0 else -1)
-                rows.append(dict(game=game, ply=ply, features=active, search_cp=score,
+                rows.append(dict(game=game, ply=ply, features=active, feature_schema=version, search_cp=score,
                                  depth=int(info[1]), nodes=int(info[3]),
                                  position=response(engine, 'nu-position')[0]))
                 if rng.random() < .2:
@@ -97,14 +100,18 @@ def export(net, path):
         checksum = ((checksum ^ byte) * 1099511628211) & ((1 << 64) - 1)
     header = struct.pack('<8sIIIIQ', b'NUNNUE2\0' if nonlinear else b'NUNNUE1\0', net.schema, 8192, net.width, 256, checksum)
     temporary = path.with_suffix('.pending')
-    temporary.write_bytes(header + payload)
+    encoded=header+payload
+    if path.exists():
+        if path.read_bytes()!=encoded:raise RuntimeError('immutable model output already exists; choose a new candidate namespace')
+        return
+    temporary.write_bytes(encoded)
     os.replace(temporary, path)
 
 def train(records, output, epochs, batch, device_name,widths=(64,128)):
     import torch
     from torch import nn
     versions={row.get('feature_schema',1) for row in records}
-    if not records or len(versions)!=1 or not versions.issubset({1,2,3}):
+    if not records or len(versions)!=1 or not versions.issubset({1,2,3,4,6}):
         raise RuntimeError('one supported feature schema is required per corpus')
     torch.set_num_threads(4)
     torch.manual_seed(1701)

@@ -1,0 +1,51 @@
+{
+  "role": "64-wide-research-incumbent",
+  "status": "user-promoted",
+  "production_default_changed": false,
+  "architecture": {
+    "width": 64,
+    "head": "linear"
+  },
+  "schema": 6,
+  "feature_contract": "nu-canonical-d6-mobility-v1",
+  "required_pair": {
+    "engine": "Nu/work/incumbents/64-linear/4a6473e6aaaec47e0df13072ec2d5c2af0fd02199c1fc36e27ec4288f66cc874/5798fc3b9204c35480717c994d68a465b9493bea703b49c8b7355be360867d96/nu.exe",
+    "engine_sha256": "5798fc3b9204c35480717c994d68a465b9493bea703b49c8b7355be360867d96",
+    "model": "Nu/work/incumbents/64-linear/4a6473e6aaaec47e0df13072ec2d5c2af0fd02199c1fc36e27ec4288f66cc874/5798fc3b9204c35480717c994d68a465b9493bea703b49c8b7355be360867d96/nu-64-linear.nnue",
+    "model_sha256": "4a6473e6aaaec47e0df13072ec2d5c2af0fd02199c1fc36e27ec4288f66cc874"
+  },
+  "checkpoint": "Nu/work/incumbents/64-linear/4a6473e6aaaec47e0df13072ec2d5c2af0fd02199c1fc36e27ec4288f66cc874/5798fc3b9204c35480717c994d68a465b9493bea703b49c8b7355be360867d96/nu-64-linear.pt",
+  "checkpoint_sha256": "0a7af33eff3f5dd1367d59935a65bfa064feef4c57d9db3c09e5afe70847a1be",
+  "predecessor_model_sha256": "d4b67b1f867f452fc2ebbdad7a0b3f9ad862645bb0f6bbfc041a5ac91b1e85fd",
+  "promotion_authority": "explicit user request",
+  "sealed_qualification": false,
+  "evidence": {
+    "schema_migration": "canonical-D6-mobility-v1: header 5 -> 6 only",
+    "source_model_sha256": "da255c85cf7ec29d07f81e3131c331fc991c40d385e1d0062ead8d2580b39e26",
+    "model_sha256": "4a6473e6aaaec47e0df13072ec2d5c2af0fd02199c1fc36e27ec4288f66cc874",
+    "engine_sha256": "5798fc3b9204c35480717c994d68a465b9493bea703b49c8b7355be360867d96",
+    "payload_unchanged": true,
+    "feature_score_parity_positions": 384,
+    "fixed_depth_parity_positions": 12
+  },
+  "development_results": [
+    {
+      "opponent": "incumbent-64",
+      "points": 10.5,
+      "games": 20,
+      "evidence_sha256": "d89161f7adb51d79facc142e288f4eceb9ef9cffc7269d10b7198ff17cda346c"
+    },
+    {
+      "opponent": "incumbent-128",
+      "points": 3.0,
+      "games": 20,
+      "evidence_sha256": "92ac340445f94ff2d2bc41c62608b200c9aee1bd49354eb48f1f4ae60d77bce8"
+    },
+    {
+      "opponent": "alpha-gen1",
+      "points": 0.5,
+      "games": 20,
+      "evidence_sha256": "8639437fee09cdf0d4ce7e45112f91b6563f75f9cf5ba2573e4521733490af23"
+    }
+  ]
+}

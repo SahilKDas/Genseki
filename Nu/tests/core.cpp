@@ -14,7 +14,7 @@ int brute(nu::State& state,int depth,int ply=0) {
     return best;
 }
 int main(){
-    for(unsigned width:{64u,128u})for(unsigned version:{3u,4u}) {
+    for(unsigned width:{64u,128u})for(unsigned version:{3u,4u,5u,6u}) {
         nu::Model model(width);model.feature_schema=version;nu::State state(model);std::mt19937 rng(123);
         for(unsigned game=0;game<12;++game) {
             state=nu::State(model);std::vector<nu::State::Undo> undo;
@@ -68,7 +68,7 @@ int main(){
     try{nu::Applied applied(exact_state,generated);exact_state.evaluate();}catch(const std::runtime_error&){cancelled=true;}
     genseki::nu_generation_check=nullptr;genseki::nu_generation_context=nullptr;
     check(cancelled&&exact_state.board.position_string()==exact_before&&exact_state.equivalent());
-    for(unsigned version:{3u,4u}) {
+    for(unsigned version:{3u,4u,5u,6u}) {
         nu::Model reference_model;reference_model.feature_schema=version;
         nu::State lazy(reference_model),eager(reference_model);eager.eager_features=true;
         std::mt19937 random(881);std::vector<nu::State::Undo> lazy_undo,eager_undo;

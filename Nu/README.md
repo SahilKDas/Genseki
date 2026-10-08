@@ -41,6 +41,29 @@ Schema 3 adds articulation, local gate-access proxies and Queen liberties.
 Schema 4 adds actual legal movement-destination counts, including Queen escape
 counts, and Queen stack-control flags. Mobility saturates at 15 destinations;
 it is not a count of paths, placements or speculative future mobility.
+Opt-in schema 6 retains schema-4 feature banks but
+canonicalizes the entire labeled board over all six rotations and six reflected
+rotations, independently for each color-relative perspective. Queen anchors are
+retained; before a Queen is placed, the lowest perspective-relative piece identity
+anchors the board instead of the origin. Thus translated, rotated and reflected
+boards have identical feature multisets and integer evaluations, including stacks.
+Canonical coordinates use full-width integers before hashing. This normalizes
+evaluation inputs only: move coordinates, repetition keys and TT keys are unchanged.
+
+Schemas 1--4 keep their original orientation-dependent semantics. Existing weights
+are never relabeled as schema 6: reconstruct every corpus position and child with
+`refeature.py --schema 6` using the newly built engine, then train a separately named
+schema-6 model. Do not mix schemas or resume a schema-4 optimizer as schema 6.
+No trained weights or strength promotion are supplied by this rules-level change.
+Schema 5 is reserved for the original checkout's distinct fast/residual contract;
+the combined engine supports both contracts without interchanging them. The historically tested private schema-5 weights were
+renumbered to 6 with exact payload, feature, inference and fixed-depth parity.
+The explicit user-promoted 64-wide incumbent is registered as an engine/model
+pair in `incumbents/64-linear.json`; launch it with `tools/incumbent.py`.
+Alpha's separate Rust adapter still supports its existing schemas, not schema 6.
+The collector CLI defaults to `--feature-schema 6`; use `--feature-schema 4`
+explicitly when continuing old schema-4 collection manifests. Existing programmatic
+campaign callers without that option retain schema 4 to protect resume identities.
 The shared rules library uses signed 16-bit axial
 coordinates; Nu does not claim mathematically unbounded coordinates.
 
@@ -75,7 +98,7 @@ PV may be shortened by TT hits. Conservative history-sensitive TT keys reduce
 transposition reuse, but their rolling history component is now O(1). Piece
 hashes update incrementally; features still refresh before accumulator deltas.
 Legal-move caches restore on undo; per-ply ordering/PV buffers are reused.
-Schema-4 mobility counts update incrementally for occupied-stack Beetle moves:
+Schema-4/6 mobility counts update incrementally for occupied-stack Beetle moves:
 ground geometry is unchanged, so only exposed/covered pieces and Beetles refresh.
 Other moves rebuild mobility; full recomputation remains the integrity reference.
 Profiling reports feature, generation, ordering and TT-probe time separately.
@@ -174,5 +197,7 @@ aborts. Qualification remains intentionally unrun after weak development
 results. The generated seeds are distinct from development seeds but are not
 cryptographically hidden from an operator with filesystem access.
 
+See COMBINED_INTEGRATION.md for the reconciled schema-5/schema-6 implementation,
+verified compatibility, backup locations and commit-review scope.
 See STATUS.md for measured evidence and remaining work. Device constraints in
 the root constraints file remain binding.
