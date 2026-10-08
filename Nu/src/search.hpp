@@ -1,12 +1,13 @@
 #pragma once
 #include "state.hpp"
+#include "hybrid.hpp"
 #include <atomic>
 #include <mutex>
 #include <thread>
 
 namespace nu {
 inline thread_local unsigned generation_checks=0;
-struct SearchOptions {unsigned threat_plies=0;bool lmr=false,profile=false,adaptive=false;};
+struct SearchOptions {unsigned threat_plies=0;bool lmr=false,profile=false,adaptive=false,hybrid=false;unsigned hybrid_weight=100,hybrid_terms=63;};
 struct SearchResult {Move move{};int score=0;unsigned depth=0;std::uint64_t nodes=0;std::vector<Move> pv;Metrics profile;};
 class Search {
     struct Entry {std::uint64_t key=0,context=0;int value=0,depth=-1,bound=0;Move move{};unsigned age=0;};
@@ -97,16 +98,19 @@ class Search {
         checkpoint();++ordering.visited;
         if(state.board.is_terminal())return terminal(state.board,ply);
         if(state.repetition())return 0;
-        if(!remaining||(liberties(state.board,Color::white)>1&&liberties(state.board,Color::black)>1))return state.evaluate();
+        const unsigned threshold=options.threat_plies>=2?2:1;
+        if(!remaining||(liberties(state.board,Color::white)>threshold&&liberties(state.board,Color::black)>threshold))return evaluate(state,options);
         const auto mover=state.board.side_to_move();
         bool danger=winning_reply(state.board,other(mover));
-        int best=danger?-100001:state.evaluate();
+        int best=danger?-100001:evaluate(state,options);
         bool defense=false;
         // Only actual wins and replies that remove every immediate winning response extend.
         for(auto move:state.legal()) {
             checkpoint();Applied applied(state,move);auto result=state.board.result();
             bool win=result==(mover==Color::white?GameResult::white_win:GameResult::black_win);
-            if(!win&&!danger)continue;
+            if(!win&&!danger) {
+                if(threshold==1||remaining<2||!winning_reply(state.board,mover))continue;
+            }
             if(result==GameResult::ongoing&&!state.repetition()&&winning_reply(state.board,other(mover)))continue;
             defense=true;auto& child=ordering.pv_buffers[ply+1];child.clear();
             int value=-threat(state,-beta,-alpha,ply+1,remaining-1,child,ordering);
@@ -143,7 +147,7 @@ class Search {
         ++ordering.visited;checkpoint();
         if(s.board.is_terminal())return terminal(s.board,ply);
         if(s.repetition())return 0;
-        if(depth<=0)return options.threat_plies?threat(s,alpha,beta,ply,options.threat_plies,pv,ordering):s.evaluate();
+        if(depth<=0)return options.threat_plies?threat(s,alpha,beta,ply,options.threat_plies,pv,ordering):evaluate(s,options);
         const auto key=s.hash,context=s.context_key();
         auto started=metrics?std::chrono::steady_clock::now():std::chrono::steady_clock::time_point{};
         auto cached=probe(key,context);
@@ -179,6 +183,12 @@ class Search {
         save({key,context,packed,depth,best<=original?2:best>=beta?1:0,selected,age});return best;
     }
 public:
+    static int evaluate(const State& state,const SearchOptions& settings) {
+        int base=state.evaluate();
+        if(!settings.hybrid||!settings.hybrid_weight)return base;
+        int bonus=handcrafted_white(state.board,settings.hybrid_terms)*(state.board.side_to_move()==Color::white?1:-1);
+        return std::clamp(base+bonus*int(settings.hybrid_weight)/100,-8000,8000);
+    }
     std::size_t allocated_table_bytes()const {return table.capacity()*sizeof(Bucket);}
     explicit Search(unsigned mib=16,std::size_t bucket_limit=0):table(std::max<std::size_t>(1,
         std::min(bucket_limit?bucket_limit:std::numeric_limits<std::size_t>::max(),std::size_t(std::clamp(mib,1u,256u))*1024*1024/sizeof(Bucket)))){}
@@ -186,8 +196,8 @@ public:
     SearchResult run(const State& initial,unsigned max_depth,double milliseconds,unsigned threads=1,std::atomic<bool>* entered=nullptr,SearchOptions settings={}) {
         auto started=std::chrono::steady_clock::now();
         if(!std::isfinite(milliseconds)||milliseconds<0||milliseconds>60000)throw std::runtime_error("invalid search time");
-        if(settings.threat_plies>4||max_depth>64)throw std::runtime_error("search bounds exceeded");
-        if(age&&(table_model!=initial.model||settings.threat_plies!=options.threat_plies||settings.lmr!=options.lmr)) {
+        if(settings.threat_plies>4||max_depth>64||settings.hybrid_weight>200||settings.hybrid_terms>127)throw std::runtime_error("search bounds exceeded");
+        if(age&&(table_model!=initial.model||settings.threat_plies!=options.threat_plies||settings.lmr!=options.lmr||settings.hybrid!=options.hybrid||settings.hybrid_weight!=options.hybrid_weight||settings.hybrid_terms!=options.hybrid_terms)) {
             for(auto& bucket:table)for(auto& entry:bucket)entry.depth=-1;
         }
         table_model=initial.model;options=settings;stopped=false;nodes=0;++age;

@@ -1,0 +1,588 @@
+{
+  "version": 1,
+  "manifest": {
+    "version": 1,
+    "pins": {
+      "nu.exe": "c415a08bc545b117960033c2d7420249149940ef6c27cc89a8f27ae401034a21",
+      "cost.exe": "0d16097e1efae8f0d0268aa153e243214698ed930d65b3a4d3abf44a2a388466",
+      "model.nnue": "9267591529b13283ae94994b71c7bbf85cb9ea056d33c9a4a60c45ced6cfa27e",
+      "rules.exe": "8f0616dcf73feccd349c6c5954772dd0be34e20d54a76161f43d664a665a9fdf",
+      "openings.json": "6731090dc5571faff94b9fd620b748a1a7a41323de63f9d10d9a6669dd551e25",
+      "roots.json": "992176355945acc163e9b565b56e1f3f4f1d01b9e00ddafaaf9a0387c9bef739"
+    },
+    "terms": 64,
+    "weight": 100,
+    "threat_plies": 2,
+    "threads": 1,
+    "table_mib": 16,
+    "internal_ms": 230,
+    "external_ms": 250,
+    "cap": 160,
+    "openings_note": "Previously exposed development openings; not confirmation or qualification."
+  },
+  "benchmark": {
+    "manifest": {
+      "version": 1,
+      "pins": {
+        "nu.exe": "c415a08bc545b117960033c2d7420249149940ef6c27cc89a8f27ae401034a21",
+        "cost.exe": "0d16097e1efae8f0d0268aa153e243214698ed930d65b3a4d3abf44a2a388466",
+        "model.nnue": "9267591529b13283ae94994b71c7bbf85cb9ea056d33c9a4a60c45ced6cfa27e",
+        "rules.exe": "8f0616dcf73feccd349c6c5954772dd0be34e20d54a76161f43d664a665a9fdf",
+        "openings.json": "6731090dc5571faff94b9fd620b748a1a7a41323de63f9d10d9a6669dd551e25",
+        "roots.json": "992176355945acc163e9b565b56e1f3f4f1d01b9e00ddafaaf9a0387c9bef739"
+      },
+      "terms": 64,
+      "weight": 100,
+      "threat_plies": 2,
+      "threads": 1,
+      "table_mib": 16,
+      "internal_ms": 230,
+      "external_ms": 250,
+      "cap": 160,
+      "openings_note": "Previously exposed development openings; not confirmation or qualification."
+    },
+    "rows": [
+      {
+        "enabled": false,
+        "eval_protocol_ms": 0.17459500231780112,
+        "move_ms": 220.69040004862472,
+        "info": [
+          "depth 4 nodes 11185 score 12",
+          "pv;wQ wA1/;bQ bG1\\;wA1 bS1-;bA1 /bG1"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": false,
+        "eval_protocol_ms": 0.15083499893080443,
+        "move_ms": 220.4059000359848,
+        "info": [
+          "depth 3 nodes 8438 score -9",
+          "pv;wG2 wG1-;bS2 bG1/;wA2 bQ\\"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": false,
+        "eval_protocol_ms": 0.3716599981999025,
+        "move_ms": 220.44260002439842,
+        "info": [
+          "depth 2 nodes 1640 score -208",
+          "pv;wA3 bA2-;bA3 wA3-"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": false,
+        "eval_protocol_ms": 0.3647150006145239,
+        "move_ms": 220.5549000063911,
+        "info": [
+          "depth 2 nodes 2448 score -253",
+          "pv;wA3 -bA1;bG1 bA3/"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": false,
+        "eval_protocol_ms": 0.19127500127069652,
+        "move_ms": 220.32590000890195,
+        "info": [
+          "depth 4 nodes 11625 score -1",
+          "pv;wA1 /wG1;bQ bS1-;wQ \\wA1;bA1 \\bS1"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": false,
+        "eval_protocol_ms": 0.07174499914981425,
+        "move_ms": 220.23939999053255,
+        "info": [
+          "depth 2 nodes 4979 score -85",
+          "pv;wS2 /wG1;bA1 wQ/"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": false,
+        "eval_protocol_ms": 0.1795399992261082,
+        "move_ms": 220.36019997904077,
+        "info": [
+          "depth 2 nodes 4177 score 149",
+          "pv;wA3 wS1-;bB2 bA2-"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": false,
+        "eval_protocol_ms": 0.1662349997786805,
+        "move_ms": 220.40069999638945,
+        "info": [
+          "depth 2 nodes 5760 score 61",
+          "pv;wA3 bQ-;bA1 wA1/"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": false,
+        "eval_protocol_ms": 0.08707000233698636,
+        "move_ms": 220.21120000863448,
+        "info": [
+          "depth 4 nodes 14293 score -8",
+          "pv;wQ \\wG2;bA1 /bS1;wA1 \\wG1;bQ -bA1"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": false,
+        "eval_protocol_ms": 0.17080499965231866,
+        "move_ms": 220.37100000306964,
+        "info": [
+          "depth 2 nodes 3549 score -17",
+          "pv;wA1 bQ-;bA1 -wQ"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": false,
+        "eval_protocol_ms": 0.3671750018838793,
+        "move_ms": 220.3754000365734,
+        "info": [
+          "depth 1 nodes 1753 score 70",
+          "pv;wA1 wG3/"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": false,
+        "eval_protocol_ms": 0.11879499943461269,
+        "move_ms": 220.38070001872256,
+        "info": [
+          "depth 2 nodes 4684 score -71",
+          "pv;wA1 wG3/;bA1 wQ/"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": true,
+        "eval_protocol_ms": 0.07909499981906265,
+        "move_ms": 220.40910000214353,
+        "info": [
+          "depth 4 nodes 11386 score 21",
+          "pv;wQ wA1/;bQ bS1\\;wA1 bQ\\;bG2 bG1\\"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": true,
+        "eval_protocol_ms": 0.11428500001784414,
+        "move_ms": 220.27829999569803,
+        "info": [
+          "depth 2 nodes 5626 score -134",
+          "pv;wA3 \\wG2;bA1 bG1/"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": true,
+        "eval_protocol_ms": 0.4947400011587888,
+        "move_ms": 220.37210001144558,
+        "info": [
+          "depth 1 nodes 867 score -148",
+          "pv;wA3 bA2-"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": true,
+        "eval_protocol_ms": 0.26391999854240566,
+        "move_ms": 220.2936999965459,
+        "info": [
+          "depth 2 nodes 2213 score -229",
+          "pv;wA3 -bA1;bG1 bA3/"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": true,
+        "eval_protocol_ms": 0.0600350002059713,
+        "move_ms": 220.24210001109168,
+        "info": [
+          "depth 4 nodes 11893 score -1",
+          "pv;wA1 /wG1;bQ bS1-;wQ \\wA1;bA1 \\bS1"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": true,
+        "eval_protocol_ms": 0.0681649980833754,
+        "move_ms": 220.22479999577627,
+        "info": [
+          "depth 2 nodes 3679 score -117",
+          "pv;wS2 /wG1;bA1 wQ/"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": true,
+        "eval_protocol_ms": 0.2962650003610179,
+        "move_ms": 220.33689997624606,
+        "info": [
+          "depth 2 nodes 2179 score 167",
+          "pv;wA2 bA1\\;bB2 bS2-"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": true,
+        "eval_protocol_ms": 0.26163999864365906,
+        "move_ms": 220.31219996279106,
+        "info": [
+          "depth 2 nodes 2012 score 89",
+          "pv;wA3 bQ-;bA1 wQ/"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": true,
+        "eval_protocol_ms": 0.06139000179246068,
+        "move_ms": 220.20709997741506,
+        "info": [
+          "depth 4 nodes 13820 score -2",
+          "pv;wQ \\wG2;bQ bS1\\;wA1 wG2-;bB1 bS1"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": true,
+        "eval_protocol_ms": 0.13409500243142247,
+        "move_ms": 220.4083999968134,
+        "info": [
+          "depth 2 nodes 3087 score 11",
+          "pv;wA1 bQ-;bA1 -wQ"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": true,
+        "eval_protocol_ms": 0.6015249993652105,
+        "move_ms": 220.37439997075126,
+        "info": [
+          "depth 0 nodes 625 score 0",
+          "pv;wS2 -wA2"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      },
+      {
+        "enabled": true,
+        "eval_protocol_ms": 0.07029499975033104,
+        "move_ms": 220.31740000238642,
+        "info": [
+          "depth 1 nodes 870 score 92",
+          "pv;wA1 bQ-"
+        ],
+        "memory": [
+          "model 1049190 table 16777152"
+        ],
+        "timeout": false
+      }
+    ],
+    "native_cost": {
+      "plain": {
+        "schema": 7,
+        "roots": 39,
+        "evaluation_ns": 300600,
+        "make_evaluate_unmake_ns": 13939500,
+        "reconstruction_ns": 1993300,
+        "consumed_checksum": -69136
+      },
+      "coordination": {
+        "schema": 7,
+        "roots": 39,
+        "evaluation_ns": 209531400,
+        "make_evaluate_unmake_ns": 61897000,
+        "reconstruction_ns": 2130700,
+        "consumed_checksum": -97948
+      }
+    }
+  },
+  "points": 9.0,
+  "expected_games": 20,
+  "games": [
+    {
+      "pair": 0,
+      "opening_seed": 460000,
+      "nu_color": "white",
+      "score": 1.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 220.9395000245422,
+      "timeout_side": null
+    },
+    {
+      "pair": 0,
+      "opening_seed": 460000,
+      "nu_color": "black",
+      "score": 1.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 224.65899999951944,
+      "timeout_side": null
+    },
+    {
+      "pair": 1,
+      "opening_seed": 460001,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 222.0878999796696,
+      "timeout_side": null
+    },
+    {
+      "pair": 1,
+      "opening_seed": 460001,
+      "nu_color": "black",
+      "score": 1.0,
+      "result": "Forfeit",
+      "termination": "timeout",
+      "max_move_ms": 273.2918999972753,
+      "timeout_side": "Opponent"
+    },
+    {
+      "pair": 2,
+      "opening_seed": 460005,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 225.58459994615987,
+      "timeout_side": null
+    },
+    {
+      "pair": 2,
+      "opening_seed": 460005,
+      "nu_color": "black",
+      "score": 0.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 220.81189998425543,
+      "timeout_side": null
+    },
+    {
+      "pair": 3,
+      "opening_seed": 460006,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 220.70519998669624,
+      "timeout_side": null
+    },
+    {
+      "pair": 3,
+      "opening_seed": 460006,
+      "nu_color": "black",
+      "score": 1.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 221.08480002498254,
+      "timeout_side": null
+    },
+    {
+      "pair": 4,
+      "opening_seed": 460007,
+      "nu_color": "white",
+      "score": 1.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 221.02319996338338,
+      "timeout_side": null
+    },
+    {
+      "pair": 4,
+      "opening_seed": 460007,
+      "nu_color": "black",
+      "score": 1.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 220.91490001184866,
+      "timeout_side": null
+    },
+    {
+      "pair": 5,
+      "opening_seed": 460008,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 220.8033000351861,
+      "timeout_side": null
+    },
+    {
+      "pair": 5,
+      "opening_seed": 460008,
+      "nu_color": "black",
+      "score": 0.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 220.73460003593937,
+      "timeout_side": null
+    },
+    {
+      "pair": 6,
+      "opening_seed": 460009,
+      "nu_color": "white",
+      "score": 0.5,
+      "result": "Draw",
+      "termination": "repetition",
+      "max_move_ms": 221.87469998607412,
+      "timeout_side": null
+    },
+    {
+      "pair": 6,
+      "opening_seed": 460009,
+      "nu_color": "black",
+      "score": 0.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 220.796599984169,
+      "timeout_side": null
+    },
+    {
+      "pair": 7,
+      "opening_seed": 460010,
+      "nu_color": "white",
+      "score": 1.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 220.75569996377453,
+      "timeout_side": null
+    },
+    {
+      "pair": 7,
+      "opening_seed": 460010,
+      "nu_color": "black",
+      "score": 0.5,
+      "result": "Draw",
+      "termination": "repetition",
+      "max_move_ms": 220.83239996572956,
+      "timeout_side": null
+    },
+    {
+      "pair": 8,
+      "opening_seed": 460011,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 224.61100004147738,
+      "timeout_side": null
+    },
+    {
+      "pair": 8,
+      "opening_seed": 460011,
+      "nu_color": "black",
+      "score": 0.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 228.08199998689815,
+      "timeout_side": null
+    },
+    {
+      "pair": 9,
+      "opening_seed": 460012,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 220.7371999975294,
+      "timeout_side": null
+    },
+    {
+      "pair": 9,
+      "opening_seed": 460012,
+      "nu_color": "black",
+      "score": 1.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 221.52040002401918,
+      "timeout_side": null
+    }
+  ],
+  "limitations": [
+    "Previously exposed development openings",
+    "Current legal coverage is not a forced multi-move surround",
+    "Native cost measurement is one sequential trial",
+    "Both sides use ThreatPlies 2; not the zero-threat production configuration"
+  ],
+  "promoted": false
+}

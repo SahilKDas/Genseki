@@ -57,9 +57,13 @@ def main():
     parser.add_argument('--threads', type=int, default=1)
     parser.add_argument('--threat-plies', type=int, default=0)
     parser.add_argument('--lmr', action='store_true')
+    parser.add_argument('--hybrid',action='store_true')
+    parser.add_argument('--hybrid-weight',type=int,default=100)
+    parser.add_argument('--hybrid-terms',type=int,default=63)
     parser.add_argument('--opponent-model', type=Path)
     parser.add_argument('--resume',action='store_true')
     args = parser.parse_args()
+    if not 0<=args.hybrid_weight<=200 or not 0<=args.hybrid_terms<=127:parser.error('invalid hybrid settings')
     openings=json.loads(args.openings.read_text())['openings'] if args.openings else None
     if openings is not None and (len(openings)*2!=args.games or any(len(row['moves'])!=4 for row in openings)):
         raise RuntimeError('opening manifest must contain one four-ply opening per mirrored pair')
@@ -76,6 +80,7 @@ def main():
                 repetition_policy=REPETITION_POLICY,threat_plies=args.threat_plies,lmr=args.lmr,seed_base=args.seed_base,
                 invocation=[str(args.opponent)],opponent_model_sha256=None)
     report.update(referee_sha256=hashlib.sha256(args.referee.read_bytes()).hexdigest(),
+                  hybrid=args.hybrid,hybrid_weight=args.hybrid_weight,hybrid_terms=args.hybrid_terms,
                   validation_policy=VALIDATION_POLICY,depth_limit=SEARCH_DEPTH_LIMIT,
                   memory_policy=MEMORY_POLICY,
                   openings_sha256=hashlib.sha256(args.openings.read_bytes()).hexdigest() if args.openings else None)
@@ -88,6 +93,7 @@ def main():
     if saved is not None:
         keys=('kind','expected_games','engine_sha256','model_sha256','opponent_sha256','opponent_model_sha256','referee_sha256','validation_policy','memory_policy','depth_limit','openings_sha256','milliseconds','internal_ms','threads','cap','repetition_policy','threat_plies','lmr','seed_base','table_mib','background_pondering','random_opening')
         if saved.get('rejected') or any(saved.get(k)!=report.get(k) for k in keys):raise RuntimeError('arena resume identity/settings mismatch or rejected run')
+        if any(saved.get(k)!=report[k] for k in ('hybrid','hybrid_weight','hybrid_terms')):raise RuntimeError('hybrid resume settings mismatch')
         rows=saved['games']
         if len(rows)>args.games or any(g.get('pair')!=i//2 or g.get('opening_seed')!=(openings[i//2]['seed'] if openings else args.seed_base+i//2) or g.get('nu_color')!=('white' if i%2==0 else 'black') for i,g in enumerate(rows)):raise RuntimeError('arena resume game prefix mismatch')
         if saved.get('points')!=sum(g['score'] for g in rows):raise RuntimeError('arena resume total mismatch')
@@ -121,12 +127,16 @@ def main():
                 command(nu, 'options BackgroundPondering False')
                 command(nu, f'options ThreatPlies {args.threat_plies}')
                 command(nu, f'options LateMoveReductions {"True" if args.lmr else "False"}')
+                if args.hybrid:
+                    command(nu,'options HybridEvaluation True')
+                    command(nu,f'options HybridWeight {args.hybrid_weight}')
+                    command(nu,f'options HybridTerms {args.hybrid_terms}')
                 if args.opponent_model:
                     command(opponent,f'options Threads {args.threads}')
                     command(opponent,'options TableMiB 16')
                     command(opponent,'options BackgroundPondering False')
-                    command(opponent,'options ThreatPlies 0')
-                    command(opponent,'options LateMoveReductions False')
+                    command(opponent,f'options ThreatPlies {args.threat_plies}')
+                    command(opponent,f'options LateMoveReductions {"True" if args.lmr else "False"}')
                 else:
                     command(opponent, f'options set NumThreads {args.threads}')
                     command(opponent, 'options set BackgroundPondering False')

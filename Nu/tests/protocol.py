@@ -36,6 +36,17 @@ try:
     assert command('options set ThreatPlies 1')[0].startswith('ThreatPlies;int;1')
     assert command('options set LateMoveReductions True')[0].startswith('LateMoveReductions;bool;True')
     assert command('options set LateMoveReductions False')[0].startswith('LateMoveReductions;bool;False')
+    assert command('options get HybridEvaluation')==['HybridEvaluation;bool;False;False']
+    assert command('options set HybridEvaluation True')==['HybridEvaluation;bool;True;False']
+    assert command('options HybridWeight 201')[0].startswith('err')
+    assert command('options HybridTerms 128')[0].startswith('err')
+    assert command('options HybridTerms 0')==['HybridTerms;int;0;63;0;127']
+    assert 'handcrafted 0 ' in command('nu-hybrid-eval')[0]
+    assert command('options HybridTerms 63')==['HybridTerms;int;63;63;0;127']
+    assert command('options HybridWeight 0')==['HybridWeight;int;0;100;0;200']
+    assert 'enabled True' in command('nu-hybrid-eval')[0]
+    assert command('options HybridWeight 100')==['HybridWeight;int;100;100;0;200']
+    command('options HybridEvaluation False')
     assert command('nu-matchdraw')==['False']
     assert command('nu-moveid '+move)[0]
     assert command('play nonsense')[0].startswith('err')

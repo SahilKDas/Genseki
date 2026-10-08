@@ -104,7 +104,9 @@ int main(int argc,char** argv) {
                     if(!std::isfinite(ms)||ms<0||ms>60000)throw std::runtime_error("invalid time budget");
                     last=search->run(state,depth,ms,threads,nullptr,search_options);std::cout<<*state.board.uhp_move_string(last.move)<<'\n';
                 }else if(command=="options") {
-                    if(argument.empty())std::cout<<"Threads;int;"<<threads<<";1;1;12\nTableMiB;int;"<<mib<<";16;1;256\nBackgroundPondering;bool;"<<(pondering?"True":"False")<<";False\nThreatPlies;int;"<<search_options.threat_plies<<";0;0;4\nLateMoveReductions;bool;"<<(search_options.lmr?"True":"False")<<";False\nProfile;bool;"<<(search_options.profile?"True":"False")<<";False\n";
+                    if(argument.empty()){std::cout<<"Threads;int;"<<threads<<";1;1;12\nTableMiB;int;"<<mib<<";16;1;256\nBackgroundPondering;bool;"<<(pondering?"True":"False")<<";False\nThreatPlies;int;"<<search_options.threat_plies<<";0;0;4\nLateMoveReductions;bool;"<<(search_options.lmr?"True":"False")<<";False\nProfile;bool;"<<(search_options.profile?"True":"False")<<";False\nHybridEvaluation;bool;"<<(search_options.hybrid?"True":"False")<<";False\nHybridWeight;int;"<<search_options.hybrid_weight<<";100;0;200\n";
+                        std::cout<<"HybridTerms;int;"<<search_options.hybrid_terms<<";63;0;127\n";
+                    }
                     else {std::istringstream a(argument);std::string name;unsigned value;a>>name;
                         if(name=="set")a>>name;
                         if(name=="get") {a>>name;
@@ -112,15 +114,19 @@ int main(int argc,char** argv) {
                             else if(name=="TableMiB")std::cout<<"TableMiB;int;"<<mib<<";16;1;256\n";
                             else if(name=="BackgroundPondering")std::cout<<"BackgroundPondering;bool;"<<(pondering?"True":"False")<<";False\n";
                             else if(name=="ThreatPlies")std::cout<<"ThreatPlies;int;"<<search_options.threat_plies<<";0;0;4\n";
+                            else if(name=="HybridEvaluation")std::cout<<"HybridEvaluation;bool;"<<(search_options.hybrid?"True":"False")<<";False\n";
+                            else if(name=="HybridWeight")std::cout<<"HybridWeight;int;"<<search_options.hybrid_weight<<";100;0;200\n";
+                            else if(name=="HybridTerms")std::cout<<"HybridTerms;int;"<<search_options.hybrid_terms<<";63;0;127\n";
                             else if(name=="LateMoveReductions"||name=="Profile")std::cout<<name<<";bool;"<<((name=="Profile"?search_options.profile:search_options.lmr)?"True":"False")<<";False\n";
                             else throw std::runtime_error("unknown option");
                             std::cout<<"ok\n"<<std::flush;continue;
                         }
-                        if(name=="BackgroundPondering"||name=="LateMoveReductions"||name=="Profile") {
+                        if(name=="BackgroundPondering"||name=="LateMoveReductions"||name=="Profile"||name=="HybridEvaluation") {
                             std::string boolean;a>>boolean;
                             if(boolean!="True"&&boolean!="False")throw std::runtime_error("invalid boolean");
                             if(name=="BackgroundPondering")pondering=boolean=="True";
                             else if(name=="Profile")search_options.profile=boolean=="True";
+                            else if(name=="HybridEvaluation")search_options.hybrid=boolean=="True";
                             else search_options.lmr=boolean=="True";
                             std::cout<<name<<";bool;"<<boolean<<";False\nok\n"<<std::flush;continue;
                         }
@@ -128,14 +134,23 @@ int main(int argc,char** argv) {
                         if(name=="Threads"&&value>=1&&value<=12)threads=value;
                         else if(name=="TableMiB"&&value>=1&&value<=256){mib=value;search=std::make_unique<nu::Search>(mib);}
                         else if(name=="ThreatPlies"&&value<=4)search_options.threat_plies=value;
+                        else if(name=="HybridWeight"&&value<=200)search_options.hybrid_weight=value;
+                        else if(name=="HybridTerms"&&value<=127)search_options.hybrid_terms=value;
                         else throw std::runtime_error("unknown option or out of range");
                         if(name=="Threads")std::cout<<"Threads;int;"<<threads<<";1;1;12\n";
                         else if(name=="TableMiB")std::cout<<"TableMiB;int;"<<mib<<";16;1;256\n";
+                        else if(name=="HybridWeight")std::cout<<"HybridWeight;int;"<<search_options.hybrid_weight<<";100;0;200\n";
+                        else if(name=="HybridTerms")std::cout<<"HybridTerms;int;"<<search_options.hybrid_terms<<";63;0;127\n";
                         else std::cout<<"ThreatPlies;int;"<<search_options.threat_plies<<";0;0;4\n";
                     }
                 }else if(command=="nu-feature-schema")std::cout<<model.feature_schema<<'\n';
                 else if(command=="nu-prior")std::cout<<state.strategic_prior(nu::Color::white)<<'\n';
                 else if(command=="nu-memory")std::cout<<"model "<<model.allocated_bytes()<<" table "<<search->allocated_table_bytes()<<'\n';
+                else if(command=="nu-hybrid-eval") {
+                    std::cout<<"base "<<state.evaluate()<<" handcrafted "<<nu::handcrafted_white(state.board,search_options.hybrid_terms)*(state.board.side_to_move()==nu::Color::white?1:-1)
+                             <<" combined "<<nu::Search::evaluate(state,search_options)<<" version 1 weight "<<search_options.hybrid_weight
+                             <<" enabled "<<(search_options.hybrid?"True":"False")<<" terms "<<search_options.hybrid_terms<<'\n';
+                }
                 else if(command=="nu-moveid") {
                     auto move=state.board.parse_uhp_move(argument);if(!move)throw std::runtime_error(move.error());
                     std::cout<<nu::move_notation(*move)<<'\n';

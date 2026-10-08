@@ -205,3 +205,33 @@ See COMBINED_INTEGRATION.md for the reconciled schema-5/schema-6 implementation,
 verified compatibility, backup locations and commit-review scope.
 See STATUS.md for measured evidence and remaining work. Device constraints in
 the root constraints file remain binding.
+
+## Independent Handcrafted + NNUE Candidate
+
+Enable the opt-in candidate with `options set HybridEvaluation True`; tune its
+percentage with `options set HybridWeight 100` (0--200). Default is disabled.
+Search combines the existing checkpoint evaluation with independently written
+position weights: enemy Queen neighbors (18), friendly surrounding tops (12),
+enemy Queen stack control (90), adjacent friendly Beetles (14), own Queen local
+open gates (4), and enemy Queen at one/two liberties (140/50).
+These weights favor the resulting positions of moves, not bonuses accumulated
+per ply. Full-width search still chooses the move; terminal/repetition results
+override heuristic scores. No new Nokamute code, weights, calls, or training
+data are used for this candidate. Existing schema-5/7 trained prior v1 remains
+unchanged inside the base evaluation; this is a separate optional addition.
+
+`nu-hybrid-eval` reports base, handcrafted, and combined side-to-move scores and
+the heuristic version. Mode/weight changes stop pondering and invalidate search
+table scores before reuse. Checkpoints, feature schemas and defaults are intact.
+The added weights are unqualified; no strength improvement is claimed.
+Verification: sixteen Nu suites pass, including symmetry, zero-weight/default
+parity, score orientation, table isolation, brute-force depth-two comparison,
+make/unmake, and terminal-win precedence. The frozen trained schema-7 model
+matched the previous executable on twelve fixed-depth roots with the mode off;
+with it enabled, twelve legal 230/250-ms replies had no timeouts (maximum
+220.773 ms). Evidence: `Nu/work/hybrid-v1/verification.json`.
+Subsequent controlled screens scored 15.5/20 against plain schema 7 and 1.5/20
+against frozen Alpha Gen 1, including one opponent timeout win in each screen.
+No natural Gen 1 win occurred. See HYBRID_STUDY.md for cost, depth, term ablations,
+forfeits, capped results and limitations. The mode remains opt-in; no retraining
+or promotion was performed.

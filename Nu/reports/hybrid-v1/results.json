@@ -1,0 +1,807 @@
+{
+  "version": 1,
+  "manifest": {
+    "version": 1,
+    "pins": {
+      "nu.exe": "19613e8559c69695dd9c86b5f88f343d91e4fb7d1c8f5faa17b6bfef4303092b",
+      "cost.exe": "baa8d00a7c0406eec3ecb215f4bd83b089d5fe0afcbd0e66570482160a536fbc",
+      "scores.exe": "c68efe5c9b39de4c561648cae50cee67acb454e9e35774cb5c4d3bf3ba01a055",
+      "model.nnue": "9267591529b13283ae94994b71c7bbf85cb9ea056d33c9a4a60c45ced6cfa27e",
+      "gen1.exe": "80d1cc75571c2e3266e0246b2cec00d3657e3ba94029e5ca4635cfe0eaf12ef6",
+      "rules.exe": "8f0616dcf73feccd349c6c5954772dd0be34e20d54a76161f43d664a665a9fdf",
+      "openings.json": "6731090dc5571faff94b9fd620b748a1a7a41323de63f9d10d9a6669dd551e25",
+      "roots.json": "992176355945acc163e9b565b56e1f3f4f1d01b9e00ddafaaf9a0387c9bef739",
+      "roots.txt": "5c1a3805ac28aa43a245404531ffa4ed3f7555d3e41e155ab773e7a22a839c57"
+    },
+    "indexes": [
+      {
+        "path": "Nu\\work\\schema7-campaign\\corpus\\final-index.sqlite",
+        "sha256": "ed121f3e29335c5dcf2e1b8bb13a0924199d21a42069fb8c23f23b8582baa952"
+      },
+      {
+        "path": "Nu\\work\\canonical-repair-v3\\index.sqlite",
+        "sha256": "36de35b126ac283ea430a37168eb9cb9b453488c0df79347082ab179d2fc7725"
+      }
+    ],
+    "fast_corpus_sha256": "1a1c298ff4549ed254184922c4496febac3061ccd30278025924c4ac469ea17e",
+    "exclusions_sha256": "386edcc667540e512c1ef1b8bde997d46c1e457312c81d7be0c52080e4456462",
+    "configs": [
+      [
+        "plain",
+        null
+      ],
+      [
+        "full",
+        63
+      ],
+      [
+        "without_neighbors",
+        62
+      ],
+      [
+        "without_friendly_surround",
+        61
+      ],
+      [
+        "without_queen_control",
+        59
+      ],
+      [
+        "without_nearby_beetle",
+        55
+      ],
+      [
+        "without_queen_exits",
+        47
+      ],
+      [
+        "without_critical_liberties",
+        31
+      ]
+    ],
+    "threads": 1,
+    "table_mib": 16,
+    "internal_ms": 230,
+    "external_ms": 250,
+    "cap": 160,
+    "promoted": false
+  },
+  "profiles": {
+    "plain": {
+      "roots": 39,
+      "legal_replies": 39,
+      "timeouts": 0,
+      "completed_depth_sum": 114,
+      "nodes_sum": 230334,
+      "maximum_latency_ms": 223.96030003437772,
+      "maximum_peak_commit_bytes": 35946496,
+      "evaluator_plus_table_bytes": 17826342,
+      "cost_median_ns": {
+        "evaluation_ns": 369700,
+        "make_evaluate_unmake_ns": 17878200,
+        "reconstruction_ns": 2613400
+      },
+      "cost_range_ns": {
+        "evaluation_ns": [
+          296500,
+          518800
+        ],
+        "make_evaluate_unmake_ns": [
+          14619600,
+          20206400
+        ]
+      }
+    },
+    "full": {
+      "roots": 39,
+      "legal_replies": 39,
+      "timeouts": 0,
+      "completed_depth_sum": 107,
+      "nodes_sum": 176739,
+      "maximum_latency_ms": 223.4389999648556,
+      "maximum_peak_commit_bytes": 35934208,
+      "evaluator_plus_table_bytes": 17826342,
+      "cost_median_ns": {
+        "evaluation_ns": 2067400,
+        "make_evaluate_unmake_ns": 21508800,
+        "reconstruction_ns": 3070000
+      },
+      "cost_range_ns": {
+        "evaluation_ns": [
+          1689700,
+          2130700
+        ],
+        "make_evaluate_unmake_ns": [
+          17224800,
+          22621400
+        ]
+      }
+    },
+    "without_neighbors": {
+      "roots": 39,
+      "legal_replies": 38,
+      "timeouts": 1,
+      "completed_depth_sum": 89,
+      "nodes_sum": 69674,
+      "maximum_latency_ms": 353.21420000400394,
+      "maximum_peak_commit_bytes": 35942400,
+      "evaluator_plus_table_bytes": 17826342,
+      "cost_median_ns": {
+        "evaluation_ns": 1746400,
+        "make_evaluate_unmake_ns": 17986100,
+        "reconstruction_ns": 2571200
+      },
+      "cost_range_ns": {
+        "evaluation_ns": [
+          1635900,
+          2242700
+        ],
+        "make_evaluate_unmake_ns": [
+          17011000,
+          23454900
+        ]
+      }
+    },
+    "without_friendly_surround": {
+      "roots": 39,
+      "legal_replies": 39,
+      "timeouts": 0,
+      "completed_depth_sum": 95,
+      "nodes_sum": 79216,
+      "maximum_latency_ms": 223.8186000031419,
+      "maximum_peak_commit_bytes": 35942400,
+      "evaluator_plus_table_bytes": 17826342,
+      "cost_median_ns": {
+        "evaluation_ns": 1810800,
+        "make_evaluate_unmake_ns": 19377200,
+        "reconstruction_ns": 2746300
+      },
+      "cost_range_ns": {
+        "evaluation_ns": [
+          1521600,
+          2023100
+        ],
+        "make_evaluate_unmake_ns": [
+          15637100,
+          21835800
+        ]
+      }
+    },
+    "without_queen_control": {
+      "roots": 39,
+      "legal_replies": 39,
+      "timeouts": 0,
+      "completed_depth_sum": 93,
+      "nodes_sum": 76830,
+      "maximum_latency_ms": 223.0318000074476,
+      "maximum_peak_commit_bytes": 35938304,
+      "evaluator_plus_table_bytes": 17826342,
+      "cost_median_ns": {
+        "evaluation_ns": 1759000,
+        "make_evaluate_unmake_ns": 18386100,
+        "reconstruction_ns": 2665100
+      },
+      "cost_range_ns": {
+        "evaluation_ns": [
+          1695500,
+          2763600
+        ],
+        "make_evaluate_unmake_ns": [
+          17088500,
+          25152300
+        ]
+      }
+    },
+    "without_nearby_beetle": {
+      "roots": 39,
+      "legal_replies": 38,
+      "timeouts": 1,
+      "completed_depth_sum": 90,
+      "nodes_sum": 73905,
+      "maximum_latency_ms": 307.7439999906346,
+      "maximum_peak_commit_bytes": 35942400,
+      "evaluator_plus_table_bytes": 17826342,
+      "cost_median_ns": {
+        "evaluation_ns": 1789000,
+        "make_evaluate_unmake_ns": 18873300,
+        "reconstruction_ns": 2695800
+      },
+      "cost_range_ns": {
+        "evaluation_ns": [
+          1529200,
+          1998700
+        ],
+        "make_evaluate_unmake_ns": [
+          15132700,
+          20732100
+        ]
+      }
+    },
+    "without_queen_exits": {
+      "roots": 39,
+      "legal_replies": 39,
+      "timeouts": 0,
+      "completed_depth_sum": 96,
+      "nodes_sum": 82629,
+      "maximum_latency_ms": 247.04250000650063,
+      "maximum_peak_commit_bytes": 35938304,
+      "evaluator_plus_table_bytes": 17826342,
+      "cost_median_ns": {
+        "evaluation_ns": 567600,
+        "make_evaluate_unmake_ns": 19477400,
+        "reconstruction_ns": 2739900
+      },
+      "cost_range_ns": {
+        "evaluation_ns": [
+          551700,
+          852200
+        ],
+        "make_evaluate_unmake_ns": [
+          17205100,
+          24287000
+        ]
+      }
+    },
+    "without_critical_liberties": {
+      "roots": 39,
+      "legal_replies": 39,
+      "timeouts": 0,
+      "completed_depth_sum": 95,
+      "nodes_sum": 83136,
+      "maximum_latency_ms": 221.96459997212514,
+      "maximum_peak_commit_bytes": 35934208,
+      "evaluator_plus_table_bytes": 17826342,
+      "cost_median_ns": {
+        "evaluation_ns": 1655000,
+        "make_evaluate_unmake_ns": 17926300,
+        "reconstruction_ns": 2461200
+      },
+      "cost_range_ns": {
+        "evaluation_ns": [
+          1553700,
+          2131200
+        ],
+        "make_evaluate_unmake_ns": [
+          16147500,
+          23364400
+        ]
+      }
+    }
+  },
+  "ablation": {
+    "index_sha256": "ed121f3e29335c5dcf2e1b8bb13a0924199d21a42069fb8c23f23b8582baa952",
+    "model_sha256": "9267591529b13283ae94994b71c7bbf85cb9ea056d33c9a4a60c45ced6cfa27e",
+    "decision_positions": 2115,
+    "position_file_sha256": "d77cdd9dc703541c8612632ebda096f1f926f14d74ed32abb74b79024499b982",
+    "metrics": {
+      "plain": {
+        "decisions": 541,
+        "regret_cp": 33.15341959334565,
+        "top_choice_agreement": 0.6284658040665434
+      },
+      "full": {
+        "decisions": 541,
+        "regret_cp": 33.05730129390018,
+        "top_choice_agreement": 0.634011090573013
+      },
+      "without_neighbors": {
+        "decisions": 541,
+        "regret_cp": 32.76894639556377,
+        "top_choice_agreement": 0.6358595194085028
+      },
+      "without_friendly_surround": {
+        "decisions": 541,
+        "regret_cp": 33.15341959334565,
+        "top_choice_agreement": 0.6377079482439926
+      },
+      "without_queen_control": {
+        "decisions": 541,
+        "regret_cp": 33.160813308687615,
+        "top_choice_agreement": 0.6321626617375231
+      },
+      "without_nearby_beetle": {
+        "decisions": 541,
+        "regret_cp": 33.367837338262476,
+        "top_choice_agreement": 0.6321626617375231
+      },
+      "without_queen_exits": {
+        "decisions": 541,
+        "regret_cp": 33.914972273567464,
+        "top_choice_agreement": 0.6284658040665434
+      },
+      "without_critical_liberties": {
+        "decisions": 541,
+        "regret_cp": 32.38447319778189,
+        "top_choice_agreement": 0.634011090573013
+      }
+    },
+    "terms": {
+      "neighbors": {
+        "prior_correlation": 0.6473801350477327,
+        "mean_abs_cp": 18.229787234042554
+      },
+      "friendly_surround": {
+        "prior_correlation": 0.3984834052206344,
+        "mean_abs_cp": 9.764539007092198
+      },
+      "queen_control": {
+        "prior_correlation": 0.15856343523504485,
+        "mean_abs_cp": 4.51063829787234
+      },
+      "nearby_beetle": {
+        "prior_correlation": 0.005478163303721957,
+        "mean_abs_cp": 2.0652482269503545
+      },
+      "queen_exits": {
+        "prior_correlation": 0.5618940975235925,
+        "mean_abs_cp": 7.667139479905438
+      },
+      "critical_liberties": {
+        "prior_correlation": 0.48526755065111093,
+        "mean_abs_cp": 22.01418439716312
+      }
+    },
+    "limitations": [
+      "Offline move regret and correlation are diagnostics, not match strength.",
+      "These held-out decisions are now development-exposed.",
+      "Prior correlation does not establish harmful double-counting."
+    ]
+  },
+  "screens": {
+    "plain": {
+      "points": 15.5,
+      "wins": 13,
+      "draws": 5,
+      "losses": 2,
+      "natural_wins": 12,
+      "terminations": {
+        "natural": 15,
+        "ply_cap": 2,
+        "repetition": 2,
+        "timeout": 1
+      },
+      "candidate_timeouts": 0,
+      "opponent_timeouts": 1,
+      "maximum_move_ms": 306.04009999660775,
+      "sha256": "119b3e4f1137f49adee32cffb64efea05242526ee4328ea88701bb9017e99e5e",
+      "games": [
+        {
+          "pair": 0,
+          "opening_seed": 460000,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 220.54800001205876,
+          "timeout_side": null
+        },
+        {
+          "pair": 0,
+          "opening_seed": 460000,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 220.47230001771823,
+          "timeout_side": null
+        },
+        {
+          "pair": 1,
+          "opening_seed": 460001,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 220.6614000024274,
+          "timeout_side": null
+        },
+        {
+          "pair": 1,
+          "opening_seed": 460001,
+          "nu_color": "black",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 221.3004999794066,
+          "timeout_side": null
+        },
+        {
+          "pair": 2,
+          "opening_seed": 460005,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 222.47979999519885,
+          "timeout_side": null
+        },
+        {
+          "pair": 2,
+          "opening_seed": 460005,
+          "nu_color": "black",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 225.2925000502728,
+          "timeout_side": null
+        },
+        {
+          "pair": 3,
+          "opening_seed": 460006,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 220.9846999612637,
+          "timeout_side": null
+        },
+        {
+          "pair": 3,
+          "opening_seed": 460006,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 223.07109995745122,
+          "timeout_side": null
+        },
+        {
+          "pair": 4,
+          "opening_seed": 460007,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 220.71939997840673,
+          "timeout_side": null
+        },
+        {
+          "pair": 4,
+          "opening_seed": 460007,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 220.8111999789253,
+          "timeout_side": null
+        },
+        {
+          "pair": 5,
+          "opening_seed": 460008,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 220.97319999011233,
+          "timeout_side": null
+        },
+        {
+          "pair": 5,
+          "opening_seed": 460008,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 221.2197000044398,
+          "timeout_side": null
+        },
+        {
+          "pair": 6,
+          "opening_seed": 460009,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 220.76370002469048,
+          "timeout_side": null
+        },
+        {
+          "pair": 6,
+          "opening_seed": 460009,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 221.26209997804835,
+          "timeout_side": null
+        },
+        {
+          "pair": 7,
+          "opening_seed": 460010,
+          "nu_color": "white",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "natural",
+          "max_move_ms": 221.2643999955617,
+          "timeout_side": null
+        },
+        {
+          "pair": 7,
+          "opening_seed": 460010,
+          "nu_color": "black",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "repetition",
+          "max_move_ms": 224.03640003176406,
+          "timeout_side": null
+        },
+        {
+          "pair": 8,
+          "opening_seed": 460011,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 221.44930000649765,
+          "timeout_side": null
+        },
+        {
+          "pair": 8,
+          "opening_seed": 460011,
+          "nu_color": "black",
+          "score": 1.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 221.6593999764882,
+          "timeout_side": null
+        },
+        {
+          "pair": 9,
+          "opening_seed": 460012,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "Forfeit",
+          "termination": "timeout",
+          "max_move_ms": 306.04009999660775,
+          "timeout_side": "Opponent"
+        },
+        {
+          "pair": 9,
+          "opening_seed": 460012,
+          "nu_color": "black",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "repetition",
+          "max_move_ms": 221.7333999578841,
+          "timeout_side": null
+        }
+      ]
+    },
+    "gen1": {
+      "points": 1.5,
+      "wins": 1,
+      "draws": 1,
+      "losses": 18,
+      "natural_wins": 0,
+      "terminations": {
+        "natural": 18,
+        "ply_cap": 1,
+        "timeout": 1
+      },
+      "candidate_timeouts": 0,
+      "opponent_timeouts": 1,
+      "maximum_move_ms": 253.5065000411123,
+      "sha256": "ce92294294bc107c5856b252d03764dd4175ee7731012ba17c38a45b79c06166",
+      "games": [
+        {
+          "pair": 0,
+          "opening_seed": 460000,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.60629999963567,
+          "timeout_side": null
+        },
+        {
+          "pair": 0,
+          "opening_seed": 460000,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 233.36450004717335,
+          "timeout_side": null
+        },
+        {
+          "pair": 1,
+          "opening_seed": 460001,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.60479998821393,
+          "timeout_side": null
+        },
+        {
+          "pair": 1,
+          "opening_seed": 460001,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.46279995469376,
+          "timeout_side": null
+        },
+        {
+          "pair": 2,
+          "opening_seed": 460005,
+          "nu_color": "white",
+          "score": 0.5,
+          "result": "Draw",
+          "termination": "ply_cap",
+          "max_move_ms": 230.6640999740921,
+          "timeout_side": null
+        },
+        {
+          "pair": 2,
+          "opening_seed": 460005,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.94109998783097,
+          "timeout_side": null
+        },
+        {
+          "pair": 3,
+          "opening_seed": 460006,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 234.5614000223577,
+          "timeout_side": null
+        },
+        {
+          "pair": 3,
+          "opening_seed": 460006,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.68949999287724,
+          "timeout_side": null
+        },
+        {
+          "pair": 4,
+          "opening_seed": 460007,
+          "nu_color": "white",
+          "score": 1.0,
+          "result": "Forfeit",
+          "termination": "timeout",
+          "max_move_ms": 253.5065000411123,
+          "timeout_side": "Opponent"
+        },
+        {
+          "pair": 4,
+          "opening_seed": 460007,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 233.49670000607148,
+          "timeout_side": null
+        },
+        {
+          "pair": 5,
+          "opening_seed": 460008,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.46140000224113,
+          "timeout_side": null
+        },
+        {
+          "pair": 5,
+          "opening_seed": 460008,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.56870000436902,
+          "timeout_side": null
+        },
+        {
+          "pair": 6,
+          "opening_seed": 460009,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.5342000327073,
+          "timeout_side": null
+        },
+        {
+          "pair": 6,
+          "opening_seed": 460009,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.82900000736117,
+          "timeout_side": null
+        },
+        {
+          "pair": 7,
+          "opening_seed": 460010,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.88500002631918,
+          "timeout_side": null
+        },
+        {
+          "pair": 7,
+          "opening_seed": 460010,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.6135999970138,
+          "timeout_side": null
+        },
+        {
+          "pair": 8,
+          "opening_seed": 460011,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.43170000892133,
+          "timeout_side": null
+        },
+        {
+          "pair": 8,
+          "opening_seed": 460011,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 233.12980000628158,
+          "timeout_side": null
+        },
+        {
+          "pair": 9,
+          "opening_seed": 460012,
+          "nu_color": "white",
+          "score": 0.0,
+          "result": "BlackWins",
+          "termination": "natural",
+          "max_move_ms": 230.4885999765247,
+          "timeout_side": null
+        },
+        {
+          "pair": 9,
+          "opening_seed": 460012,
+          "nu_color": "black",
+          "score": 0.0,
+          "result": "WhiteWins",
+          "termination": "natural",
+          "max_move_ms": 230.4901000461541,
+          "timeout_side": null
+        }
+      ]
+    }
+  },
+  "default_enabled": false,
+  "promoted": false,
+  "qualification_run": false,
+  "input_hashes": {
+    "manifest.json": "5d5307b46489247998114d14aeacb566c1443d8e0078856a9e6da6c6847c3ca1",
+    "benchmark.json": "db6d6a34e7bc81a25488d35b6d0330a683574024688e5ba46c83a6a5a047ba47",
+    "balanced-cost.json": "58e140d9c96b8745b76965fe39e76d483f175ebbf767303eafe73042d2e440ac",
+    "ablation.json": "dd7fdd69a1e2c4b41e71798e3deaed1ee62c4e7cc5c01df35cc88a2402b8c57c"
+  },
+  "limitations": [
+    "Small development screens do not establish production qualification.",
+    "Every timeout counts as a loss, including opponent forfeits.",
+    "No natural win against Alpha Gen 1 occurred.",
+    "Ablations use existing held-out Gen 1-labeled corpus decisions, now development-exposed.",
+    "Offline regret/correlation do not establish ablated match strength.",
+    "Search profiles were sequential; balanced cost trials used five shuffled rounds.",
+    "Do not compare this Gen 1 score causally with earlier screens on different openings."
+  ]
+}
