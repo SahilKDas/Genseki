@@ -22,6 +22,9 @@ struct Fact {
 struct SearchAnswer {
     std::string move;
     int score = 0; // Side to move, not a probability or a calibrated rating.
+    std::optional<unsigned> completed_depth;
+    std::optional<std::uint64_t> nodes;
+    std::optional<double> elapsed_ms;
 };
 
 struct Entry {

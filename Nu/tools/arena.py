@@ -126,4 +126,6 @@ def main():
             atomic_json(args.output,report)
             print(f'{len(rows)}/{args.games}: {termination}, Nu score={score}',flush=True)
 
-if __name__ == '__main__': main()
+if __name__ == '__main__':
+    from research_job import run
+    run(main)

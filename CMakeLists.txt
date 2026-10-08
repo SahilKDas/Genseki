@@ -67,12 +67,28 @@ if(WIN32)
     target_link_libraries(genseki_review_transport_tests PRIVATE genseki_review_core)
     add_test(NAME genseki_review_transport COMMAND genseki_review_transport_tests $<TARGET_FILE:genseki_review_fake_alpha>)
     set_tests_properties(genseki_review_transport PROPERTIES TIMEOUT 15 RUN_SERIAL TRUE)
+    add_executable(genseki_review_lock_helper tests/review_lock_helper.cpp)
+    target_link_libraries(genseki_review_lock_helper PRIVATE genseki_review_core)
+    target_compile_definitions(genseki_review_lock_helper PRIVATE NOMINMAX WIN32_LEAN_AND_MEAN)
+    if(Python3_Interpreter_FOUND)
+        add_test(NAME genseki_review_lock_tests
+            COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/review_lock_tests.py
+                $<TARGET_FILE:genseki_review_lock_helper>)
+        set_tests_properties(genseki_review_lock_tests PROPERTIES TIMEOUT 30 RUN_SERIAL TRUE)
+    endif()
 endif()
 if(Python3_Interpreter_FOUND)
     add_test(NAME genseki_transport_tests
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/transport_tests.py)
     add_test(NAME genseki_resource_tests
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/resource_tests.py)
+    add_test(NAME genseki_artifact_tests
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/artifact_tests.py)
+    add_test(NAME genseki_tactical_evidence_tests
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Alpha/tests/tactical_evidence.py)
+    set_tests_properties(genseki_transport_tests genseki_resource_tests
+        genseki_artifact_tests genseki_tactical_evidence_tests
+        PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
     add_test(NAME genseki_gauntlet_tests
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/gauntlet_tests.py)
     add_test(NAME genseki_default_engine
@@ -110,6 +126,11 @@ if(WIN32)
     set_target_properties(genseki_gui PROPERTIES CXX_SCAN_FOR_MODULES OFF)
     target_link_libraries(genseki_gui PRIVATE gdi32 user32 comdlg32 comctl32 shell32 ole32 oleaut32 msimg32 winmm genseki_review_core)
     add_dependencies(genseki_gui genseki genseki_raster)
+    add_test(NAME genseki_gui_state
+        COMMAND genseki_spectator --check-gui-state ${CMAKE_CURRENT_SOURCE_DIR}/tests/review_completed.uhp)
+    set_tests_properties(genseki_gui_state PROPERTIES TIMEOUT 15 RUN_SERIAL TRUE)
+    add_test(NAME genseki_gui_layout COMMAND genseki_spectator --check-gui-layout)
+    set_tests_properties(genseki_gui_layout PROPERTIES TIMEOUT 15 RUN_SERIAL TRUE)
     # Build the same native board as a spectator without rebuilding Alpha.
     add_executable(genseki_spectator WIN32 src/gui/win32_gui.cpp src/gui/assets/icons.rc)
     target_include_directories(genseki_spectator PRIVATE src/gui/assets)

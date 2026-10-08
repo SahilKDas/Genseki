@@ -22,6 +22,13 @@ pub trait Evaluator {
     /// move next.
     fn evaluate(&self, s: &<Self::G as Game>::S) -> Evaluation;
 
+    /// Optional experimental ordering; true means a completely proven unique
+    /// immediate defense. Must preserve the move multiset and obey cancellation.
+    fn tactical_advice(
+        &self, _state: &<Self::G as Game>::S, _moves: &mut [<Self::G as Game>::M],
+        _order: bool, _stop: &dyn Fn() -> bool,
+    ) -> bool { false }
+
     /// Optional interface to support strategies using quiescence search.
     ///
     /// A "noisy" move is a threatening move that requires a response.

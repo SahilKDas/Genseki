@@ -1,6 +1,7 @@
 """Gauntlet orchestration tests using deterministic UHP peers, no search jobs."""
 from pathlib import Path
 import sys
+import json
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -22,13 +23,18 @@ class Peer:
         self.moves = []
         self.closed = False
         self.commands = []
+        self.options = {'NumThreads': '1', 'BackgroundPondering': 'False', 'Evaluator': 'gen1'}
         self.instances.append(self)
 
     def command(self, text, timeout=5):
         self.commands.append(text)
         if text == 'options':
-            return ['NumThreads;int;1;1;1;12', 'BackgroundPondering;bool;False;False', 'ok'], 0
+            return [f'NumThreads;int;{self.options["NumThreads"]};1;1;12',
+                    f'BackgroundPondering;bool;{self.options["BackgroundPondering"]};False',
+                    f'Evaluator;string;{self.options["Evaluator"]};gen1;gen1;neural', 'ok'], 0
         if text.startswith('options '):
+            _, _, name, value = text.split(' ', 3)
+            self.options[name] = value
             return ['ok'], 0
         if text == 'newgame Base':
             return [g.INITIAL, 'ok'], 0
@@ -106,7 +112,44 @@ class GauntletTests(unittest.TestCase):
     def test_options_cannot_override_thread_and_pondering_limits(self):
         peer = Peer(['a'])
         g.configure(peer, self.args, ['NumThreads 99', 'BackgroundPondering True'], self.guard)
-        self.assertEqual(peer.commands[-2:], ['options set NumThreads 1', 'options set BackgroundPondering False'])
+        self.assertEqual(peer.commands[-3:], ['options set NumThreads 1',
+                         'options set BackgroundPondering False', 'options'])
+
+    def test_ignored_options_are_rejected(self):
+        peer = Peer(['a'])
+        original = peer.command
+        def ignores(text, timeout=5):
+            if text == 'options set NumThreads 2':
+                return ['ok'], 0
+            return original(text, timeout)
+        peer.command = ignores
+        self.args.threads = 2
+        with self.assertRaisesRegex(RuntimeError, 'effective option mismatch'):
+            g.configure(peer, self.args, [], self.guard)
+
+    def test_manifest_mismatch_rejects_before_starting_peers(self):
+        path = self.output/'bad-manifest.json'
+        path.write_text(json.dumps({'schema_version': 999}), encoding='utf-8')
+        self.args.a_manifest = path
+        with self.assertRaisesRegex(RuntimeError, 'manifest rejected'):
+            g.play_game(self.args, 0, self.view, self.guard, Peer)
+        self.assertEqual(Peer.instances, [])
+
+    def test_saved_metadata_has_no_host_paths(self):
+        path = self.output/'report.json'
+        g.save(path, {'engine': g.ROOT/'build/engine.exe',
+                      'error': 'C:/Users/private/weights.nnue unavailable'})
+        value = json.loads(path.read_text())
+        self.assertEqual(value['engine'], 'build/engine.exe')
+        self.assertNotIn('Users', value['error'])
+
+    def test_manifest_checks_observed_default_options(self):
+        self.args.a_manifest = self.output/'frozen-manifest.json'
+        manifest = {'effective_settings': {'verified': {'Evaluator': 'gen1'}}}
+        with patch.object(g, 'load_manifest', return_value=manifest):
+            row = g.play_game(self.args, 0, self.view, self.guard, Peer)
+        self.assertEqual(row['effective_settings']['a']['observed']['Evaluator'], 'gen1')
+        self.assertNotIn('Evaluator', row['effective_settings']['a']['requested'])
 
 
 if __name__ == '__main__':

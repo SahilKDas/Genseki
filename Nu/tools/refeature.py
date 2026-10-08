@@ -32,4 +32,6 @@ def main():
                     row.pop('alternatives',None)
                 output.write(json.dumps(row)+'\n')
     finally:engine.close()
-if __name__=='__main__':main()
+if __name__=='__main__':
+    from research_job import run
+    run(main)

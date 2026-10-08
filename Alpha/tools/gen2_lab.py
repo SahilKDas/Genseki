@@ -255,6 +255,7 @@ def main():
     if args.threads!=1: p.error('paired diagnostic search is serial; use one thread for all modes')
     jobs=contextlib.ExitStack()
     try:
+        jobs.enter_context(g.job_lock(g.team_job_path(g.ROOT)))
         jobs.enter_context(g.job_lock(g.heavy_job_path(g.ROOT)))
         jobs.enter_context(g.job_lock(g.WORK/'stage.lock'))
         if os.name=='nt':

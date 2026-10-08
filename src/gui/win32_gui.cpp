@@ -200,6 +200,8 @@ std::optional<Hex> direction_from_marker(char marker, bool after) {
 
 class EngineProcess {
 public:
+    bool connected() const { return in_ && out_ && process_; }
+
     bool start(const std::filesystem::path& path) {
         SECURITY_ATTRIBUTES sa{sizeof(sa), nullptr, TRUE};
         HANDLE child_stdout_read = nullptr;
@@ -310,6 +312,7 @@ private:
 
     std::vector<std::string> read_until_ok() {
         std::vector<std::string> lines;
+        std::size_t bytes=0;
         const auto deadline=GetTickCount64()+5000;
         for (;;) {
             auto line = read_line(deadline);
@@ -317,6 +320,11 @@ private:
                 lines.push_back("err Engine response deadline or pipe failure; restart the engine");
                 stop();
                 break;
+            }
+            bytes+=line->size()+1;
+            if (bytes>1024*1024 || lines.size()>=256) {
+                stop();
+                return {"err Engine output limit exceeded; restart the engine"};
             }
             if (*line == "ok") break;
             if(!line->empty())lines.push_back(*line);
@@ -363,15 +371,13 @@ public:
     const std::string& game_string() const { return game_string_; }
 
     std::vector<Piece> reserve(Color color) const {
-        std::array<int, 5> total{1, 2, 2, 3, 3};
-        for (const auto& stack : stacks_) {
-            for (const auto& piece : stack.pieces) {
-                if (piece.color == color) --total[static_cast<int>(piece.bug)];
-            }
-        }
+        constexpr std::array<int, 5> total{1, 2, 2, 3, 3};
         std::vector<Piece> out;
         for (int bug = 0; bug < 5; ++bug) {
-            for (int i = 0; i < total[bug]; ++i) out.push_back(Piece{color, static_cast<Bug>(bug), i});
+            for (int i = 0; i < total[bug]; ++i) {
+                Piece piece{color, static_cast<Bug>(bug), i};
+                if (!find_piece(piece)) out.push_back(piece);
+            }
         }
         return out;
     }
@@ -478,6 +484,94 @@ std::optional<SpectatorFrame> read_spectator_frame(const std::filesystem::path& 
 
 class App {
 public:
+    static int gui_layout_smoke(HINSTANCE instance) {
+        App app;
+        app.hwnd_=CreateWindowExW(0,L"STATIC",L"GUI layout test",WS_OVERLAPPEDWINDOW,
+                                 0,0,1220,780,nullptr,nullptr,instance,nullptr);
+        if (!app.hwnd_) return 40;
+        HFONT font=CreateFontW(-16,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,
+            OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,CLEARTYPE_QUALITY,DEFAULT_PITCH,L"Nunito");
+        HDC dc=GetDC(app.hwnd_);
+        if (!font || !dc) {
+            if (font) DeleteObject(font);
+            if (dc) ReleaseDC(app.hwnd_,dc);
+            DestroyWindow(app.hwnd_);return 40;
+        }
+        const auto old_font=SelectObject(dc,font);
+        int result=0;
+        for (int width : {1000,1220,1600}) {
+            RECT requested{0,0,width,720};
+            AdjustWindowRectEx(&requested,WS_OVERLAPPEDWINDOW,FALSE,0);
+            SetWindowPos(app.hwnd_,nullptr,0,0,requested.right-requested.left,
+                         requested.bottom-requested.top,SWP_NOMOVE|SWP_NOZORDER|SWP_NOACTIVATE);
+            app.layout();
+            for (std::size_t i=0;i<app.buttons_.size();++i) {
+                const auto& button=app.buttons_[i];
+                SIZE text{};
+                GetTextExtentPoint32W(dc,button.text.c_str(),int(button.text.size()),&text);
+                if (button.rect.left<0 || button.rect.right>width || button.rect.bottom>app.toolbar_.bottom
+                    || text.cx>button.rect.right-button.rect.left-8) result=41;
+                for (std::size_t j=i+1;j<app.buttons_.size();++j) {
+                    RECT overlap{};
+                    if (IntersectRect(&overlap,&button.rect,&app.buttons_[j].rect)) result=42;
+                }
+            }
+        }
+        SelectObject(dc,old_font);DeleteObject(font);ReleaseDC(app.hwnd_,dc);
+        DestroyWindow(app.hwnd_);
+        return result;
+    }
+
+    static int gui_state_smoke(const std::filesystem::path& replay_file) {
+        App app;
+        if (app.button_enabled(102) || app.button_enabled(114)) return 30;
+        const auto check_inventory = [](const MirrorBoard& board) {
+            constexpr std::array<int, 5> totals{1,2,2,3,3};
+            for (Color color : {Color::white, Color::black}) {
+                const auto reserve = board.reserve(color);
+                for (int bug=0;bug<5;++bug) for (int id=0;id<totals[bug];++id) {
+                    const Piece piece{color,static_cast<Bug>(bug),id};
+                    const auto count=std::count(reserve.begin(),reserve.end(),piece);
+                    if (count != (board.find_piece(piece)?0:1)) return false;
+                }
+            }
+            return true;
+        };
+        std::wstring error;
+        const std::string opening="Base;InProgress;White[3];wA1;bA1 wA1-;wS1 -wA1;bS1 bA1-";
+        if (!genseki::review::prepare(opening) || !app.board_.load_game_string(opening,error)) return 31;
+        if (!check_inventory(app.board_) || !app.button_enabled(102) || app.button_enabled(114)) return 32;
+        app.imported_game_=true;
+        if (!app.button_enabled(114)) return 33;
+        app.thinking_=true;
+        if (app.button_enabled(101) || app.button_enabled(102) || app.button_enabled(114)
+            || !app.button_enabled(111) || !app.button_enabled(112) || !app.button_enabled(113)) return 34;
+        app.thinking_=false;
+        app.dialog_open_=true;
+        if (app.button_enabled(101) || app.button_enabled(103) || app.button_enabled(114)) return 39;
+        app.dialog_open_=false;
+        std::ifstream input(replay_file);
+        std::string replay(std::istreambuf_iterator<char>(input),{});
+        while (!replay.empty() && (replay.back()=='\n' || replay.back()=='\r')) replay.pop_back();
+        if (!input || !genseki::review::prepare(replay) || !app.board_.load_game_string(replay,error)) return 35;
+        app.imported_game_=false;
+        if (!check_inventory(app.board_) || !app.button_enabled(114)) return 36;
+        app.hwnd_=CreateWindowExW(0,L"STATIC",L"History wheel test",WS_OVERLAPPEDWINDOW,
+                                 0,0,400,300,nullptr,nullptr,GetModuleHandleW(nullptr),nullptr);
+        if (!app.hwnd_) return 37;
+        app.history_rect_={0,0,200,60};
+        POINT pointer{20,20};ClientToScreen(app.hwnd_,&pointer);
+        const double original_size=app.size_;
+        app.on_wheel(pointer.x,pointer.y,WHEEL_DELTA);
+        const int expected=std::min(3,std::max(0,int(app.board_.history().size())-3));
+        bool scroll_ok=app.history_offset_==expected && app.size_==original_size;
+        app.on_wheel(pointer.x,pointer.y,-WHEEL_DELTA);
+        scroll_ok=scroll_ok && app.history_offset_==0 && app.size_==original_size;
+        DestroyWindow(app.hwnd_);
+        if (!scroll_ok) return 38;
+        return 0;
+    }
+
     static int review_flow_smoke(HINSTANCE instance,const std::filesystem::path& engine,const std::filesystem::path& replay_file,const std::filesystem::path& output){
         App app;app.instance_=instance;app.engine_path_=engine;app.review_testing_hidden_=true;
         app.hwnd_=CreateWindowExW(0,L"STATIC",L"Review flow test",WS_OVERLAPPEDWINDOW,0,0,900,640,nullptr,nullptr,instance,nullptr);
@@ -720,13 +814,23 @@ private:
     }
 
     void send_newgame(const std::string& game) {
+        if (!engine_.connected() && !engine_.start(engine_path_)) {
+            status_=L"Could not start Alpha. The current game has been kept.";
+            InvalidateRect(hwnd_,nullptr,FALSE);
+            return;
+        }
         imported_game_=game!="Base";
+        history_offset_=0;
+        history_wheel_delta_=0;
         audio_cues_.clear();
         animation_.reset();
         selected_.reset();
         legal_.clear();
         auto lines = engine_.command("newgame " + game);
         consume_engine_response(lines);
+        animation_.reset();
+        audio_cues_.clear();
+        audio_.silence();
         refresh_legal();
         white_elapsed_ = black_elapsed_ = std::chrono::seconds{0};
         last_tick_ = std::chrono::steady_clock::now();
@@ -748,6 +852,8 @@ private:
                 if (!board_.load_game_string(line, error)) status_ = error;
                 else {
                     status_ = L"Position loaded";
+                    if (history_offset_>0 && board_.history().size()>previous)
+                        history_offset_+=int(board_.history().size()-previous);
                     if(board_.history().size()==previous+1&&!board_.history().empty()) {
                         auto move=board_.history().back();
                         if(move.kind!=MoveKind::pass) {
@@ -825,6 +931,7 @@ private:
 
     void maybe_engine_move() {
         update_clock();
+        if (dialog_open_) return;
         if(review_window_&&review_window_->active())return;
         if(reply_.valid()) {
             if(reply_.wait_for(std::chrono::seconds(0))!=std::future_status::ready)return;
@@ -835,7 +942,7 @@ private:
         }
         if(animation_&&std::chrono::duration<double>(std::chrono::steady_clock::now()-animation_->started).count()<.32)return;
         const Mode mode = board_.side() == Color::white ? white_mode_ : black_mode_;
-        if (mode == Mode::engine && !thinking_
+        if (mode == Mode::engine && !thinking_ && engine_.connected()
             && (board_.result() == L"InProgress" || board_.result() == L"NotStarted")) {
             thinking_ = true;
             status_ = L"Engine thinking (" + bot_name() + L")";
@@ -876,10 +983,11 @@ private:
     void on_left_down(int x, int y) {
         for (const auto& button : buttons_) {
             if (PtInRect(&button.rect, {x, y})) {
-                SendMessageW(hwnd_, WM_COMMAND, button.id, 0);
+                if (button_enabled(button.id)) SendMessageW(hwnd_, WM_COMMAND, button.id, 0);
                 return;
             }
         }
+        if (review_window_ && review_window_->active()) return;
         if(!spectator_path_.empty()) {
             if(x<panel_rect_.left&&y>=board_rect_.top){
                 dragging_=true;last_mouse_={x,y};SetCapture(hwnd_);
@@ -946,6 +1054,17 @@ private:
     void on_wheel(int screen_x, int screen_y, int delta) {
         POINT client{screen_x, screen_y};
         ScreenToClient(hwnd_, &client);
+        if (PtInRect(&history_rect_,client)) {
+            const int visible=std::max(1,int(history_rect_.bottom-history_rect_.top)/20);
+            const int maximum=std::max(0,int(board_.history().size())-visible);
+            history_wheel_delta_+=delta;
+            const int steps=history_wheel_delta_/WHEEL_DELTA;
+            history_wheel_delta_%=WHEEL_DELTA;
+            history_offset_=std::clamp(history_offset_+steps*3,0,maximum);
+            InvalidateRect(hwnd_,nullptr,FALSE);
+            return;
+        }
+        if (!PtInRect(&board_rect_,client) || !delta) return;
         const double old = size_;
         size_ = std::clamp(size_ * (delta > 0 ? 1.12 : 0.89), 18.0, 88.0);
         const double scale = size_ / old;
@@ -954,9 +1073,19 @@ private:
         InvalidateRect(hwnd_, nullptr, FALSE);
     }
 
+    bool button_enabled(int id) const {
+        if (dialog_open_) return false;
+        if (!spectator_path_.empty()) return id == 111 || id == 112 || id == 113;
+        if (review_window_ && review_window_->active()) return false;
+        if (thinking_) return id == 111 || id == 112 || id == 113;
+        if (id == 102) return !board_.history().empty();
+        if (id == 114) return !board_.history().empty() &&
+            (imported_game_ || (board_.result() != L"InProgress" && board_.result() != L"NotStarted"));
+        return true;
+    }
+
     void on_command(int id) {
-        if(!spectator_path_.empty()&&id!=111&&id!=112&&id!=113)return;
-        if(thinking_&&id!=112&&id!=113)return;
+        if (!button_enabled(id)) return;
         if(id==114){
             if(board_.history().empty()||(!imported_game_&&(board_.result()==L"InProgress"||board_.result()==L"NotStarted"))){status_=L"Finish the game or load a replay to review it.";InvalidateRect(hwnd_,nullptr,FALSE);return;}
             update_clock();animation_.reset();audio_cues_.clear();audio_.silence();
@@ -1003,7 +1132,10 @@ private:
     }
 
     void load_game_dialog() {
+        // A modal dialog pumps WM_TIMER: do not start a competing engine request.
+        dialog_open_=true;
         const int result = MessageBoxW(hwnd_, L"Load the Hive game from clipboard text?", L"Load game", MB_OKCANCEL);
+        dialog_open_=false;
         if (result != IDOK) return;
         std::wstring replay;
         if (OpenClipboard(hwnd_)) {
@@ -1083,12 +1215,14 @@ private:
                 ||(button.id==109&&white_mode_==Mode::engine&&black_mode_==Mode::human)
                 ||(button.id==110&&white_mode_==Mode::human&&black_mode_==Mode::human)
                 ||(button.id==107&&white_mode_==Mode::engine&&black_mode_==Mode::engine);
-            double hover=hover_amount(button.id,button.rect);
-            HBRUSH fill=CreateSolidBrush(active?RGB(int(142+hover*26),int(70+hover*17),int(37+hover*10)):RGB(int(66+hover*29),int(44+hover*18),int(33+hover*10)));
+            const bool enabled=button_enabled(button.id);
+            SetTextColor(hdc,enabled?RGB(246,225,199):RGB(132,113,99));
+            double hover=enabled?hover_amount(button.id,button.rect):0.;
+            HBRUSH fill=CreateSolidBrush(!enabled?RGB(42,32,27):active?RGB(int(142+hover*26),int(70+hover*17),int(37+hover*10)):RGB(int(66+hover*29),int(44+hover*18),int(33+hover*10)));
             auto old=SelectObject(hdc,fill);
             RECT visual=button.rect;
             int expansion=int(std::lround(hover*2));InflateRect(&visual,expansion,expansion);
-            HPEN border=CreatePen(PS_SOLID,1,RGB(int(125+hover*50),int(83+hover*42),int(51+hover*30)));
+            HPEN border=CreatePen(PS_SOLID,1,!enabled?RGB(68,53,44):RGB(int(125+hover*50),int(83+hover*42),int(51+hover*30)));
             auto old_pen=SelectObject(hdc,border);
             RoundRect(hdc,visual.left,visual.top,visual.right,visual.bottom,6,6);
             SelectObject(hdc,old_pen);DeleteObject(border);
@@ -1213,13 +1347,20 @@ private:
         y = draw_reserve(hdc, y, Color::black);
         if(spectator_path_.empty()){draw_line(hdc, 10, y, L"Legal moves: " + std::to_wstring(legal_.size())); y += 24;}
         draw_line(hdc, 10, y, L"Move history"); y += 22;
-        RECT hist{panel_rect_.left + 10, y, panel_rect_.right - 10, panel_rect_.bottom - 10};
+        history_rect_={panel_rect_.left + 10, y, panel_rect_.right - 10,
+                       std::max<LONG>(y,panel_rect_.bottom - 10)};
+        RECT hist=history_rect_;
         std::wstring text;
-        int n = 1;
-        for (const auto& move : board_.history()) {
-            text += std::to_wstring(n++) + L". " + move.uhp + L"\r\n";
+        const int visible=std::max(1,int(hist.bottom-hist.top)/20);
+        const int total=int(board_.history().size());
+        history_offset_=std::clamp(history_offset_,0,std::max(0,total-visible));
+        const int first=std::max(0,total-visible-history_offset_);
+        for (int index=first;index<std::min(total,first+visible);++index) {
+            RECT row{hist.left,hist.top+(index-first)*20,hist.right,
+                     std::min(hist.bottom,hist.top+(index-first+1)*20)};
+            text=std::to_wstring(index+1)+L". "+board_.history()[index].uhp;
+            DrawTextW(hdc,text.c_str(),-1,&row,DT_LEFT|DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS|DT_NOPREFIX);
         }
-        DrawTextW(hdc, text.c_str(), -1, &hist, DT_LEFT | DT_TOP | DT_NOPREFIX);
     }
 
     std::wstring clock_text(std::chrono::steady_clock::duration elapsed) const {
@@ -1310,10 +1451,14 @@ private:
     Mode white_mode_ = Mode::human;
     Mode black_mode_ = Mode::human;
     bool thinking_ = false;
+    bool dialog_open_=false;
     bool motion_=true,sound_=true;
     AudioPlayer audio_;
     bool easing_=false;
     bool dragging_ = false;
+    RECT history_rect_{};
+    int history_offset_=0;
+    int history_wheel_delta_=0;
     POINT last_mouse_{};
     double size_ = 38.0;
     double origin_x_ = 390.0;
@@ -1337,6 +1482,14 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR command_line, int show)
     (void)command_line;
     int argc = 0;
     wchar_t** argv = CommandLineToArgvW(GetCommandLineW(), &argc);
+    if(argv&&argc==2&&std::wstring_view(argv[1])==L"--check-gui-layout"){
+        const int result=nunito().ready()?App::gui_layout_smoke(instance):43;
+        LocalFree(argv);if(SUCCEEDED(com))CoUninitialize();return result;
+    }
+    if(argv&&argc==3&&std::wstring_view(argv[1])==L"--check-gui-state"){
+        const int result=App::gui_state_smoke(argv[2]);
+        LocalFree(argv);if(SUCCEEDED(com))CoUninitialize();return result;
+    }
     if(argv&&argc==5&&std::wstring_view(argv[1])==L"--check-review-flow"){
         bool ready=nunito().ready()&&tiny_raster().ready();
         int result=ready?App::review_flow_smoke(instance,argv[2],argv[3],argv[4]):10;

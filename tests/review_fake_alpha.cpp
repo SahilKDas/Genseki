@@ -14,7 +14,7 @@ int main() {
     while(std::getline(std::cin,command)) {
         if(command.starts_with("options get ")) {
             auto name=command.substr(12);
-            auto value=name=="NumThreads"?"1":name=="TableSizeMiB"?"32":"False";
+            auto value=name=="NumThreads"?"1":name=="TableSizeMiB"?"32":name=="Evaluator"?"gen1":"False";
             std::cout<<name<<";string;"<<(mode=="options"?"wrong":value)<<"\n";
         }else if(command.starts_with("newgame ")) {
             std::cout<<command.substr(8)<<'\n';

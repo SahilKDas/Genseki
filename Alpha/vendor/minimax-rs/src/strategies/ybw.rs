@@ -110,7 +110,7 @@ where
     }
 
     fn null_move_check(
-        &self, s: &mut <E::G as Game>::S, depth: u8, beta: Evaluation,
+        &self, s: &mut <E::G as Game>::S, depth: u8, beta: Evaluation, extension_budget: u8,
     ) -> Option<Evaluation> {
         if let (Some(depth_reduction), Some(null_move)) =
             (self.opts.null_move_depth, E::G::null_move(s))
@@ -123,7 +123,7 @@ where
                 // If we just pass and let the opponent play this position (at reduced depth),
                 let mut nulled = AppliedMove::<E::G>::new(s, null_move);
                 let value =
-                    -self.negamax(&mut nulled, None, depth - depth_reduction, -beta, -beta + 1)?;
+                    -self.negamax_inner(&mut nulled, None, depth - depth_reduction, -beta, -beta + 1, extension_budget)?;
                 // is the result still so good that we shouldn't bother with a full search?
                 if value >= beta {
                     return Some(value);
@@ -173,7 +173,20 @@ where
     // Recursively compute negamax on the game state. Returns None if it hits the timeout.
     fn negamax(
         &self, s: &mut <E::G as Game>::S, prev_move: Option<<E::G as Game>::M>, depth: u8,
-        mut alpha: Evaluation, mut beta: Evaluation,
+        alpha: Evaluation, beta: Evaluation,
+    ) -> Option<Evaluation>
+    where
+        <E::G as Game>::S: Clone + Send + Sync,
+        <E::G as Game>::M: Copy + Eq + Send + Sync,
+        E: Sync,
+    {
+        self.negamax_inner(s, prev_move, depth, alpha, beta,
+            if self.opts.forced_defense_extensions { 2 } else { 0 })
+    }
+
+    fn negamax_inner(
+        &self, s: &mut <E::G as Game>::S, prev_move: Option<<E::G as Game>::M>, mut depth: u8,
+        mut alpha: Evaluation, mut beta: Evaluation, mut extension_budget: u8,
     ) -> Option<Evaluation>
     where
         <E::G as Game>::S: Clone + Send + Sync,
@@ -198,11 +211,13 @@ where
         let alpha_orig = alpha;
         let hash = E::G::zobrist_hash(s);
         let mut good_move = None;
-        if let Some(value) = self.table.check(hash, depth, &mut good_move, &mut alpha, &mut beta) {
+        if self.opts.forced_defense_extensions {
+            good_move = self.table.lookup(hash).and_then(|entry| entry.best_move);
+        } else if let Some(value) = self.table.check(hash, depth, &mut good_move, &mut alpha, &mut beta) {
             return Some(value);
         }
 
-        if self.null_move_check(s, depth, beta)? >= beta {
+        if self.null_move_check(s, depth, beta, extension_budget)? >= beta {
             return Some(beta);
         }
 
@@ -224,12 +239,25 @@ where
             move_to_front(good, &mut moves);
         }
 
+        if self.opts.tactical_ordering || extension_budget > 0 {
+            let forced = self.eval.tactical_advice(s, &mut moves, self.opts.tactical_ordering,
+                &|| self.timeout.load(Ordering::Relaxed) || self.deadline.is_some_and(|d| Instant::now() >= d));
+            if forced && extension_budget > 0 {
+                depth = depth.saturating_add(1);
+                extension_budget -= 1;
+            }
+            if self.timeout.load(Ordering::Relaxed) || self.deadline.is_some_and(|d| Instant::now() >= d) {
+                self.move_pool.local_do(|pool| pool.free(moves));
+                return None;
+            }
+        }
+
         let first_move = moves[0];
 
         // Evaluate first move serially.
         let initial_value = {
             let mut new = AppliedMove::<E::G>::new(s, first_move);
-            -self.negamax(&mut new, Some(first_move), depth - 1, -beta, -alpha)?
+            -self.negamax_inner(&mut new, Some(first_move), depth - 1, -beta, -alpha, extension_budget)?
         };
         alpha = max(alpha, initial_value);
         let (best, best_move) = if alpha >= beta {
@@ -243,15 +271,15 @@ where
             for &m in moves[1..].iter() {
                 let mut new = AppliedMove::<E::G>::new(s, m);
                 let value = if null_window {
-                    let probe = -self.negamax(&mut new, Some(m), depth - 1, -alpha - 1, -alpha)?;
+                    let probe = -self.negamax_inner(&mut new, Some(m), depth - 1, -alpha - 1, -alpha, extension_budget)?;
                     if probe > alpha && probe < beta {
                         // Full search fallback.
-                        -self.negamax(&mut new, Some(m), depth - 1, -beta, -probe)?
+                        -self.negamax_inner(&mut new, Some(m), depth - 1, -beta, -probe, extension_budget)?
                     } else {
                         probe
                     }
                 } else {
-                    -self.negamax(&mut new, Some(m), depth - 1, -beta, -alpha)?
+                    -self.negamax_inner(&mut new, Some(m), depth - 1, -beta, -alpha, extension_budget)?
                 };
                 if value > best {
                     best = value;
@@ -284,12 +312,13 @@ where
                 let mut new = AppliedMove::<E::G>::new(&mut state, m);
                 let value = if self.opts.null_window_search && initial_alpha > alpha_orig {
                     // TODO: send reference to alpha as neg_beta to children.
-                    let probe = -self.negamax(
+                    let probe = -self.negamax_inner(
                         &mut new,
                         Some(m),
                         depth - 1,
                         -initial_alpha - 1,
                         -initial_alpha,
+                        extension_budget,
                     )?;
                     if probe > initial_alpha && probe < beta {
                         // Check again that we're not cancelled.
@@ -297,12 +326,12 @@ where
                             return None;
                         }
                         // Full search fallback.
-                        -self.negamax(&mut new, Some(m), depth - 1, -beta, -probe)?
+                        -self.negamax_inner(&mut new, Some(m), depth - 1, -beta, -probe, extension_budget)?
                     } else {
                         probe
                     }
                 } else {
-                    -self.negamax(&mut new, Some(m), depth - 1, -beta, -initial_alpha)?
+                    -self.negamax_inner(&mut new, Some(m), depth - 1, -beta, -initial_alpha, extension_budget)?
                 };
 
                 alpha.fetch_max(value, Ordering::SeqCst);
@@ -331,6 +360,11 @@ where
         let root_hash = E::G::zobrist_hash(&state);
         let mut best_move = None;
         let mut best_value = 0;
+        if self.opts.tactical_ordering || self.opts.forced_defense_extensions {
+            let mut legal = Vec::new();
+            E::G::generate_moves(&state, &mut legal);
+            best_move = legal.first().copied();
+        }
         let mut interval_start;
 
         let mut depth = max_depth % self.opts.step_increment;

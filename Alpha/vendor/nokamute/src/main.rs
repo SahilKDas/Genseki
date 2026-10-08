@@ -31,6 +31,8 @@ engine flags:
  --aspiration-window=[int]
  --double-step
  --quiet-search
+ --tactical-ordering (Base-only experiment, default disabled)
+ --forced-defense-extensions (Base-only experiment, default disabled)
  --null-move-pruning"#,
         nokamute_version()
     );
@@ -39,6 +41,10 @@ engine flags:
 #[cfg(not(target_arch = "wasm32"))]
 fn main() {
     let (config, args) = configure_player().unwrap();
+    if config.has_tactical_experiments() && !matches!(args.first().map(String::as_str),None|Some("uhp"|"play")) {
+        eprintln!("tactical experiments support UHP diagnostics or Base play only");
+        std::process::exit(2);
+    }
     if config.is_neural() && matches!(args.first().map(String::as_str),Some("profile"|"profile-search"|"cli"|"uhp-debug")) {
         eprintln!("this auxiliary mode supports Gen 1 only; use neural UHP diagnostics instead");
         std::process::exit(2);

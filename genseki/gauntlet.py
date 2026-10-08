@@ -14,7 +14,8 @@ import subprocess
 import time
 
 from .uhp import UhpProcess
-from .resources import HEAVY_PROCESS_PATTERNS, available_ram, heavy_job_path, job_lock
+from .artifacts import portable_value, verify_manifest
+from .resources import HEAVY_PROCESS_PATTERNS, available_ram, heavy_job_path, team_job_path, job_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 INITIAL = 'Base;NotStarted;White[1]'
@@ -36,7 +37,7 @@ def atomic(path, text):
 
 
 def save(path, value):
-    atomic(path, json.dumps(value, indent=2) + '\n')
+    atomic(path, json.dumps(portable_value(ROOT, value), indent=2) + '\n')
 
 
 def digest(path):
@@ -130,18 +131,51 @@ def command(engine, text, guard, timeout=5):
 
 
 def configure(engine, args, options, guard):
+    requested = {}
     for option in options:
+        name, separator, value = option.partition(' ')
+        if not separator or not value:
+            raise RuntimeError('engine option requires name and value')
         command(engine, 'options set '+option, guard)
+        requested[name] = value
     offered, _ = command(engine, 'options', guard)
     names = {line.split(';')[0] for line in offered}
     thread = 'NumThreads' if 'NumThreads' in names else 'Threads'
     if thread not in names:
         raise RuntimeError('engine must expose NumThreads or Threads to enforce the CPU limit')
     command(engine, f'options set {thread} {args.threads}', guard)
+    requested[thread] = str(args.threads)
     for name, value in [('BackgroundPondering', 'False'), ('RandomOpening', 'False'),
                         ('TableSizeMiB', str(args.table_mib)), ('TableMiB', str(args.table_mib))]:
         if name in names:
             command(engine, f'options set {name} {value}', guard)
+            requested[name] = value
+    effective, _ = command(engine, 'options', guard)
+    parsed = {}
+    for line in effective:
+        fields = line.split(';')
+        if len(fields) >= 3:
+            parsed[fields[0]] = fields[2]
+    for name, value in requested.items():
+        if parsed.get(name, '').casefold() != value.casefold():
+            raise RuntimeError('engine effective option mismatch: '+name)
+    return dict(requested=requested,
+                verified={name: parsed[name] for name in requested}, observed=parsed,
+                evidence=effective)
+
+
+def load_manifest(path, executable):
+    with Path(path).open(encoding='utf-8') as stream:
+        manifest = json.load(stream)
+    # Frozen binaries stay comparable while the shared checkout evolves.
+    # Source/build corroboration belongs to the pre-build doctor and retained log.
+    issues = verify_manifest(ROOT, manifest, check_sources=False)
+    if issues:
+        raise RuntimeError('artifact manifest rejected: '+'; '.join(issues))
+    artifact = manifest['artifacts']['executable']
+    if (ROOT/artifact['path']).resolve() != Path(executable).resolve():
+        raise RuntimeError('artifact manifest names a different executable')
+    return manifest
 
 
 class Spectator:
@@ -171,6 +205,12 @@ def game_state(lines):
 
 
 def play_game(args, index, view, guard, factory=UhpProcess):
+    frozen = {}
+    for side in ('a', 'b'):
+        path = getattr(args, side+'_manifest', None)
+        if path:
+            executable = args.engine_a if side == 'a' else args.engine_b
+            frozen[side] = load_manifest(path, executable)
     a_white = index % 2 == 0
     seed = args.seed + index//2
     view.index = index
@@ -186,8 +226,15 @@ def play_game(args, index, view, guard, factory=UhpProcess):
             stack.callback(engine.close)
             engines.append(engine)
         a, b, referee = engines
-        configure(a, args, args.a_option, guard)
-        configure(b, args, args.b_option, guard)
+        settings = dict(a=configure(a, args, args.a_option, guard),
+                        b=configure(b, args, args.b_option, guard))
+        for side in ('a', 'b'):
+            if side in frozen:
+                expected = frozen[side]['effective_settings']['verified']
+                actual = settings[side]['observed']
+                if any(str(actual.get(k, '')).casefold() != str(v).casefold()
+                       for k, v in expected.items()):
+                    raise RuntimeError('effective settings differ from frozen manifest')
         state = INITIAL
         for engine in engines:
             state = game_state(command(engine, 'newgame Base', guard)[0])
@@ -212,7 +259,7 @@ def play_game(args, index, view, guard, factory=UhpProcess):
                 except TimeoutError:
                     return dict(index=index, seed=seed, a_color='white' if a_white else 'black',
                                 score=float(actor is b), termination='timeout', loser=side,
-                                game=state, moves=moves, move_ms=timings)
+                                game=state, moves=moves, move_ms=timings, effective_settings=settings)
                 if not response:
                     raise RuntimeError('engine supplied no best move')
                 move = response[0]
@@ -228,14 +275,15 @@ def play_game(args, index, view, guard, factory=UhpProcess):
                 score = .5 if result == 'Draw' else float((result == 'WhiteWins') == a_white)
                 return dict(index=index, seed=seed, a_color='white' if a_white else 'black',
                             score=score, termination='natural', result=result,
-                            game=state, moves=moves, move_ms=timings)
+                            game=state, moves=moves, move_ms=timings, effective_settings=settings)
             if result != 'InProgress':
                 raise RuntimeError(f'unexpected game result: {result}')
             # Optional pacing affects viewing only, never the measured search time.
             if args.move_delay_ms:
                 time.sleep(min(args.move_delay_ms/1000, max(0, guard.deadline-time.monotonic())))
         return dict(index=index, seed=seed, a_color='white' if a_white else 'black',
-                    score=.5, termination='ply_cap', game=state, moves=moves, move_ms=timings)
+                    score=.5, termination='ply_cap', game=state, moves=moves, move_ms=timings,
+                    effective_settings=settings)
 
 
 def parser():
@@ -246,6 +294,8 @@ def parser():
     p.add_argument('--b-arg', action='append', default=[])
     p.add_argument('--a-option', action='append', default=[], help='UHP option, e.g. "Evaluator neural"')
     p.add_argument('--b-option', action='append', default=[])
+    p.add_argument('--a-manifest', type=Path, help='frozen artifact/settings manifest')
+    p.add_argument('--b-manifest', type=Path, help='frozen artifact/settings manifest')
     p.add_argument('--name-a', default='Genseki')
     p.add_argument('--name-b', default='Opponent')
     p.add_argument('--referee', type=Path, default=ROOT/'build/genseki_rules.exe')
@@ -281,15 +331,30 @@ def main(argv=None):
             p.error(f'missing executable: {binary}; build genseki_spectator and genseki_rules first')
     args.output.mkdir(parents=True, exist_ok=False)
     view = Spectator(args.output, args.name_a, args.name_b, args.games)
-    report = dict(kind='development', status='starting', settings={k: str(v) if isinstance(v, Path) else v for k,v in vars(args).items()},
+    report = dict(kind='development', status='starting',
                   engine_a_sha256=digest(args.engine_a), engine_b_sha256=digest(args.engine_b),
                   referee_sha256=digest(args.referee), games=[], points=0)
+    report['settings'] = portable_value(ROOT, vars(args))
+    opening_plan = dict(generator='sorted-legal-random-four-plies-v1',
+                        seeds=[args.seed+i for i in range(args.games//2)])
+    report['opening_plan'] = opening_plan
+    report['opening_plan_sha256'] = hashlib.sha256(
+        json.dumps(opening_plan, sort_keys=True).encode('utf-8')).hexdigest()
+    report['provenance_status'] = 'unverified-imports'
     guard = Guard(args.hours, args.output)
     gui = None
     try:
-        with job_lock(heavy_job_path(ROOT)), job_lock(ROOT/'reports/work/gauntlet.lock'):
+        with job_lock(team_job_path(ROOT)), job_lock(heavy_job_path(ROOT)), job_lock(ROOT/'reports/work/gauntlet.lock'):
             preflight(not args.no_gui)
             guard.check()
+            manifests = {}
+            for side, executable in (('a', args.engine_a), ('b', args.engine_b)):
+                path = getattr(args, side+'_manifest')
+                if path:
+                    manifests[side] = load_manifest(path, executable)
+            report['manifests'] = manifests
+            if len(manifests) == 2:
+                report['provenance_status'] = 'manifest-verified'
             if os.name == 'nt':
                 kernel = ctypes.windll.kernel32
                 kernel.GetCurrentProcess.restype = ctypes.c_void_p
@@ -305,6 +370,11 @@ def main(argv=None):
             print(f'Live view: {view.path}\nEvidence: {args.output}', flush=True)
             for index in range(args.games):
                 guard.check()
+                for path, key in ((args.engine_a, 'engine_a_sha256'),
+                                  (args.engine_b, 'engine_b_sha256'),
+                                  (args.referee, 'referee_sha256')):
+                    if digest(path) != report[key]:
+                        raise RuntimeError('frozen executable changed during match')
                 row = play_game(args, index, view, guard)
                 save(args.output/f'game-{index+1:04d}.json', row)
                 report['games'].append(row)
@@ -317,7 +387,7 @@ def main(argv=None):
     except (KeyboardInterrupt, StageStopped) as error:
         report.update(status='stopped', error=str(error) or 'Ctrl+C')
     except Exception as error:
-        report.update(status='rejected', error=str(error))
+        report.update(status='rejected', error=portable_value(ROOT, str(error)))
     finally:
         report['last_game'] = view.game
         save(args.output/'report.json', report)

@@ -11,6 +11,8 @@ import ctypes
 import copy
 
 def resource_guard():
+    from research_job import check_deadline
+    check_deadline()
     class Memory(ctypes.Structure):
         _fields_ = [('length', ctypes.c_ulong), ('load', ctypes.c_ulong)] + [(name, ctypes.c_ulonglong) for name in ('total', 'free', 'total_page', 'free_page', 'total_virtual', 'free_virtual', 'extended')]
     memory = Memory(); memory.length = ctypes.sizeof(memory)
@@ -30,6 +32,8 @@ def pooled_transform(indices,offsets,weight,width,bias):
                                              include_last_offset=True).reshape(-1,2,width)+bias
 
 def response(engine, text):
+    from research_job import check_deadline
+    check_deadline()
     lines, _ = engine.command(text)
     if any(line.startswith('err ') for line in lines):
         raise RuntimeError(lines)
@@ -226,4 +230,5 @@ def main():
     train(records, args.output, args.epochs, args.batch, args.device,tuple(args.widths))
 
 if __name__ == '__main__':
-    main()
+    from research_job import run
+    run(main)
