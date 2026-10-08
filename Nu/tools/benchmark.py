@@ -92,4 +92,6 @@ def main():
                 threat_plies=args.threat_plies,lmr=args.lmr,selection_is_performance_only=True,completed=True)
     atomic_json(args.output,report);print(json.dumps(summaries))
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    from research_job import run
+    run(main)

@@ -1,5 +1,6 @@
 #include "genseki/review/review.hpp"
 #include "alpha_process.hpp"
+#include "job_lock.hpp"
 
 #include <algorithm>
 #include <array>
@@ -12,6 +13,7 @@
 #include <thread>
 #include <limits>
 #include <map>
+#include <mutex>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -89,9 +91,9 @@ std::string escaped(std::string_view text) {
     }
     out << '"'; return out.str();
 }
-#ifdef _WIN32
-HANDLE job_mutex = nullptr;
-#endif
+std::mutex job_gate;
+bool job_owned=false;
+FileJobLock team_job, application_job;
 }
 
 Entry describe(const Board& before, const Move& move) {
@@ -402,6 +404,9 @@ std::string json(const Report& r) {
             bool c=true;for(auto cell:item.cells){if(!c)out<<',';c=false;out<<'['<<cell.q<<','<<cell.r<<']';}out<<"]}";
         }
         out<<"],\"preferred_move\":"<<(e.preferred?escaped(e.preferred->move):"null")
+           <<",\"completed_depth\":"<<(e.preferred&&e.preferred->completed_depth?std::to_string(*e.preferred->completed_depth):"null")
+           <<",\"nodes\":"<<(e.preferred&&e.preferred->nodes?std::to_string(*e.preferred->nodes):"null")
+           <<",\"search_elapsed_ms\":"<<(e.preferred&&e.preferred->elapsed_ms?std::to_string(*e.preferred->elapsed_ms):"null")
            <<",\"root_score\":"<<(e.preferred?std::to_string(e.preferred->score):"null")
            <<",\"played_score\":"<<(e.played_score?std::to_string(*e.played_score):"null")
            <<",\"preferred_score\":"<<(e.preferred_score?std::to_string(*e.preferred_score):"null")
@@ -432,18 +437,22 @@ std::string file_sha256(const std::filesystem::path& path) {
     return sha256(std::string(std::istreambuf_iterator<char>(file),{}));
 }
 bool claim_job() {
-#ifdef _WIN32
-    if(job_mutex)return false;
-    job_mutex=CreateMutexW(nullptr,TRUE,L"Local\\GensekiEnglishReview");
-    if(!job_mutex)return false;
-    if(GetLastError()==ERROR_ALREADY_EXISTS){CloseHandle(job_mutex);job_mutex=nullptr;return false;}
-#endif
+    std::lock_guard gate(job_gate);
+    if(job_owned)return false;
+    std::error_code error;auto root=std::filesystem::current_path(error);
+    if(error)return false;
+    while(!std::filesystem::exists(root/"constraints_on_SahilKDas_device.md",error)){
+        if(error||root==root.parent_path())return false;
+        root=root.parent_path();
+    }
+    if(!team_job.acquire(root/".tmp/team-genseki/heavy.lock"))return false;
+    if(!application_job.acquire(root/"reports/work/heavy-job.lock")){team_job.release();return false;}
+    job_owned=true;
     return true;
 }
 void release_job() {
-#ifdef _WIN32
-    if(job_mutex){ReleaseMutex(job_mutex);CloseHandle(job_mutex);job_mutex=nullptr;}
-#endif
+    std::lock_guard gate(job_gate);
+    application_job.release();team_job.release();job_owned=false;
 }
 bool process_slots_available(const std::vector<ProcessUsage>& processes,unsigned self,unsigned owned_engine) {
     unsigned engines=0,guis=0;

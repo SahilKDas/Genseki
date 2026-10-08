@@ -32,6 +32,10 @@ def heavy_job_path(root):
     return Path(root) / 'reports/work/heavy-job.lock'
 
 
+def team_job_path(root):
+    return Path(root) / '.tmp/team-genseki/heavy.lock'
+
+
 @contextmanager
 def job_lock(path):
     path = Path(path)

@@ -115,6 +115,8 @@ impl<M: Copy> Table<M> for TranspositionTable<M> {
 #[derive(Clone, Copy)]
 pub struct IterativeOptions {
     pub table_byte_size: usize,
+    pub tactical_ordering: bool,
+    pub forced_defense_extensions: bool,
     pub(super) strategy: Replacement,
     pub(super) null_window_search: bool,
     pub(super) null_move_depth: Option<u8>,
@@ -133,6 +135,8 @@ impl IterativeOptions {
     pub fn new() -> Self {
         IterativeOptions {
             table_byte_size: 1 << 20,
+            tactical_ordering: false,
+            forced_defense_extensions: false,
             strategy: Replacement::TwoTier,
             null_window_search: true,
             null_move_depth: None,
@@ -366,7 +370,7 @@ where
     }
 
     fn null_move_check(
-        &mut self, s: &mut <E::G as Game>::S, depth: u8, beta: Evaluation,
+        &mut self, s: &mut <E::G as Game>::S, depth: u8, beta: Evaluation, extension_budget: u8,
     ) -> Option<Evaluation> {
         if let (Some(depth_reduction), Some(null_move)) =
             (self.opts.null_move_depth, E::G::null_move(s))
@@ -379,7 +383,7 @@ where
                 // If we just pass and let the opponent play this position (at reduced depth),
                 let mut nulled = AppliedMove::<E::G>::new(s, null_move);
                 let value =
-                    -self.negamax(&mut nulled, None, depth - depth_reduction, -beta, -beta + 1)?;
+                    -self.negamax_inner(&mut nulled, None, depth - depth_reduction, -beta, -beta + 1, extension_budget)?;
                 // is the result still so good that we shouldn't bother with a full search?
                 if value >= beta {
                     return Some(value);
@@ -427,8 +431,16 @@ where
 
     // Recursively compute negamax on the game state. Returns None if it hits the timeout.
     pub(super) fn negamax(
+        &mut self, s: &mut <E::G as Game>::S, prev_move: Option<<E::G as Game>::M>, depth: u8,
+        alpha: Evaluation, beta: Evaluation,
+    ) -> Option<Evaluation> {
+        self.negamax_inner(s, prev_move, depth, alpha, beta,
+            if self.opts.forced_defense_extensions { 2 } else { 0 })
+    }
+
+    fn negamax_inner(
         &mut self, s: &mut <E::G as Game>::S, prev_move: Option<<E::G as Game>::M>, mut depth: u8,
-        mut alpha: Evaluation, mut beta: Evaluation,
+        mut alpha: Evaluation, mut beta: Evaluation, mut extension_budget: u8,
     ) -> Option<Evaluation> {
         if self.timeout_check() {
             return None;
@@ -448,11 +460,15 @@ where
         let alpha_orig = alpha;
         let hash = E::G::zobrist_hash(s);
         let mut good_move = None;
-        if let Some(value) = self.table.check(hash, depth, &mut good_move, &mut alpha, &mut beta) {
+        if self.opts.forced_defense_extensions {
+            // Remaining extension budget is path-dependent and absent from TT
+            // keys. Reuse only move ordering, never an incompatible score bound.
+            good_move = self.table.lookup(hash).and_then(|entry| entry.best_move);
+        } else if let Some(value) = self.table.check(hash, depth, &mut good_move, &mut alpha, &mut beta) {
             return Some(value);
         }
 
-        if self.null_move_check(s, depth, beta)? >= beta {
+        if self.null_move_check(s, depth, beta, extension_budget)? >= beta {
             return Some(beta);
         }
 
@@ -478,21 +494,34 @@ where
             move_to_front(good, &mut moves);
         }
 
+        #[cfg(not(target_arch = "wasm32"))]
+        if self.opts.tactical_ordering || extension_budget > 0 {
+            let timeout = self.timeout.clone();
+            let deadline = self.native_deadline;
+            let forced = self.eval.tactical_advice(s, &mut moves, self.opts.tactical_ordering,
+                &|| timeout.load(Ordering::Relaxed) || deadline.is_some_and(|d| Instant::now() >= d));
+            if forced && extension_budget > 0 {
+                depth = depth.saturating_add(1);
+                extension_budget -= 1;
+            }
+            if self.timeout_check() { self.move_pool.free(moves); return None; }
+        }
+
         let mut best = WORST_EVAL;
         let mut best_move = moves[0];
         let mut null_window = false;
         for &m in moves.iter() {
             let mut new = AppliedMove::<E::G>::new(s, m);
             let value = if null_window {
-                let probe = -self.negamax(&mut new, Some(m), depth - 1, -alpha - 1, -alpha)?;
+                let probe = -self.negamax_inner(&mut new, Some(m), depth - 1, -alpha - 1, -alpha, extension_budget)?;
                 if probe > alpha && probe < beta {
                     // Full search fallback.
-                    -self.negamax(&mut new, Some(m), depth - 1, -beta, -probe)?
+                    -self.negamax_inner(&mut new, Some(m), depth - 1, -beta, -probe, extension_budget)?
                 } else {
                     probe
                 }
             } else {
-                -self.negamax(&mut new, Some(m), depth - 1, -beta, -alpha)?
+                -self.negamax_inner(&mut new, Some(m), depth - 1, -beta, -alpha, extension_budget)?
             };
             if value > best {
                 best = value;
@@ -533,11 +562,29 @@ where
     pub(super) fn search_and_reorder(
         &mut self, s: &mut <E::G as Game>::S, moves: &mut [ValueMove<<E::G as Game>::M>], depth: u8,
     ) -> Option<Evaluation> {
+        let mut search_depth = depth;
+        let mut extension_budget = if self.opts.forced_defense_extensions { 2 } else { 0 };
+        #[cfg(not(target_arch = "wasm32"))]
+        if self.opts.tactical_ordering || extension_budget > 0 {
+            let mut ordered: Vec<_> = moves.iter().map(|m| m.m).collect();
+            let timeout = self.timeout.clone();
+            let deadline = self.native_deadline;
+            let forced = self.eval.tactical_advice(s, &mut ordered, self.opts.tactical_ordering,
+                &|| timeout.load(Ordering::Relaxed) || deadline.is_some_and(|d| Instant::now() >= d));
+            for (i, wanted) in ordered.into_iter().enumerate() {
+                if let Some(j) = moves[i..].iter().position(|m| m.m == wanted) { moves.swap(i, i+j); }
+            }
+            if forced && extension_budget > 0 {
+                search_depth = search_depth.saturating_add(1);
+                extension_budget -= 1;
+            }
+            if self.timeout_check() { return None; }
+        }
         let mut alpha = WORST_EVAL;
         let beta = BEST_EVAL;
         for value_move in moves.iter_mut() {
             let mut new = AppliedMove::<E::G>::new(s, value_move.m);
-            let value = -self.negamax(&mut new, Some(value_move.m), depth - 1, -beta, -alpha)?;
+            let value = -self.negamax_inner(&mut new, Some(value_move.m), search_depth - 1, -beta, -alpha, extension_budget)?;
 
             alpha = max(alpha, value);
             value_move.value = value;
@@ -665,6 +712,9 @@ where
         // Start in a random order.
         moves.shuffle(&mut rand::rng());
         let mut moves = moves.into_iter().map(|m| ValueMove::new(0, m)).collect::<Vec<_>>();
+        if self.opts.tactical_ordering || self.opts.forced_defense_extensions {
+            best_move = moves.first().map(|m| m.m);
+        }
 
         // Start at 1 or 2 to hit the max depth.
         let mut depth = self.max_depth % self.opts.step_increment;
@@ -757,5 +807,67 @@ where
 
     fn principal_variation(&self) -> Vec<<E::G as Game>::M> {
         self.pv.clone()
+    }
+}
+
+#[cfg(all(test, not(target_arch = "wasm32")))]
+mod tactical_tests {
+    use super::*;
+    struct Line;
+    impl Game for Line {
+        type S = u8;
+        type M = u8;
+        fn generate_moves(_: &u8, moves: &mut Vec<u8>) { moves.push(1); }
+        fn apply(s: &mut u8, _: u8) -> Option<u8> { *s += 1; None }
+        fn undo(s: &mut u8, _: u8) { *s -= 1; }
+        fn get_winner(_: &u8) -> Option<Winner> { None }
+        fn zobrist_hash(s: &u8) -> u64 { ((*s as u64 + 1) << 32) | *s as u64 }
+    }
+    struct Eval;
+    impl Evaluator for Eval {
+        type G = Line;
+        fn evaluate(&self, s: &u8) -> Evaluation { *s as Evaluation }
+        fn tactical_advice(&self, _: &u8, _: &mut [u8], _: bool, stop: &dyn Fn() -> bool) -> bool { !stop() }
+    }
+    #[test]
+    fn experiments_default_off() {
+        let opts = IterativeOptions::new();
+        assert!(!opts.tactical_ordering && !opts.forced_defense_extensions);
+    }
+    #[test]
+    fn forced_extensions_are_bounded_and_restore_state() {
+        for enabled in [false, true] {
+            let mut opts = IterativeOptions::new();
+            opts.table_byte_size = 4096;
+            opts.forced_defense_extensions = enabled;
+            let mut search = IterativeSearch::new(Eval, opts);
+            let mut state = 0;
+            let value = search.negamaxer.negamax(&mut state, None, 1, WORST_EVAL, BEST_EVAL).unwrap();
+            assert_eq!(unclamp_value(value), if enabled { -3 } else { -1 });
+            assert_eq!(state, 0);
+        }
+    }
+    #[test]
+    fn extension_search_ignores_incompatible_tt_score() {
+        let mut opts = IterativeOptions::new();
+        opts.table_byte_size = 4096;
+        opts.forced_defense_extensions = true;
+        let mut search = IterativeSearch::new(Eval, opts);
+        search.negamaxer.table.store(Line::zobrist_hash(&0), 1234, 99, EntryFlag::Exact, 1);
+        let mut state = 0;
+        let value = search.negamaxer.negamax(&mut state, None, 1, WORST_EVAL, BEST_EVAL).unwrap();
+        assert_eq!(unclamp_value(value), -3);
+        assert_eq!(state, 0);
+    }
+    #[test]
+    fn interrupted_search_restores_state() {
+        let mut opts = IterativeOptions::new();
+        opts.table_byte_size = 4096;
+        opts.forced_defense_extensions = true;
+        let mut search = IterativeSearch::new(Eval, opts);
+        search.negamaxer.set_timeout(Arc::new(AtomicBool::new(true)));
+        let mut state = 0;
+        assert!(search.negamaxer.negamax(&mut state, None, 1, WORST_EVAL, BEST_EVAL).is_none());
+        assert_eq!(state, 0);
     }
 }

@@ -79,7 +79,7 @@ pub fn play_game(
     config: PlayerConfig, game_type: &str, name1: &str, name2: &str, depth: Option<u8>,
     timeout: Option<String>,
 ) {
-    if config.neural_enabled && game_type!="Base" {exit("neural mode supports Base only".into());}
+    if (config.neural_enabled || config.has_tactical_experiments()) && game_type!="Base" {exit("neural/tactical modes support Base only".into());}
     let mut player1 = get_player(name1, &config);
     let mut player2 = get_player(name2, &config);
     if let Some(depth) = depth {
@@ -222,6 +222,8 @@ pub fn configure_player() -> Result<(PlayerConfig, Vec<String>), pico_args::Erro
     let mut args = pico_args::Arguments::from_env();
 
     let mut config = PlayerConfig::new();
+    config.opts.tactical_ordering = args.contains("--tactical-ordering");
+    config.opts.forced_defense_extensions = args.contains("--forced-defense-extensions");
     let evaluator:Option<String> = args.opt_value_from_str("--evaluator")?;
     let model:Option<String> = args.opt_value_from_str("--model")?;
     if let Some(path)=model {config.neural=Some(NeuralModel::load(&path).unwrap_or_else(|e|exit(e)));config.model_path=path;}
@@ -291,6 +293,7 @@ pub fn configure_player() -> Result<(PlayerConfig, Vec<String>), pico_args::Erro
     if config.num_threads.is_some_and(|n|n>12) {exit("NumThreads cannot exceed 12".into());}
     if config.neural.as_ref().is_some_and(|m|m.bytes+1024*1024+crate::neural::CACHE_RESERVE>config.opts.table_byte_size) {exit("memory budget too small for model".into());}
     if config.neural_enabled && !matches!(config.strategy,PlayerStrategy::Iterative(_)) {exit("neural evaluator requires iterative search".into());}
+    if config.has_tactical_experiments() && !matches!(config.strategy,PlayerStrategy::Iterative(_)) {exit("tactical experiments require iterative search".into());}
     Ok((config, args.finish().into_iter().map(|s| s.into_string().unwrap()).collect::<Vec<_>>()))
 }
 
@@ -301,6 +304,9 @@ impl Default for PlayerConfig {
 }
 
 impl PlayerConfig {
+    pub fn has_tactical_experiments(&self) -> bool {
+        self.opts.tactical_ordering || self.opts.forced_defense_extensions
+    }
     pub fn is_neural(&self)->bool {self.neural_enabled}
     pub fn new() -> Self {
         Self {

@@ -29,7 +29,7 @@ impl<W: Write> UhpServer<W> {
     fn info(&mut self) -> Result<()> {
         writeln!(self.output, "id {} {}", env!("CARGO_PKG_NAME"), nokamute_version())?;
         // Capabilities
-        writeln!(self.output, "{}",if self.config.neural_enabled {""}else{"Mosquito;Ladybug;Pillbug"})?;
+        writeln!(self.output, "{}",if self.config.neural_enabled || self.config.has_tactical_experiments() {""}else{"Mosquito;Ladybug;Pillbug"})?;
         Ok(())
     }
 
@@ -53,6 +53,7 @@ impl<W: Write> UhpServer<W> {
         let args = if args.is_empty() { "Base" } else { args };
         let board=Board::from_game_string(args)?;
         if self.config.neural_enabled && board.game_type()!="Base" {return Err(UhpError::EngineError("neural mode supports Base only".into()));}
+        if self.config.has_tactical_experiments() && board.game_type()!="Base" {return Err(UhpError::EngineError("tactical experiments support Base only".into()));}
         self.board = Some(board);
         self.reset_engine();
         writeln!(self.output, "{}", self.board.as_mut().unwrap().game_string())?;
@@ -210,6 +211,10 @@ impl<W: Write> UhpServer<W> {
             "Verbose" => self.get_option_bool::<VerboseOption>(),
             "Evaluator" => {writeln!(self.output,"Evaluator;string;{};gen1;gen1;neural",if self.config.neural_enabled {"neural"}else{"gen1"})?;Ok(())},
             "ModelPath" => {writeln!(self.output,"ModelPath;string;{};",self.config.model_path)?;Ok(())},
+            "TacticalOrdering" | "ForcedDefenseExtensions" => {
+                let enabled = if option=="TacticalOrdering" { self.config.opts.tactical_ordering } else { self.config.opts.forced_defense_extensions };
+                writeln!(self.output,"{option};bool;{};False",if enabled {"True"}else{"False"})?; Ok(())
+            },
             _ => Err(UhpError::InvalidOption(option.into())),
         }
     }
@@ -231,10 +236,25 @@ impl<W: Write> UhpServer<W> {
             self.get_option_int::<TableSizeOption>()?;
             self.get_option_bool::<VerboseOption>()?;
             self.get_option("Evaluator")?;self.get_option("ModelPath")?;
+            self.get_option("TacticalOrdering")?;self.get_option("ForcedDefenseExtensions")?;
         } else if tokens.len() == 2 && tokens[0] == "get" {
             self.get_option(tokens[1])?;
         } else if tokens.len() == 3 && tokens[0] == "set" {
             match tokens[1] {
+                "TacticalOrdering" | "ForcedDefenseExtensions" => {
+                    let enabled = match tokens[2] {"True"=>true,"False"=>false,_=>return Err(UhpError::InvalidOption(args.into()))};
+                    #[cfg(target_arch = "wasm32")]
+                    if enabled { return Err(UhpError::EngineError("tactical experiments require native search".into())); }
+                    if enabled && self.board.as_ref().is_some_and(|b|b.game_type()!="Base") {
+                        return Err(UhpError::EngineError("tactical experiments support Base only".into()));
+                    }
+                    #[cfg(not(target_arch = "wasm32"))]
+                    if enabled && !matches!(self.config.strategy,PlayerStrategy::Iterative(_)) {
+                        return Err(UhpError::EngineError("tactical experiments require iterative search".into()));
+                    }
+                    if tokens[1]=="TacticalOrdering" {self.config.opts.tactical_ordering=enabled;} else {self.config.opts.forced_defense_extensions=enabled;}
+                    self.get_option(tokens[1])?;
+                },
                 "Evaluator" => {match tokens[2] {
                     "gen1"=>self.config.neural_enabled=false,
                     "neural"=>{if self.config.neural.is_none() {return Err(UhpError::EngineError("load trained ModelPath first".into()));}
@@ -565,4 +585,29 @@ fn test_pv_output_failure_preserves_board() {
     server.output.fail = true;
     assert!(server.pv().is_err());
     assert_eq!(before, server.board.as_ref().unwrap().game_string());
+}
+
+#[test]
+fn test_tactical_options_are_independent_and_reject_expansions() {
+    let mut config = PlayerConfig::default();
+    config.num_threads = Some(1);
+    let mut server = UhpServer::new(config, Vec::new());
+    assert!(!server.config.has_tactical_experiments());
+    server.options("set TacticalOrdering True").unwrap();
+    assert!(server.config.opts.tactical_ordering);
+    assert!(!server.config.opts.forced_defense_extensions);
+    assert!(server.new_game("Base+MLP").is_err());
+    server.new_game("Base").unwrap();
+    let before = server.board.as_ref().unwrap().game_string();
+    assert!(server.options("set ForcedDefenseExtensions maybe").is_err());
+    assert!(!server.config.opts.forced_defense_extensions);
+    server.options("set ForcedDefenseExtensions True").unwrap();
+    server.options("set TacticalOrdering False").unwrap();
+    assert!(!server.config.opts.tactical_ordering);
+    assert!(server.config.opts.forced_defense_extensions);
+    assert_eq!(before, server.board.as_ref().unwrap().game_string());
+    server.options("set ForcedDefenseExtensions False").unwrap();
+    server.new_game("Base+MLP").unwrap();
+    assert!(server.options("set TacticalOrdering True").is_err());
+    assert!(!server.config.has_tactical_experiments());
 }

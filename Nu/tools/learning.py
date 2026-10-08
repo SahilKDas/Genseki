@@ -277,13 +277,15 @@ def main():
     p.add_argument('--widths',type=int,nargs='+',choices=(64,128),default=[64,128])
     p.add_argument('--heads',nargs='+',choices=('linear','nonlinear'),default=['linear','nonlinear'])
     p.add_argument('--device',default='auto');p.add_argument('--seed',type=int,default=1701)
-    p.add_argument('--learning-rate',type=float,default=.001);p.add_argument('--wall-seconds',type=int,default=0)
+    p.add_argument('--learning-rate',type=float,default=.001);p.add_argument('--wall-seconds',type=int,default=7200)
     p.add_argument('--ablate',choices=tuple(GROUPS));p.add_argument('--outcome-only',action='store_true')
     p.add_argument('--initialize',type=Path)
     p.add_argument('--ranking-weight',type=float,default=.05)
     p.add_argument('--selection',choices=('mse','regret'),default='mse')
     args=p.parse_args()
-    if not 1<=args.batch<=512 or not 1<=args.accumulation<=16 or not 1<=args.epochs<=100 or args.wall_seconds<0 or not 0<args.learning_rate<=.01 or not math.isfinite(args.ranking_weight) or not 0<=args.ranking_weight<=1:p.error('invalid bounded training settings')
+    if not 1<=args.batch<=512 or not 1<=args.accumulation<=16 or not 1<=args.epochs<=100 or not 1<=args.wall_seconds<=7200 or not 0<args.learning_rate<=.01 or not math.isfinite(args.ranking_weight) or not 0<=args.ranking_weight<=1:p.error('invalid bounded training settings')
     run(args)
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    from research_job import run as run_job
+    run_job(main)

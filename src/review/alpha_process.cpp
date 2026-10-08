@@ -1,6 +1,7 @@
 #include "alpha_process.hpp"
 #include <algorithm>
 #include <sstream>
+#include <regex>
 #ifdef _WIN32
 #include <windows.h>
 #endif
@@ -60,12 +61,12 @@ std::expected<void,std::string> AlphaProcess::start(const std::filesystem::path&
     if(err==INVALID_HANDLE_VALUE){cleanup();return std::unexpected("Could not isolate engine diagnostics.");}
     STARTUPINFOW si{};si.cb=sizeof(si);si.dwFlags=STARTF_USESTDHANDLES|STARTF_USESHOWWINDOW;si.wShowWindow=SW_HIDE;si.hStdInput=ir;si.hStdOutput=w;si.hStdError=err;
     PROCESS_INFORMATION pi{};auto cmd=L"\""+path.wstring()+L"\"";
-    bool ok=CreateProcessW(path.c_str(),cmd.data(),nullptr,nullptr,TRUE,CREATE_NO_WINDOW|BELOW_NORMAL_PRIORITY_CLASS,nullptr,path.parent_path().c_str(),&si,&pi);
+    bool ok=CreateProcessW(path.c_str(),cmd.data(),nullptr,nullptr,TRUE,CREATE_NO_WINDOW|IDLE_PRIORITY_CLASS,nullptr,path.parent_path().c_str(),&si,&pi);
     CloseHandle(err);CloseHandle(ir);ir=nullptr;CloseHandle(w);w=nullptr;
     if(!ok){cleanup();return std::unexpected("Could not launch the separate Alpha analysis engine.");}
     CloseHandle(pi.hThread);impl_->process=pi.hProcess;impl_->input=iw;impl_->output=r;
     auto ready=impl_->response(5000,stop);if(!ready)return std::unexpected(ready.error());
-    for(auto [name,value]:std::vector<std::pair<std::string,std::string>>{{"BackgroundPondering","False"},{"RandomOpening","False"},{"NumThreads","1"},{"TableSizeMiB","32"}}){
+    for(auto [name,value]:std::vector<std::pair<std::string,std::string>>{{"BackgroundPondering","False"},{"RandomOpening","False"},{"NumThreads","1"},{"TableSizeMiB","32"},{"Evaluator","gen1"}}){
         auto set=impl_->command("options set "+name+" "+value,1000,stop);if(!set)return std::unexpected(set.error());
         auto get=impl_->command("options get "+name,1000,stop);if(!get)return std::unexpected(get.error());
         bool matched=false;for(auto line:*get)if(line.starts_with(name+";")){auto p=line.find(';',name.size()+1);auto end=line.find(';',p+1);matched=p!=std::string::npos&&line.substr(p+1,end-p-1)==value;}
@@ -81,13 +82,21 @@ std::expected<SearchAnswer,std::string> AlphaProcess::search(const Board& board,
     auto loaded=impl_->command("newgame "+board.game_string(),1000,stop);if(!loaded)return std::unexpected(loaded.error());
     bool verified=false;for(auto line:*loaded)if(line.starts_with("Base;")){auto b=Board::from_game_string(line);verified=b&&b->position_string()==board.position_string();}
     if(!verified)return std::unexpected("Alpha and the rules core disagreed on the review position.");
+    auto begin=std::chrono::steady_clock::now();
     auto reply=impl_->command("alpha-search 8 "+std::to_string(std::clamp(ms,1u,2000u)),ms+150,stop);if(!reply)return std::unexpected(reply.error());
     for(auto line:*reply)if(line.starts_with("score ")){
         std::istringstream in(line);std::string a,b,c;int value=0,stat=0;in>>a>>value>>b>>stat>>c;
         if(!in||b!="static"||c!="move")break;
         std::string move;std::getline(in,move);if(!move.empty()&&move.front()==' ')move.erase(0,1);
         if(!board.parse_uhp_move(move))return std::unexpected("Alpha suggested an illegal move.");
-        return SearchAnswer{move,value};
+        SearchAnswer answer{move,value};
+        answer.elapsed_ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-begin).count();
+        static const std::regex telemetry(R"(Explored (\d+) nodes to depth (\d+))");
+        for(const auto& info:*reply){std::smatch match;if(std::regex_search(info,match,telemetry)){
+            try {answer.nodes=std::stoull(match[1]);answer.completed_depth=static_cast<unsigned>(std::stoul(match[2]));}
+            catch(const std::exception&){return std::unexpected("Invalid completed-depth telemetry.");}
+        }}
+        return answer;
     }
     return std::unexpected("Alpha returned an unsupported diagnostic response.");
 #else

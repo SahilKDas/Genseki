@@ -26,12 +26,12 @@ public:
             Report result;
             auto publish=[shared](const Report& report){std::lock_guard lock(shared->mutex);shared->report=report;++shared->version;};
             try {
+                if(!claim_job()){result.status="deferred";result.message="Review is waiting for the shared heavy-job slot.";publish(result);return result;}
+                struct Release{~Release(){release_job();}} release;
                 auto prepared=prepare(replay,token);
                 if(!prepared){result.status=token.stop_requested()?"cancelled":"error";result.message=prepared.error();publish(result);return result;}
                 result=std::move(*prepared);publish(result);
                 if(token.stop_requested()){result.status="cancelled";publish(result);return result;}
-                if(!claim_job()){result.status="deferred";result.message="Another game review is active.";publish(result);return result;}
-                struct Release{~Release(){release_job();}} release;
                 Settings settings;settings.engine=engine;
                 if(testing){
                     Search reference=[](const Board& b,unsigned,std::stop_token)->std::expected<SearchAnswer,std::string>{return SearchAnswer{*b.uhp_move_string(b.legal_moves().front()),0};};

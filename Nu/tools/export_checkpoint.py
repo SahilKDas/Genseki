@@ -24,4 +24,6 @@ def main():
                curves=saved.get('curves',[]),completed=False,source_checkpoint_sha256=digest(args.checkpoint),
                model_sha256=digest(args.output),reason='bounded partial-training validated checkpoint export'))
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    from research_job import run
+    run(main)

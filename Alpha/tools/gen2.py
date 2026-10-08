@@ -17,7 +17,7 @@ from types import SimpleNamespace
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT))
 from genseki.uhp import UhpProcess
-from genseki.resources import HEAVY_PROCESS_PATTERNS, available_ram, heavy_job_path, job_lock
+from genseki.resources import HEAVY_PROCESS_PATTERNS, available_ram, heavy_job_path, team_job_path, job_lock
 WORK=ROOT/'Alpha/work/gen2'
 REPORT=ROOT/'Alpha/reports/gen2'
 ENGINE=ROOT/'Alpha/build/gen2-target/release/alpha_nokamute_mit.exe'
@@ -138,6 +138,23 @@ def curated_index(learning,files,index,checkpoint):
         db.close();raise RuntimeError('held-out registry changed; preserve checkpoints and use a new corpus namespace')
     db.execute(f'delete from samples where id in ({excluded})',keys)
     db.execute('insert or replace into metadata values("tactical_exclusions",?)',(signature,));db.commit()
+    frozen=ROOT/'.tmp/team-genseki/developer-3/contracts/tactical-fixtures-v2.json'
+    if frozen.exists():
+        from tactical_evidence import position_key as canonical_key
+        frozen_signature=digest(frozen)
+        previous=db.execute('select value from metadata where key="frozen_tactical_exclusions"').fetchone()
+        if checkpoint.exists() and (not previous or previous[0]!=frozen_signature):
+            db.close();raise RuntimeError('frozen tactical registry changed; use a new corpus namespace')
+        reserved={key for record in read(frozen)['records'] for key in record['exposures']}
+        remove=[]
+        for sample,payload in db.execute('select id,payload from samples'):
+            row=json.loads(payload)
+            positions=[row['position']]+[row[k] for k in ('preferred_position','alternative_position') if k in row]
+            positions += [candidate['position'] for candidate in row.get('alternatives',[]) if 'position' in candidate]
+            if any(canonical_key(position) in reserved for position in positions):remove.append((sample,))
+        db.executemany('delete from samples where id=?',remove)
+        db.execute('insert or replace into metadata values("frozen_tactical_exclusions",?)',(frozen_signature,));db.commit()
+        count+=len(remove)
     return db,signature,count
 
 def prepare():
@@ -489,6 +506,7 @@ def main():
     WORK.mkdir(parents=True,exist_ok=True)
     jobs=contextlib.ExitStack()
     try:
+        jobs.enter_context(job_lock(team_job_path(ROOT)))
         jobs.enter_context(job_lock(heavy_job_path(ROOT)))
         jobs.enter_context(job_lock(WORK/'stage.lock'))
         if os.name=='nt':

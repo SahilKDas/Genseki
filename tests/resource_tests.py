@@ -104,6 +104,26 @@ class ResourceTests(unittest.TestCase):
             # A leftover file is not a live lock.
             self.assertEqual(self.contender(path).returncode, 0)
 
+    def test_process_death_releases_lock(self):
+        with tempfile.TemporaryDirectory(dir=ROOT/'tests') as folder:
+            path = resources.heavy_job_path(folder)
+            code = ('import sys,time; from genseki.resources import job_lock\n'
+                    'with job_lock(sys.argv[1]):\n'
+                    ' print("locked",flush=True)\n'
+                    ' time.sleep(30)\n')
+            child = subprocess.Popen([sys.executable, '-B', '-u', '-c', code, str(path)],
+                cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            try:
+                self.assertEqual(child.stdout.readline().strip(), 'locked')
+                self.assertEqual(self.contender(path).returncode, 7)
+                child.kill()
+                child.wait(timeout=5)
+                self.assertEqual(self.contender(path).returncode, 0)
+            finally:
+                if child.poll() is None:
+                    child.kill()
+                child.communicate(timeout=5)
+
 
 if __name__ == '__main__':
     unittest.main()

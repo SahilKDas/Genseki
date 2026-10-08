@@ -640,6 +640,9 @@ impl SelectedEvaluator {
 }
 impl Evaluator for SelectedEvaluator {
     type G = Rules;
+    fn tactical_advice(&self, b: &Board, moves: &mut [Turn], order: bool, stop: &dyn Fn() -> bool) -> bool {
+        crate::tactics::advise(b, moves, order, stop)
+    }
     fn evaluate(&self, b: &Board) -> Evaluation {
         match &self.model {
             None => self.basic.evaluate(b),
