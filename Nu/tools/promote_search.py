@@ -59,7 +59,7 @@ def main():
         raise RuntimeError('opponent identity mismatch')
     if gate['openings_sha256']!=choice['gate_openings_sha256'] or alpha['openings_sha256']!=gate['openings_sha256']:
         raise RuntimeError('opening identity mismatch')
-    options=choice['settings'];names={'ThreatPlies':'threat_plies','LateMoveReductions':'lmr','CooperativeOrdering':'cooperative_ordering','RootPVS':'root_pvs'}
+    options=choice['settings'];names={'ThreatPlies':'threat_plies','LateMoveReductions':'lmr','CooperativeOrdering':'cooperative_ordering','RootPVS':'root_pvs','RootPVFirst':'root_pv_first'}
     for report in (gate,alpha):
         if not report.get('deadline_guard') or any(report.get(field,False)!=options.get(name,False) for name,field in names.items()):
             raise RuntimeError('selected policy mismatch')

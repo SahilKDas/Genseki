@@ -1,0 +1,5272 @@
+{
+  "pins": {
+    "candidate": "4242dd0637582b01dede1be7285af511fdec783ea8fe2f69e95c341ed4a04738",
+    "baseline": "76f9bcdac0e75620a1e2d4a4e77c638ce45dc8a438aefe29fdac5f31da8979c8",
+    "model": "78f265a5a96ee5994e2e5743817a2017fcbc7dc1d4d2c8fc5661d0584ed1d875",
+    "referee": "8f0616dcf73feccd349c6c5954772dd0be34e20d54a76161f43d664a665a9fdf",
+    "alpha": "80d1cc75571c2e3266e0246b2cec00d3657e3ba94029e5ca4635cfe0eaf12ef6"
+  },
+  "measurements": [
+    {
+      "policy": "guard",
+      "repeat": 0,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.7288000266999,
+      "depth": 6,
+      "nodes": 121696,
+      "timing": {
+        "setup_ns": 375000,
+        "join_ns": 7626500,
+        "total_ns": 195473600,
+        "stop_lag_ns": 473600,
+        "reply_ns": 700
+      },
+      "profile": {
+        "features_ns": 285906500,
+        "generation_ns": 169867300,
+        "ordering_ns": 63338600,
+        "tt_ns": 5836200,
+        "inference_ns": 7005700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 539703
+      },
+      "memory": {
+        "working_set_bytes": 26103808,
+        "peak_working_set_bytes": 41181184,
+        "peak_committed_bytes": 35860480
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 0,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.1487999651581,
+      "depth": 4,
+      "nodes": 77807,
+      "timing": {
+        "setup_ns": 675200,
+        "join_ns": 38521600,
+        "total_ns": 195770700,
+        "stop_lag_ns": 770700,
+        "reply_ns": 2100
+      },
+      "profile": {
+        "features_ns": 510200400,
+        "generation_ns": 437539200,
+        "ordering_ns": 98512900,
+        "tt_ns": 3746900,
+        "inference_ns": 5467700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 681343
+      },
+      "memory": {
+        "working_set_bytes": 25763840,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35864576
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 0,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.12729997606948,
+      "depth": 6,
+      "nodes": 197210,
+      "timing": {
+        "setup_ns": 720500,
+        "join_ns": 10002400,
+        "total_ns": 195809400,
+        "stop_lag_ns": 809400,
+        "reply_ns": 2100
+      },
+      "profile": {
+        "features_ns": 668867700,
+        "generation_ns": 294380100,
+        "ordering_ns": 57719400,
+        "tt_ns": 10163700,
+        "inference_ns": 14016800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 922155
+      },
+      "memory": {
+        "working_set_bytes": 26419200,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35872768
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 0,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 2.4502999731339514,
+      "depth": 1,
+      "nodes": 93,
+      "timing": {
+        "setup_ns": 695000,
+        "join_ns": 579900,
+        "total_ns": 2142100,
+        "stop_lag_ns": 0,
+        "reply_ns": 1900
+      },
+      "profile": {
+        "features_ns": 565600,
+        "generation_ns": 0,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 6800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 399
+      },
+      "memory": {
+        "working_set_bytes": 24870912,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35872768
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.0891999769956,
+      "depth": 4,
+      "nodes": 65140,
+      "timing": {
+        "setup_ns": 917300,
+        "join_ns": 19761000,
+        "total_ns": 195580200,
+        "stop_lag_ns": 580200,
+        "reply_ns": 4400
+      },
+      "profile": {
+        "features_ns": 541727300,
+        "generation_ns": 494212300,
+        "ordering_ns": 92246100,
+        "tt_ns": 3448900,
+        "inference_ns": 4626000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 675002
+      },
+      "memory": {
+        "working_set_bytes": 25743360,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35917824
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.19619997683913,
+      "depth": 4,
+      "nodes": 79384,
+      "timing": {
+        "setup_ns": 870100,
+        "join_ns": 20954600,
+        "total_ns": 195592300,
+        "stop_lag_ns": 592300,
+        "reply_ns": 2800
+      },
+      "profile": {
+        "features_ns": 600432000,
+        "generation_ns": 392777900,
+        "ordering_ns": 90022000,
+        "tt_ns": 3490500,
+        "inference_ns": 6208600,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 742158
+      },
+      "memory": {
+        "working_set_bytes": 25763840,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35864576
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.77489997027442,
+      "depth": 4,
+      "nodes": 76676,
+      "timing": {
+        "setup_ns": 694900,
+        "join_ns": 11947300,
+        "total_ns": 195465800,
+        "stop_lag_ns": 465800,
+        "reply_ns": 2000
+      },
+      "profile": {
+        "features_ns": 745833300,
+        "generation_ns": 227609900,
+        "ordering_ns": 41610700,
+        "tt_ns": 1505200,
+        "inference_ns": 6509000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 896637
+      },
+      "memory": {
+        "working_set_bytes": 26476544,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.24379999004304,
+      "depth": 4,
+      "nodes": 61418,
+      "timing": {
+        "setup_ns": 682500,
+        "join_ns": 9188700,
+        "total_ns": 195871100,
+        "stop_lag_ns": 871100,
+        "reply_ns": 2200
+      },
+      "profile": {
+        "features_ns": 530764100,
+        "generation_ns": 542788900,
+        "ordering_ns": 92063100,
+        "tt_ns": 3847600,
+        "inference_ns": 4106600,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 593860
+      },
+      "memory": {
+        "working_set_bytes": 25808896,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 0,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 6.150000030174851,
+      "depth": 2,
+      "nodes": 1625,
+      "timing": {
+        "setup_ns": 716300,
+        "join_ns": 970700,
+        "total_ns": 5843700,
+        "stop_lag_ns": 0,
+        "reply_ns": 2400
+      },
+      "profile": {
+        "features_ns": 15904600,
+        "generation_ns": 2509600,
+        "ordering_ns": 808500,
+        "tt_ns": 130700,
+        "inference_ns": 152900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 15124
+      },
+      "memory": {
+        "working_set_bytes": 25956352,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 0,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.70090004708618,
+      "depth": 6,
+      "nodes": 211514,
+      "timing": {
+        "setup_ns": 360400,
+        "join_ns": 6678100,
+        "total_ns": 195396600,
+        "stop_lag_ns": 396600,
+        "reply_ns": 900
+      },
+      "profile": {
+        "features_ns": 278846800,
+        "generation_ns": 158167200,
+        "ordering_ns": 58521500,
+        "tt_ns": 5943300,
+        "inference_ns": 7672600,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 541590
+      },
+      "memory": {
+        "working_set_bytes": 26071040,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35926016
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 0,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.83650003187358,
+      "depth": 4,
+      "nodes": 121353,
+      "timing": {
+        "setup_ns": 692800,
+        "join_ns": 65756100,
+        "total_ns": 195552800,
+        "stop_lag_ns": 552800,
+        "reply_ns": 2200
+      },
+      "profile": {
+        "features_ns": 472975500,
+        "generation_ns": 289426300,
+        "ordering_ns": 42351300,
+        "tt_ns": 1719900,
+        "inference_ns": 5221600,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 620608
+      },
+      "memory": {
+        "working_set_bytes": 26435584,
+        "peak_working_set_bytes": 41201664,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 0,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.08520000474527,
+      "depth": 5,
+      "nodes": 251467,
+      "timing": {
+        "setup_ns": 664900,
+        "join_ns": 74463600,
+        "total_ns": 195725600,
+        "stop_lag_ns": 725600,
+        "reply_ns": 4300
+      },
+      "profile": {
+        "features_ns": 400191800,
+        "generation_ns": 291848800,
+        "ordering_ns": 57380500,
+        "tt_ns": 10498000,
+        "inference_ns": 8268700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 605851
+      },
+      "memory": {
+        "working_set_bytes": 26374144,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35930112
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 0,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 7.182599976658821,
+      "depth": 1,
+      "nodes": 207,
+      "timing": {
+        "setup_ns": 758400,
+        "join_ns": 744800,
+        "total_ns": 6781600,
+        "stop_lag_ns": 0,
+        "reply_ns": 2200
+      },
+      "profile": {
+        "features_ns": 851800,
+        "generation_ns": 1159300,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 6100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 480
+      },
+      "memory": {
+        "working_set_bytes": 25088000,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35876864
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.95459999982268,
+      "depth": 4,
+      "nodes": 94018,
+      "timing": {
+        "setup_ns": 977600,
+        "join_ns": 54783300,
+        "total_ns": 195563300,
+        "stop_lag_ns": 563300,
+        "reply_ns": 1800
+      },
+      "profile": {
+        "features_ns": 444602700,
+        "generation_ns": 319928900,
+        "ordering_ns": 55433000,
+        "tt_ns": 2268000,
+        "inference_ns": 3704400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 592363
+      },
+      "memory": {
+        "working_set_bytes": 25804800,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.82069996977225,
+      "depth": 3,
+      "nodes": 54136,
+      "timing": {
+        "setup_ns": 677700,
+        "join_ns": 94162200,
+        "total_ns": 195487100,
+        "stop_lag_ns": 487100,
+        "reply_ns": 2600
+      },
+      "profile": {
+        "features_ns": 214449900,
+        "generation_ns": 181852000,
+        "ordering_ns": 21627600,
+        "tt_ns": 974700,
+        "inference_ns": 2291200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 245345
+      },
+      "memory": {
+        "working_set_bytes": 26480640,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35897344
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.8648999570869,
+      "depth": 3,
+      "nodes": 148774,
+      "timing": {
+        "setup_ns": 692000,
+        "join_ns": 12380300,
+        "total_ns": 195508100,
+        "stop_lag_ns": 508100,
+        "reply_ns": 2300
+      },
+      "profile": {
+        "features_ns": 727027800,
+        "generation_ns": 220754400,
+        "ordering_ns": 38988400,
+        "tt_ns": 1225300,
+        "inference_ns": 6480900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 899071
+      },
+      "memory": {
+        "working_set_bytes": 25718784,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35909632
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.00190001074225,
+      "depth": 4,
+      "nodes": 105642,
+      "timing": {
+        "setup_ns": 700100,
+        "join_ns": 23246100,
+        "total_ns": 195696900,
+        "stop_lag_ns": 696900,
+        "reply_ns": 2200
+      },
+      "profile": {
+        "features_ns": 518132800,
+        "generation_ns": 540539900,
+        "ordering_ns": 91101400,
+        "tt_ns": 3742800,
+        "inference_ns": 3956600,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 591172
+      },
+      "memory": {
+        "working_set_bytes": 26353664,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35913728
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 0,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 3.052000014577061,
+      "depth": 1,
+      "nodes": 116,
+      "timing": {
+        "setup_ns": 702900,
+        "join_ns": 345100,
+        "total_ns": 2686900,
+        "stop_lag_ns": 0,
+        "reply_ns": 2000
+      },
+      "profile": {
+        "features_ns": 535300,
+        "generation_ns": 2433500,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 4300,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 209
+      },
+      "memory": {
+        "working_set_bytes": 25055232,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35876864
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 0,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.6341000040993,
+      "depth": 6,
+      "nodes": 122459,
+      "timing": {
+        "setup_ns": 358200,
+        "join_ns": 14435700,
+        "total_ns": 195380600,
+        "stop_lag_ns": 380600,
+        "reply_ns": 700
+      },
+      "profile": {
+        "features_ns": 271581800,
+        "generation_ns": 212706000,
+        "ordering_ns": 77896500,
+        "tt_ns": 7281100,
+        "inference_ns": 6441900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 499168
+      },
+      "memory": {
+        "working_set_bytes": 26079232,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35864576
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 0,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.19570003123954,
+      "depth": 4,
+      "nodes": 80127,
+      "timing": {
+        "setup_ns": 680400,
+        "join_ns": 43652400,
+        "total_ns": 195823200,
+        "stop_lag_ns": 823200,
+        "reply_ns": 3300
+      },
+      "profile": {
+        "features_ns": 524763700,
+        "generation_ns": 409526900,
+        "ordering_ns": 92243400,
+        "tt_ns": 3314400,
+        "inference_ns": 5503200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 730140
+      },
+      "memory": {
+        "working_set_bytes": 26533888,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35872768
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 0,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.88669994845986,
+      "depth": 5,
+      "nodes": 138934,
+      "timing": {
+        "setup_ns": 767200,
+        "join_ns": 86548700,
+        "total_ns": 195591400,
+        "stop_lag_ns": 591400,
+        "reply_ns": 1800
+      },
+      "profile": {
+        "features_ns": 364383900,
+        "generation_ns": 253724300,
+        "ordering_ns": 53386800,
+        "tt_ns": 8194000,
+        "inference_ns": 7485100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 584784
+      },
+      "memory": {
+        "working_set_bytes": 26341376,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35876864
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 0,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 2.2936000023037195,
+      "depth": 1,
+      "nodes": 93,
+      "timing": {
+        "setup_ns": 751900,
+        "join_ns": 341700,
+        "total_ns": 1918200,
+        "stop_lag_ns": 0,
+        "reply_ns": 1700
+      },
+      "profile": {
+        "features_ns": 587800,
+        "generation_ns": 0,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 6000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 399
+      },
+      "memory": {
+        "working_set_bytes": 24842240,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.92930004000664,
+      "depth": 4,
+      "nodes": 62340,
+      "timing": {
+        "setup_ns": 686300,
+        "join_ns": 37049000,
+        "total_ns": 195636100,
+        "stop_lag_ns": 636100,
+        "reply_ns": 2300
+      },
+      "profile": {
+        "features_ns": 513781100,
+        "generation_ns": 436529400,
+        "ordering_ns": 81710000,
+        "tt_ns": 3084200,
+        "inference_ns": 4283000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 685387
+      },
+      "memory": {
+        "working_set_bytes": 26546176,
+        "peak_working_set_bytes": 41205760,
+        "peak_committed_bytes": 35909632
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.8975000306964,
+      "depth": 4,
+      "nodes": 84194,
+      "timing": {
+        "setup_ns": 678600,
+        "join_ns": 23316300,
+        "total_ns": 195570200,
+        "stop_lag_ns": 570200,
+        "reply_ns": 2900
+      },
+      "profile": {
+        "features_ns": 627700200,
+        "generation_ns": 409559400,
+        "ordering_ns": 76799100,
+        "tt_ns": 3620500,
+        "inference_ns": 6787100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 741556
+      },
+      "memory": {
+        "working_set_bytes": 26595328,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35909632
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.86610002443194,
+      "depth": 3,
+      "nodes": 75952,
+      "timing": {
+        "setup_ns": 732900,
+        "join_ns": 7792000,
+        "total_ns": 195458500,
+        "stop_lag_ns": 458500,
+        "reply_ns": 2000
+      },
+      "profile": {
+        "features_ns": 777868400,
+        "generation_ns": 222231300,
+        "ordering_ns": 41945400,
+        "tt_ns": 1458000,
+        "inference_ns": 6926900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 888015
+      },
+      "memory": {
+        "working_set_bytes": 25837568,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.9076999919489,
+      "depth": 4,
+      "nodes": 57857,
+      "timing": {
+        "setup_ns": 668400,
+        "join_ns": 40393700,
+        "total_ns": 195524000,
+        "stop_lag_ns": 524000,
+        "reply_ns": 2500
+      },
+      "profile": {
+        "features_ns": 527028700,
+        "generation_ns": 431486100,
+        "ordering_ns": 71636200,
+        "tt_ns": 3043700,
+        "inference_ns": 4166400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 595093
+      },
+      "memory": {
+        "working_set_bytes": 25636864,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35889152
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 0,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 8.109599992167205,
+      "depth": 2,
+      "nodes": 1253,
+      "timing": {
+        "setup_ns": 725700,
+        "join_ns": 2876400,
+        "total_ns": 7822600,
+        "stop_lag_ns": 0,
+        "reply_ns": 2500
+      },
+      "profile": {
+        "features_ns": 9864200,
+        "generation_ns": 3778400,
+        "ordering_ns": 3985700,
+        "tt_ns": 16900,
+        "inference_ns": 90800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 11683
+      },
+      "memory": {
+        "working_set_bytes": 25878528,
+        "peak_working_set_bytes": 41209856,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 0,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.65530004911125,
+      "depth": 6,
+      "nodes": 198756,
+      "timing": {
+        "setup_ns": 399900,
+        "join_ns": 16323000,
+        "total_ns": 195392400,
+        "stop_lag_ns": 392400,
+        "reply_ns": 700
+      },
+      "profile": {
+        "features_ns": 256393700,
+        "generation_ns": 201646000,
+        "ordering_ns": 71851500,
+        "tt_ns": 6782300,
+        "inference_ns": 6374300,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 480417
+      },
+      "memory": {
+        "working_set_bytes": 26054656,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35885056
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 0,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.0127999773249,
+      "depth": 4,
+      "nodes": 115510,
+      "timing": {
+        "setup_ns": 683500,
+        "join_ns": 63953500,
+        "total_ns": 195648400,
+        "stop_lag_ns": 648400,
+        "reply_ns": 2400
+      },
+      "profile": {
+        "features_ns": 447606900,
+        "generation_ns": 312626800,
+        "ordering_ns": 48930800,
+        "tt_ns": 1983600,
+        "inference_ns": 4839500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 599542
+      },
+      "memory": {
+        "working_set_bytes": 25788416,
+        "peak_working_set_bytes": 41181184,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 0,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.80580003093928,
+      "depth": 6,
+      "nodes": 370389,
+      "timing": {
+        "setup_ns": 652400,
+        "join_ns": 14122400,
+        "total_ns": 195510600,
+        "stop_lag_ns": 510600,
+        "reply_ns": 1800
+      },
+      "profile": {
+        "features_ns": 690035900,
+        "generation_ns": 258806300,
+        "ordering_ns": 53053500,
+        "tt_ns": 9082700,
+        "inference_ns": 14087800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 1062863
+      },
+      "memory": {
+        "working_set_bytes": 26308608,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35926016
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 0,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 11.267299996688962,
+      "depth": 1,
+      "nodes": 207,
+      "timing": {
+        "setup_ns": 953900,
+        "join_ns": 380100,
+        "total_ns": 10640800,
+        "stop_lag_ns": 0,
+        "reply_ns": 4000
+      },
+      "profile": {
+        "features_ns": 1297200,
+        "generation_ns": 1765200,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 10500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 480
+      },
+      "memory": {
+        "working_set_bytes": 25182208,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35868672
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.44779997179285,
+      "depth": 4,
+      "nodes": 73665,
+      "timing": {
+        "setup_ns": 883100,
+        "join_ns": 7240100,
+        "total_ns": 195903700,
+        "stop_lag_ns": 903700,
+        "reply_ns": 2500
+      },
+      "profile": {
+        "features_ns": 422690300,
+        "generation_ns": 207932100,
+        "ordering_ns": 34087800,
+        "tt_ns": 1317900,
+        "inference_ns": 3285100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 472055
+      },
+      "memory": {
+        "working_set_bytes": 25833472,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.40960003016517,
+      "depth": 3,
+      "nodes": 54987,
+      "timing": {
+        "setup_ns": 744100,
+        "join_ns": 34904400,
+        "total_ns": 196063900,
+        "stop_lag_ns": 1063900,
+        "reply_ns": 2000
+      },
+      "profile": {
+        "features_ns": 217213100,
+        "generation_ns": 181172400,
+        "ordering_ns": 21052300,
+        "tt_ns": 980800,
+        "inference_ns": 2468800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 232768
+      },
+      "memory": {
+        "working_set_bytes": 25649152,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35905536
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.91279997257516,
+      "depth": 3,
+      "nodes": 139723,
+      "timing": {
+        "setup_ns": 674100,
+        "join_ns": 7040700,
+        "total_ns": 195541400,
+        "stop_lag_ns": 541400,
+        "reply_ns": 2200
+      },
+      "profile": {
+        "features_ns": 747798800,
+        "generation_ns": 226333500,
+        "ordering_ns": 42928800,
+        "tt_ns": 1353400,
+        "inference_ns": 6651300,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 836755
+      },
+      "memory": {
+        "working_set_bytes": 25784320,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35909632
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.8077999879606,
+      "depth": 4,
+      "nodes": 105719,
+      "timing": {
+        "setup_ns": 629800,
+        "join_ns": 16179400,
+        "total_ns": 195470300,
+        "stop_lag_ns": 470300,
+        "reply_ns": 2500
+      },
+      "profile": {
+        "features_ns": 512981700,
+        "generation_ns": 545516900,
+        "ordering_ns": 91427900,
+        "tt_ns": 3637900,
+        "inference_ns": 3863800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 598856
+      },
+      "memory": {
+        "working_set_bytes": 25665536,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35901440
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 0,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 3.1394999823533,
+      "depth": 1,
+      "nodes": 116,
+      "timing": {
+        "setup_ns": 692700,
+        "join_ns": 304200,
+        "total_ns": 2795900,
+        "stop_lag_ns": 0,
+        "reply_ns": 2100
+      },
+      "profile": {
+        "features_ns": 667000,
+        "generation_ns": 3084800,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 5100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 209
+      },
+      "memory": {
+        "working_set_bytes": 25108480,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35889152
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 0,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.60779997846112,
+      "depth": 6,
+      "nodes": 203287,
+      "timing": {
+        "setup_ns": 367100,
+        "join_ns": 15277900,
+        "total_ns": 195351500,
+        "stop_lag_ns": 351500,
+        "reply_ns": 900
+      },
+      "profile": {
+        "features_ns": 270725000,
+        "generation_ns": 201161900,
+        "ordering_ns": 76992500,
+        "tt_ns": 6815800,
+        "inference_ns": 6289100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 497663
+      },
+      "memory": {
+        "working_set_bytes": 26103808,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35901440
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 0,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.8841999876313,
+      "depth": 3,
+      "nodes": 97117,
+      "timing": {
+        "setup_ns": 719800,
+        "join_ns": 12555100,
+        "total_ns": 195536100,
+        "stop_lag_ns": 536100,
+        "reply_ns": 2200
+      },
+      "profile": {
+        "features_ns": 367820400,
+        "generation_ns": 275868000,
+        "ordering_ns": 445047200,
+        "tt_ns": 1398200,
+        "inference_ns": 4049100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 483190
+      },
+      "memory": {
+        "working_set_bytes": 25780224,
+        "peak_working_set_bytes": 41177088,
+        "peak_committed_bytes": 35868672
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 0,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.05289999162778,
+      "depth": 6,
+      "nodes": 317989,
+      "timing": {
+        "setup_ns": 700700,
+        "join_ns": 22956500,
+        "total_ns": 195705100,
+        "stop_lag_ns": 705100,
+        "reply_ns": 2000
+      },
+      "profile": {
+        "features_ns": 589976200,
+        "generation_ns": 266928300,
+        "ordering_ns": 180866000,
+        "tt_ns": 8185200,
+        "inference_ns": 12227900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 880086
+      },
+      "memory": {
+        "working_set_bytes": 26497024,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 0,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 6.9191999500617385,
+      "depth": 1,
+      "nodes": 206,
+      "timing": {
+        "setup_ns": 839400,
+        "join_ns": 779400,
+        "total_ns": 6537700,
+        "stop_lag_ns": 0,
+        "reply_ns": 2000
+      },
+      "profile": {
+        "features_ns": 787200,
+        "generation_ns": 1464800,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 6400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 480
+      },
+      "memory": {
+        "working_set_bytes": 25137152,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35917824
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.18530001025647,
+      "depth": 4,
+      "nodes": 62144,
+      "timing": {
+        "setup_ns": 829200,
+        "join_ns": 73947200,
+        "total_ns": 195763300,
+        "stop_lag_ns": 763300,
+        "reply_ns": 2200
+      },
+      "profile": {
+        "features_ns": 307712600,
+        "generation_ns": 158712300,
+        "ordering_ns": 166551800,
+        "tt_ns": 1263400,
+        "inference_ns": 2617700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 369911
+      },
+      "memory": {
+        "working_set_bytes": 25853952,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35897344
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.9130999748595,
+      "depth": 3,
+      "nodes": 47611,
+      "timing": {
+        "setup_ns": 713900,
+        "join_ns": 21792300,
+        "total_ns": 195594700,
+        "stop_lag_ns": 594700,
+        "reply_ns": 2800
+      },
+      "profile": {
+        "features_ns": 184022100,
+        "generation_ns": 171549600,
+        "ordering_ns": 247556300,
+        "tt_ns": 907600,
+        "inference_ns": 1933400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 207833
+      },
+      "memory": {
+        "working_set_bytes": 26480640,
+        "peak_working_set_bytes": 41181184,
+        "peak_committed_bytes": 35889152
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.0927000036463,
+      "depth": 3,
+      "nodes": 125933,
+      "timing": {
+        "setup_ns": 776300,
+        "join_ns": 10821800,
+        "total_ns": 195695300,
+        "stop_lag_ns": 695300,
+        "reply_ns": 2700
+      },
+      "profile": {
+        "features_ns": 635129300,
+        "generation_ns": 200112400,
+        "ordering_ns": 284237900,
+        "tt_ns": 1035600,
+        "inference_ns": 5605700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 748176
+      },
+      "memory": {
+        "working_set_bytes": 26763264,
+        "peak_working_set_bytes": 41201664,
+        "peak_committed_bytes": 35938304
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.0506000323221,
+      "depth": 4,
+      "nodes": 87885,
+      "timing": {
+        "setup_ns": 896700,
+        "join_ns": 51583300,
+        "total_ns": 195647500,
+        "stop_lag_ns": 647500,
+        "reply_ns": 2900
+      },
+      "profile": {
+        "features_ns": 477483300,
+        "generation_ns": 343663900,
+        "ordering_ns": 134872900,
+        "tt_ns": 2635400,
+        "inference_ns": 3753100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 539690
+      },
+      "memory": {
+        "working_set_bytes": 25628672,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35930112
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 0,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 4.904299974441528,
+      "depth": 1,
+      "nodes": 116,
+      "timing": {
+        "setup_ns": 2257500,
+        "join_ns": 369000,
+        "total_ns": 4411600,
+        "stop_lag_ns": 0,
+        "reply_ns": 3800
+      },
+      "profile": {
+        "features_ns": 549100,
+        "generation_ns": 2517500,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 4400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 209
+      },
+      "memory": {
+        "working_set_bytes": 25042944,
+        "peak_working_set_bytes": 41172992,
+        "peak_committed_bytes": 35856384
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 0,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.65690000308678,
+      "depth": 6,
+      "nodes": 210511,
+      "timing": {
+        "setup_ns": 371000,
+        "join_ns": 13056900,
+        "total_ns": 195393500,
+        "stop_lag_ns": 393500,
+        "reply_ns": 600
+      },
+      "profile": {
+        "features_ns": 278286200,
+        "generation_ns": 159994000,
+        "ordering_ns": 59036900,
+        "tt_ns": 5980600,
+        "inference_ns": 7137500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 535380
+      },
+      "memory": {
+        "working_set_bytes": 26038272,
+        "peak_working_set_bytes": 41201664,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 0,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.89309999719262,
+      "depth": 2,
+      "nodes": 17862,
+      "timing": {
+        "setup_ns": 661700,
+        "join_ns": 126180700,
+        "total_ns": 195546600,
+        "stop_lag_ns": 546600,
+        "reply_ns": 2300
+      },
+      "profile": {
+        "features_ns": 78592400,
+        "generation_ns": 125351100,
+        "ordering_ns": 5187800,
+        "tt_ns": 281500,
+        "inference_ns": 857900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 98661
+      },
+      "memory": {
+        "working_set_bytes": 25616384,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35913728
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 0,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.11760001862422,
+      "depth": 5,
+      "nodes": 192403,
+      "timing": {
+        "setup_ns": 705800,
+        "join_ns": 12053100,
+        "total_ns": 195694300,
+        "stop_lag_ns": 694300,
+        "reply_ns": 3900
+      },
+      "profile": {
+        "features_ns": 345767600,
+        "generation_ns": 261484500,
+        "ordering_ns": 32522600,
+        "tt_ns": 7372400,
+        "inference_ns": 7280200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 468830
+      },
+      "memory": {
+        "working_set_bytes": 25571328,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35913728
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 0,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 7.881099998485297,
+      "depth": 1,
+      "nodes": 362,
+      "timing": {
+        "setup_ns": 700800,
+        "join_ns": 1347800,
+        "total_ns": 7451200,
+        "stop_lag_ns": 0,
+        "reply_ns": 2100
+      },
+      "profile": {
+        "features_ns": 2466000,
+        "generation_ns": 3463300,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 20500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 1814
+      },
+      "memory": {
+        "working_set_bytes": 25415680,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35897344
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.89859998086467,
+      "depth": 3,
+      "nodes": 37703,
+      "timing": {
+        "setup_ns": 694100,
+        "join_ns": 115350500,
+        "total_ns": 195537900,
+        "stop_lag_ns": 537900,
+        "reply_ns": 1400
+      },
+      "profile": {
+        "features_ns": 202759600,
+        "generation_ns": 95418000,
+        "ordering_ns": 9841800,
+        "tt_ns": 479500,
+        "inference_ns": 1806200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 235694
+      },
+      "memory": {
+        "working_set_bytes": 25702400,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35860480
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.0308999987319,
+      "depth": 2,
+      "nodes": 15862,
+      "timing": {
+        "setup_ns": 730800,
+        "join_ns": 26177700,
+        "total_ns": 195675100,
+        "stop_lag_ns": 675100,
+        "reply_ns": 2000
+      },
+      "profile": {
+        "features_ns": 107787400,
+        "generation_ns": 96374100,
+        "ordering_ns": 6630700,
+        "tt_ns": 104200,
+        "inference_ns": 1171000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 98960
+      },
+      "memory": {
+        "working_set_bytes": 25509888,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35868672
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.1882999748923,
+      "depth": 3,
+      "nodes": 33454,
+      "timing": {
+        "setup_ns": 704000,
+        "join_ns": 109178200,
+        "total_ns": 195835800,
+        "stop_lag_ns": 835800,
+        "reply_ns": 2800
+      },
+      "profile": {
+        "features_ns": 175157600,
+        "generation_ns": 147915900,
+        "ordering_ns": 14646200,
+        "tt_ns": 518300,
+        "inference_ns": 1513400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 205148
+      },
+      "memory": {
+        "working_set_bytes": 26411008,
+        "peak_working_set_bytes": 41201664,
+        "peak_committed_bytes": 35917824
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 0,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.03479997022077,
+      "depth": 4,
+      "nodes": 95296,
+      "timing": {
+        "setup_ns": 699500,
+        "join_ns": 23280100,
+        "total_ns": 195572900,
+        "stop_lag_ns": 572900,
+        "reply_ns": 2400
+      },
+      "profile": {
+        "features_ns": 483197400,
+        "generation_ns": 490258100,
+        "ordering_ns": 79346800,
+        "tt_ns": 3416200,
+        "inference_ns": 3707300,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 556064
+      },
+      "memory": {
+        "working_set_bytes": 25645056,
+        "peak_working_set_bytes": 41177088,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 0,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 136.0351000330411,
+      "depth": 1,
+      "nodes": 3093,
+      "timing": {
+        "setup_ns": 718500,
+        "join_ns": 26116400,
+        "total_ns": 135607800,
+        "stop_lag_ns": 0,
+        "reply_ns": 2300
+      },
+      "profile": {
+        "features_ns": 7950000,
+        "generation_ns": 46081500,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 66600,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 5297
+      },
+      "memory": {
+        "working_set_bytes": 25513984,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35864576
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 1,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.57649997295812,
+      "depth": 6,
+      "nodes": 124789,
+      "timing": {
+        "setup_ns": 423000,
+        "join_ns": 32405100,
+        "total_ns": 195320100,
+        "stop_lag_ns": 320100,
+        "reply_ns": 800
+      },
+      "profile": {
+        "features_ns": 275548300,
+        "generation_ns": 159810400,
+        "ordering_ns": 59586300,
+        "tt_ns": 6039200,
+        "inference_ns": 6853400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 555329
+      },
+      "memory": {
+        "working_set_bytes": 26099712,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 1,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.90039999457076,
+      "depth": 4,
+      "nodes": 74131,
+      "timing": {
+        "setup_ns": 660100,
+        "join_ns": 36049200,
+        "total_ns": 195575100,
+        "stop_lag_ns": 575100,
+        "reply_ns": 2300
+      },
+      "profile": {
+        "features_ns": 488859400,
+        "generation_ns": 459889200,
+        "ordering_ns": 105856300,
+        "tt_ns": 3630700,
+        "inference_ns": 5020400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 648151
+      },
+      "memory": {
+        "working_set_bytes": 26619904,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35897344
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 1,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.95520000439137,
+      "depth": 6,
+      "nodes": 211993,
+      "timing": {
+        "setup_ns": 662800,
+        "join_ns": 21785200,
+        "total_ns": 195592100,
+        "stop_lag_ns": 592100,
+        "reply_ns": 3800
+      },
+      "profile": {
+        "features_ns": 668841500,
+        "generation_ns": 295293900,
+        "ordering_ns": 58499700,
+        "tt_ns": 10333500,
+        "inference_ns": 14370100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 1013125
+      },
+      "memory": {
+        "working_set_bytes": 25718784,
+        "peak_working_set_bytes": 41181184,
+        "peak_committed_bytes": 35885056
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 1,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 2.4025000166147947,
+      "depth": 1,
+      "nodes": 93,
+      "timing": {
+        "setup_ns": 686700,
+        "join_ns": 458600,
+        "total_ns": 2023800,
+        "stop_lag_ns": 0,
+        "reply_ns": 1900
+      },
+      "profile": {
+        "features_ns": 588200,
+        "generation_ns": 0,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 5900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 399
+      },
+      "memory": {
+        "working_set_bytes": 24838144,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35864576
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.1068999953568,
+      "depth": 4,
+      "nodes": 66379,
+      "timing": {
+        "setup_ns": 744900,
+        "join_ns": 5984400,
+        "total_ns": 195738300,
+        "stop_lag_ns": 738300,
+        "reply_ns": 2300
+      },
+      "profile": {
+        "features_ns": 551839500,
+        "generation_ns": 550490700,
+        "ordering_ns": 110906800,
+        "tt_ns": 3697300,
+        "inference_ns": 4364900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 712552
+      },
+      "memory": {
+        "working_set_bytes": 25829376,
+        "peak_working_set_bytes": 41201664,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.1081000044942,
+      "depth": 4,
+      "nodes": 82397,
+      "timing": {
+        "setup_ns": 689500,
+        "join_ns": 27477700,
+        "total_ns": 195567600,
+        "stop_lag_ns": 567600,
+        "reply_ns": 6100
+      },
+      "profile": {
+        "features_ns": 591354800,
+        "generation_ns": 413334700,
+        "ordering_ns": 76858600,
+        "tt_ns": 3626300,
+        "inference_ns": 6081100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 736421
+      },
+      "memory": {
+        "working_set_bytes": 25636864,
+        "peak_working_set_bytes": 41181184,
+        "peak_committed_bytes": 35876864
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.0426999721676,
+      "depth": 3,
+      "nodes": 72842,
+      "timing": {
+        "setup_ns": 689700,
+        "join_ns": 37005600,
+        "total_ns": 195679900,
+        "stop_lag_ns": 679900,
+        "reply_ns": 3400
+      },
+      "profile": {
+        "features_ns": 706021100,
+        "generation_ns": 201428500,
+        "ordering_ns": 37592600,
+        "tt_ns": 1162200,
+        "inference_ns": 6366000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 846588
+      },
+      "memory": {
+        "working_set_bytes": 26546176,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35913728
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.98139997106045,
+      "depth": 4,
+      "nodes": 63234,
+      "timing": {
+        "setup_ns": 777200,
+        "join_ns": 12856400,
+        "total_ns": 195568500,
+        "stop_lag_ns": 568500,
+        "reply_ns": 2600
+      },
+      "profile": {
+        "features_ns": 530059300,
+        "generation_ns": 562661000,
+        "ordering_ns": 95337600,
+        "tt_ns": 3733400,
+        "inference_ns": 4102800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 599555
+      },
+      "memory": {
+        "working_set_bytes": 25673728,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35889152
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 1,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 6.718599994201213,
+      "depth": 2,
+      "nodes": 1498,
+      "timing": {
+        "setup_ns": 670500,
+        "join_ns": 2236800,
+        "total_ns": 6367900,
+        "stop_lag_ns": 0,
+        "reply_ns": 2300
+      },
+      "profile": {
+        "features_ns": 12658200,
+        "generation_ns": 5262000,
+        "ordering_ns": 3233900,
+        "tt_ns": 15600,
+        "inference_ns": 119900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 13851
+      },
+      "memory": {
+        "working_set_bytes": 25145344,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 1,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.64189994707704,
+      "depth": 6,
+      "nodes": 209387,
+      "timing": {
+        "setup_ns": 362500,
+        "join_ns": 4338300,
+        "total_ns": 195383800,
+        "stop_lag_ns": 383800,
+        "reply_ns": 600
+      },
+      "profile": {
+        "features_ns": 269624200,
+        "generation_ns": 155991100,
+        "ordering_ns": 55593000,
+        "tt_ns": 5587200,
+        "inference_ns": 6644300,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 531995
+      },
+      "memory": {
+        "working_set_bytes": 26054656,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35901440
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 1,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.73529995977879,
+      "depth": 4,
+      "nodes": 119565,
+      "timing": {
+        "setup_ns": 675800,
+        "join_ns": 45502700,
+        "total_ns": 195453200,
+        "stop_lag_ns": 453200,
+        "reply_ns": 2300
+      },
+      "profile": {
+        "features_ns": 462035800,
+        "generation_ns": 297893700,
+        "ordering_ns": 43142800,
+        "tt_ns": 1749000,
+        "inference_ns": 5762400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 607587
+      },
+      "memory": {
+        "working_set_bytes": 26644480,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35913728
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 1,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.19849999435246,
+      "depth": 5,
+      "nodes": 250912,
+      "timing": {
+        "setup_ns": 775600,
+        "join_ns": 63586800,
+        "total_ns": 195657600,
+        "stop_lag_ns": 657600,
+        "reply_ns": 6700
+      },
+      "profile": {
+        "features_ns": 423632800,
+        "generation_ns": 306766800,
+        "ordering_ns": 60516400,
+        "tt_ns": 10300600,
+        "inference_ns": 9199100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 601770
+      },
+      "memory": {
+        "working_set_bytes": 25550848,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35889152
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 1,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 7.4346999754197896,
+      "depth": 1,
+      "nodes": 207,
+      "timing": {
+        "setup_ns": 690600,
+        "join_ns": 1423800,
+        "total_ns": 7047200,
+        "stop_lag_ns": 0,
+        "reply_ns": 1800
+      },
+      "profile": {
+        "features_ns": 1445900,
+        "generation_ns": 1838000,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 11200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 480
+      },
+      "memory": {
+        "working_set_bytes": 25317376,
+        "peak_working_set_bytes": 41177088,
+        "peak_committed_bytes": 35897344
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.9258000133559,
+      "depth": 4,
+      "nodes": 91255,
+      "timing": {
+        "setup_ns": 791400,
+        "join_ns": 52461500,
+        "total_ns": 195626200,
+        "stop_lag_ns": 626200,
+        "reply_ns": 2200
+      },
+      "profile": {
+        "features_ns": 437278000,
+        "generation_ns": 373982600,
+        "ordering_ns": 62826600,
+        "tt_ns": 2498200,
+        "inference_ns": 3664400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 549769
+      },
+      "memory": {
+        "working_set_bytes": 26529792,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.8638000069186,
+      "depth": 3,
+      "nodes": 56895,
+      "timing": {
+        "setup_ns": 628900,
+        "join_ns": 89474900,
+        "total_ns": 195537800,
+        "stop_lag_ns": 537800,
+        "reply_ns": 3600
+      },
+      "profile": {
+        "features_ns": 230088300,
+        "generation_ns": 180081400,
+        "ordering_ns": 21941300,
+        "tt_ns": 1001200,
+        "inference_ns": 2561100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 252416
+      },
+      "memory": {
+        "working_set_bytes": 26521600,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.16549997590482,
+      "depth": 3,
+      "nodes": 142364,
+      "timing": {
+        "setup_ns": 800800,
+        "join_ns": 3288600,
+        "total_ns": 195786300,
+        "stop_lag_ns": 786300,
+        "reply_ns": 3000
+      },
+      "profile": {
+        "features_ns": 740124300,
+        "generation_ns": 229669200,
+        "ordering_ns": 38524300,
+        "tt_ns": 1395400,
+        "inference_ns": 6305600,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 866124
+      },
+      "memory": {
+        "working_set_bytes": 26517504,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35930112
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.91459998628125,
+      "depth": 4,
+      "nodes": 100526,
+      "timing": {
+        "setup_ns": 676700,
+        "join_ns": 11441400,
+        "total_ns": 195585000,
+        "stop_lag_ns": 585000,
+        "reply_ns": 2400
+      },
+      "profile": {
+        "features_ns": 532432000,
+        "generation_ns": 531142700,
+        "ordering_ns": 87864900,
+        "tt_ns": 3619700,
+        "inference_ns": 4070900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 589823
+      },
+      "memory": {
+        "working_set_bytes": 26460160,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35876864
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 1,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 3.5328000085428357,
+      "depth": 1,
+      "nodes": 116,
+      "timing": {
+        "setup_ns": 753000,
+        "join_ns": 341600,
+        "total_ns": 3156300,
+        "stop_lag_ns": 0,
+        "reply_ns": 2100
+      },
+      "profile": {
+        "features_ns": 460100,
+        "generation_ns": 3694200,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 4700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 209
+      },
+      "memory": {
+        "working_set_bytes": 24965120,
+        "peak_working_set_bytes": 41205760,
+        "peak_committed_bytes": 35909632
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 1,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.72190003236756,
+      "depth": 6,
+      "nodes": 130540,
+      "timing": {
+        "setup_ns": 350500,
+        "join_ns": 8610300,
+        "total_ns": 195441400,
+        "stop_lag_ns": 441400,
+        "reply_ns": 800
+      },
+      "profile": {
+        "features_ns": 285076300,
+        "generation_ns": 218555600,
+        "ordering_ns": 78612100,
+        "tt_ns": 7484600,
+        "inference_ns": 6635100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 537377
+      },
+      "memory": {
+        "working_set_bytes": 26152960,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 1,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.86650002747774,
+      "depth": 4,
+      "nodes": 80768,
+      "timing": {
+        "setup_ns": 710200,
+        "join_ns": 43560800,
+        "total_ns": 195539200,
+        "stop_lag_ns": 539200,
+        "reply_ns": 2000
+      },
+      "profile": {
+        "features_ns": 508016100,
+        "generation_ns": 453607800,
+        "ordering_ns": 103119700,
+        "tt_ns": 3736200,
+        "inference_ns": 5418400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 692753
+      },
+      "memory": {
+        "working_set_bytes": 26701824,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 1,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.76060003601015,
+      "depth": 5,
+      "nodes": 136581,
+      "timing": {
+        "setup_ns": 657200,
+        "join_ns": 83149600,
+        "total_ns": 195478300,
+        "stop_lag_ns": 478300,
+        "reply_ns": 2400
+      },
+      "profile": {
+        "features_ns": 392515600,
+        "generation_ns": 270867700,
+        "ordering_ns": 56126800,
+        "tt_ns": 9112700,
+        "inference_ns": 8343700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 559450
+      },
+      "memory": {
+        "working_set_bytes": 26398720,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 1,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 2.266000024974346,
+      "depth": 1,
+      "nodes": 93,
+      "timing": {
+        "setup_ns": 733600,
+        "join_ns": 401800,
+        "total_ns": 1953800,
+        "stop_lag_ns": 0,
+        "reply_ns": 1900
+      },
+      "profile": {
+        "features_ns": 553200,
+        "generation_ns": 0,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 5500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 399
+      },
+      "memory": {
+        "working_set_bytes": 24838144,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35897344
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.87749999482185,
+      "depth": 4,
+      "nodes": 64873,
+      "timing": {
+        "setup_ns": 663900,
+        "join_ns": 8371900,
+        "total_ns": 195596600,
+        "stop_lag_ns": 596600,
+        "reply_ns": 2100
+      },
+      "profile": {
+        "features_ns": 585041700,
+        "generation_ns": 506912500,
+        "ordering_ns": 99521100,
+        "tt_ns": 3473900,
+        "inference_ns": 4823200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 717107
+      },
+      "memory": {
+        "working_set_bytes": 26595328,
+        "peak_working_set_bytes": 41201664,
+        "peak_committed_bytes": 35897344
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.84210001630709,
+      "depth": 4,
+      "nodes": 83835,
+      "timing": {
+        "setup_ns": 676000,
+        "join_ns": 32089100,
+        "total_ns": 195540400,
+        "stop_lag_ns": 540400,
+        "reply_ns": 2300
+      },
+      "profile": {
+        "features_ns": 601897200,
+        "generation_ns": 394333200,
+        "ordering_ns": 72995300,
+        "tt_ns": 3450700,
+        "inference_ns": 6477000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 748986
+      },
+      "memory": {
+        "working_set_bytes": 26652672,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.12059998326004,
+      "depth": 4,
+      "nodes": 78901,
+      "timing": {
+        "setup_ns": 691600,
+        "join_ns": 18365500,
+        "total_ns": 195712400,
+        "stop_lag_ns": 712400,
+        "reply_ns": 2000
+      },
+      "profile": {
+        "features_ns": 760243800,
+        "generation_ns": 205131900,
+        "ordering_ns": 35917400,
+        "tt_ns": 1298600,
+        "inference_ns": 6903500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 915542
+      },
+      "memory": {
+        "working_set_bytes": 25878528,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35897344
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.84510003915057,
+      "depth": 4,
+      "nodes": 61375,
+      "timing": {
+        "setup_ns": 688400,
+        "join_ns": 28112300,
+        "total_ns": 195486700,
+        "stop_lag_ns": 486700,
+        "reply_ns": 1900
+      },
+      "profile": {
+        "features_ns": 508397600,
+        "generation_ns": 537834500,
+        "ordering_ns": 92025500,
+        "tt_ns": 3818500,
+        "inference_ns": 3802700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 610952
+      },
+      "memory": {
+        "working_set_bytes": 25620480,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35885056
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 1,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 6.882999965455383,
+      "depth": 2,
+      "nodes": 1482,
+      "timing": {
+        "setup_ns": 737400,
+        "join_ns": 1579300,
+        "total_ns": 6535800,
+        "stop_lag_ns": 0,
+        "reply_ns": 2100
+      },
+      "profile": {
+        "features_ns": 13179000,
+        "generation_ns": 5543400,
+        "ordering_ns": 601100,
+        "tt_ns": 15800,
+        "inference_ns": 119100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 14010
+      },
+      "memory": {
+        "working_set_bytes": 25116672,
+        "peak_working_set_bytes": 41177088,
+        "peak_committed_bytes": 35860480
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 1,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.73129998752847,
+      "depth": 6,
+      "nodes": 200830,
+      "timing": {
+        "setup_ns": 339900,
+        "join_ns": 12063700,
+        "total_ns": 195446700,
+        "stop_lag_ns": 446700,
+        "reply_ns": 700
+      },
+      "profile": {
+        "features_ns": 263269600,
+        "generation_ns": 212312000,
+        "ordering_ns": 74573400,
+        "tt_ns": 6998400,
+        "inference_ns": 6181800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 488006
+      },
+      "memory": {
+        "working_set_bytes": 26038272,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35876864
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 1,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.90690004406497,
+      "depth": 4,
+      "nodes": 117012,
+      "timing": {
+        "setup_ns": 746400,
+        "join_ns": 22060600,
+        "total_ns": 195501800,
+        "stop_lag_ns": 501800,
+        "reply_ns": 1800
+      },
+      "profile": {
+        "features_ns": 463000300,
+        "generation_ns": 295869600,
+        "ordering_ns": 44006500,
+        "tt_ns": 1701300,
+        "inference_ns": 5114000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 606040
+      },
+      "memory": {
+        "working_set_bytes": 25821184,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35930112
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 1,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.05630001751706,
+      "depth": 5,
+      "nodes": 225528,
+      "timing": {
+        "setup_ns": 667200,
+        "join_ns": 90933800,
+        "total_ns": 195732100,
+        "stop_lag_ns": 732100,
+        "reply_ns": 1800
+      },
+      "profile": {
+        "features_ns": 375649200,
+        "generation_ns": 269137200,
+        "ordering_ns": 54784200,
+        "tt_ns": 8728600,
+        "inference_ns": 7905900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 558960
+      },
+      "memory": {
+        "working_set_bytes": 26411008,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 1,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 8.401700004469603,
+      "depth": 1,
+      "nodes": 207,
+      "timing": {
+        "setup_ns": 727500,
+        "join_ns": 1289800,
+        "total_ns": 8010300,
+        "stop_lag_ns": 0,
+        "reply_ns": 1900
+      },
+      "profile": {
+        "features_ns": 1073500,
+        "generation_ns": 1352900,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 8200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 480
+      },
+      "memory": {
+        "working_set_bytes": 25239552,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35901440
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.05870003579184,
+      "depth": 4,
+      "nodes": 55260,
+      "timing": {
+        "setup_ns": 763400,
+        "join_ns": 111772100,
+        "total_ns": 195746500,
+        "stop_lag_ns": 746500,
+        "reply_ns": 1800
+      },
+      "profile": {
+        "features_ns": 282420400,
+        "generation_ns": 128883300,
+        "ordering_ns": 23159800,
+        "tt_ns": 954600,
+        "inference_ns": 2557100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 332016
+      },
+      "memory": {
+        "working_set_bytes": 26460160,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35889152
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.95000002300367,
+      "depth": 3,
+      "nodes": 58382,
+      "timing": {
+        "setup_ns": 640800,
+        "join_ns": 90761500,
+        "total_ns": 195649900,
+        "stop_lag_ns": 649900,
+        "reply_ns": 2600
+      },
+      "profile": {
+        "features_ns": 218873000,
+        "generation_ns": 175778600,
+        "ordering_ns": 22429800,
+        "tt_ns": 1107900,
+        "inference_ns": 2508800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 249102
+      },
+      "memory": {
+        "working_set_bytes": 26468352,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35905536
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.1328000179492,
+      "depth": 3,
+      "nodes": 150696,
+      "timing": {
+        "setup_ns": 723500,
+        "join_ns": 4438100,
+        "total_ns": 195736400,
+        "stop_lag_ns": 736400,
+        "reply_ns": 4100
+      },
+      "profile": {
+        "features_ns": 753750200,
+        "generation_ns": 225813700,
+        "ordering_ns": 38817700,
+        "tt_ns": 1283900,
+        "inference_ns": 6724800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 876111
+      },
+      "memory": {
+        "working_set_bytes": 26537984,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35901440
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.04499998968095,
+      "depth": 4,
+      "nodes": 100296,
+      "timing": {
+        "setup_ns": 671200,
+        "join_ns": 17830500,
+        "total_ns": 195669900,
+        "stop_lag_ns": 669900,
+        "reply_ns": 2400
+      },
+      "profile": {
+        "features_ns": 510735200,
+        "generation_ns": 526458000,
+        "ordering_ns": 90007100,
+        "tt_ns": 3609900,
+        "inference_ns": 3890800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 577155
+      },
+      "memory": {
+        "working_set_bytes": 25595904,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35917824
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 1,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 3.062700037844479,
+      "depth": 1,
+      "nodes": 116,
+      "timing": {
+        "setup_ns": 687600,
+        "join_ns": 385100,
+        "total_ns": 2710000,
+        "stop_lag_ns": 0,
+        "reply_ns": 2900
+      },
+      "profile": {
+        "features_ns": 544300,
+        "generation_ns": 2832600,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 4700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 209
+      },
+      "memory": {
+        "working_set_bytes": 25731072,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35917824
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 1,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.83740003872663,
+      "depth": 6,
+      "nodes": 186971,
+      "timing": {
+        "setup_ns": 354200,
+        "join_ns": 18501400,
+        "total_ns": 195567700,
+        "stop_lag_ns": 567700,
+        "reply_ns": 1000
+      },
+      "profile": {
+        "features_ns": 270467300,
+        "generation_ns": 193048400,
+        "ordering_ns": 74765500,
+        "tt_ns": 6894600,
+        "inference_ns": 6358500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 457917
+      },
+      "memory": {
+        "working_set_bytes": 26046464,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35913728
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 1,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.14750001346692,
+      "depth": 3,
+      "nodes": 81046,
+      "timing": {
+        "setup_ns": 868200,
+        "join_ns": 5468300,
+        "total_ns": 195736300,
+        "stop_lag_ns": 736300,
+        "reply_ns": 2700
+      },
+      "profile": {
+        "features_ns": 384099600,
+        "generation_ns": 271568100,
+        "ordering_ns": 430384900,
+        "tt_ns": 1265100,
+        "inference_ns": 4206200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 400458
+      },
+      "memory": {
+        "working_set_bytes": 26488832,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 1,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.18239998817444,
+      "depth": 5,
+      "nodes": 211662,
+      "timing": {
+        "setup_ns": 830100,
+        "join_ns": 36583400,
+        "total_ns": 195634700,
+        "stop_lag_ns": 634700,
+        "reply_ns": 3700
+      },
+      "profile": {
+        "features_ns": 459090500,
+        "generation_ns": 297885800,
+        "ordering_ns": 207044200,
+        "tt_ns": 9784200,
+        "inference_ns": 9928100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 512138
+      },
+      "memory": {
+        "working_set_bytes": 25632768,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35909632
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 1,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 10.808899998664856,
+      "depth": 1,
+      "nodes": 206,
+      "timing": {
+        "setup_ns": 1125100,
+        "join_ns": 678900,
+        "total_ns": 10420200,
+        "stop_lag_ns": 0,
+        "reply_ns": 2400
+      },
+      "profile": {
+        "features_ns": 2683900,
+        "generation_ns": 2979800,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 15400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 480
+      },
+      "memory": {
+        "working_set_bytes": 26013696,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35901440
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.93430001987144,
+      "depth": 3,
+      "nodes": 52568,
+      "timing": {
+        "setup_ns": 713900,
+        "join_ns": 84665100,
+        "total_ns": 195567400,
+        "stop_lag_ns": 567400,
+        "reply_ns": 1800
+      },
+      "profile": {
+        "features_ns": 327312100,
+        "generation_ns": 139433500,
+        "ordering_ns": 152027600,
+        "tt_ns": 983600,
+        "inference_ns": 2904200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 318529
+      },
+      "memory": {
+        "working_set_bytes": 25808896,
+        "peak_working_set_bytes": 41205760,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.256400027778,
+      "depth": 3,
+      "nodes": 43905,
+      "timing": {
+        "setup_ns": 1328000,
+        "join_ns": 11758900,
+        "total_ns": 195853300,
+        "stop_lag_ns": 853300,
+        "reply_ns": 3600
+      },
+      "profile": {
+        "features_ns": 211573800,
+        "generation_ns": 202569800,
+        "ordering_ns": 322781400,
+        "tt_ns": 1052200,
+        "inference_ns": 2241100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 205487
+      },
+      "memory": {
+        "working_set_bytes": 26484736,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.10590004594997,
+      "depth": 3,
+      "nodes": 93862,
+      "timing": {
+        "setup_ns": 790300,
+        "join_ns": 13906600,
+        "total_ns": 195636200,
+        "stop_lag_ns": 636200,
+        "reply_ns": 3700
+      },
+      "profile": {
+        "features_ns": 612078500,
+        "generation_ns": 194800400,
+        "ordering_ns": 293044800,
+        "tt_ns": 1061700,
+        "inference_ns": 5576600,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 552057
+      },
+      "memory": {
+        "working_set_bytes": 26628096,
+        "peak_working_set_bytes": 41201664,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.16839999798685,
+      "depth": 4,
+      "nodes": 76779,
+      "timing": {
+        "setup_ns": 830900,
+        "join_ns": 41350300,
+        "total_ns": 195688200,
+        "stop_lag_ns": 688200,
+        "reply_ns": 2700
+      },
+      "profile": {
+        "features_ns": 549004700,
+        "generation_ns": 377962900,
+        "ordering_ns": 161030300,
+        "tt_ns": 2742600,
+        "inference_ns": 4110300,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 496738
+      },
+      "memory": {
+        "working_set_bytes": 25690112,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 1,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 6.0116000240668654,
+      "depth": 1,
+      "nodes": 116,
+      "timing": {
+        "setup_ns": 2638900,
+        "join_ns": 410000,
+        "total_ns": 5388300,
+        "stop_lag_ns": 0,
+        "reply_ns": 5000
+      },
+      "profile": {
+        "features_ns": 633100,
+        "generation_ns": 2650700,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 5400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 209
+      },
+      "memory": {
+        "working_set_bytes": 24989696,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 1,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.70079998811707,
+      "depth": 6,
+      "nodes": 186003,
+      "timing": {
+        "setup_ns": 392200,
+        "join_ns": 15554900,
+        "total_ns": 195395000,
+        "stop_lag_ns": 395000,
+        "reply_ns": 800
+      },
+      "profile": {
+        "features_ns": 276439100,
+        "generation_ns": 151757700,
+        "ordering_ns": 57492600,
+        "tt_ns": 5060100,
+        "inference_ns": 6908000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 472797
+      },
+      "memory": {
+        "working_set_bytes": 26071040,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35897344
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 1,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.0694000008516,
+      "depth": 2,
+      "nodes": 15334,
+      "timing": {
+        "setup_ns": 694700,
+        "join_ns": 127901500,
+        "total_ns": 195694300,
+        "stop_lag_ns": 694300,
+        "reply_ns": 1900
+      },
+      "profile": {
+        "features_ns": 76860900,
+        "generation_ns": 125996900,
+        "ordering_ns": 6615100,
+        "tt_ns": 307500,
+        "inference_ns": 853500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 83200
+      },
+      "memory": {
+        "working_set_bytes": 25788416,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35889152
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 1,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.08429999789223,
+      "depth": 5,
+      "nodes": 165431,
+      "timing": {
+        "setup_ns": 747000,
+        "join_ns": 57438100,
+        "total_ns": 195760000,
+        "stop_lag_ns": 760000,
+        "reply_ns": 3100
+      },
+      "profile": {
+        "features_ns": 347160800,
+        "generation_ns": 223728500,
+        "ordering_ns": 40523500,
+        "tt_ns": 5003600,
+        "inference_ns": 7259700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 431976
+      },
+      "memory": {
+        "working_set_bytes": 26329088,
+        "peak_working_set_bytes": 41201664,
+        "peak_committed_bytes": 35897344
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 1,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 9.44080000044778,
+      "depth": 1,
+      "nodes": 362,
+      "timing": {
+        "setup_ns": 765100,
+        "join_ns": 641600,
+        "total_ns": 8979400,
+        "stop_lag_ns": 0,
+        "reply_ns": 3000
+      },
+      "profile": {
+        "features_ns": 3117300,
+        "generation_ns": 4653800,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 45300,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 1814
+      },
+      "memory": {
+        "working_set_bytes": 25292800,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35860480
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.26539997989312,
+      "depth": 3,
+      "nodes": 17942,
+      "timing": {
+        "setup_ns": 695500,
+        "join_ns": 103473400,
+        "total_ns": 195859700,
+        "stop_lag_ns": 859700,
+        "reply_ns": 1700
+      },
+      "profile": {
+        "features_ns": 115000800,
+        "generation_ns": 81340400,
+        "ordering_ns": 10193300,
+        "tt_ns": 370100,
+        "inference_ns": 1024200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 110650
+      },
+      "memory": {
+        "working_set_bytes": 25747456,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.17960002506152,
+      "depth": 2,
+      "nodes": 13947,
+      "timing": {
+        "setup_ns": 991100,
+        "join_ns": 27254600,
+        "total_ns": 195674300,
+        "stop_lag_ns": 674300,
+        "reply_ns": 2700
+      },
+      "profile": {
+        "features_ns": 107576200,
+        "generation_ns": 99780600,
+        "ordering_ns": 1829900,
+        "tt_ns": 107200,
+        "inference_ns": 1184600,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 87541
+      },
+      "memory": {
+        "working_set_bytes": 25567232,
+        "peak_working_set_bytes": 41177088,
+        "peak_committed_bytes": 35872768
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.0084000020288,
+      "depth": 3,
+      "nodes": 52611,
+      "timing": {
+        "setup_ns": 824000,
+        "join_ns": 50224700,
+        "total_ns": 195586600,
+        "stop_lag_ns": 586600,
+        "reply_ns": 3500
+      },
+      "profile": {
+        "features_ns": 347314400,
+        "generation_ns": 201658600,
+        "ordering_ns": 20092200,
+        "tt_ns": 668300,
+        "inference_ns": 3072000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 309975
+      },
+      "memory": {
+        "working_set_bytes": 25870336,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35860480
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 1,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.27660000696778,
+      "depth": 4,
+      "nodes": 75745,
+      "timing": {
+        "setup_ns": 813500,
+        "join_ns": 27396500,
+        "total_ns": 195851900,
+        "stop_lag_ns": 851900,
+        "reply_ns": 3500
+      },
+      "profile": {
+        "features_ns": 542900100,
+        "generation_ns": 350776300,
+        "ordering_ns": 54811100,
+        "tt_ns": 2417000,
+        "inference_ns": 4082700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 501287
+      },
+      "memory": {
+        "working_set_bytes": 25550848,
+        "peak_working_set_bytes": 41177088,
+        "peak_committed_bytes": 35864576
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 1,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 179.3595000053756,
+      "depth": 1,
+      "nodes": 3093,
+      "timing": {
+        "setup_ns": 771600,
+        "join_ns": 35535800,
+        "total_ns": 178882600,
+        "stop_lag_ns": 0,
+        "reply_ns": 4500
+      },
+      "profile": {
+        "features_ns": 10122200,
+        "generation_ns": 60972900,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 87500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 5297
+      },
+      "memory": {
+        "working_set_bytes": 26238976,
+        "peak_working_set_bytes": 41218048,
+        "peak_committed_bytes": 35946496
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 2,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.6408999976702,
+      "depth": 6,
+      "nodes": 105366,
+      "timing": {
+        "setup_ns": 403200,
+        "join_ns": 30947400,
+        "total_ns": 195372000,
+        "stop_lag_ns": 372000,
+        "reply_ns": 800
+      },
+      "profile": {
+        "features_ns": 289676800,
+        "generation_ns": 142287700,
+        "ordering_ns": 52668900,
+        "tt_ns": 5040100,
+        "inference_ns": 7364700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 471045
+      },
+      "memory": {
+        "working_set_bytes": 26087424,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35864576
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 2,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.18790003005415,
+      "depth": 4,
+      "nodes": 66381,
+      "timing": {
+        "setup_ns": 1189300,
+        "join_ns": 33241900,
+        "total_ns": 195692600,
+        "stop_lag_ns": 692600,
+        "reply_ns": 3000
+      },
+      "profile": {
+        "features_ns": 566348800,
+        "generation_ns": 370968000,
+        "ordering_ns": 101323800,
+        "tt_ns": 2868500,
+        "inference_ns": 5958200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 634673
+      },
+      "memory": {
+        "working_set_bytes": 26619904,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35868672
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 2,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.19019998935983,
+      "depth": 6,
+      "nodes": 159774,
+      "timing": {
+        "setup_ns": 773100,
+        "join_ns": 9472500,
+        "total_ns": 195776800,
+        "stop_lag_ns": 776800,
+        "reply_ns": 2100
+      },
+      "profile": {
+        "features_ns": 606706300,
+        "generation_ns": 360456000,
+        "ordering_ns": 68105400,
+        "tt_ns": 11906500,
+        "inference_ns": 12998100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 675701
+      },
+      "memory": {
+        "working_set_bytes": 25595904,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35885056
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 2,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 2.9363000066950917,
+      "depth": 1,
+      "nodes": 93,
+      "timing": {
+        "setup_ns": 934800,
+        "join_ns": 552900,
+        "total_ns": 2508100,
+        "stop_lag_ns": 0,
+        "reply_ns": 2200
+      },
+      "profile": {
+        "features_ns": 701700,
+        "generation_ns": 0,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 7600,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 399
+      },
+      "memory": {
+        "working_set_bytes": 24817664,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35926016
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.3862999691628,
+      "depth": 4,
+      "nodes": 55715,
+      "timing": {
+        "setup_ns": 769000,
+        "join_ns": 8122300,
+        "total_ns": 195914200,
+        "stop_lag_ns": 914200,
+        "reply_ns": 3600
+      },
+      "profile": {
+        "features_ns": 604191200,
+        "generation_ns": 503288600,
+        "ordering_ns": 87981700,
+        "tt_ns": 3207000,
+        "inference_ns": 5099000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 595161
+      },
+      "memory": {
+        "working_set_bytes": 25624576,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35864576
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.44070003414527,
+      "depth": 4,
+      "nodes": 64590,
+      "timing": {
+        "setup_ns": 860100,
+        "join_ns": 41733900,
+        "total_ns": 195831900,
+        "stop_lag_ns": 831900,
+        "reply_ns": 3200
+      },
+      "profile": {
+        "features_ns": 561996700,
+        "generation_ns": 395406400,
+        "ordering_ns": 74998300,
+        "tt_ns": 2890100,
+        "inference_ns": 6055500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 567425
+      },
+      "memory": {
+        "working_set_bytes": 25767936,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35868672
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.19559997227043,
+      "depth": 3,
+      "nodes": 62541,
+      "timing": {
+        "setup_ns": 849900,
+        "join_ns": 10747400,
+        "total_ns": 195693600,
+        "stop_lag_ns": 693600,
+        "reply_ns": 2700
+      },
+      "profile": {
+        "features_ns": 821262200,
+        "generation_ns": 222261500,
+        "ordering_ns": 42073000,
+        "tt_ns": 1306800,
+        "inference_ns": 7395100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 724401
+      },
+      "memory": {
+        "working_set_bytes": 25808896,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35876864
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.03380002081394,
+      "depth": 4,
+      "nodes": 48420,
+      "timing": {
+        "setup_ns": 862400,
+        "join_ns": 23290400,
+        "total_ns": 195601200,
+        "stop_lag_ns": 601200,
+        "reply_ns": 3000
+      },
+      "profile": {
+        "features_ns": 568666900,
+        "generation_ns": 480594700,
+        "ordering_ns": 80003000,
+        "tt_ns": 3429300,
+        "inference_ns": 4229300,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 518062
+      },
+      "memory": {
+        "working_set_bytes": 25661440,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35864576
+      }
+    },
+    {
+      "policy": "guard",
+      "repeat": 2,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 8.909899974241853,
+      "depth": 2,
+      "nodes": 1430,
+      "timing": {
+        "setup_ns": 818200,
+        "join_ns": 1357000,
+        "total_ns": 8394800,
+        "stop_lag_ns": 0,
+        "reply_ns": 2600
+      },
+      "profile": {
+        "features_ns": 16668700,
+        "generation_ns": 6994500,
+        "ordering_ns": 1054700,
+        "tt_ns": 19300,
+        "inference_ns": 152000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 13332
+      },
+      "memory": {
+        "working_set_bytes": 25112576,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35901440
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 2,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.71539998287335,
+      "depth": 6,
+      "nodes": 189818,
+      "timing": {
+        "setup_ns": 417000,
+        "join_ns": 9364900,
+        "total_ns": 195446800,
+        "stop_lag_ns": 446800,
+        "reply_ns": 700
+      },
+      "profile": {
+        "features_ns": 296894300,
+        "generation_ns": 150843600,
+        "ordering_ns": 56376900,
+        "tt_ns": 5315700,
+        "inference_ns": 7321000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 483507
+      },
+      "memory": {
+        "working_set_bytes": 26075136,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 2,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.08080002944916,
+      "depth": 3,
+      "nodes": 101849,
+      "timing": {
+        "setup_ns": 737300,
+        "join_ns": 63494700,
+        "total_ns": 195641400,
+        "stop_lag_ns": 641400,
+        "reply_ns": 2600
+      },
+      "profile": {
+        "features_ns": 494230700,
+        "generation_ns": 287049000,
+        "ordering_ns": 37643600,
+        "tt_ns": 1483500,
+        "inference_ns": 5372000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 539585
+      },
+      "memory": {
+        "working_set_bytes": 26431488,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35897344
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 2,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.4309000177309,
+      "depth": 6,
+      "nodes": 267002,
+      "timing": {
+        "setup_ns": 757900,
+        "join_ns": 7466000,
+        "total_ns": 195919300,
+        "stop_lag_ns": 919300,
+        "reply_ns": 4200
+      },
+      "profile": {
+        "features_ns": 585550100,
+        "generation_ns": 352397500,
+        "ordering_ns": 66353000,
+        "tt_ns": 11887500,
+        "inference_ns": 12257000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 671433
+      },
+      "memory": {
+        "working_set_bytes": 25600000,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35876864
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 2,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 8.251399965956807,
+      "depth": 1,
+      "nodes": 207,
+      "timing": {
+        "setup_ns": 807400,
+        "join_ns": 794400,
+        "total_ns": 7730100,
+        "stop_lag_ns": 0,
+        "reply_ns": 3300
+      },
+      "profile": {
+        "features_ns": 1053000,
+        "generation_ns": 1354800,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 8100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 480
+      },
+      "memory": {
+        "working_set_bytes": 25247744,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35909632
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.48620003135875,
+      "depth": 4,
+      "nodes": 69909,
+      "timing": {
+        "setup_ns": 908000,
+        "join_ns": 4395800,
+        "total_ns": 195940900,
+        "stop_lag_ns": 940900,
+        "reply_ns": 2100
+      },
+      "profile": {
+        "features_ns": 410946300,
+        "generation_ns": 216673800,
+        "ordering_ns": 48961400,
+        "tt_ns": 1510600,
+        "inference_ns": 3558200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 431908
+      },
+      "memory": {
+        "working_set_bytes": 25714688,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35860480
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.18859997717664,
+      "depth": 3,
+      "nodes": 55889,
+      "timing": {
+        "setup_ns": 737200,
+        "join_ns": 83440100,
+        "total_ns": 195744100,
+        "stop_lag_ns": 744100,
+        "reply_ns": 3600
+      },
+      "profile": {
+        "features_ns": 260090200,
+        "generation_ns": 184821900,
+        "ordering_ns": 22799400,
+        "tt_ns": 1027400,
+        "inference_ns": 2934000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 247112
+      },
+      "memory": {
+        "working_set_bytes": 26402816,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35930112
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.01660000625998,
+      "depth": 3,
+      "nodes": 120718,
+      "timing": {
+        "setup_ns": 750600,
+        "join_ns": 6298600,
+        "total_ns": 195649500,
+        "stop_lag_ns": 649500,
+        "reply_ns": 2800
+      },
+      "profile": {
+        "features_ns": 761012400,
+        "generation_ns": 242612400,
+        "ordering_ns": 40642900,
+        "tt_ns": 1286800,
+        "inference_ns": 6823200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 695488
+      },
+      "memory": {
+        "working_set_bytes": 26435584,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35917824
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.2470999569632,
+      "depth": 4,
+      "nodes": 86041,
+      "timing": {
+        "setup_ns": 890800,
+        "join_ns": 7671700,
+        "total_ns": 195815600,
+        "stop_lag_ns": 815600,
+        "reply_ns": 2900
+      },
+      "profile": {
+        "features_ns": 574564500,
+        "generation_ns": 527456300,
+        "ordering_ns": 88468000,
+        "tt_ns": 3651400,
+        "inference_ns": 4476900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 478537
+      },
+      "memory": {
+        "working_set_bytes": 25743360,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35901440
+      }
+    },
+    {
+      "policy": "threat",
+      "repeat": 2,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 3.9496999816037714,
+      "depth": 1,
+      "nodes": 116,
+      "timing": {
+        "setup_ns": 812700,
+        "join_ns": 407300,
+        "total_ns": 3606100,
+        "stop_lag_ns": 0,
+        "reply_ns": 2300
+      },
+      "profile": {
+        "features_ns": 669300,
+        "generation_ns": 3519400,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 4900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 209
+      },
+      "memory": {
+        "working_set_bytes": 25677824,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35913728
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 2,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.85989997722208,
+      "depth": 6,
+      "nodes": 103633,
+      "timing": {
+        "setup_ns": 414900,
+        "join_ns": 33585600,
+        "total_ns": 195571700,
+        "stop_lag_ns": 571700,
+        "reply_ns": 900
+      },
+      "profile": {
+        "features_ns": 257659400,
+        "generation_ns": 193712600,
+        "ordering_ns": 68613900,
+        "tt_ns": 6519200,
+        "inference_ns": 6237400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 424183
+      },
+      "memory": {
+        "working_set_bytes": 26050560,
+        "peak_working_set_bytes": 41181184,
+        "peak_committed_bytes": 35913728
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 2,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.15829997928813,
+      "depth": 4,
+      "nodes": 68229,
+      "timing": {
+        "setup_ns": 700400,
+        "join_ns": 8782300,
+        "total_ns": 195671000,
+        "stop_lag_ns": 671000,
+        "reply_ns": 3500
+      },
+      "profile": {
+        "features_ns": 564341900,
+        "generation_ns": 436222300,
+        "ordering_ns": 97399200,
+        "tt_ns": 3449300,
+        "inference_ns": 5932000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 607217
+      },
+      "memory": {
+        "working_set_bytes": 26673152,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35934208
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 2,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.11990003613755,
+      "depth": 6,
+      "nodes": 157982,
+      "timing": {
+        "setup_ns": 731100,
+        "join_ns": 22855900,
+        "total_ns": 195639500,
+        "stop_lag_ns": 639500,
+        "reply_ns": 2200
+      },
+      "profile": {
+        "features_ns": 660014100,
+        "generation_ns": 305348900,
+        "ordering_ns": 60882100,
+        "tt_ns": 9573900,
+        "inference_ns": 14676000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 734655
+      },
+      "memory": {
+        "working_set_bytes": 25628672,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35909632
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 2,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 3.3024000003933907,
+      "depth": 1,
+      "nodes": 93,
+      "timing": {
+        "setup_ns": 1001900,
+        "join_ns": 573400,
+        "total_ns": 2711500,
+        "stop_lag_ns": 0,
+        "reply_ns": 3300
+      },
+      "profile": {
+        "features_ns": 806100,
+        "generation_ns": 0,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 7700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 399
+      },
+      "memory": {
+        "working_set_bytes": 24817664,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35872768
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.06250000651926,
+      "depth": 4,
+      "nodes": 54858,
+      "timing": {
+        "setup_ns": 1348700,
+        "join_ns": 14240600,
+        "total_ns": 195708000,
+        "stop_lag_ns": 708000,
+        "reply_ns": 2400
+      },
+      "profile": {
+        "features_ns": 603667500,
+        "generation_ns": 451996100,
+        "ordering_ns": 83750700,
+        "tt_ns": 2961000,
+        "inference_ns": 4970800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 604144
+      },
+      "memory": {
+        "working_set_bytes": 26632192,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35885056
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.07750000432134,
+      "depth": 4,
+      "nodes": 62694,
+      "timing": {
+        "setup_ns": 838500,
+        "join_ns": 36801300,
+        "total_ns": 195713800,
+        "stop_lag_ns": 713800,
+        "reply_ns": 3000
+      },
+      "profile": {
+        "features_ns": 615619900,
+        "generation_ns": 327504800,
+        "ordering_ns": 61377400,
+        "tt_ns": 2439500,
+        "inference_ns": 6339300,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 624954
+      },
+      "memory": {
+        "working_set_bytes": 26419200,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35909632
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.31730002583936,
+      "depth": 3,
+      "nodes": 65924,
+      "timing": {
+        "setup_ns": 973000,
+        "join_ns": 6595000,
+        "total_ns": 195790100,
+        "stop_lag_ns": 790100,
+        "reply_ns": 3200
+      },
+      "profile": {
+        "features_ns": 820011400,
+        "generation_ns": 239713100,
+        "ordering_ns": 46289300,
+        "tt_ns": 1333600,
+        "inference_ns": 7154100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 754830
+      },
+      "memory": {
+        "working_set_bytes": 25710592,
+        "peak_working_set_bytes": 41201664,
+        "peak_committed_bytes": 35926016
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.14080002065748,
+      "depth": 4,
+      "nodes": 48357,
+      "timing": {
+        "setup_ns": 1059800,
+        "join_ns": 10752800,
+        "total_ns": 195573300,
+        "stop_lag_ns": 573300,
+        "reply_ns": 3200
+      },
+      "profile": {
+        "features_ns": 578853500,
+        "generation_ns": 466367900,
+        "ordering_ns": 78142800,
+        "tt_ns": 3161400,
+        "inference_ns": 4442400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 500582
+      },
+      "memory": {
+        "working_set_bytes": 25616384,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35930112
+      }
+    },
+    {
+      "policy": "lmr",
+      "repeat": 2,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 8.261300041340292,
+      "depth": 2,
+      "nodes": 1691,
+      "timing": {
+        "setup_ns": 814600,
+        "join_ns": 1793800,
+        "total_ns": 7700900,
+        "stop_lag_ns": 0,
+        "reply_ns": 2200
+      },
+      "profile": {
+        "features_ns": 21483600,
+        "generation_ns": 3211600,
+        "ordering_ns": 870900,
+        "tt_ns": 51800,
+        "inference_ns": 204200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 15728
+      },
+      "memory": {
+        "working_set_bytes": 25219072,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 2,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.70210005622357,
+      "depth": 6,
+      "nodes": 176991,
+      "timing": {
+        "setup_ns": 425500,
+        "join_ns": 20330700,
+        "total_ns": 195398100,
+        "stop_lag_ns": 398100,
+        "reply_ns": 800
+      },
+      "profile": {
+        "features_ns": 283422200,
+        "generation_ns": 189675900,
+        "ordering_ns": 68638800,
+        "tt_ns": 6449800,
+        "inference_ns": 6711900,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 429986
+      },
+      "memory": {
+        "working_set_bytes": 26120192,
+        "peak_working_set_bytes": 41201664,
+        "peak_committed_bytes": 35917824
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 2,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.15309999790043,
+      "depth": 3,
+      "nodes": 102568,
+      "timing": {
+        "setup_ns": 947600,
+        "join_ns": 48489900,
+        "total_ns": 195736600,
+        "stop_lag_ns": 736600,
+        "reply_ns": 2800
+      },
+      "profile": {
+        "features_ns": 510257400,
+        "generation_ns": 305379000,
+        "ordering_ns": 45208600,
+        "tt_ns": 1624100,
+        "inference_ns": 5456000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 545060
+      },
+      "memory": {
+        "working_set_bytes": 26296320,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35872768
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 2,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.0815999773331,
+      "depth": 5,
+      "nodes": 229381,
+      "timing": {
+        "setup_ns": 779400,
+        "join_ns": 29209900,
+        "total_ns": 195621200,
+        "stop_lag_ns": 621200,
+        "reply_ns": 4100
+      },
+      "profile": {
+        "features_ns": 499701500,
+        "generation_ns": 378421400,
+        "ordering_ns": 88311400,
+        "tt_ns": 10387100,
+        "inference_ns": 10849700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 568353
+      },
+      "memory": {
+        "working_set_bytes": 26406912,
+        "peak_working_set_bytes": 41201664,
+        "peak_committed_bytes": 35930112
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 2,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 8.75630002701655,
+      "depth": 1,
+      "nodes": 207,
+      "timing": {
+        "setup_ns": 789600,
+        "join_ns": 511500,
+        "total_ns": 8360800,
+        "stop_lag_ns": 0,
+        "reply_ns": 2600
+      },
+      "profile": {
+        "features_ns": 1037100,
+        "generation_ns": 1562400,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 8500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 480
+      },
+      "memory": {
+        "working_set_bytes": 25120768,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.4051999966614,
+      "depth": 4,
+      "nodes": 65114,
+      "timing": {
+        "setup_ns": 974200,
+        "join_ns": 7761300,
+        "total_ns": 195832300,
+        "stop_lag_ns": 832300,
+        "reply_ns": 3300
+      },
+      "profile": {
+        "features_ns": 392137400,
+        "generation_ns": 188289500,
+        "ordering_ns": 33516300,
+        "tt_ns": 1282000,
+        "inference_ns": 3343800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 392031
+      },
+      "memory": {
+        "working_set_bytes": 25776128,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.98050002241507,
+      "depth": 3,
+      "nodes": 55524,
+      "timing": {
+        "setup_ns": 709800,
+        "join_ns": 62872200,
+        "total_ns": 195656400,
+        "stop_lag_ns": 656400,
+        "reply_ns": 2500
+      },
+      "profile": {
+        "features_ns": 265990000,
+        "generation_ns": 215685400,
+        "ordering_ns": 26371000,
+        "tt_ns": 1204400,
+        "inference_ns": 2912800,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 246834
+      },
+      "memory": {
+        "working_set_bytes": 26460160,
+        "peak_working_set_bytes": 41205760,
+        "peak_committed_bytes": 35913728
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.22739998158067,
+      "depth": 3,
+      "nodes": 112334,
+      "timing": {
+        "setup_ns": 711700,
+        "join_ns": 9689400,
+        "total_ns": 195769800,
+        "stop_lag_ns": 769800,
+        "reply_ns": 3400
+      },
+      "profile": {
+        "features_ns": 737932700,
+        "generation_ns": 270432100,
+        "ordering_ns": 43173300,
+        "tt_ns": 1469000,
+        "inference_ns": 6705500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 661499
+      },
+      "memory": {
+        "working_set_bytes": 25563136,
+        "peak_working_set_bytes": 41177088,
+        "peak_committed_bytes": 35889152
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.03610003832728,
+      "depth": 4,
+      "nodes": 82454,
+      "timing": {
+        "setup_ns": 765600,
+        "join_ns": 33349100,
+        "total_ns": 195665200,
+        "stop_lag_ns": 665200,
+        "reply_ns": 2900
+      },
+      "profile": {
+        "features_ns": 548643900,
+        "generation_ns": 462944500,
+        "ordering_ns": 78987100,
+        "tt_ns": 3161900,
+        "inference_ns": 4237100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 505016
+      },
+      "memory": {
+        "working_set_bytes": 26509312,
+        "peak_working_set_bytes": 41197568,
+        "peak_committed_bytes": 35885056
+      }
+    },
+    {
+      "policy": "both",
+      "repeat": 2,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 4.016999970190227,
+      "depth": 1,
+      "nodes": 116,
+      "timing": {
+        "setup_ns": 756200,
+        "join_ns": 582900,
+        "total_ns": 3611600,
+        "stop_lag_ns": 0,
+        "reply_ns": 2800
+      },
+      "profile": {
+        "features_ns": 782500,
+        "generation_ns": 3220700,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 7400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 209
+      },
+      "memory": {
+        "working_set_bytes": 25817088,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35872768
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 2,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.71850000647828,
+      "depth": 6,
+      "nodes": 172281,
+      "timing": {
+        "setup_ns": 396900,
+        "join_ns": 29847900,
+        "total_ns": 195446600,
+        "stop_lag_ns": 446600,
+        "reply_ns": 700
+      },
+      "profile": {
+        "features_ns": 254118400,
+        "generation_ns": 197193900,
+        "ordering_ns": 76265800,
+        "tt_ns": 6633200,
+        "inference_ns": 6237200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 413013
+      },
+      "memory": {
+        "working_set_bytes": 26075136,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35872768
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 2,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.0016000084579,
+      "depth": 3,
+      "nodes": 80905,
+      "timing": {
+        "setup_ns": 798100,
+        "join_ns": 17172300,
+        "total_ns": 195640500,
+        "stop_lag_ns": 640500,
+        "reply_ns": 3500
+      },
+      "profile": {
+        "features_ns": 389995500,
+        "generation_ns": 251425200,
+        "ordering_ns": 412254200,
+        "tt_ns": 1199900,
+        "inference_ns": 4288400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 412699
+      },
+      "memory": {
+        "working_set_bytes": 26562560,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 2,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.01539999712259,
+      "depth": 6,
+      "nodes": 224737,
+      "timing": {
+        "setup_ns": 739200,
+        "join_ns": 23612200,
+        "total_ns": 195672600,
+        "stop_lag_ns": 672600,
+        "reply_ns": 2100
+      },
+      "profile": {
+        "features_ns": 520323500,
+        "generation_ns": 305079400,
+        "ordering_ns": 202289500,
+        "tt_ns": 9830700,
+        "inference_ns": 10900000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 563324
+      },
+      "memory": {
+        "working_set_bytes": 26464256,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35872768
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 2,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 9.211800002958626,
+      "depth": 1,
+      "nodes": 206,
+      "timing": {
+        "setup_ns": 934000,
+        "join_ns": 793300,
+        "total_ns": 8729000,
+        "stop_lag_ns": 0,
+        "reply_ns": 3400
+      },
+      "profile": {
+        "features_ns": 1844700,
+        "generation_ns": 2320100,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 15400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 480
+      },
+      "memory": {
+        "working_set_bytes": 25382912,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35917824
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.9890999714844,
+      "depth": 3,
+      "nodes": 47902,
+      "timing": {
+        "setup_ns": 734900,
+        "join_ns": 89952000,
+        "total_ns": 195667600,
+        "stop_lag_ns": 667600,
+        "reply_ns": 1800
+      },
+      "profile": {
+        "features_ns": 300589000,
+        "generation_ns": 129372400,
+        "ordering_ns": 134943900,
+        "tt_ns": 1037600,
+        "inference_ns": 2618100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 283870
+      },
+      "memory": {
+        "working_set_bytes": 26513408,
+        "peak_working_set_bytes": 41209856,
+        "peak_committed_bytes": 35938304
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.97870000870898,
+      "depth": 3,
+      "nodes": 38979,
+      "timing": {
+        "setup_ns": 882000,
+        "join_ns": 14485600,
+        "total_ns": 195618700,
+        "stop_lag_ns": 618700,
+        "reply_ns": 2200
+      },
+      "profile": {
+        "features_ns": 197621300,
+        "generation_ns": 173636900,
+        "ordering_ns": 272931000,
+        "tt_ns": 1024300,
+        "inference_ns": 2089500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 184897
+      },
+      "memory": {
+        "working_set_bytes": 26554368,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.37130002956837,
+      "depth": 3,
+      "nodes": 90659,
+      "timing": {
+        "setup_ns": 824200,
+        "join_ns": 16974100,
+        "total_ns": 195734000,
+        "stop_lag_ns": 734000,
+        "reply_ns": 3900
+      },
+      "profile": {
+        "features_ns": 598488000,
+        "generation_ns": 208812800,
+        "ordering_ns": 292547500,
+        "tt_ns": 1142800,
+        "inference_ns": 5195500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 544403
+      },
+      "memory": {
+        "working_set_bytes": 25862144,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35909632
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.44079997669905,
+      "depth": 4,
+      "nodes": 77873,
+      "timing": {
+        "setup_ns": 881300,
+        "join_ns": 8211800,
+        "total_ns": 195819200,
+        "stop_lag_ns": 819200,
+        "reply_ns": 3600
+      },
+      "profile": {
+        "features_ns": 544652300,
+        "generation_ns": 424438000,
+        "ordering_ns": 162172700,
+        "tt_ns": 3094700,
+        "inference_ns": 4124700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 494880
+      },
+      "memory": {
+        "working_set_bytes": 26501120,
+        "peak_working_set_bytes": 41205760,
+        "peak_committed_bytes": 35909632
+      }
+    },
+    {
+      "policy": "coordination",
+      "repeat": 2,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 5.7649000082165,
+      "depth": 1,
+      "nodes": 116,
+      "timing": {
+        "setup_ns": 2685000,
+        "join_ns": 434300,
+        "total_ns": 5293400,
+        "stop_lag_ns": 0,
+        "reply_ns": 1900
+      },
+      "profile": {
+        "features_ns": 670700,
+        "generation_ns": 3136100,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 5500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 209
+      },
+      "memory": {
+        "working_set_bytes": 25833472,
+        "peak_working_set_bytes": 41177088,
+        "peak_committed_bytes": 35868672
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 2,
+      "category": "opening",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 195.64459996763617,
+      "depth": 6,
+      "nodes": 166057,
+      "timing": {
+        "setup_ns": 384600,
+        "join_ns": 8286100,
+        "total_ns": 195370800,
+        "stop_lag_ns": 370800,
+        "reply_ns": 600
+      },
+      "profile": {
+        "features_ns": 297607100,
+        "generation_ns": 114564400,
+        "ordering_ns": 46251500,
+        "tt_ns": 4326100,
+        "inference_ns": 7433400,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 423651
+      },
+      "memory": {
+        "working_set_bytes": 26107904,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35917824
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 2,
+      "category": "middlegame",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 197.15049996739253,
+      "depth": 2,
+      "nodes": 17064,
+      "timing": {
+        "setup_ns": 969100,
+        "join_ns": 93017500,
+        "total_ns": 196759000,
+        "stop_lag_ns": 1759000,
+        "reply_ns": 2400
+      },
+      "profile": {
+        "features_ns": 93389100,
+        "generation_ns": 168480900,
+        "ordering_ns": 8010400,
+        "tt_ns": 340500,
+        "inference_ns": 1036600,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 89003
+      },
+      "memory": {
+        "working_set_bytes": 26337280,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35868672
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 2,
+      "category": "stacked",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.36610004818067,
+      "depth": 5,
+      "nodes": 154193,
+      "timing": {
+        "setup_ns": 706100,
+        "join_ns": 65629100,
+        "total_ns": 195819400,
+        "stop_lag_ns": 819400,
+        "reply_ns": 4500
+      },
+      "profile": {
+        "features_ns": 329927200,
+        "generation_ns": 204510600,
+        "ordering_ns": 23291200,
+        "tt_ns": 3847900,
+        "inference_ns": 6879000,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 408843
+      },
+      "memory": {
+        "working_set_bytes": 25567232,
+        "peak_working_set_bytes": 41185280,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 2,
+      "category": "tactical",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 10.155300027690828,
+      "depth": 1,
+      "nodes": 362,
+      "timing": {
+        "setup_ns": 777000,
+        "join_ns": 2421300,
+        "total_ns": 9759300,
+        "stop_lag_ns": 0,
+        "reply_ns": 2800
+      },
+      "profile": {
+        "features_ns": 2927100,
+        "generation_ns": 4545400,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 22200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 1814
+      },
+      "memory": {
+        "working_set_bytes": 26152960,
+        "peak_working_set_bytes": 41201664,
+        "peak_committed_bytes": 35926016
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-1",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.1515000439249,
+      "depth": 3,
+      "nodes": 20138,
+      "timing": {
+        "setup_ns": 694300,
+        "join_ns": 93445200,
+        "total_ns": 195757600,
+        "stop_lag_ns": 757600,
+        "reply_ns": 2700
+      },
+      "profile": {
+        "features_ns": 120781000,
+        "generation_ns": 84675100,
+        "ordering_ns": 8742300,
+        "tt_ns": 443700,
+        "inference_ns": 1015100,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 125341
+      },
+      "memory": {
+        "working_set_bytes": 25710592,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35913728
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.19210000382736,
+      "depth": 2,
+      "nodes": 13834,
+      "timing": {
+        "setup_ns": 685300,
+        "join_ns": 24821000,
+        "total_ns": 195889500,
+        "stop_lag_ns": 889500,
+        "reply_ns": 2600
+      },
+      "profile": {
+        "features_ns": 121740500,
+        "generation_ns": 100041400,
+        "ordering_ns": 2037000,
+        "tt_ns": 92200,
+        "inference_ns": 1327500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 87253
+      },
+      "memory": {
+        "working_set_bytes": 26337280,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35880960
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-6",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.2311000097543,
+      "depth": 3,
+      "nodes": 55880,
+      "timing": {
+        "setup_ns": 723500,
+        "join_ns": 2988300,
+        "total_ns": 195752500,
+        "stop_lag_ns": 752500,
+        "reply_ns": 3900
+      },
+      "profile": {
+        "features_ns": 374766700,
+        "generation_ns": 219711600,
+        "ordering_ns": 22454300,
+        "tt_ns": 787600,
+        "inference_ns": 3279700,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 331988
+      },
+      "memory": {
+        "working_set_bytes": 26423296,
+        "peak_working_set_bytes": 41189376,
+        "peak_committed_bytes": 35893248
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 2,
+      "category": "timeout-strength-schema7-7",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.3511000503786,
+      "depth": 4,
+      "nodes": 76854,
+      "timing": {
+        "setup_ns": 745400,
+        "join_ns": 24651800,
+        "total_ns": 195804200,
+        "stop_lag_ns": 804200,
+        "reply_ns": 3900
+      },
+      "profile": {
+        "features_ns": 543498200,
+        "generation_ns": 392672600,
+        "ordering_ns": 66371000,
+        "tt_ns": 2571800,
+        "inference_ns": 4024500,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 490303
+      },
+      "memory": {
+        "working_set_bytes": 25632768,
+        "peak_working_set_bytes": 41193472,
+        "peak_committed_bytes": 35921920
+      }
+    },
+    {
+      "policy": "deep-threat",
+      "repeat": 2,
+      "category": "timeout-strength-alpha-g1-3",
+      "accumulator_isa": "avx2",
+      "timeout": false,
+      "ms": 196.36239996179938,
+      "depth": 0,
+      "nodes": 3082,
+      "timing": {
+        "setup_ns": 919000,
+        "join_ns": 18907700,
+        "total_ns": 195782300,
+        "stop_lag_ns": 782300,
+        "reply_ns": 2800
+      },
+      "profile": {
+        "features_ns": 12654600,
+        "generation_ns": 67413900,
+        "ordering_ns": 0,
+        "tt_ns": 0,
+        "inference_ns": 112200,
+        "mobility_full": 0,
+        "mobility_incremental": 0,
+        "fast_piece_rebuilds": 5202
+      },
+      "memory": {
+        "working_set_bytes": 25661440,
+        "peak_working_set_bytes": 41205760,
+        "peak_committed_bytes": 35913728
+      }
+    }
+  ],
+  "completed": true,
+  "policies": {
+    "guard": {
+      "ThreatPlies": 0,
+      "LateMoveReductions": false,
+      "CooperativeOrdering": false,
+      "RootPVS": true
+    },
+    "threat": {
+      "ThreatPlies": 1,
+      "LateMoveReductions": false,
+      "CooperativeOrdering": false,
+      "RootPVS": true
+    },
+    "lmr": {
+      "ThreatPlies": 0,
+      "LateMoveReductions": true,
+      "CooperativeOrdering": false,
+      "RootPVS": true
+    },
+    "both": {
+      "ThreatPlies": 1,
+      "LateMoveReductions": true,
+      "CooperativeOrdering": false,
+      "RootPVS": true
+    },
+    "coordination": {
+      "ThreatPlies": 1,
+      "LateMoveReductions": true,
+      "CooperativeOrdering": true,
+      "RootPVS": true
+    },
+    "deep-threat": {
+      "ThreatPlies": 2,
+      "LateMoveReductions": false,
+      "CooperativeOrdering": false,
+      "RootPVS": true
+    }
+  },
+  "summaries": [
+    {
+      "policy": "guard",
+      "timeouts": 0,
+      "depths": 103,
+      "nodes": 1942715
+    },
+    {
+      "policy": "threat",
+      "timeouts": 0,
+      "depths": 93,
+      "nodes": 2850003
+    },
+    {
+      "policy": "lmr",
+      "timeouts": 0,
+      "depths": 101,
+      "nodes": 1825118
+    },
+    {
+      "policy": "both",
+      "timeouts": 0,
+      "depths": 93,
+      "nodes": 2792088
+    },
+    {
+      "policy": "coordination",
+      "timeouts": 0,
+      "depths": 90,
+      "nodes": 2423061
+    },
+    {
+      "policy": "deep-threat",
+      "timeouts": 0,
+      "depths": 80,
+      "nodes": 1644478
+    }
+  ]
+}

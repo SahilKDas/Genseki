@@ -4,12 +4,15 @@
 #include "genseki/core/piece.hpp"
 
 #include <array>
+#include <algorithm>
 #include <cstddef>
 #include <cstdint>
 #include <expected>
+#include <initializer_list>
 #include <optional>
 #include <string>
 #include <string_view>
+#include <stdexcept>
 #include <vector>
 
 namespace genseki {
@@ -19,11 +22,38 @@ namespace genseki {
 inline thread_local void (*nu_generation_check)(void*) = nullptr;
 inline thread_local void* nu_generation_context = nullptr;
 inline void check_nu_generation() { if(nu_generation_check)nu_generation_check(nu_generation_context); }
+
+// One bottom piece plus the four Base-Hive Beetles; no heap allocation.
+class NuPieceStack {
+    std::array<Piece,5> data_{};
+    std::uint8_t count_=0;
+public:
+    NuPieceStack()=default;
+    NuPieceStack(std::initializer_list<Piece> pieces){for(auto piece:pieces)push_back(piece);}
+    std::size_t size()const{return count_;}
+    bool empty()const{return count_==0;}
+    Piece* begin(){return data_.data();}
+    Piece* end(){return begin()+count_;}
+    const Piece* begin()const{return data_.data();}
+    const Piece* end()const{return begin()+count_;}
+    Piece& operator[](std::size_t i){return data_[i];}
+    const Piece& operator[](std::size_t i)const{return data_[i];}
+    Piece& back(){if(empty())throw std::logic_error("empty Nu stack");return data_[count_-1];}
+    const Piece& back()const{if(empty())throw std::logic_error("empty Nu stack");return data_[count_-1];}
+    void push_back(Piece piece){if(count_==data_.size())throw std::logic_error("Base Hive stack exceeds five pieces");data_[count_++]=piece;}
+    void pop_back(){if(empty())throw std::logic_error("empty Nu stack");--count_;}
+    bool operator==(const NuPieceStack& other)const{return count_==other.count_&&std::equal(begin(),end(),other.begin());}
+    auto operator<=>(const NuPieceStack& other)const{return std::lexicographical_compare_three_way(begin(),end(),other.begin(),other.end());}
+};
 #endif
 
 struct Stack {
     Hex cell{};
+#ifdef GENSEKI_NU_CANCELLATION
+    NuPieceStack pieces{};
+#else
     std::vector<Piece> pieces{};
+#endif
     auto operator<=>(const Stack&) const = default;
 };
 

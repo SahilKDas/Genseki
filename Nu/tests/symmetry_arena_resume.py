@@ -37,7 +37,7 @@ class ResumeTests(unittest.TestCase):
             self.assertEqual(path.read_bytes(),before)
 
     def test_changed_identity_or_mirrored_order_rejected(self):
-        for field in ('model_sha256','validation_policy','depth_limit','referee_sha256','hybrid','hybrid_weight','hybrid_terms','opponent_search_policy','deadline_guard','cooperative_ordering','candidate_only_selectivity','root_pvs','order','rejected'):
+        for field in ('model_sha256','validation_policy','depth_limit','referee_sha256','hybrid','hybrid_weight','hybrid_terms','opponent_search_policy','deadline_guard','cooperative_ordering','candidate_only_selectivity','root_pvs','root_pv_first','opponent_config','opponent_config_sha256','order','rejected'):
             with tempfile.TemporaryDirectory() as folder:
                 args,path,report=self.fixture(Path(folder))
                 if field=='order':report['games'][0]['nu_color']='black'

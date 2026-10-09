@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "redaction": "invocation-filenames-only-v1",
+  "files": [
+    {
+      "file": "ablation-openings.json",
+      "private_original_sha256": "866ca06ea2fe6f0275c96c26d104600baa2532b31f27e47bc72a273b7b45902f",
+      "public_sha256": "866ca06ea2fe6f0275c96c26d104600baa2532b31f27e47bc72a273b7b45902f"
+    },
+    {
+      "file": "ablation-parallel-lmr.json",
+      "private_original_sha256": "43cd8294e4f61ba2820b5e9ff68269b4fd5c4f9faaa9c44efdbd6ebd19c2c3c9",
+      "public_sha256": "5284d923c07d380171c92e916b07f1b03fa110a6117c3b8d46b0fa6506ff244d"
+    },
+    {
+      "file": "ablation-parallel.json",
+      "private_original_sha256": "83bd92a9f9cf06e2335edcbab4c2103d7d89a2f24c510bb2aa3ead27c306af07",
+      "public_sha256": "d92ac25308a474818eaee6a938be57cca6234739c8e181f7fcde18aa5de3561b"
+    },
+    {
+      "file": "ablation-pv-first-lmr.json",
+      "private_original_sha256": "8caba6e1cc59c6039a2b27ac2404a42cce8a11ba408c611ec9779759b6cfa677",
+      "public_sha256": "d9ad33e2efcad90d951cfee0f5a2f4362be0357608dac7d203a172293180e3e5"
+    },
+    {
+      "file": "ablation-pv-first.json",
+      "private_original_sha256": "a78ff3bc914400ab468e4b272de8f1a84fe0c2e58a966bc3d82a3f76797ab3a4",
+      "public_sha256": "4e619f9ff99acb24187d155ab22a5b90fba7bd4bd2cbc56cef5bfd91e1bc3916"
+    },
+    {
+      "file": "alpha-openings.json",
+      "private_original_sha256": "506ed17b7f3d5fc6b398c6797cda904a048c689d0fc1458edafc25885965856e",
+      "public_sha256": "506ed17b7f3d5fc6b398c6797cda904a048c689d0fc1458edafc25885965856e"
+    },
+    {
+      "file": "gate-openings.json",
+      "private_original_sha256": "506ed17b7f3d5fc6b398c6797cda904a048c689d0fc1458edafc25885965856e",
+      "public_sha256": "506ed17b7f3d5fc6b398c6797cda904a048c689d0fc1458edafc25885965856e"
+    },
+    {
+      "file": "pins.json",
+      "private_original_sha256": "26f18b628a7f794663fb845cfceb4d1839c359794c54aebeac98017d6240de31",
+      "public_sha256": "26f18b628a7f794663fb845cfceb4d1839c359794c54aebeac98017d6240de31"
+    },
+    {
+      "file": "predecessor-config.json",
+      "private_original_sha256": "6c67d1e1f319719443a83772ea5f1f2838c291b5e7dc1203ee3df4d8b5f6b7f0",
+      "public_sha256": "6c67d1e1f319719443a83772ea5f1f2838c291b5e7dc1203ee3df4d8b5f6b7f0"
+    },
+    {
+      "file": "probe.json",
+      "private_original_sha256": "15ee8965d148158ba07d1e032ab9223af7f64c72e84549c8d83dd0adb0d80665",
+      "public_sha256": "15ee8965d148158ba07d1e032ab9223af7f64c72e84549c8d83dd0adb0d80665"
+    },
+    {
+      "file": "roots.json",
+      "private_original_sha256": "836e1aaa53bb6a3ee3741545916231ed8c4c715025cbf4ac338a66fe55a17bb4",
+      "public_sha256": "836e1aaa53bb6a3ee3741545916231ed8c4c715025cbf4ac338a66fe55a17bb4"
+    },
+    {
+      "file": "selected.json",
+      "private_original_sha256": "d1b7b160d13a3a3a64dd4aefc244fb816de1673958456f44efe54ebfb97d6b4b",
+      "public_sha256": "d1b7b160d13a3a3a64dd4aefc244fb816de1673958456f44efe54ebfb97d6b4b"
+    }
+  ],
+  "summaries": [
+    {
+      "report": "ablation-parallel-lmr.json",
+      "completed": true,
+      "rejected": false,
+      "points": 3.0,
+      "games": 6,
+      "terminations": {
+        "natural": 4,
+        "ply_cap": 1,
+        "repetition": 1
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    },
+    {
+      "report": "ablation-parallel.json",
+      "completed": true,
+      "rejected": false,
+      "points": 2.5,
+      "games": 6,
+      "terminations": {
+        "natural": 5,
+        "ply_cap": 1
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    },
+    {
+      "report": "ablation-pv-first-lmr.json",
+      "completed": true,
+      "rejected": false,
+      "points": 2.0,
+      "games": 6,
+      "terminations": {
+        "natural": 6
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    },
+    {
+      "report": "ablation-pv-first.json",
+      "completed": true,
+      "rejected": false,
+      "points": 2.5,
+      "games": 6,
+      "terminations": {
+        "natural": 5,
+        "ply_cap": 1
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    }
+  ],
+  "sealed_qualification": false,
+  "promotion": false
+}

@@ -4,13 +4,52 @@
 #include <atomic>
 #include <mutex>
 #include <thread>
+#include <condition_variable>
+#include <functional>
 
 namespace nu {
 inline thread_local unsigned generation_checks=0;
-struct SearchOptions {unsigned threat_plies=0;bool lmr=false,profile=false,adaptive=false,hybrid=false,deadline_guard=false,cooperative_ordering=false,root_pvs=false;unsigned hybrid_weight=100,hybrid_terms=63;};
+struct SearchOptions {unsigned threat_plies=0;bool lmr=false,profile=false,adaptive=false,hybrid=false,deadline_guard=false,cooperative_ordering=false,root_pvs=false,root_pv_first=false;unsigned hybrid_weight=100,hybrid_terms=63;};
 struct SearchTiming {std::uint64_t setup_ns=0,join_ns=0,total_ns=0,stop_lag_ns=0,reply_ns=0;};
 struct SearchResult {Move move{};int score=0;unsigned depth=0;std::uint64_t nodes=0;std::vector<Move> pv;Metrics profile;SearchTiming timing;};
 class Search {
+    class Workers {
+        std::mutex mutex;
+        std::condition_variable wake,done;
+        std::vector<std::jthread> threads;
+        std::function<void(unsigned)> task;
+        unsigned epoch=0,pending=0;
+        bool closing=false;
+        void shutdown() {
+            {std::lock_guard guard(mutex);closing=true;}
+            wake.notify_all();
+            for(auto& thread:threads)thread.join();
+        }
+    public:
+        explicit Workers(unsigned count) {
+            try {
+                for(unsigned lane=1;lane<count;++lane)threads.emplace_back([this,lane]{
+                    unsigned seen=0;
+                    std::unique_lock lock(mutex);
+                    for(;;) {
+                        wake.wait(lock,[&]{return closing||epoch!=seen;});
+                        if(closing)return;
+                        seen=epoch;lock.unlock();task(lane);lock.lock();
+                        if(--pending==0)done.notify_one();
+                    }
+                });
+            }catch(...){shutdown();throw;}
+        }
+        ~Workers(){shutdown();}
+        void dispatch(std::function<void(unsigned)> next) {
+            {std::lock_guard guard(mutex);task=std::move(next);pending=unsigned(threads.size());++epoch;}
+            wake.notify_all();
+        }
+        void wait() {
+            std::unique_lock lock(mutex);done.wait(lock,[&]{return pending==0;});
+            task={};
+        }
+    };
     struct Entry {std::uint64_t key=0,context=0;int value=0,depth=-1,bound=0;Move move{};unsigned age=0;};
     using Bucket=std::array<Entry,4>;
     std::vector<Bucket> table;
@@ -87,9 +126,17 @@ class Search {
         return false;
     }
     bool winning_reply(const Board& original,Color side) {
-        if(liberties(original,other(side))>1)return false;
+        if(liberties(original,other(side))!=1)return false;
+        std::optional<Hex> target;
+        for(const auto& stack:original.stacks())for(auto piece:stack.pieces)
+            if(piece.color==other(side)&&piece.bug==Bug::queen)for(auto direction:directions) {
+                auto cell=add(stack.cell,direction);
+                if(std::none_of(original.stacks().begin(),original.stacks().end(),[&](const Stack& s){return s.cell==cell;}))target=cell;
+            }
+        if(!target)return false;
         auto board=original.with_side_to_move(side);
         for(auto move:board.legal_moves()) {
+            if(move.kind==MoveKind::pass||move.to!=*target)continue;
             checkpoint();auto undo=board.make_generated_move(move);auto result=board.result();board.unmake_move(undo);
             if(result==(side==Color::white?GameResult::white_win:GameResult::black_win))return true;
         }
@@ -121,11 +168,25 @@ class Search {
         }
         return score;
     }
-    bool reduction_safe(const Board& board,const Move& move)const {
+public:
+    static bool reduction_safe(const Board& board,const Move& move) {
         // Never reduce a remote defense merely because it is not Queen-adjacent.
-        return !tactical(board,move)&&liberties(board,board.side_to_move())>2&&
-               liberties(board,other(board.side_to_move()))>2;
+        const auto own=liberties(board,board.side_to_move());
+        const auto enemy=liberties(board,other(board.side_to_move()));
+        if(own<=2||enemy<=2)return false;
+        if(!tactical(board,move))return true;
+        if(own<4||enemy<4||move.kind==MoveKind::pass||
+           move.piece.bug==Bug::queen||move.piece.bug==Bug::beetle)return false;
+        // In calm positions, adding a ground piece near our own Queen is
+        // not automatically a forcing move. Attacks and defender departures
+        // remain protected; raised scouts are always re-searched at full depth.
+        for(const auto& stack:board.stacks())for(auto piece:stack.pieces)if(piece.bug==Bug::queen) {
+            if(move.from&&(*move.from==stack.cell||adjacent(stack.cell,*move.from)))return false;
+            if(piece.color!=board.side_to_move()&&(move.to==stack.cell||adjacent(stack.cell,move.to)))return false;
+        }
+        return true;
     }
+private:
     int threat(State& state,int alpha,int beta,unsigned ply,unsigned remaining,std::vector<Move>& pv,Ordering& ordering) {
         checkpoint();++ordering.visited;
         if(state.board.is_terminal())return terminal(state.board,ply);
@@ -207,7 +268,8 @@ class Search {
         if(metrics)metrics->ordering_ns+=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-started).count();
         int original=alpha,best=-100001;Move selected=moves.front();
         for(unsigned i=0;i<moves.size();++i) {
-            bool reduce=options.lmr&&!pv_node&&depth>=3&&i>=4&&moves.size()>1&&reduction_safe(s.board,moves[i])&&moves[i]!=cached.move;
+            bool reduce=options.lmr&&!pv_node&&depth>=3&&i>=4&&moves.size()>1&&
+                moves[i]!=cached.move&&ordering.score(moves[i],ply,mover,previous)<80000&&reduction_safe(s.board,moves[i]);
             Applied applied(s,moves[i]);auto& child=ordering.pv_buffers[ply+1];child.clear();int value;
             if(i==0)value=-visit(s,depth-1,-beta,-alpha,ply+1,child,ordering,pv_node);
             else {
@@ -236,7 +298,7 @@ public:
         auto started=std::chrono::steady_clock::now();
         if(!std::isfinite(milliseconds)||milliseconds<0||milliseconds>60000)throw std::runtime_error("invalid search time");
         if(settings.threat_plies>4||max_depth>64||settings.hybrid_weight>200||settings.hybrid_terms>127)throw std::runtime_error("search bounds exceeded");
-        if(age&&(table_model!=initial.model||settings.threat_plies!=options.threat_plies||settings.lmr!=options.lmr||settings.cooperative_ordering!=options.cooperative_ordering||settings.root_pvs!=options.root_pvs||settings.hybrid!=options.hybrid||settings.hybrid_weight!=options.hybrid_weight||settings.hybrid_terms!=options.hybrid_terms)) {
+        if(age&&(table_model!=initial.model||settings.threat_plies!=options.threat_plies||settings.lmr!=options.lmr||settings.cooperative_ordering!=options.cooperative_ordering||settings.root_pvs!=options.root_pvs||settings.root_pv_first!=options.root_pv_first||settings.hybrid!=options.hybrid||settings.hybrid_weight!=options.hybrid_weight||settings.hybrid_terms!=options.hybrid_terms)) {
             for(auto& bucket:table)for(auto& entry:bucket)entry.depth=-1;
         }
         table_model=initial.model;options=settings;stopped=false;nodes=0;++age;
@@ -264,6 +326,7 @@ public:
         std::vector<Ordering> orderings(count);Metrics aggregate;std::mutex profile_lock;
         // These outlive all iterative-deepening workers; each lane has exclusive access.
         std::vector<FeatureCache> feature_caches(count);
+        auto workers=std::make_unique<Workers>(count);
         SearchTiming timing;
         timing.setup_ns=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-started).count();
         double previous_ms=0;
@@ -275,7 +338,7 @@ public:
             std::vector<SearchResult> roots(moves.size());std::atomic<unsigned> next{0};std::atomic<bool> interrupted{false};
             std::atomic<int> shared_alpha{-100001};std::vector<unsigned char> exact_roots(moves.size());
             std::exception_ptr failure;std::mutex failure_lock;
-            auto worker=[&](unsigned lane) {
+            auto worker=[&](unsigned lane,bool first_only=false) {
               try {
                 State state=root;state.bind_cache(feature_caches[lane]);
                 if(state.model->feature_schema==8)for(auto& bank:state.active)bank.reserve(134);
@@ -298,7 +361,16 @@ public:
                             int lower=depth==1?-100001:std::max(-100001,completed.score-75);
                             int upper=depth==1?100001:std::min(100001,completed.score+75);
                             score=-visit(state,int(depth)-1,-upper,-lower,1,child,ordering);
-                            if(score<=lower||score>=upper){child.clear();score=-visit(state,int(depth)-1,-100001,100001,1,child,ordering);}
+                            unsigned radius=75;
+                            while(score<=lower||score>=upper) {
+                                checkpoint();
+                                radius=std::min(200002u,radius*4);
+                                // Widen only the failed side; TT bounds from previous
+                                // attempts remain useful without discarding the PV.
+                                if(score<=lower)lower=std::max(-100001,score-int(radius));
+                                if(score>=upper)upper=std::min(100001,score+int(radius));
+                                child.clear();score=-visit(state,int(depth)-1,-upper,-lower,1,child,ordering);
+                            }
                         }
                         root_alpha=std::max(root_alpha,score);roots[i]={moves[i],score,depth,0,{moves[i]}, {}, {}};
                         roots[i].pv.insert(roots[i].pv.end(),child.begin(),child.end());
@@ -307,6 +379,7 @@ public:
                             int best=shared_alpha.load(std::memory_order_relaxed);
                             while(score>best&&!shared_alpha.compare_exchange_weak(best,score,std::memory_order_relaxed)){}
                         }
+                        if(first_only)break;
                     }
                 }catch(Interrupted&){interrupted=true;if(options.deadline_guard)stopped=true;}
                 nodes.fetch_add(ordering.visited-before,std::memory_order_relaxed);
@@ -315,10 +388,14 @@ public:
                 aggregate.mobility_full+=profile.mobility_full;aggregate.mobility_incremental+=profile.mobility_incremental;aggregate.fast_piece_rebuilds+=profile.fast_piece_rebuilds;
               } catch(...) {std::lock_guard guard(failure_lock);failure=std::current_exception();stopped=true;}
             };
-            std::vector<std::jthread> workers;
-            for(unsigned lane=1;lane<count;++lane)workers.emplace_back(worker,lane);
-            worker(0);auto join_started=std::chrono::steady_clock::now();
-            for(auto& thread:workers)thread.join();
+            // Establish the previous iteration's PV bound before parallel scouts.
+            if(options.root_pvs&&options.root_pv_first&&count>1)worker(0,true);
+            if(!stopped&&!interrupted) {
+                workers->dispatch([&](unsigned lane){worker(lane);});
+                worker(0);
+            }
+            auto join_started=std::chrono::steady_clock::now();
+            workers->wait();
             timing.join_ns+=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-join_started).count();
             if(failure)std::rethrow_exception(failure);
             if(interrupted)break;
@@ -331,10 +408,18 @@ public:
             }else completed=*std::max_element(roots.begin(),roots.end(),[](auto& a,auto& b){return a.score<b.score;});
             std::stable_sort(roots.begin(),roots.end(),[](const auto& a,const auto& b){return a.score>b.score;});
             for(unsigned i=0;i<moves.size();++i)moves[i]=roots[i].move;
+            if(options.root_pvs) {
+                // A fail-low upper bound may tie the exact winner. Keep the
+                // selected exact PV first, not whichever bound sorted first.
+                auto pv=std::find(moves.begin(),moves.end(),completed.move);
+                std::rotate(moves.begin(),pv,pv+1);
+            }
             previous_ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-now).count();
             if(std::abs(completed.score)>90000)break;
         }
         // Include destruction of the large per-search scratch pools in the measurement.
+        auto join_started=std::chrono::steady_clock::now();workers.reset();
+        timing.join_ns+=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-join_started).count();
         feature_caches.clear();orderings.clear();
         auto finished=std::chrono::steady_clock::now();
         timing.total_ns=std::chrono::duration_cast<std::chrono::nanoseconds>(finished-started).count();

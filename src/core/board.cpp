@@ -316,6 +316,21 @@ bool Board::hive_connected_after_lift(Hex cell) const {
     if (source == nullptr || source->pieces.size() > 1 || stacks_.size() <= 2) {
         return true;
     }
+#ifdef GENSEKI_NU_CANCELLATION
+    if(stacks_.size()<=22) {
+        std::array<bool,22> seen{};std::array<unsigned,22> pending{};
+        const auto removed=unsigned(source-stacks_.data());seen[removed]=true;
+        unsigned cursor=0,count=1;pending[0]=removed==0?1:0;seen[pending[0]]=true;
+        while(cursor<count) {
+            generation_checkpoint();const auto current=stacks_[pending[cursor++]].cell;
+            for(auto direction:directions)if(const auto* neighbor=stack_at(add(current,direction))) {
+                auto next=unsigned(neighbor-stacks_.data());
+                if(!seen[next]){seen[next]=true;pending[count++]=next;}
+            }
+        }
+        return count==stacks_.size()-1;
+    }
+#endif
     std::set<Hex> remaining;
     for (const auto& stack : stacks_) {
         if (stack.cell != cell) {
@@ -345,6 +360,13 @@ bool Board::touches_hive(Hex cell) const {
 }
 
 bool Board::can_slide(Hex from, Hex to) const {
+#ifdef GENSEKI_NU_CANCELLATION
+    // Exactly one occupied common neighbor also proves hive contact.
+    if(occupied(to))return false;
+    for(unsigned d=0;d<6;++d)if(add(from,directions[d])==to)
+        return occupied(add(from,directions[(d+5)%6]))!=occupied(add(from,directions[(d+1)%6]));
+    return false;
+#else
     if (!adjacent(from, to) || occupied(to) || !touches_hive(to)) {
         return false;
     }
@@ -356,10 +378,16 @@ bool Board::can_slide(Hex from, Hex to) const {
         }
     }
     return blockers == 1;
+#endif
 }
 
 bool Board::beetle_gate_open(Hex from, Hex to, std::size_t source_height) const {
     const auto clearance = std::max(source_height, height(to) + 1);
+#ifdef GENSEKI_NU_CANCELLATION
+    for(unsigned d=0;d<6;++d)if(add(from,directions[d])==to)
+        return height(add(from,directions[(d+5)%6]))<clearance||height(add(from,directions[(d+1)%6]))<clearance;
+    return false;
+#else
     unsigned blockers = 0;
     for (const auto direction : directions) {
         const auto candidate = add(from, direction);
@@ -368,22 +396,41 @@ bool Board::beetle_gate_open(Hex from, Hex to, std::size_t source_height) const 
         }
     }
     return blockers < 2;
+#endif
 }
 
 std::vector<Hex> Board::ground_crawl(Hex start, bool exactly_three) const {
 #ifdef GENSEKI_NU_CANCELLATION
-    if(!exactly_three) {
+    if(exactly_three) {
+        std::array<Hex,4> path{};path[0]=start;
+        std::vector<Hex> destinations;destinations.reserve(32);
+        const auto visit=[&](const auto& self,Hex current,unsigned depth)->void {
+            generation_checkpoint();
+            if(depth==3){destinations.push_back(current);return;}
+            for(auto direction:directions) {
+                auto next=add(current,direction);
+                if(std::find(path.begin(),path.begin()+depth+1,next)==path.begin()+depth+1&&can_slide(current,next)) {
+                    path[depth+1]=next;self(self,next,depth+1);
+                }
+            }
+        };
+        visit(visit,start,0);std::ranges::sort(destinations);
+        destinations.erase(std::unique(destinations.begin(),destinations.end()),destinations.end());
+        return destinations;
+    }
+    if(!exactly_three&&stacks_.size()<=22) {
         // At most 22 occupied cells expose at most 132 adjacent empty cells.
         std::array<Hex,256> keys{};std::array<bool,256> used{};
         auto locate=[&](Hex cell){auto slot=cell_bucket(cell,255);while(used[slot]&&keys[slot]!=cell)slot=(slot+1)&255;return slot;};
         auto first=locate(start);used[first]=true;keys[first]=start;
-        std::vector<Hex> pending{start},destinations;pending.reserve(144);destinations.reserve(144);
-        for(unsigned cursor=0;cursor<pending.size();++cursor) {
+        std::array<Hex,144> pending{};pending[0]=start;unsigned count=1;
+        std::vector<Hex> destinations;destinations.reserve(144);
+        for(unsigned cursor=0;cursor<count;++cursor) {
             generation_checkpoint();auto current=pending[cursor];
             for(auto direction:directions) {
                 auto next=add(current,direction);auto slot=locate(next);
                 if(!used[slot]&&can_slide(current,next)) {
-                    used[slot]=true;keys[slot]=next;pending.push_back(next);destinations.push_back(next);
+                    used[slot]=true;keys[slot]=next;pending[count++]=next;destinations.push_back(next);
                 }
             }
         }
@@ -496,6 +543,9 @@ std::vector<Move> Board::legal_moves() const {
         return {};
     }
     std::vector<Move> moves;
+#ifdef GENSEKI_NU_CANCELLATION
+    std::optional<std::vector<Hex>> placement_cache;
+#endif
     const bool queen_required = !queen_played(side_to_move_) && turns_taken_[index(side_to_move_)] >= 3;
     for (const auto piece : pieces_in_hand(side_to_move_)) {
         if (piece.bug == Bug::queen && turns_taken_[index(side_to_move_)] == 0) {
@@ -504,7 +554,12 @@ std::vector<Move> Board::legal_moves() const {
         if (queen_required && piece.bug != Bug::queen) {
             continue;
         }
+#ifdef GENSEKI_NU_CANCELLATION
+        if(!placement_cache)placement_cache=placement_cells();
+        for(const auto cell:*placement_cache) {
+#else
         for (const auto cell : placement_cells()) {
+#endif
             moves.push_back(Move{MoveKind::placement, std::nullopt, cell, piece});
         }
     }

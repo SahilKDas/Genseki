@@ -14,7 +14,7 @@ from genseki.uhp import UhpProcess
 def verified_settings(record):
     settings=record.get('uhp_settings',{})
     limits={'Threads':(1,12),'TableMiB':(1,256),'ThreatPlies':(0,4)}
-    booleans={'BackgroundPondering','LateMoveReductions','DeadlineGuard','CooperativeOrdering','RootPVS'}
+    booleans={'BackgroundPondering','LateMoveReductions','DeadlineGuard','CooperativeOrdering','RootPVS','RootPVFirst'}
     for name,value in settings.items():
         if name in limits:
             if type(value)!=int or not limits[name][0]<=value<=limits[name][1]:raise RuntimeError('invalid incumbent option')

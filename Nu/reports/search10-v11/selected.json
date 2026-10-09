@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "policy": "lmr",
+  "pins": {
+    "candidate": "ae2043c0e9db80288706217864b324e195b4658af29fe9f81f9610c9ed336d36",
+    "baseline": "76f9bcdac0e75620a1e2d4a4e77c638ce45dc8a438aefe29fdac5f31da8979c8",
+    "model": "78f265a5a96ee5994e2e5743817a2017fcbc7dc1d4d2c8fc5661d0584ed1d875",
+    "referee": "8f0616dcf73feccd349c6c5954772dd0be34e20d54a76161f43d664a665a9fdf",
+    "alpha": "80d1cc75571c2e3266e0246b2cec00d3657e3ba94029e5ca4635cfe0eaf12ef6"
+  },
+  "settings": {
+    "ThreatPlies": 0,
+    "LateMoveReductions": true,
+    "CooperativeOrdering": false,
+    "RootPVS": true
+  },
+  "deadline_guard": true,
+  "summaries": [
+    {
+      "policy": "guard",
+      "points": 2.5,
+      "natural_points": 2.5,
+      "own_timeouts": 0,
+      "probe_depths": 99,
+      "report_sha256": "38a441c30057b1454f37cbf6a71c42af25e565976f212ab3ca82ff576c9448d2"
+    },
+    {
+      "policy": "threat",
+      "points": 3.5,
+      "natural_points": 3.0,
+      "own_timeouts": 0,
+      "probe_depths": 93,
+      "report_sha256": "ef539b93009176d7573a80694c55a9d66db4e90a43a723b794ca875a6ffd18c2"
+    },
+    {
+      "policy": "lmr",
+      "points": 4.0,
+      "natural_points": 4.0,
+      "own_timeouts": 0,
+      "probe_depths": 101,
+      "report_sha256": "dcd89ff9220d49851c16f85ed051fe4aded139c98e57b53a48dd875c04a84ca1"
+    },
+    {
+      "policy": "both",
+      "points": 3.5,
+      "natural_points": 3.0,
+      "own_timeouts": 0,
+      "probe_depths": 92,
+      "report_sha256": "17644f7b6f9cd0f9cc06841affee74357e93aa340eeda74be0868a97103a8b3e"
+    },
+    {
+      "policy": "coordination",
+      "points": 3.0,
+      "natural_points": 3.0,
+      "own_timeouts": 0,
+      "probe_depths": 89,
+      "report_sha256": "40a8f9597734b025835286553dd84b4307e8fe7c2d0888c863576d1771a802e6"
+    },
+    {
+      "policy": "deep-threat",
+      "points": 2.0,
+      "natural_points": 1.0,
+      "own_timeouts": 0,
+      "probe_depths": 80,
+      "report_sha256": "16e20052a0338d5a9377a03eee3f5e35322d23a5acf11b08b365605750d2998b"
+    }
+  ],
+  "gate_openings_sha256": "e87d050e5db22940b6f8303a42c13bc3ce911f3a75229583388cfce3e2968a85",
+  "selection_rule": "points-natural-fewer-timeouts-depth-v1",
+  "promoted": false
+}

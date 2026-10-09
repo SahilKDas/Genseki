@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "redaction": "invocation-filenames-only-v1",
+  "files": [
+    {
+      "file": "ablation-both.json",
+      "private_original_sha256": "0044ca12d518cdf7b4ca2bf560725a145245c0447bc1c31ec493d072c58a7ac5",
+      "public_sha256": "310c5bc57eabd2965bfaf15012a0479bf2263bf6c6572b5035b5d189615a9393"
+    },
+    {
+      "file": "ablation-coordination.json",
+      "private_original_sha256": "2fb9e67d8f042a65bc08784f066a2e50ecf4b08030015f27cfd2f059df02df3a",
+      "public_sha256": "c3148a3ca74a0147afb82c9134a4aa3919a2ab7ce95078de19521d5342819114"
+    },
+    {
+      "file": "ablation-deep-threat.json",
+      "private_original_sha256": "f887db5fb85cd34bf73163bee36001c4b8925cc74f7372af43159946ba6e58bc",
+      "public_sha256": "47e7e01a1f95d61fe0b8fdc42846a431a90c2358aa331a9ae597b87d07b7a378"
+    },
+    {
+      "file": "ablation-guard.json",
+      "private_original_sha256": "c2703e9fbd7e18f469d06c9ee31b505cad60a72d6369f25893fe9ae7e49e4563",
+      "public_sha256": "f24722e61f7abffdd1e8738bf234b2c37889e47b435fa38cc57f906ba93d72ac"
+    },
+    {
+      "file": "ablation-lmr.json",
+      "private_original_sha256": "7c2ef0102a8725068e7a4e347064fd3ad9bb7f00f0917024e2093b3046b024b7",
+      "public_sha256": "c71f5d7fd115fe79fad6ccbefcd7cf33840524b078e3f705b26605ca82f9d1b7"
+    },
+    {
+      "file": "ablation-openings.json",
+      "private_original_sha256": "e147f36da56b37de6877d9c06ae80bd185460d3089c083cad81b81f422fe1140",
+      "public_sha256": "e147f36da56b37de6877d9c06ae80bd185460d3089c083cad81b81f422fe1140"
+    },
+    {
+      "file": "ablation-threat.json",
+      "private_original_sha256": "f8bb99e732e6ba080e5392924bd77d57490387a53219fc53711a1c68892c778c",
+      "public_sha256": "9db6a4f02cb4ec5e89272260d22e151c48c495701545fddc8e555d342b006487"
+    },
+    {
+      "file": "alpha-openings.json",
+      "private_original_sha256": "2fd322bcaa1549b5c69554e1272e911f2bbba40de4dc2b4b6b42d5936cb564d5",
+      "public_sha256": "2fd322bcaa1549b5c69554e1272e911f2bbba40de4dc2b4b6b42d5936cb564d5"
+    },
+    {
+      "file": "gate-openings.json",
+      "private_original_sha256": "2fd322bcaa1549b5c69554e1272e911f2bbba40de4dc2b4b6b42d5936cb564d5",
+      "public_sha256": "2fd322bcaa1549b5c69554e1272e911f2bbba40de4dc2b4b6b42d5936cb564d5"
+    },
+    {
+      "file": "pins.json",
+      "private_original_sha256": "b09bf9aa46307569505edfe77aeda5fd5c8a2cf97899289a6dfa98be73006434",
+      "public_sha256": "b09bf9aa46307569505edfe77aeda5fd5c8a2cf97899289a6dfa98be73006434"
+    },
+    {
+      "file": "predecessor-config.json",
+      "private_original_sha256": "6c67d1e1f319719443a83772ea5f1f2838c291b5e7dc1203ee3df4d8b5f6b7f0",
+      "public_sha256": "6c67d1e1f319719443a83772ea5f1f2838c291b5e7dc1203ee3df4d8b5f6b7f0"
+    },
+    {
+      "file": "probe.json",
+      "private_original_sha256": "fdac08e97bdbbbeadae70d70757085aa61345691ba4df28a38f6857bcb7e8b0f",
+      "public_sha256": "fdac08e97bdbbbeadae70d70757085aa61345691ba4df28a38f6857bcb7e8b0f"
+    },
+    {
+      "file": "roots.json",
+      "private_original_sha256": "836e1aaa53bb6a3ee3741545916231ed8c4c715025cbf4ac338a66fe55a17bb4",
+      "public_sha256": "836e1aaa53bb6a3ee3741545916231ed8c4c715025cbf4ac338a66fe55a17bb4"
+    },
+    {
+      "file": "selected.json",
+      "private_original_sha256": "787954b841161654a68ccdb745f7a2e73aadc690c8d936d4a6b76e1749b7dd6f",
+      "public_sha256": "787954b841161654a68ccdb745f7a2e73aadc690c8d936d4a6b76e1749b7dd6f"
+    }
+  ],
+  "summaries": [
+    {
+      "report": "ablation-both.json",
+      "completed": true,
+      "rejected": false,
+      "points": 4.0,
+      "games": 6,
+      "terminations": {
+        "natural": 4,
+        "ply_cap": 2
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    },
+    {
+      "report": "ablation-coordination.json",
+      "completed": true,
+      "rejected": false,
+      "points": 0.5,
+      "games": 6,
+      "terminations": {
+        "natural": 5,
+        "ply_cap": 1
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    },
+    {
+      "report": "ablation-deep-threat.json",
+      "completed": true,
+      "rejected": false,
+      "points": 2.0,
+      "games": 6,
+      "terminations": {
+        "natural": 4,
+        "ply_cap": 1,
+        "repetition": 1
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    },
+    {
+      "report": "ablation-guard.json",
+      "completed": true,
+      "rejected": false,
+      "points": 3.0,
+      "games": 6,
+      "terminations": {
+        "natural": 4,
+        "ply_cap": 2
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    },
+    {
+      "report": "ablation-lmr.json",
+      "completed": true,
+      "rejected": false,
+      "points": 4.0,
+      "games": 6,
+      "terminations": {
+        "natural": 4,
+        "ply_cap": 2
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    },
+    {
+      "report": "ablation-threat.json",
+      "completed": true,
+      "rejected": false,
+      "points": 2.5,
+      "games": 6,
+      "terminations": {
+        "natural": 3,
+        "ply_cap": 3
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    }
+  ],
+  "sealed_qualification": false,
+  "promotion": false
+}

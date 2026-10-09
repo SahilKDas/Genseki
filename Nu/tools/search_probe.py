@@ -28,7 +28,11 @@ def main():
         p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--repeats',type=int,default=3)
     p.add_argument('--root-pvs',action='store_true')
+    p.add_argument('--deep-threat',action='store_true')
+    p.add_argument('--scheduler-ablation',action='store_true')
+    p.add_argument('--record-isa',action='store_true')
     p.add_argument('--seed-base',type=int,default=190100)
+    p.add_argument('--predecessor-record',type=Path)
     args=p.parse_args()
     if args.directory.exists():raise RuntimeError('immutable experiment already exists')
     if not 1<=args.repeats<=10:raise RuntimeError('invalid repeat count')
@@ -39,6 +43,14 @@ def main():
         target=args.directory/(name+('.nnue' if name=='model' else '.exe'))
         shutil.copy2(source,target);pins[name]=digest(target)
     atomic_json(args.directory/'pins.json',pins)
+    if args.predecessor_record:
+        from incumbent import checked_pair,verified_settings
+        record=json.loads(args.predecessor_record.read_text());checked_pair(Path(__file__).resolve().parents[2],record)
+        if record['required_pair']['engine_sha256']!=pins['baseline'] or record['required_pair']['model_sha256']!=pins['model']:
+            raise RuntimeError('predecessor pair mismatch')
+        settings=verified_settings(record)
+        if not settings:raise RuntimeError('missing predecessor configuration')
+        atomic_json(args.directory/'predecessor-config.json',settings)
     root=Path(__file__).resolve().parents[1]
     benchmark=json.loads((root/'reports/schema8-v1/benchmark-checked.json').read_text())
     roots=[dict(category=r['category'],position=r['position']) for r in benchmark['native']['8']['components']]
@@ -54,6 +66,8 @@ def main():
         used=set(json.loads((root/'work/schema7-campaign/openings/exclusions.json').read_text())['opening_families'])
         for prior in (root/'work').glob('search9-*/gate-openings.json'):
             used.update(row['key'] for row in json.loads(prior.read_text())['openings'])
+        for prior in (root/'work').glob('search10-*/gate-openings.json'):
+            used.update(row['key'] for row in json.loads(prior.read_text())['openings'])
         for name,count,seed in [('ablation-openings',3,args.seed_base),('gate-openings',10,args.seed_base+800),('alpha-openings',10,args.seed_base+800)]:
             if name=='alpha-openings':
                 shutil.copy2(args.directory/'gate-openings.json',args.directory/'alpha-openings.json');continue
@@ -66,6 +80,12 @@ def main():
     atomic_json(args.directory/'roots.json',roots)
     rows=[]
     policies={name:{**settings,**({'RootPVS':True} if args.root_pvs else {})} for name,settings in POLICIES.items()}
+    if args.deep_threat:
+        policies['deep-threat']=dict(ThreatPlies=2,LateMoveReductions=False,CooperativeOrdering=False,RootPVS=args.root_pvs)
+    if args.scheduler_ablation:
+        if not args.root_pvs:raise RuntimeError('scheduler ablation requires root PVS')
+        policies={name:{**policies[base], 'RootPVFirst':first} for name,base,first in
+                  [('parallel','guard',False),('parallel-lmr','lmr',False),('pv-first','guard',True),('pv-first-lmr','lmr',True)]}
     try:
         for repeat in range(args.repeats):
             for policy in policies:
@@ -79,6 +99,7 @@ def main():
                         response(peer,'nu-loadposition '+item['position'])
                         legal=response(peer,'validmoves')[0].split(';')
                         row=dict(policy=policy,repeat=repeat,category=item['category'])
+                        if args.record_isa:row['accumulator_isa']=response(peer,'nu-accumulator-isa')[0]
                         try:lines,elapsed=peer.command('bestmove depthorseconds 64 .23',.25)
                         except TimeoutError:
                             rows.append(dict(**row,timeout=True));continue

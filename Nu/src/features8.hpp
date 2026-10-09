@@ -31,28 +31,33 @@ struct FastFeatures8 {
 struct FeatureScratch8 {
     struct Cell {Hex cell{};unsigned height=0,top_color=0;std::array<unsigned,6> neighbors{};};
     std::array<Cell,22> cells{};
-    std::array<std::array<int,4>,22> candidate{},best{};
-    Coordinates coordinates{};
+    std::array<int,64> occupied{};
+    std::array<std::array<FixedList<unsigned,22>,6>,2> banks{};
 };
 
 // Relative identities are unique: canonical keys have the same identity order
 // in every frame, so the twelve candidate keys need no sorting or allocation.
 inline Coordinates canonical8(const std::array<FastPiece,22>& pieces,Hex anchor,
-                              unsigned perspective,unsigned& frame,FeatureScratch8& scratch) {
+                              unsigned perspective,unsigned& frame) {
     Coordinates best_coordinates{};
-    for(unsigned symmetry=0;symmetry<12;++symmetry) {
-        unsigned count=0;
+    frame=0;
+    for(unsigned id=0;id<22;++id)if(pieces[id].present)
+        best_coordinates[id]=orient(int(pieces[id].cell.q)-int(anchor.q),int(pieces[id].cell.r)-int(anchor.r),0);
+    for(unsigned symmetry=1;symmetry<12;++symmetry) {
+        bool better=false;
         for(unsigned relative=0;relative<22;++relative) {
             auto id=(relative+11*perspective)%22;
             const auto& piece=pieces[id];if(!piece.present)continue;
             auto xy=orient(int(piece.cell.q)-int(anchor.q),int(piece.cell.r)-int(anchor.r),symmetry);
-            scratch.coordinates[id]=xy;
-            scratch.candidate[count++]={int(relative),int(piece.layer),xy[0],xy[1]};
+            // Identity and layer are frame-invariant; the first coordinate
+            // difference decides the complete labeled geometry comparison.
+            if(xy>best_coordinates[id])break;
+            if(xy<best_coordinates[id]){better=true;break;}
         }
-        if(symmetry==0||std::lexicographical_compare(scratch.candidate.begin(),scratch.candidate.begin()+count,
-                                                    scratch.best.begin(),scratch.best.begin()+count)) {
-            std::copy_n(scratch.candidate.begin(),count,scratch.best.begin());
-            best_coordinates=scratch.coordinates;frame=symmetry;
+        if(better) {
+            frame=symmetry;
+            for(unsigned id=0;id<22;++id)if(pieces[id].present)
+                best_coordinates[id]=orient(int(pieces[id].cell.q)-int(anchor.q),int(pieces[id].cell.r)-int(anchor.r),symmetry);
         }
     }
     return best_coordinates;
@@ -120,10 +125,19 @@ inline void fast_features8(FastFeatures8& next,const Board& board,const FastFeat
     }
     std::array<Hex,2> anchors{};std::array<bool,2> queens{};unsigned present=0;
     next.cells=unsigned(stacks.size());
-    auto height=[&](Hex cell){for(unsigned i=0;i<next.cells;++i)if(scratch.cells[i].cell==cell)return scratch.cells[i].height;return 0u;};
+    scratch.occupied.fill(-1);
+    for(auto& perspective:scratch.banks)for(auto& bank:perspective)bank.count=0;
+    auto locate=[&](Hex cell) {
+        auto key=std::uint64_t(std::uint32_t(cell.q))|(std::uint64_t(std::uint32_t(cell.r))<<32);
+        unsigned bucket=unsigned(mix(key)&63);
+        while(scratch.occupied[bucket]>=0&&scratch.cells[scratch.occupied[bucket]].cell!=cell)bucket=(bucket+1)&63;
+        return bucket;
+    };
+    auto height=[&](Hex cell){auto id=scratch.occupied[locate(cell)];return id<0?0u:scratch.cells[id].height;};
     for(unsigned i=0;i<next.cells;++i) {
         const auto& stack=stacks[i];if(stack.pieces.empty())throw std::runtime_error("empty stack");
         next.geometry[i]=stack.cell;scratch.cells[i]={stack.cell,unsigned(stack.pieces.size()),unsigned(stack.pieces.back().color),{}};
+        scratch.occupied[locate(stack.cell)]=int(i);
         for(unsigned layer=0;layer<stack.pieces.size();++layer) {
             auto piece=stack.pieces[layer];auto id=slot(piece);
             if(id>=22||next.pieces[id].present||++present>22)throw std::runtime_error("invalid Base Hive identity");
@@ -138,7 +152,7 @@ inline void fast_features8(FastFeatures8& next,const Board& board,const FastFeat
             auto id=(relative+11*perspective)%22;
             if(next.pieces[id].present){anchors[perspective]=next.pieces[id].cell;break;}
         }
-        coordinates[perspective]=canonical8(next.pieces,anchors[perspective],perspective,frames[perspective],scratch);
+        coordinates[perspective]=canonical8(next.pieces,anchors[perspective],perspective,frames[perspective]);
     }
     next.pinned=previous&&next.geometry==previous->geometry&&next.cells==previous->cells?previous->pinned:pins8(next.geometry,next.cells);
     constexpr int covered_cost[]{45,65,55,70,145},pinned_cost[]{25,40,35,45,100},gated_cost[]{12,18,16,20,30};
@@ -149,7 +163,8 @@ inline void fast_features8(FastFeatures8& next,const Board& board,const FastFeat
             descriptor.oriented_neighbors[p][direction_frames8[frames[p]][d]]=descriptor.neighbors[d];}
         if(previous&&previous->pieces[id]==descriptor)next.encoded[id]=previous->encoded[id];
         else {next.encoded[id]=encode8(descriptor,id);++next.rebuilt_pieces;}
-        for(unsigned p=0;p<2;++p)for(auto feature:next.encoded[id][p])next.active[p].push_back(feature);
+        for(unsigned p=0;p<2;++p)for(unsigned bank=0;bank<next.encoded[id][p].size();++bank)
+            scratch.banks[p][bank].push_back(next.encoded[id][p][bank]);
         int cost=0;auto bug=unsigned(piece.bug);
         if(descriptor.layer+1!=descriptor.height)cost=covered_cost[bug];
         else if(descriptor.height==1&&next.pinned[i])cost=pinned_cost[bug];
@@ -159,11 +174,19 @@ inline void fast_features8(FastFeatures8& next,const Board& board,const FastFeat
     for(unsigned color=0;color<2;++color) {
         unsigned liberties=7;
         if(queens[color]){liberties=0;for(auto direction:directions)liberties+=height(add(anchors[color],direction))==0;}
-        for(unsigned p=0;p<2;++p){auto feature=6208+(color^p)*16+liberties;next.queen_features[p][color]=feature;next.active[p].push_back(feature);}
+        for(unsigned p=0;p<2;++p){auto feature=6208+(color^p)*16+liberties;next.queen_features[p][color]=feature;}
         if(queens[color])next.prior_white+=(color==0?-1:1)*int((6-liberties)*(6-liberties)*18);
     }
     next.prior_white=std::clamp(next.prior_white,-1800,1800);
-    for(auto& perspective:next.active)std::sort(perspective.begin(),perspective.end());
+    // Feature banks occupy disjoint ascending ranges; only sort within a bank.
+    for(unsigned p=0;p<2;++p) {
+        for(auto& bank:scratch.banks[p]) {
+            std::sort(bank.begin(),bank.end());
+            for(auto feature:bank)next.active[p].push_back(feature);
+        }
+        next.active[p].push_back(std::min(next.queen_features[p][0],next.queen_features[p][1]));
+        next.active[p].push_back(std::max(next.queen_features[p][0],next.queen_features[p][1]));
+    }
 }
 
 struct FeatureWorkspace8 {

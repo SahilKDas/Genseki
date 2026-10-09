@@ -18,6 +18,7 @@ def command(text):
     return read()
 try:
     assert read()[0].startswith('id Nu')
+    assert command('nu-accumulator-isa')==['scalar']
     assert command('newgame Base')[0].startswith('Base;')
     initial = command('nu-position')
     move = command('bestmove time 00:00:00.020')[0]
@@ -36,7 +37,7 @@ try:
     assert command('options set ThreatPlies 1')[0].startswith('ThreatPlies;int;1')
     assert command('options set LateMoveReductions True')[0].startswith('LateMoveReductions;bool;True')
     assert command('options set LateMoveReductions False')[0].startswith('LateMoveReductions;bool;False')
-    for option in ('DeadlineGuard','CooperativeOrdering','RootPVS'):
+    for option in ('DeadlineGuard','CooperativeOrdering','RootPVS','RootPVFirst'):
         assert command('options get '+option)==[option+';bool;False;False']
         assert command('options '+option+' True')==[option+';bool;True;False']
         assert command('options '+option+' nonsense')[0].startswith('err')

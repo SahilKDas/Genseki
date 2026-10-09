@@ -29,10 +29,12 @@ def main():
             '--referee',str(d/'referee.exe'),'--games',str(games),'--threads','8',
             '--openings',str(d/openings),'--deadline-guard','--candidate-only-selectivity','--output',str(output)]
         if not alpha:command+=['--opponent-model',str(d/'model.nnue')]
+        if not alpha and (d/'predecessor-config.json').exists():command+=['--opponent-config',str(d/'predecessor-config.json')]
         command+=['--threat-plies',str(settings['ThreatPlies'])]
         if settings['LateMoveReductions']:command+=['--lmr']
         if settings['CooperativeOrdering']:command+=['--cooperative-ordering']
         if settings.get('RootPVS',False):command+=['--root-pvs']
+        if settings.get('RootPVFirst',False):command+=['--root-pv-first']
         if output.exists():command+=['--resume']
         print('Running '+name,flush=True)
         subprocess.run(command,check=True,timeout=7250)

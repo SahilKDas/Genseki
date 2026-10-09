@@ -27,7 +27,7 @@ short form are accepted. Debug commands: `nu-position`, `nu-features`, and
 `nu-searchinfo`, `nu-profile`, `nu-moveid`, and `nu-matchdraw`. This is not yet a claim of full UHP conformance.
 
 Search challengers additionally expose opt-in `DeadlineGuard` and
-`CooperativeOrdering` (both default False), with `nu-timing` reporting setup,
+`CooperativeOrdering`, `RootPVS`, and `RootPVFirst` (all default False), with `nu-timing` reporting setup,
 worker joins, total search time, cleanup lag, and reply-format cost. These are
 search policies over the unchanged schema-8 weights, not new feature schemas.
 Research generations called Schema 9/10 must qualify separately; adding these
@@ -35,6 +35,11 @@ options does not itself promote an incumbent or change GUI/Alpha defaults.
 The qualified Schema 9 profile scored 15.5/20 against frozen Schema 8 and 1/20
 against Alpha Gen 1. See [SCHEMA9.md](SCHEMA9.md) for the selected configuration,
 retained failures, and research-only promotion limits.
+The qualified Schema 10 profile scored 13/20 against promoted Schema 9 and
+4.5/20 against Alpha Gen 1, without timeouts in either screen. It selects
+full-width root PVS with reductions and extensions disabled. See
+[SCHEMA10.md](SCHEMA10.md) for its hash-pinned pair, retained failed candidates,
+and research-only promotion limits.
 
 ## Models and Features
 
@@ -90,7 +95,9 @@ coordinates; Nu does not claim mathematically unbounded coordinates.
 Accumulator updates use sorted multiset differences, including queen-anchor
 changes; schema 8 updates changed piece blocks and Queen globals directly.
 Integer scale is 256. SIMD output dispatch requires SSE4.1 and has a
-scalar fallback. Files use a 32-byte little-endian header: magic `NUNNUE1\0`,
+scalar fallback. Schema-8 accumulator updates additionally dispatch AVX2,
+SSE4.1, or scalar exact-integer operations; `nu-accumulator-isa` reports the
+selected accumulator backend. Files use a 32-byte little-endian header: magic `NUNNUE1\0`,
 schema, feature count, width, quantization scale, FNV-1a payload checksum.
 Payload: int32 biases, int16 embeddings, int16 output weights. `NUNNUE2\0`
 retains the header and adds a fixed 32-unit head: row-major int16 weights

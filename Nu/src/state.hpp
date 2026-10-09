@@ -70,14 +70,16 @@ struct State {
     std::size_t cache_entries() const noexcept {return worker_cache.value?worker_cache.value->count:0;}
     std::uint64_t hash;
     std::uint64_t history_key;
+    std::uint64_t reversible_key;
+    std::size_t reversible_start=0;
     std::vector<std::uint64_t> path;
     std::vector<std::uint64_t> repeat_path;
     std::shared_ptr<const std::vector<Move>> move_cache;
-    struct Undo { genseki::Undo board; Features previous; std::uint64_t hash,history_key; std::shared_ptr<const std::vector<Move>> moves; Mobility mobility; bool dirty; std::optional<Move> pending; bool unchanged; std::shared_ptr<const FastFeatures> fast; std::shared_ptr<const FastFeatures8> fast8; };
+    struct Undo { genseki::Undo board; Features previous; std::uint64_t hash,history_key; std::shared_ptr<const std::vector<Move>> moves; Mobility mobility; bool dirty; std::optional<Move> pending; bool unchanged; std::shared_ptr<const FastFeatures> fast; std::shared_ptr<const FastFeatures8> fast8; std::uint64_t reversible_key; std::size_t reversible_start; };
     void materialize8(const FastFeatures8& features) const {
         for(unsigned p=0;p<2;++p)active[p].assign(features.active[p].begin(),features.active[p].end());
     }
-    explicit State(const Model& m,Board b={}):board(std::move(b)),model(&m),mobility((m.feature_schema==4||m.feature_schema==6)?movement_counts(board):Mobility{}),active(m.feature_schema==8?Features{}:features(board,m.feature_schema,&mobility)),accumulator(m),hash(position_hash(board)),history_key(mix(hash)),path{hash} {
+    explicit State(const Model& m,Board b={}):board(std::move(b)),model(&m),mobility((m.feature_schema==4||m.feature_schema==6)?movement_counts(board):Mobility{}),active(m.feature_schema==8?Features{}:features(board,m.feature_schema,&mobility)),accumulator(m),hash(position_hash(board)),history_key(mix(hash)),reversible_key(history_key),path{hash} {
         if(m.feature_schema==8) {
             auto next=std::make_shared<FastFeatures8>();FeatureScratch8 scratch;
             fast_features8(*next,board,nullptr,scratch);fast8=std::move(next);
@@ -89,6 +91,7 @@ struct State {
     }
     Undo make(const Move& move,bool generated=false) {
         auto old=hash;auto previous_history=history_key;
+        const auto previous_reversible=reversible_key;const auto previous_start=reversible_start;
         auto delta=mix(unsigned(board.side_to_move())+17)^mix(unsigned(other(board.side_to_move()))+17)
             ^mix(std::min<std::size_t>(board.ply(),8)+987)^mix(std::min<std::size_t>(board.ply()+1,8)+987);
         auto repeat_delta=delta;
@@ -120,7 +123,11 @@ struct State {
         auto cached=std::move(move_cache);move_cache.reset();
         hash=old^delta;path.push_back(hash);history_key=mix(history_key^hash);
         repeat_path.push_back(repeat_path.back()^repeat_delta);
-        return {undo,std::move(before),old,previous_history,std::move(cached),old_mobility,old_dirty,old_pending,old_unchanged,std::move(old_fast),std::move(old_fast8)};
+        // Base Hive has no captures: pre-placement positions contain fewer
+        // stones and cannot recur in this state or any descendant.
+        if(move.kind==MoveKind::placement){reversible_start=path.size()-1;reversible_key=mix(hash);}
+        else reversible_key=mix(reversible_key^hash);
+        return {undo,std::move(before),old,previous_history,std::move(cached),old_mobility,old_dirty,old_pending,old_unchanged,std::move(old_fast),std::move(old_fast8),previous_reversible,previous_start};
     }
     void unmake(const Undo& undo) {
         board.unmake_move(undo.board);
@@ -128,6 +135,7 @@ struct State {
             accumulator.update_blocks(*model,*fast8,*undo.fast8);fast8=undo.fast8;materialize8(*fast8);
         }else {accumulator.update(*model,active,undo.previous);active=undo.previous;}
         hash=undo.hash;history_key=undo.history_key;path.pop_back();repeat_path.pop_back();move_cache=undo.moves;mobility=undo.mobility;features_dirty=undo.dirty;pending_move=undo.pending;pending_unchanged=undo.unchanged;fast=undo.fast;
+        reversible_key=undo.reversible_key;reversible_start=undo.reversible_start;
     }
     void ensure_features(const Move* move=nullptr,bool unchanged_occupancy=false) const {
         if(!features_dirty)return;
@@ -202,12 +210,16 @@ struct State {
         auto refreshed=(model->feature_schema==4||model->feature_schema==6)?movement_counts(board):Mobility{};
         Accumulator reference(*model);reference.refresh(*model,features(board,model->feature_schema,&refreshed));
         auto history=mix(path.front());for(unsigned i=1;i<path.size();++i)history=mix(history^path[i]);
+        if(reversible_start>=path.size())return false;
+        auto reversible=mix(path[reversible_start]);
+        for(std::size_t i=reversible_start+1;i<path.size();++i)reversible=mix(reversible^path[i]);
         return reference.sums==accumulator.sums&&(!is_fast_schema(model->feature_schema)||(model->feature_schema==8?fast8->prior_white:fast->prior_white)==fast_features(board,nullptr,model->feature_schema).prior_white)&&hash==position_hash(board)&&history==history_key&&repeat_path.back()==repetition_hash(board)
-            &&((model->feature_schema!=4&&model->feature_schema!=6)||mobility==refreshed);
+            &&reversible==reversible_key&&((model->feature_schema!=4&&model->feature_schema!=6)||mobility==refreshed);
     }
     std::uint64_t context_key() const {
-        // Conservative: history-dependent repetition scores must not cross contexts.
-        return mix(hash^history_key);
+        // Keep every reversible position and the repetition eligibility threshold.
+        // Only the provably unreachable pre-placement prefix is discarded.
+        return mix(hash^reversible_key^mix(std::min<std::size_t>(repeat_path.size(),12)+713));
     }
 };
 struct Applied {

@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "policy": "parallel-lmr",
+  "pins": {
+    "candidate": "aba1f07d823464f4d5aaa0316b111b5a5bb847adf48c334d1b0c31ec75a9dc04",
+    "baseline": "76f9bcdac0e75620a1e2d4a4e77c638ce45dc8a438aefe29fdac5f31da8979c8",
+    "model": "78f265a5a96ee5994e2e5743817a2017fcbc7dc1d4d2c8fc5661d0584ed1d875",
+    "referee": "8f0616dcf73feccd349c6c5954772dd0be34e20d54a76161f43d664a665a9fdf",
+    "alpha": "80d1cc75571c2e3266e0246b2cec00d3657e3ba94029e5ca4635cfe0eaf12ef6"
+  },
+  "settings": {
+    "ThreatPlies": 0,
+    "LateMoveReductions": true,
+    "CooperativeOrdering": false,
+    "RootPVS": true,
+    "RootPVFirst": false
+  },
+  "deadline_guard": true,
+  "summaries": [
+    {
+      "policy": "parallel",
+      "points": 2.0,
+      "natural_points": 1.0,
+      "own_timeouts": 0,
+      "probe_depths": 102,
+      "report_sha256": "f1f882b07e204fe2e0f0ffd331e6d7b6ecca3b2c07380fd28d90aba40e93cf89"
+    },
+    {
+      "policy": "parallel-lmr",
+      "points": 2.5,
+      "natural_points": 2.0,
+      "own_timeouts": 0,
+      "probe_depths": 102,
+      "report_sha256": "13cf09e2d662bd584e6828d28157e9eb5032251a9978a6460ac6aba76b6401a3"
+    },
+    {
+      "policy": "pv-first",
+      "points": 1.5,
+      "natural_points": 1.0,
+      "own_timeouts": 0,
+      "probe_depths": 103,
+      "report_sha256": "b0efce2c19aae3a7492e8b26579b58cad841b4ef208838536c368ae211243104"
+    },
+    {
+      "policy": "pv-first-lmr",
+      "points": 1.0,
+      "natural_points": 0.0,
+      "own_timeouts": 0,
+      "probe_depths": 106,
+      "report_sha256": "3f99d7637feebb85e3ee8a807baf0b1f4438365d01eb13f22e58ede0411ac0ca"
+    }
+  ],
+  "gate_openings_sha256": "0d05e8ab9813b86935b87de7210f1a5a8ac8a70eedd941dc52e788b9ce6bd025",
+  "selection_rule": "points-natural-fewer-timeouts-depth-v1",
+  "promoted": false
+}

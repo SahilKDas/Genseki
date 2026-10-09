@@ -114,6 +114,7 @@ int main(int argc,char** argv) {
                         std::cout<<"HybridTerms;int;"<<search_options.hybrid_terms<<";63;0;127\n";
                         std::cout<<"DeadlineGuard;bool;"<<(search_options.deadline_guard?"True":"False")<<";False\nCooperativeOrdering;bool;"<<(search_options.cooperative_ordering?"True":"False")<<";False\n";
                         std::cout<<"RootPVS;bool;"<<(search_options.root_pvs?"True":"False")<<";False\n";
+                        std::cout<<"RootPVFirst;bool;"<<(search_options.root_pv_first?"True":"False")<<";False\n";
                     }
                     else {std::istringstream a(argument);std::string name;unsigned value;a>>name;
                         if(name=="set")a>>name;
@@ -127,11 +128,12 @@ int main(int argc,char** argv) {
                             else if(name=="HybridTerms")std::cout<<"HybridTerms;int;"<<search_options.hybrid_terms<<";63;0;127\n";
                             else if(name=="DeadlineGuard"||name=="CooperativeOrdering")std::cout<<name<<";bool;"<<((name=="DeadlineGuard"?search_options.deadline_guard:search_options.cooperative_ordering)?"True":"False")<<";False\n";
                             else if(name=="RootPVS")std::cout<<name<<";bool;"<<(search_options.root_pvs?"True":"False")<<";False\n";
+                            else if(name=="RootPVFirst")std::cout<<name<<";bool;"<<(search_options.root_pv_first?"True":"False")<<";False\n";
                             else if(name=="LateMoveReductions"||name=="Profile")std::cout<<name<<";bool;"<<((name=="Profile"?search_options.profile:search_options.lmr)?"True":"False")<<";False\n";
                             else throw std::runtime_error("unknown option");
                             std::cout<<"ok\n"<<std::flush;continue;
                         }
-                        if(name=="BackgroundPondering"||name=="LateMoveReductions"||name=="Profile"||name=="HybridEvaluation"||name=="DeadlineGuard"||name=="CooperativeOrdering"||name=="RootPVS") {
+                        if(name=="BackgroundPondering"||name=="LateMoveReductions"||name=="Profile"||name=="HybridEvaluation"||name=="DeadlineGuard"||name=="CooperativeOrdering"||name=="RootPVS"||name=="RootPVFirst") {
                             std::string boolean;a>>boolean;
                             if(boolean!="True"&&boolean!="False")throw std::runtime_error("invalid boolean");
                             if(name=="BackgroundPondering")pondering=boolean=="True";
@@ -140,6 +142,7 @@ int main(int argc,char** argv) {
                             else if(name=="DeadlineGuard")search_options.deadline_guard=boolean=="True";
                             else if(name=="CooperativeOrdering")search_options.cooperative_ordering=boolean=="True";
                             else if(name=="RootPVS")search_options.root_pvs=boolean=="True";
+                            else if(name=="RootPVFirst")search_options.root_pv_first=boolean=="True";
                             else search_options.lmr=boolean=="True";
                             std::cout<<name<<";bool;"<<boolean<<";False\nok\n"<<std::flush;continue;
                         }
@@ -157,6 +160,7 @@ int main(int argc,char** argv) {
                         else std::cout<<"ThreatPlies;int;"<<search_options.threat_plies<<";0;0;4\n";
                     }
                 }else if(command=="nu-feature-schema")std::cout<<model.feature_schema<<'\n';
+                else if(command=="nu-accumulator-isa")std::cout<<nu::Accumulator::backend(model)<<'\n';
                 else if(command=="nu-prior")std::cout<<state.strategic_prior(nu::Color::white)<<'\n';
                 else if(command=="nu-memory")std::cout<<"model "<<model.allocated_bytes()<<" table "<<search->allocated_table_bytes()<<'\n';
                 else if(command=="nu-hybrid-eval") {

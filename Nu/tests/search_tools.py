@@ -25,7 +25,7 @@ class SearchTools(unittest.TestCase):
         self.assertEqual(public_copy([{'points':6,'games':20}]),[{'points':6,'games':20}])
 
     def test_registered_settings_are_bounded_and_typed(self):
-        accepted={'Threads':8,'TableMiB':16,'ThreatPlies':1,'DeadlineGuard':True,'RootPVS':False}
+        accepted={'Threads':8,'TableMiB':16,'ThreatPlies':1,'DeadlineGuard':True,'RootPVS':False,'RootPVFirst':True}
         self.assertEqual(verified_settings({'uhp_settings':accepted}),accepted)
         for bad in ({'Threads':13},{'Threads':True},{'ThreatPlies':5},{'RootPVS':'True'},{'unknown':True}):
             with self.assertRaises(RuntimeError):verified_settings({'uhp_settings':bad})

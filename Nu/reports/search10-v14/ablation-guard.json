@@ -1,0 +1,1683 @@
+{
+  "kind": "development",
+  "games": [
+    {
+      "pair": 0,
+      "opening_seed": 205100,
+      "nu_color": "white",
+      "score": 1.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 196.0857999511063,
+      "moves": [
+        "wG1",
+        "bG1 /wG1",
+        "wS1 wG1-",
+        "bB1 -bG1",
+        "wA1 wS1/",
+        "bQ /bB1",
+        "wQ wS1\\",
+        "bS1 bG1\\",
+        "wA1 /bQ",
+        "bA1 \\bB1",
+        "wS2 \\wG1",
+        "bA1 wQ-",
+        "wS2 \\bQ",
+        "bA2 bQ-",
+        "wG2 \\wS2",
+        "bA2 -wG2",
+        "wA2 \\wG1",
+        "bB2 bQ-",
+        "wA3 wG2/",
+        "bB2 bQ",
+        "wB1 wS1/",
+        "bS1 wQ\\",
+        "wG3 -wA1",
+        "bA2 wB1-",
+        "wA3 wG3/",
+        "bG2 bS1-",
+        "wG2 wA1-",
+        "bA3 bG1\\",
+        "wG3 wS2/",
+        "bA2 \\wG3",
+        "wA2 \\wS2",
+        "bA2 wG3/",
+        "wB1 wS1-",
+        "bA1 wB1-",
+        "wA2 bG2/",
+        "bS1 bG2-",
+        "wQ bG1-",
+        "bB2 wA3",
+        "wG1 bQ-"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 195.98519999999553,
+          "info": [
+            "depth 6 nodes 145032 score 0",
+            "pv;wA1 wS1/;bQ /bB1;wQ wS1\\;bA1 \\bB1;wA2 \\wG1;bA1 \\wA2"
+          ],
+          "timing": [
+            "setup_ns 753300 join_ns 19278600 total_ns 195641700 stop_lag_ns 641700 reply_ns 2600"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 195.72469999548048,
+          "info": [
+            "depth 4 nodes 91045 score 0",
+            "pv;wQ wS1\\"
+          ],
+          "timing": [
+            "setup_ns 542400 join_ns 717900 total_ns 195527500 stop_lag_ns 527500 reply_ns 2800"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 195.7222999772057,
+          "info": [
+            "depth 4 nodes 142728 score 9",
+            "pv;wA1 /bQ;bS1 wQ\\;wA2 wS1/;bA1 \\bB1"
+          ],
+          "timing": [
+            "setup_ns 658900 join_ns 2701300 total_ns 195509600 stop_lag_ns 509600 reply_ns 2700"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 195.6241999869235,
+          "info": [
+            "depth 4 nodes 123811 score -4",
+            "pv;wS2 \\wG1;bA1 \\wS2;wA2 wS1/;bS1 wQ\\"
+          ],
+          "timing": [
+            "setup_ns 568500 join_ns 9671000 total_ns 195433100 stop_lag_ns 433100 reply_ns 2500"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 195.70659997407347,
+          "info": [
+            "depth 4 nodes 117570 score -15",
+            "pv;wS2 \\bQ;bA2 bQ-;wA2 \\wG1;bB1 wS2"
+          ],
+          "timing": [
+            "setup_ns 544400 join_ns 11726200 total_ns 195484500 stop_lag_ns 484500 reply_ns 2800"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 195.70069998735562,
+          "info": [
+            "depth 4 nodes 116571 score -14",
+            "pv;wG2 \\wS2;bA2 -wG2;wA2 wG2/;bA2 \\wA2"
+          ],
+          "timing": [
+            "setup_ns 518800 join_ns 9393400 total_ns 195487200 stop_lag_ns 487200 reply_ns 2300"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 195.72790001984686,
+          "info": [
+            "depth 4 nodes 86768 score -4",
+            "pv;wA2 \\wG1;bB2 bQ-;wA2 bA2\\;bA2 -wA2"
+          ],
+          "timing": [
+            "setup_ns 513300 join_ns 67379700 total_ns 195526000 stop_lag_ns 526000 reply_ns 2400"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 195.63120004022494,
+          "info": [
+            "depth 4 nodes 94463 score -29",
+            "pv;wA3 wG2/;bB2 bQ;wA2 \\bA2;bB2 wA1"
+          ],
+          "timing": [
+            "setup_ns 649900 join_ns 12106800 total_ns 195419200 stop_lag_ns 419200 reply_ns 2700"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 195.659400022123,
+          "info": [
+            "depth 3 nodes 100432 score 39",
+            "pv;wB1 wS1/;bB2 wA1;wG3 wA3-"
+          ],
+          "timing": [
+            "setup_ns 561700 join_ns 1769500 total_ns 195401400 stop_lag_ns 401400 reply_ns 2400"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 195.72259997949004,
+          "info": [
+            "depth 3 nodes 96706 score 50",
+            "pv;wG3 -wA1;bG2 bS1-;wG3 wA1-"
+          ],
+          "timing": [
+            "setup_ns 570700 join_ns 1466900 total_ns 195490700 stop_lag_ns 490700 reply_ns 2700"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 196.02799997664988,
+          "info": [
+            "depth 3 nodes 89247 score 116",
+            "pv;wA3 wG3/;bG2 bS1-;wG2 wA1-"
+          ],
+          "timing": [
+            "setup_ns 559000 join_ns 1329800 total_ns 195638500 stop_lag_ns 638500 reply_ns 4300"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 195.99259999813512,
+          "info": [
+            "depth 3 nodes 84301 score 155",
+            "pv;wG2 wA1-;bA3 bG1\\;wA2 bA3\\"
+          ],
+          "timing": [
+            "setup_ns 636600 join_ns 1474400 total_ns 195720400 stop_lag_ns 720400 reply_ns 2800"
+          ]
+        },
+        {
+          "ply": 28,
+          "move_ms": 196.03570003528148,
+          "info": [
+            "depth 3 nodes 78164 score 207",
+            "pv;wG3 wS2/;bA2 \\wG3;wA2 \\bA2"
+          ],
+          "timing": [
+            "setup_ns 759300 join_ns 1178600 total_ns 195558300 stop_lag_ns 558300 reply_ns 4000"
+          ]
+        },
+        {
+          "ply": 30,
+          "move_ms": 195.81750000361353,
+          "info": [
+            "depth 3 nodes 73437 score 164",
+            "pv;wA2 \\wS2;bA2 wG3/;wA2 bA2/"
+          ],
+          "timing": [
+            "setup_ns 633900 join_ns 3289000 total_ns 195524000 stop_lag_ns 524000 reply_ns 2900"
+          ]
+        },
+        {
+          "ply": 32,
+          "move_ms": 195.8322999998927,
+          "info": [
+            "depth 3 nodes 82462 score 118",
+            "pv;wB1 wS1-;bA1 wB1-;wA2 bA2/"
+          ],
+          "timing": [
+            "setup_ns 642200 join_ns 1232900 total_ns 195534800 stop_lag_ns 534800 reply_ns 2600"
+          ]
+        },
+        {
+          "ply": 34,
+          "move_ms": 195.91519999084994,
+          "info": [
+            "depth 3 nodes 83429 score 107",
+            "pv;wA2 bG2/;bS1 bG2-;wB2 \\wS2"
+          ],
+          "timing": [
+            "setup_ns 772200 join_ns 709200 total_ns 195524100 stop_lag_ns 524100 reply_ns 3100"
+          ]
+        },
+        {
+          "ply": 36,
+          "move_ms": 22.22260000417009,
+          "info": [
+            "depth 3 nodes 7486 score 99997",
+            "pv;wQ bG1-;bA2 bA1-;wG1 bB2-"
+          ],
+          "timing": [
+            "setup_ns 678200 join_ns 6219400 total_ns 21935900 stop_lag_ns 0 reply_ns 3200"
+          ]
+        },
+        {
+          "ply": 38,
+          "move_ms": 1.7692000255919993,
+          "info": [
+            "depth 1 nodes 45 score 99999",
+            "pv;wG1 bQ-"
+          ],
+          "timing": [
+            "setup_ns 685700 join_ns 413200 total_ns 1438500 stop_lag_ns 0 reply_ns 2500"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 0,
+      "opening_seed": 205100,
+      "nu_color": "black",
+      "score": 1.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 196.6346999979578,
+      "moves": [
+        "wG1",
+        "bG1 /wG1",
+        "wS1 wG1-",
+        "bB1 -bG1",
+        "wA1 \\wG1",
+        "bQ /bB1",
+        "wQ wA1-",
+        "bA1 \\bB1",
+        "wA1 -bA1",
+        "bA2 -bQ",
+        "wS1 bQ-",
+        "bA2 wS1\\",
+        "wA2 wG1-",
+        "bA2 wA2-",
+        "wA3 wS1\\",
+        "bS1 bA2/",
+        "wA3 bA1/",
+        "bS1 \\wQ",
+        "wS1 -bQ",
+        "bA3 bG1\\",
+        "wA1 wS1\\",
+        "bA3 wS1/",
+        "wA3 wA1-",
+        "bA1 bS1-",
+        "wG2 /wS1",
+        "bA3 \\wG1",
+        "wA3 bA2-",
+        "bS2 bS1/",
+        "wA1 \\bS2",
+        "bG2 -bA3",
+        "wA1 wG2-",
+        "bG2 wQ-"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 195.92990004457533,
+          "info": [
+            "depth 5 nodes 157793 score 2",
+            "pv;bQ /bB1;wQ wA1-;bA1 bQ-"
+          ],
+          "timing": [
+            "setup_ns 642600 join_ns 16520900 total_ns 195623600 stop_lag_ns 623600 reply_ns 2700"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 195.61740005156025,
+          "info": [
+            "depth 5 nodes 126152 score 6",
+            "pv;bA1 \\bB1;wA1 -bA1;bA2 bA1/;wG2 wQ-;bA2 wG2-"
+          ],
+          "timing": [
+            "setup_ns 580900 join_ns 16868200 total_ns 195416000 stop_lag_ns 416000 reply_ns 2500"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 195.69379999302328,
+          "info": [
+            "depth 4 nodes 123548 score -76",
+            "pv;bA2 -bQ;wA1 -bA2;bA1 wQ/;wS1 bA1/"
+          ],
+          "timing": [
+            "setup_ns 591600 join_ns 5458600 total_ns 195433100 stop_lag_ns 433100 reply_ns 1900"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 195.78699994599447,
+          "info": [
+            "depth 4 nodes 110977 score -85",
+            "pv;bA2 wS1\\;wA2 wG1-;bA2 wA2-;wS1 -bQ"
+          ],
+          "timing": [
+            "setup_ns 635800 join_ns 16624700 total_ns 195510800 stop_lag_ns 510800 reply_ns 2300"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 195.91310003306717,
+          "info": [
+            "depth 4 nodes 112066 score -144",
+            "pv;bA2 wA2-;wS2 wS1\\;bA3 bA2/;wS2 -bQ"
+          ],
+          "timing": [
+            "setup_ns 511600 join_ns 17334400 total_ns 195578700 stop_lag_ns 578700 reply_ns 6700"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 195.68229996366426,
+          "info": [
+            "depth 4 nodes 93787 score -166",
+            "pv;bS1 bA2/;wA3 bS1/;bA3 bA2\\;wS1 -bQ"
+          ],
+          "timing": [
+            "setup_ns 613400 join_ns 12266300 total_ns 195451100 stop_lag_ns 451100 reply_ns 2600"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 195.92399999964982,
+          "info": [
+            "depth 4 nodes 88701 score -126",
+            "pv;bS1 \\wQ;wS1 -bQ;bA3 bG1\\;wA1 bQ\\"
+          ],
+          "timing": [
+            "setup_ns 566000 join_ns 1856100 total_ns 195577500 stop_lag_ns 577500 reply_ns 3000"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 196.04270003037527,
+          "info": [
+            "depth 4 nodes 92189 score -107",
+            "pv;bA3 bG1\\;wA1 wS1\\;bA3 \\wA3;wS2 /wS1"
+          ],
+          "timing": [
+            "setup_ns 708400 join_ns 663100 total_ns 195737800 stop_lag_ns 737800 reply_ns 3500"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 196.6346999979578,
+          "info": [
+            "depth 4 nodes 79901 score -93",
+            "pv;bA3 wS1/;wA3 wA1-;bA3 /wA1;wS2 -wS1"
+          ],
+          "timing": [
+            "setup_ns 752100 join_ns 10443800 total_ns 195957500 stop_lag_ns 957500 reply_ns 6400"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 195.9198999684304,
+          "info": [
+            "depth 4 nodes 88470 score -48",
+            "pv;bA1 bS1-;wG2 /wS1;bA3 \\wG1;wS2 /wG2"
+          ],
+          "timing": [
+            "setup_ns 512100 join_ns 2138800 total_ns 195640400 stop_lag_ns 640400 reply_ns 3700"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 195.90679998509586,
+          "info": [
+            "depth 3 nodes 80498 score 85",
+            "pv;bA3 \\wG1;wA3 bA2-;bG2 bQ-"
+          ],
+          "timing": [
+            "setup_ns 730900 join_ns 2257200 total_ns 195547400 stop_lag_ns 547400 reply_ns 6400"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 196.06650003697723,
+          "info": [
+            "depth 4 nodes 61924 score 118",
+            "pv;bS2 bS1/;wA1 \\bS2;bG2 \\bA3;wA1 wG2-"
+          ],
+          "timing": [
+            "setup_ns 675200 join_ns 20785700 total_ns 195598900 stop_lag_ns 598900 reply_ns 3700"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 22.71599997766316,
+          "info": [
+            "depth 3 nodes 8106 score 99997",
+            "pv;bG2 -bA3;wA3 -bG2;bA2 wQ-"
+          ],
+          "timing": [
+            "setup_ns 1021400 join_ns 1932000 total_ns 22272400 stop_lag_ns 0 reply_ns 3400"
+          ]
+        },
+        {
+          "ply": 31,
+          "move_ms": 1.916099980007857,
+          "info": [
+            "depth 1 nodes 56 score 99999",
+            "pv;bG2 wQ-"
+          ],
+          "timing": [
+            "setup_ns 739200 join_ns 435300 total_ns 1538300 stop_lag_ns 0 reply_ns 3100"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 1,
+      "opening_seed": 205101,
+      "nu_color": "white",
+      "score": 1.0,
+      "result": "WhiteWins",
+      "termination": "natural",
+      "max_move_ms": 196.5360000031069,
+      "moves": [
+        "wA1",
+        "bA1 -wA1",
+        "wG1 wA1/",
+        "bQ \\bA1",
+        "wQ wG1-",
+        "bA2 bQ/",
+        "wA2 wA1\\",
+        "bA2 /wA2",
+        "wA3 \\wG1",
+        "bA3 /bA1",
+        "wA3 -bA3",
+        "bQ wA3/",
+        "wS1 -wA3",
+        "bB1 bQ/",
+        "wS1 bA3\\",
+        "bB1 bQ",
+        "wA2 \\bB1",
+        "bB1 wA3",
+        "wG2 -wA2",
+        "bB2 bA2-",
+        "wG3 wA2/",
+        "bB2 bA2/",
+        "wG2 wA2-",
+        "bA2 wG3/",
+        "wB1 -wA2",
+        "bA2 wQ-",
+        "wB1 \\bB1"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 196.02169998688623,
+          "info": [
+            "depth 5 nodes 143238 score 74",
+            "pv;wQ wG1-;bA2 -bQ;wA2 wA1-;bA2 wQ/;wA2 \\bQ"
+          ],
+          "timing": [
+            "setup_ns 717600 join_ns 11721800 total_ns 195684500 stop_lag_ns 684500 reply_ns 2300"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 195.96549996640533,
+          "info": [
+            "depth 4 nodes 104196 score -55",
+            "pv;wA2 wA1\\;bA2 /wA2;wS1 \\wG1;bA3 /bA1"
+          ],
+          "timing": [
+            "setup_ns 665500 join_ns 17589600 total_ns 195585100 stop_lag_ns 585100 reply_ns 5800"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 196.07079995330423,
+          "info": [
+            "depth 4 nodes 86317 score -39",
+            "pv;wA3 \\wG1;bA3 /bQ;wA3 -bA3;bQ wA3/"
+          ],
+          "timing": [
+            "setup_ns 836800 join_ns 3406600 total_ns 195634000 stop_lag_ns 634000 reply_ns 2600"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 196.10530004138127,
+          "info": [
+            "depth 4 nodes 89216 score -57",
+            "pv;wA3 -bA3;bS1 bA2\\;wS1 \\wG1;bS1 wA1-"
+          ],
+          "timing": [
+            "setup_ns 803600 join_ns 17181900 total_ns 195703000 stop_lag_ns 703000 reply_ns 6000"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 195.84080000640824,
+          "info": [
+            "depth 4 nodes 83222 score -49",
+            "pv;wS1 -wA3;bB1 bQ/;wB1 wA1-;bB1 bA1"
+          ],
+          "timing": [
+            "setup_ns 639300 join_ns 23849500 total_ns 195598800 stop_lag_ns 598800 reply_ns 3300"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 195.8827000344172,
+          "info": [
+            "depth 4 nodes 83372 score 10",
+            "pv;wS1 bA3\\;bB1 bQ;wA2 \\bB1;bB1 wA3"
+          ],
+          "timing": [
+            "setup_ns 680000 join_ns 27192300 total_ns 195591900 stop_lag_ns 591900 reply_ns 4100"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 196.02560001658276,
+          "info": [
+            "depth 4 nodes 91354 score -12",
+            "pv;wA2 \\bB1;bB1 wA3;wG2 wA1-;bA2 bA3-"
+          ],
+          "timing": [
+            "setup_ns 638300 join_ns 1899900 total_ns 195646000 stop_lag_ns 646000 reply_ns 3400"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 195.8353000227362,
+          "info": [
+            "depth 4 nodes 84668 score -21",
+            "pv;wG2 -wA2;bA2 -wG2;wB1 wA2/;bA2 wQ-"
+          ],
+          "timing": [
+            "setup_ns 793700 join_ns 3608000 total_ns 195539200 stop_lag_ns 539200 reply_ns 3700"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 195.90639998205006,
+          "info": [
+            "depth 5 nodes 72331 score 245",
+            "pv;wG3 wA2/;bB2 bA2/;wG2 wA2-;bA2 wG3/;wB1 wS1\\"
+          ],
+          "timing": [
+            "setup_ns 698100 join_ns 13416100 total_ns 195615600 stop_lag_ns 615600 reply_ns 3700"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 196.1328000179492,
+          "info": [
+            "depth 4 nodes 65278 score 136",
+            "pv;wG2 wA2-;bA2 wG3/;wB1 wS1\\;bA2 wQ-"
+          ],
+          "timing": [
+            "setup_ns 754400 join_ns 61300300 total_ns 195820400 stop_lag_ns 820400 reply_ns 3900"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 1.9129000138491392,
+          "info": [
+            "depth 2 nodes 109 score 99997",
+            "pv;wB1 -wA2"
+          ],
+          "timing": [
+            "setup_ns 685800 join_ns 434100 total_ns 1691000 stop_lag_ns 0 reply_ns 2500"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 1.7725999932736158,
+          "info": [
+            "depth 1 nodes 40 score 99999",
+            "pv;wB1 \\bB1"
+          ],
+          "timing": [
+            "setup_ns 679900 join_ns 430900 total_ns 1380100 stop_lag_ns 0 reply_ns 4800"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 1,
+      "opening_seed": 205101,
+      "nu_color": "black",
+      "score": 1.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 196.40800001798198,
+      "moves": [
+        "wA1",
+        "bA1 -wA1",
+        "wG1 wA1/",
+        "bQ \\bA1",
+        "wQ wG1-",
+        "bA2 bQ/",
+        "wA2 wA1\\",
+        "bA2 /wA2",
+        "wA3 \\wG1",
+        "bA3 /bA1",
+        "wA3 -bA3",
+        "bQ wA3/",
+        "wS1 -wA3",
+        "bG1 /bA2",
+        "wG2 wA2-",
+        "bQ wS1/",
+        "wS2 -wS1",
+        "bQ wS2/",
+        "wS2 bQ/",
+        "bG1 wA1-",
+        "wG2 bA3-",
+        "bG1 wQ/",
+        "wA2 \\bA1",
+        "bG2 \\bG1",
+        "wG3 \\wG1",
+        "bG2 wQ-",
+        "wB1 wA2/",
+        "bS1 bG1-",
+        "wB2 wA1-",
+        "bB1 bG2\\",
+        "wB2 wQ",
+        "bB1 wB2\\",
+        "wB2 bG1",
+        "bB2 /bB1",
+        "wB2 bS1",
+        "bG3 bB1-",
+        "wB2 bG1",
+        "bB2 bB1",
+        "wA1 -bQ",
+        "bB2 wG1\\",
+        "wB2 \\bG1",
+        "bS1 \\wB2",
+        "wA1 bA2-",
+        "bB2 wQ",
+        "wS2 /bQ",
+        "bG3 wG1\\",
+        "wA1 wG2-",
+        "bB2 wG3-"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 195.98010001936927,
+          "info": [
+            "depth 4 nodes 131348 score -74",
+            "pv;bA2 bQ/;wA2 wA1-;bA2 wQ/;wA2 \\bQ"
+          ],
+          "timing": [
+            "setup_ns 706900 join_ns 9300200 total_ns 195644200 stop_lag_ns 644200 reply_ns 3900"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 196.06350001413375,
+          "info": [
+            "depth 4 nodes 102644 score -29",
+            "pv;bA2 /wA2;wA3 wA1-;bA3 /bA1;wA3 /bA3"
+          ],
+          "timing": [
+            "setup_ns 891400 join_ns 17542100 total_ns 195667800 stop_lag_ns 667800 reply_ns 3600"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 195.94330003019422,
+          "info": [
+            "depth 4 nodes 88517 score -66",
+            "pv;bA3 /bA1;wA3 /bA3;bS1 bQ/;wG2 wA1-"
+          ],
+          "timing": [
+            "setup_ns 661700 join_ns 12331500 total_ns 195599600 stop_lag_ns 599600 reply_ns 3400"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 195.90039999457076,
+          "info": [
+            "depth 4 nodes 97986 score -20",
+            "pv;bQ wA3/;wA3 -bQ;bA3 wQ\\;wS1 \\wG1"
+          ],
+          "timing": [
+            "setup_ns 629900 join_ns 3342200 total_ns 195648900 stop_lag_ns 648900 reply_ns 2500"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 196.27650000620633,
+          "info": [
+            "depth 4 nodes 92955 score -63",
+            "pv;bG1 /bA2;wG2 wA2-;bA3 wQ/;wG2 bA1\\"
+          ],
+          "timing": [
+            "setup_ns 668100 join_ns 2343400 total_ns 195757200 stop_lag_ns 757200 reply_ns 4600"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 196.07079995330423,
+          "info": [
+            "depth 4 nodes 79689 score -34",
+            "pv;bQ wS1/;wB1 -wS1;bG1 wA1-;wB1 \\wS1"
+          ],
+          "timing": [
+            "setup_ns 785100 join_ns 1667500 total_ns 195821000 stop_lag_ns 821000 reply_ns 3400"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 195.85459999507293,
+          "info": [
+            "depth 4 nodes 70768 score -54",
+            "pv;bQ wS2/;wG3 wS2\\;bB1 bA3\\;wB1 wA1-"
+          ],
+          "timing": [
+            "setup_ns 711200 join_ns 11583100 total_ns 195592000 stop_lag_ns 592000 reply_ns 3600"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 195.9465999971144,
+          "info": [
+            "depth 4 nodes 75326 score -20",
+            "pv;bG1 wA1-;wB1 wG1/;bG1 wB1-;wQ bG1\\"
+          ],
+          "timing": [
+            "setup_ns 551400 join_ns 2336900 total_ns 195593000 stop_lag_ns 593000 reply_ns 3900"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 196.06990000465885,
+          "info": [
+            "depth 4 nodes 79400 score -12",
+            "pv;bG1 wQ/;wA2 \\bA1;bS1 bG1/;wB1 \\wG1"
+          ],
+          "timing": [
+            "setup_ns 640000 join_ns 8109200 total_ns 195728300 stop_lag_ns 728300 reply_ns 3000"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 196.0016000084579,
+          "info": [
+            "depth 4 nodes 73789 score 13",
+            "pv;bG2 \\bG1;wB1 wA2/;bG2 wQ-;wG3 wB1-"
+          ],
+          "timing": [
+            "setup_ns 826300 join_ns 10378600 total_ns 195699200 stop_lag_ns 699200 reply_ns 3900"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 196.10619999002665,
+          "info": [
+            "depth 4 nodes 55305 score 18",
+            "pv;bG2 wQ-;wB1 wA2/;bS1 bG1/;wB2 /wS1"
+          ],
+          "timing": [
+            "setup_ns 664600 join_ns 5706500 total_ns 195697800 stop_lag_ns 697800 reply_ns 5300"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 195.96069998806342,
+          "info": [
+            "depth 4 nodes 59492 score 42",
+            "pv;bS1 bG1-;wB2 wA1-;bS1 wB2-;wB2 bS1"
+          ],
+          "timing": [
+            "setup_ns 725000 join_ns 23255300 total_ns 195566600 stop_lag_ns 566600 reply_ns 3200"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 195.9010999999009,
+          "info": [
+            "depth 4 nodes 54192 score 14",
+            "pv;bB1 bG2\\;wB2 wQ;bB1 wB2\\;wB2 bG2"
+          ],
+          "timing": [
+            "setup_ns 789400 join_ns 8225300 total_ns 195632600 stop_lag_ns 632600 reply_ns 3400"
+          ]
+        },
+        {
+          "ply": 31,
+          "move_ms": 195.8038000157103,
+          "info": [
+            "depth 4 nodes 55610 score 81",
+            "pv;bB1 wB2\\;wB2 bG1;bG3 bB1-;wB2 bS1"
+          ],
+          "timing": [
+            "setup_ns 769700 join_ns 19646600 total_ns 195545900 stop_lag_ns 545900 reply_ns 3600"
+          ]
+        },
+        {
+          "ply": 33,
+          "move_ms": 195.9894999745302,
+          "info": [
+            "depth 3 nodes 59607 score 178",
+            "pv;bB2 /bB1;wB2 bG2;bB2 wA1-"
+          ],
+          "timing": [
+            "setup_ns 729600 join_ns 902000 total_ns 195553200 stop_lag_ns 553200 reply_ns 4200"
+          ]
+        },
+        {
+          "ply": 35,
+          "move_ms": 196.20549998944625,
+          "info": [
+            "depth 4 nodes 54102 score 138",
+            "pv;bG3 bB1-;wB2 bG1;bB2 wA1-;wG1 bA3\\"
+          ],
+          "timing": [
+            "setup_ns 831000 join_ns 18144800 total_ns 195666300 stop_lag_ns 666300 reply_ns 3200"
+          ]
+        },
+        {
+          "ply": 37,
+          "move_ms": 196.11830002395436,
+          "info": [
+            "depth 4 nodes 51062 score 167",
+            "pv;bB2 bB1;wA1 -bQ;bB2 wQ;wB2 bB2"
+          ],
+          "timing": [
+            "setup_ns 766800 join_ns 16667400 total_ns 195756600 stop_lag_ns 756600 reply_ns 3300"
+          ]
+        },
+        {
+          "ply": 39,
+          "move_ms": 196.20229996507987,
+          "info": [
+            "depth 4 nodes 57098 score 326",
+            "pv;bB2 wG1\\;wB2 \\bG1;bS1 \\wB2;wA1 wG2-"
+          ],
+          "timing": [
+            "setup_ns 978900 join_ns 9754400 total_ns 195705500 stop_lag_ns 705500 reply_ns 9100"
+          ]
+        },
+        {
+          "ply": 41,
+          "move_ms": 195.98859996767715,
+          "info": [
+            "depth 4 nodes 48534 score 480",
+            "pv;bS1 \\wB2;wA1 bA2-;bB2 wG1;wA1 bA1-"
+          ],
+          "timing": [
+            "setup_ns 700500 join_ns 32615600 total_ns 195614500 stop_lag_ns 614500 reply_ns 4100"
+          ]
+        },
+        {
+          "ply": 43,
+          "move_ms": 195.999399991706,
+          "info": [
+            "depth 4 nodes 48881 score 525",
+            "pv;bB2 wQ;wS2 /bQ;bS2 bG1-;wA1 \\bQ"
+          ],
+          "timing": [
+            "setup_ns 895300 join_ns 1893500 total_ns 195592100 stop_lag_ns 592100 reply_ns 2900"
+          ]
+        },
+        {
+          "ply": 45,
+          "move_ms": 16.554999980144203,
+          "info": [
+            "depth 3 nodes 3801 score 99997",
+            "pv;bG3 wG1\\;wA1 wG2-;bB2 wG3-"
+          ],
+          "timing": [
+            "setup_ns 885200 join_ns 4052600 total_ns 15971300 stop_lag_ns 0 reply_ns 4300"
+          ]
+        },
+        {
+          "ply": 47,
+          "move_ms": 1.9091999856755137,
+          "info": [
+            "depth 1 nodes 72 score 99999",
+            "pv;bB2 wG3-"
+          ],
+          "timing": [
+            "setup_ns 770700 join_ns 364200 total_ns 1582900 stop_lag_ns 0 reply_ns 2100"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 2,
+      "opening_seed": 205103,
+      "nu_color": "white",
+      "score": 0.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 197.0819000271149,
+      "moves": [
+        "wA1",
+        "bB1 wA1\\",
+        "wB1 -wA1",
+        "bS1 bB1\\",
+        "wQ wA1/",
+        "bA1 bS1\\",
+        "wA2 -wB1",
+        "bQ bB1-",
+        "wA2 bQ-",
+        "bA1 \\wQ",
+        "wA3 \\wB1",
+        "bS1 /wB1",
+        "wA3 bQ\\",
+        "bA2 /bB1",
+        "wS1 wA3-",
+        "bA3 -bA1",
+        "wS1 bQ/",
+        "bA2 wQ-",
+        "wA2 -bA3",
+        "bS2 bA3/",
+        "wA2 bA2/",
+        "bB1 wA1",
+        "wS2 wS1-",
+        "bG1 \\bA3",
+        "wG1 wA3-",
+        "bG2 bS2-",
+        "wG1 /bQ",
+        "bG2 wB1/",
+        "wG2 /wG1",
+        "bA3 bA1-",
+        "wG3 wG2-",
+        "bB1 wA1-"
+      ],
+      "searches": [
+        {
+          "ply": 4,
+          "move_ms": 196.12360000610352,
+          "info": [
+            "depth 5 nodes 128157 score 132",
+            "pv;wQ wA1/;bA1 bS1\\;wA2 /wB1;bQ bB1-;wA2 bQ-"
+          ],
+          "timing": [
+            "setup_ns 740800 join_ns 12290900 total_ns 195670600 stop_lag_ns 670600 reply_ns 2200"
+          ]
+        },
+        {
+          "ply": 6,
+          "move_ms": 195.90779999271035,
+          "info": [
+            "depth 4 nodes 101864 score 44",
+            "pv;wA2 -wB1;bQ bB1-;wA2 bQ-;bA1 \\wQ"
+          ],
+          "timing": [
+            "setup_ns 953000 join_ns 38021300 total_ns 195631000 stop_lag_ns 631000 reply_ns 2400"
+          ]
+        },
+        {
+          "ply": 8,
+          "move_ms": 195.83380001131445,
+          "info": [
+            "depth 4 nodes 93065 score 9",
+            "pv;wA2 bQ-;bA1 \\wQ;wB1 wA1;bS1 -wB1"
+          ],
+          "timing": [
+            "setup_ns 657800 join_ns 30381200 total_ns 195572600 stop_lag_ns 572600 reply_ns 3700"
+          ]
+        },
+        {
+          "ply": 10,
+          "move_ms": 195.8706000004895,
+          "info": [
+            "depth 4 nodes 89822 score -29",
+            "pv;wA3 \\wB1;bS1 /wB1;wA3 bB1\\;bS2 -bA1"
+          ],
+          "timing": [
+            "setup_ns 643100 join_ns 10138900 total_ns 195576700 stop_lag_ns 576700 reply_ns 2600"
+          ]
+        },
+        {
+          "ply": 12,
+          "move_ms": 196.02640002267435,
+          "info": [
+            "depth 4 nodes 76733 score -58",
+            "pv;wA3 bQ\\;bA2 /bB1;wB2 wA3-;bA3 bS1\\"
+          ],
+          "timing": [
+            "setup_ns 866800 join_ns 1344000 total_ns 195617600 stop_lag_ns 617600 reply_ns 4500"
+          ]
+        },
+        {
+          "ply": 14,
+          "move_ms": 196.06909999856725,
+          "info": [
+            "depth 3 nodes 79939 score 6",
+            "pv;wS1 wA3-"
+          ],
+          "timing": [
+            "setup_ns 820700 join_ns 1251900 total_ns 195684600 stop_lag_ns 684600 reply_ns 4100"
+          ]
+        },
+        {
+          "ply": 16,
+          "move_ms": 196.05959998443723,
+          "info": [
+            "depth 3 nodes 72089 score -2",
+            "pv;wS1 bQ/;bA2 wQ-;wA2 bA2/"
+          ],
+          "timing": [
+            "setup_ns 743900 join_ns 2866300 total_ns 195754300 stop_lag_ns 754300 reply_ns 3300"
+          ]
+        },
+        {
+          "ply": 18,
+          "move_ms": 196.15460000932217,
+          "info": [
+            "depth 4 nodes 61737 score -159",
+            "pv;wA2 -bA3;bS2 bA3/;wA2 bA2/;bA3 bA1-"
+          ],
+          "timing": [
+            "setup_ns 963200 join_ns 2217000 total_ns 195687700 stop_lag_ns 687700 reply_ns 5700"
+          ]
+        },
+        {
+          "ply": 20,
+          "move_ms": 195.99169999128208,
+          "info": [
+            "depth 3 nodes 67210 score -46",
+            "pv;wA2 bA2/;bB1 wA1;wS2 wS1-"
+          ],
+          "timing": [
+            "setup_ns 781900 join_ns 1203400 total_ns 195607100 stop_lag_ns 607100 reply_ns 3800"
+          ]
+        },
+        {
+          "ply": 22,
+          "move_ms": 195.97999996040016,
+          "info": [
+            "depth 4 nodes 71113 score -244",
+            "pv;wS2 wS1-;bG1 bB1\\;wB2 wA3-;bG1 wB1/"
+          ],
+          "timing": [
+            "setup_ns 936400 join_ns 5280300 total_ns 195628400 stop_lag_ns 628400 reply_ns 3400"
+          ]
+        },
+        {
+          "ply": 24,
+          "move_ms": 196.04170002276078,
+          "info": [
+            "depth 4 nodes 63286 score -215",
+            "pv;wG1 wA3-;bG2 bB1\\;wG1 bG2\\;bG2 wB1/"
+          ],
+          "timing": [
+            "setup_ns 712100 join_ns 1923800 total_ns 195668400 stop_lag_ns 668400 reply_ns 3600"
+          ]
+        },
+        {
+          "ply": 26,
+          "move_ms": 195.98190003307536,
+          "info": [
+            "depth 4 nodes 60719 score -197",
+            "pv;wG1 /bQ;bG2 wB1/;wG2 wG1\\;bG3 bS2/"
+          ],
+          "timing": [
+            "setup_ns 813500 join_ns 12554700 total_ns 195569500 stop_lag_ns 569500 reply_ns 3800"
+          ]
+        },
+        {
+          "ply": 28,
+          "move_ms": 195.8969000261277,
+          "info": [
+            "depth 3 nodes 66304 score -110",
+            "pv;wG2 /wG1;bG3 bS2/;wG3 wG2-"
+          ],
+          "timing": [
+            "setup_ns 749300 join_ns 11556900 total_ns 195539200 stop_lag_ns 539200 reply_ns 3600"
+          ]
+        },
+        {
+          "ply": 30,
+          "move_ms": 3.138599975500256,
+          "info": [
+            "depth 2 nodes 228 score -99998",
+            "pv;wG3 wG2-;bB1 wA1-"
+          ],
+          "timing": [
+            "setup_ns 762600 join_ns 394400 total_ns 2722700 stop_lag_ns 0 reply_ns 4900"
+          ]
+        }
+      ],
+      "timeout_side": null
+    },
+    {
+      "pair": 2,
+      "opening_seed": 205103,
+      "nu_color": "black",
+      "score": 1.0,
+      "result": "BlackWins",
+      "termination": "natural",
+      "max_move_ms": 196.47560000885278,
+      "moves": [
+        "wA1",
+        "bB1 wA1\\",
+        "wB1 -wA1",
+        "bS1 bB1\\",
+        "wQ wA1/",
+        "bQ /bB1",
+        "wB1 wA1",
+        "bS1 wQ-",
+        "wB1 wA1-",
+        "bA1 bQ-",
+        "wA1 bA1-",
+        "bA2 bS1/",
+        "wA2 wA1\\",
+        "bA2 wA2-",
+        "wA3 wA1/",
+        "bA3 bS1/",
+        "wS1 /wA2",
+        "bA3 wA3-",
+        "wS1 /bQ",
+        "bS1 -wQ",
+        "wS2 wQ-",
+        "bG1 bA3-",
+        "wG1 /wA2",
+        "bA2 /wG1",
+        "wG2 wA2-",
+        "bA2 wG2\\",
+        "wG1 wA1-",
+        "bG1 bB1-",
+        "wS2 bA3/",
+        "bA2 wA3/",
+        "wG2 bA1\\",
+        "bB1 bA1",
+        "wA2 wG1-",
+        "bB1 wA1",
+        "wG3 /wG2",
+        "bS2 \\bA2",
+        "wA2 \\bS2",
+        "bA3 \\wA2",
+        "wG1 \\wS1",
+        "bG2 /bS1",
+        "wB2 wG3-",
+        "bG2 bS1/",
+        "wB2 wG2",
+        "bB2 \\bS1",
+        "wB2 bA1",
+        "bG3 /bB2",
+        "wB2 bG1",
+        "bB2 bG2",
+        "wB2 bA1",
+        "bB2 bG3/",
+        "wB2 bG1",
+        "bB2 bG2",
+        "wB2 bA1",
+        "bB2 bS1",
+        "wB2 bG1",
+        "bB2 bG3/",
+        "wB2 bA1",
+        "bB2 bG2",
+        "wB2 bG1",
+        "bB2 bG3/",
+        "wB2 bA1",
+        "bB2 bG2",
+        "wB2 bG1",
+        "bB2 bS1",
+        "wB2 bA1",
+        "bB2 wQ",
+        "wB2 bG1",
+        "bG2 wG2-",
+        "wB2 bB1",
+        "bG2 bS1/",
+        "wG3 bS2-",
+        "bB2 wB1",
+        "wS2 wA2-",
+        "bG3 wQ-",
+        "wA3 bA2\\",
+        "bA3 bG2-",
+        "wS1 wG2\\",
+        "bB2 bS1\\"
+      ],
+      "searches": [
+        {
+          "ply": 5,
+          "move_ms": 195.99510001717135,
+          "info": [
+            "depth 5 nodes 107593 score -11",
+            "pv;bQ /bB1;wB1 wA1;bS1 wQ-;wA2 -wB1;bA1 bQ-"
+          ],
+          "timing": [
+            "setup_ns 738700 join_ns 33132100 total_ns 195629700 stop_lag_ns 629700 reply_ns 2200"
+          ]
+        },
+        {
+          "ply": 7,
+          "move_ms": 196.02199998917058,
+          "info": [
+            "depth 4 nodes 111846 score -82",
+            "pv;bS1 wQ-"
+          ],
+          "timing": [
+            "setup_ns 810300 join_ns 46934900 total_ns 195701800 stop_lag_ns 701800 reply_ns 2700"
+          ]
+        },
+        {
+          "ply": 9,
+          "move_ms": 195.91810001293197,
+          "info": [
+            "depth 4 nodes 111322 score -26",
+            "pv;bA1 bQ-;wB1 bS1;bA1 \\wQ;wA2 -wA1"
+          ],
+          "timing": [
+            "setup_ns 724600 join_ns 15204000 total_ns 195635200 stop_lag_ns 635200 reply_ns 3500"
+          ]
+        },
+        {
+          "ply": 11,
+          "move_ms": 195.8329000044614,
+          "info": [
+            "depth 4 nodes 103594 score -20",
+            "pv;bA2 bS1/;wA2 wA1\\;bA2 bB1-;wA2 /bQ"
+          ],
+          "timing": [
+            "setup_ns 634300 join_ns 17954600 total_ns 195575900 stop_lag_ns 575900 reply_ns 2900"
+          ]
+        },
+        {
+          "ply": 13,
+          "move_ms": 195.93669997993857,
+          "info": [
+            "depth 4 nodes 76678 score -1",
+            "pv;bA2 wA2-;wA3 wA1/;bS1 -wQ;wA3 /bQ"
+          ],
+          "timing": [
+            "setup_ns 627500 join_ns 20957200 total_ns 195673600 stop_lag_ns 673600 reply_ns 3800"
+          ]
+        },
+        {
+          "ply": 15,
+          "move_ms": 195.84160001249984,
+          "info": [
+            "depth 4 nodes 80525 score 6",
+            "pv;bA3 bS1/;wS1 /wA2;bQ -bB1;wS1 bA2-"
+          ],
+          "timing": [
+            "setup_ns 652700 join_ns 15861900 total_ns 195539300 stop_lag_ns 539300 reply_ns 3000"
+          ]
+        },
+        {
+          "ply": 17,
+          "move_ms": 196.0875000222586,
+          "info": [
+            "depth 4 nodes 85841 score 64",
+            "pv;bA3 wA3-;wS1 /bQ;bS1 -wQ;wS2 /wA2"
+          ],
+          "timing": [
+            "setup_ns 827300 join_ns 5006700 total_ns 195621500 stop_lag_ns 621500 reply_ns 4500"
+          ]
+        },
+        {
+          "ply": 19,
+          "move_ms": 195.88229997316375,
+          "info": [
+            "depth 4 nodes 77334 score 13",
+            "pv;bS1 -wQ;wS2 wQ-;bB2 \\bS1;wS2 bA3/"
+          ],
+          "timing": [
+            "setup_ns 684100 join_ns 11508400 total_ns 195560700 stop_lag_ns 560700 reply_ns 3200"
+          ]
+        },
+        {
+          "ply": 21,
+          "move_ms": 195.92939998256043,
+          "info": [
+            "depth 4 nodes 73408 score 126",
+            "pv;bG1 bA3-;wG1 /wA2;bG1 bB1-;wG1 wA1-"
+          ],
+          "timing": [
+            "setup_ns 698800 join_ns 12911000 total_ns 195587400 stop_lag_ns 587400 reply_ns 2800"
+          ]
+        },
+        {
+          "ply": 23,
+          "move_ms": 195.7974000251852,
+          "info": [
+            "depth 4 nodes 59357 score 123",
+            "pv;bA2 /wG1;wG2 wA2-;bG1 bB1-;wG2 bA1\\"
+          ],
+          "timing": [
+            "setup_ns 610300 join_ns 34893500 total_ns 195561700 stop_lag_ns 561700 reply_ns 3200"
+          ]
+        },
+        {
+          "ply": 25,
+          "move_ms": 196.09820004552603,
+          "info": [
+            "depth 4 nodes 62078 score 48",
+            "pv;bA2 wG2\\;wG1 wA1-;bG1 bB1-;wA2 bA2-"
+          ],
+          "timing": [
+            "setup_ns 725300 join_ns 1271300 total_ns 195615800 stop_lag_ns 615800 reply_ns 3900"
+          ]
+        },
+        {
+          "ply": 27,
+          "move_ms": 196.04279997292906,
+          "info": [
+            "depth 3 nodes 71172 score 117",
+            "pv;bG1 bB1-"
+          ],
+          "timing": [
+            "setup_ns 818900 join_ns 824300 total_ns 195610400 stop_lag_ns 610400 reply_ns 3700"
+          ]
+        },
+        {
+          "ply": 29,
+          "move_ms": 196.10840000677854,
+          "info": [
+            "depth 3 nodes 71538 score 64",
+            "pv;bA2 wA3/;wG2 bA1\\;bS2 \\bS1"
+          ],
+          "timing": [
+            "setup_ns 763600 join_ns 1481900 total_ns 195600200 stop_lag_ns 600200 reply_ns 6700"
+          ]
+        },
+        {
+          "ply": 31,
+          "move_ms": 196.0753999883309,
+          "info": [
+            "depth 4 nodes 62289 score -13",
+            "pv;bB1 bA1;wA2 wG1-;bB1 wA1;wG1 wB1-"
+          ],
+          "timing": [
+            "setup_ns 786400 join_ns 7512300 total_ns 195678700 stop_lag_ns 678700 reply_ns 3300"
+          ]
+        },
+        {
+          "ply": 33,
+          "move_ms": 196.06689998181537,
+          "info": [
+            "depth 4 nodes 63110 score 31",
+            "pv;bB1 wA1;wG3 /wG2;bA2 wA2-;wA3 bA2-"
+          ],
+          "timing": [
+            "setup_ns 1275900 join_ns 14509100 total_ns 195623900 stop_lag_ns 623900 reply_ns 3800"
+          ]
+        },
+        {
+          "ply": 35,
+          "move_ms": 196.13289996050298,
+          "info": [
+            "depth 4 nodes 55996 score 39",
+            "pv;bS2 \\bA2;wA2 \\bS2;bA3 \\wA2;wG1 \\wS1"
+          ],
+          "timing": [
+            "setup_ns 836200 join_ns 57259500 total_ns 195780400 stop_lag_ns 780400 reply_ns 3200"
+          ]
+        },
+        {
+          "ply": 37,
+          "move_ms": 196.28720002947375,
+          "info": [
+            "depth 4 nodes 50298 score 8",
+            "pv;bA3 \\wA2;wB2 wG3-;bB2 \\bS1;wG1 wB1-"
+          ],
+          "timing": [
+            "setup_ns 876000 join_ns 3591100 total_ns 195783500 stop_lag_ns 783500 reply_ns 3500"
+          ]
+        },
+        {
+          "ply": 39,
+          "move_ms": 196.12219999544322,
+          "info": [
+            "depth 4 nodes 53292 score 32",
+            "pv;bG2 /bS1;wB2 wG3-;bG2 bS1/;wS2 wG2-"
+          ],
+          "timing": [
+            "setup_ns 809700 join_ns 32753900 total_ns 195698500 stop_lag_ns 698500 reply_ns 3300"
+          ]
+        },
+        {
+          "ply": 41,
+          "move_ms": 196.33939996128902,
+          "info": [
+            "depth 4 nodes 44091 score -19",
+            "pv;bG2 bS1/;wB2 wG2;bG3 \\bS1;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 967800 join_ns 29022400 total_ns 195768900 stop_lag_ns 768900 reply_ns 6100"
+          ]
+        },
+        {
+          "ply": 43,
+          "move_ms": 196.05989998672158,
+          "info": [
+            "depth 4 nodes 56004 score 61",
+            "pv;bB2 \\bS1;wB2 bA1;bG3 bB2/;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 831500 join_ns 3327400 total_ns 195660200 stop_lag_ns 660200 reply_ns 3700"
+          ]
+        },
+        {
+          "ply": 45,
+          "move_ms": 196.1326000164263,
+          "info": [
+            "depth 4 nodes 50595 score 61",
+            "pv;bG3 /bB2;wB2 wG2;bG3 bB2/;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 750700 join_ns 23795700 total_ns 195604900 stop_lag_ns 604900 reply_ns 5000"
+          ]
+        },
+        {
+          "ply": 47,
+          "move_ms": 196.21809996897355,
+          "info": [
+            "depth 4 nodes 49939 score 24",
+            "pv;bB2 bG2;wB2 bA1;bB2 wQ;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 751100 join_ns 38460600 total_ns 195669800 stop_lag_ns 669800 reply_ns 4800"
+          ]
+        },
+        {
+          "ply": 49,
+          "move_ms": 196.0819999803789,
+          "info": [
+            "depth 4 nodes 32272 score 61",
+            "pv;bB2 bG3/;wB2 wG2;bG3 bB2/;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 898000 join_ns 120503900 total_ns 195750700 stop_lag_ns 750700 reply_ns 3000"
+          ]
+        },
+        {
+          "ply": 51,
+          "move_ms": 196.19749998673797,
+          "info": [
+            "depth 4 nodes 49003 score 24",
+            "pv;bB2 bG2;wB2 bA1;bB2 wQ;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 792600 join_ns 27046800 total_ns 195648800 stop_lag_ns 648800 reply_ns 5800"
+          ]
+        },
+        {
+          "ply": 53,
+          "move_ms": 196.16649998351932,
+          "info": [
+            "depth 4 nodes 50142 score 24",
+            "pv;bB2 bS1;wB2 wG2;bB2 wQ;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 848600 join_ns 22225800 total_ns 195687400 stop_lag_ns 687400 reply_ns 2500"
+          ]
+        },
+        {
+          "ply": 55,
+          "move_ms": 196.0885999724269,
+          "info": [
+            "depth 4 nodes 53481 score 61",
+            "pv;bB2 bG3/;wB2 bA1;bG3 bB2/;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 825800 join_ns 28143600 total_ns 195651200 stop_lag_ns 651200 reply_ns 3600"
+          ]
+        },
+        {
+          "ply": 57,
+          "move_ms": 196.22250000247732,
+          "info": [
+            "depth 4 nodes 45960 score 24",
+            "pv;bB2 bG2;wB2 wG2;bB2 wQ;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 936900 join_ns 53402600 total_ns 195634800 stop_lag_ns 634800 reply_ns 5400"
+          ]
+        },
+        {
+          "ply": 59,
+          "move_ms": 196.47560000885278,
+          "info": [
+            "depth 4 nodes 54463 score 61",
+            "pv;bB2 bG3/;wB2 bA1;bG3 bB2/;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 876600 join_ns 23080300 total_ns 195750300 stop_lag_ns 750300 reply_ns 4400"
+          ]
+        },
+        {
+          "ply": 61,
+          "move_ms": 196.05779997073114,
+          "info": [
+            "depth 4 nodes 40223 score 24",
+            "pv;bB2 bG2;wB2 wG2;bB2 wQ;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 852400 join_ns 21948600 total_ns 195532800 stop_lag_ns 532800 reply_ns 5700"
+          ]
+        },
+        {
+          "ply": 63,
+          "move_ms": 196.11020002048463,
+          "info": [
+            "depth 4 nodes 45880 score 24",
+            "pv;bB2 bS1;wB2 bA1;bB2 wQ;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 807000 join_ns 10702800 total_ns 195675900 stop_lag_ns 675900 reply_ns 3400"
+          ]
+        },
+        {
+          "ply": 65,
+          "move_ms": 196.19399996008724,
+          "info": [
+            "depth 4 nodes 44683 score 1",
+            "pv;bB2 wQ;wB2 wG2;bA3 bS1\\;wB2 bB1"
+          ],
+          "timing": [
+            "setup_ns 908500 join_ns 17979100 total_ns 195724100 stop_lag_ns 724100 reply_ns 2800"
+          ]
+        },
+        {
+          "ply": 67,
+          "move_ms": 196.07199996244162,
+          "info": [
+            "depth 4 nodes 47411 score 36",
+            "pv;bG2 wG2-;wB2 bB1;bG2 bS1/;wS2 bA3-"
+          ],
+          "timing": [
+            "setup_ns 935900 join_ns 36418700 total_ns 195701600 stop_lag_ns 701600 reply_ns 4100"
+          ]
+        },
+        {
+          "ply": 69,
+          "move_ms": 196.23120001051575,
+          "info": [
+            "depth 4 nodes 48953 score -2",
+            "pv;bG2 bS1/;wG1 wB2-;bB2 wB1;wG1 \\wS1"
+          ],
+          "timing": [
+            "setup_ns 828000 join_ns 28124100 total_ns 195750700 stop_lag_ns 750700 reply_ns 4200"
+          ]
+        },
+        {
+          "ply": 71,
+          "move_ms": 196.11339998664334,
+          "info": [
+            "depth 4 nodes 51511 score 36",
+            "pv;bB2 wB1;wG3 /wG2;bB2 wQ;wS2 bA3-"
+          ],
+          "timing": [
+            "setup_ns 1012900 join_ns 19126600 total_ns 195689600 stop_lag_ns 689600 reply_ns 3300"
+          ]
+        },
+        {
+          "ply": 73,
+          "move_ms": 195.91859995853156,
+          "info": [
+            "depth 4 nodes 40526 score 87",
+            "pv;bG3 wQ-;wA3 bA2\\;bA3 bG2-;wS1 wG2\\"
+          ],
+          "timing": [
+            "setup_ns 759500 join_ns 66727800 total_ns 195556100 stop_lag_ns 556100 reply_ns 3200"
+          ]
+        },
+        {
+          "ply": 75,
+          "move_ms": 15.739599999506027,
+          "info": [
+            "depth 3 nodes 2609 score 99997",
+            "pv;bA3 bG2-;wS1 wG2\\;bB2 bS1\\"
+          ],
+          "timing": [
+            "setup_ns 959800 join_ns 3361500 total_ns 15329700 stop_lag_ns 0 reply_ns 3400"
+          ]
+        },
+        {
+          "ply": 77,
+          "move_ms": 1.94980000378564,
+          "info": [
+            "depth 1 nodes 46 score 99999",
+            "pv;bB2 bS1\\"
+          ],
+          "timing": [
+            "setup_ns 757500 join_ns 489900 total_ns 1644200 stop_lag_ns 0 reply_ns 3200"
+          ]
+        }
+      ],
+      "timeout_side": null
+    }
+  ],
+  "points": 5.0,
+  "expected_games": 6,
+  "completed": true,
+  "rejected": false,
+  "model_sha256": "78f265a5a96ee5994e2e5743817a2017fcbc7dc1d4d2c8fc5661d0584ed1d875",
+  "engine_sha256": "a75b28ac8b724eaad1d7960be96db5e82cf611e9a08dacc8705cb2631b85187d",
+  "opponent_sha256": "76f9bcdac0e75620a1e2d4a4e77c638ce45dc8a438aefe29fdac5f31da8979c8",
+  "milliseconds": 250,
+  "internal_ms": 230,
+  "threads": 8,
+  "cap": 160,
+  "repetition_policy": "nokamute-1.0.3-stride4-window32-v1",
+  "threat_plies": 0,
+  "lmr": false,
+  "seed_base": 71000,
+  "invocation": [
+    "baseline.exe",
+    "--model",
+    "model.nnue"
+  ],
+  "opponent_model_sha256": "78f265a5a96ee5994e2e5743817a2017fcbc7dc1d4d2c8fc5661d0584ed1d875",
+  "referee_sha256": "8f0616dcf73feccd349c6c5954772dd0be34e20d54a76161f43d664a665a9fdf",
+  "opponent_search_policy": "candidate-selectivity-v1",
+  "hybrid": false,
+  "hybrid_weight": 100,
+  "hybrid_terms": 63,
+  "validation_policy": "three-reconstructed-boards-repetition-v1",
+  "depth_limit": 64,
+  "memory_policy": "configure-before-newgame-v1",
+  "openings_sha256": "faa574de2089994e8e0f7a586b3c78659343de652929d40657cdf46f680dbd01",
+  "deadline_guard": true,
+  "cooperative_ordering": false,
+  "candidate_only_selectivity": true,
+  "root_pvs": true,
+  "root_pv_first": false,
+  "opponent_config": {
+    "Threads": 8,
+    "TableMiB": 16,
+    "BackgroundPondering": false,
+    "DeadlineGuard": true,
+    "ThreatPlies": 0,
+    "LateMoveReductions": true,
+    "CooperativeOrdering": false,
+    "RootPVS": true
+  },
+  "opponent_config_sha256": "6c67d1e1f319719443a83772ea5f1f2838c291b5e7dc1203ee3df4d8b5f6b7f0",
+  "opponent_version": null,
+  "opponent_revision": null,
+  "table_mib": 16,
+  "background_pondering": false,
+  "random_opening": false
+}

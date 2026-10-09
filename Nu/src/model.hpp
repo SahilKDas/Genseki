@@ -70,13 +70,29 @@ struct Model {
 struct Accumulator {
     std::array<std::vector<std::int32_t>,2> sums;
     explicit Accumulator(const Model& m):sums{m.bias,m.bias} {}
+    static const char* backend(const Model& m) {
+#if defined(__GNUC__) && defined(__x86_64__)
+        if(m.feature_schema==8&&__builtin_cpu_supports("avx2"))return "avx2";
+        if(m.feature_schema==8&&__builtin_cpu_supports("sse4.1"))return "sse4.1";
+#endif
+        return "scalar";
+    }
     void add(const Model& m,unsigned perspective,unsigned feature,int sign) {
 #if defined(__GNUC__) && defined(__x86_64__)
+        if(m.feature_schema==8&&__builtin_cpu_supports("avx2")){add_avx2(m,perspective,feature,sign);return;}
         if(m.feature_schema==8&&__builtin_cpu_supports("sse4.1")){add_vectorized(m,perspective,feature,sign);return;}
 #endif
         for(unsigned j=0;j<m.hidden;++j)sums[perspective][j]+=sign*m.embedding[feature*m.hidden+j];
     }
 #if defined(__GNUC__) && defined(__x86_64__)
+    __attribute__((target("avx2"))) void add_avx2(const Model& m,unsigned perspective,unsigned feature,int sign) {
+        for(unsigned j=0;j<m.hidden;j+=8) {
+            auto weights=_mm256_cvtepi16_epi32(_mm_loadu_si128(reinterpret_cast<const __m128i*>(m.embedding.data()+feature*m.hidden+j)));
+            auto current=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(sums[perspective].data()+j));
+            auto next=sign==1?_mm256_add_epi32(current,weights):_mm256_sub_epi32(current,weights);
+            _mm256_storeu_si256(reinterpret_cast<__m256i*>(sums[perspective].data()+j),next);
+        }
+    }
     __attribute__((target("sse4.1"))) void add_vectorized(const Model& m,unsigned perspective,unsigned feature,int sign) {
         for(unsigned j=0;j<m.hidden;j+=4) {
             auto weights=_mm_cvtepi16_epi32(_mm_loadl_epi64(reinterpret_cast<const __m128i*>(m.embedding.data()+feature*m.hidden+j)));

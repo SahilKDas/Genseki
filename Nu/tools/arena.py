@@ -61,13 +61,22 @@ def main():
     parser.add_argument('--deadline-guard',action='store_true')
     parser.add_argument('--cooperative-ordering',action='store_true')
     parser.add_argument('--root-pvs',action='store_true')
+    parser.add_argument('--root-pv-first',action='store_true')
     parser.add_argument('--candidate-only-selectivity',action='store_true')
     parser.add_argument('--hybrid',action='store_true')
     parser.add_argument('--hybrid-weight',type=int,default=100)
     parser.add_argument('--hybrid-terms',type=int,default=63)
     parser.add_argument('--opponent-model', type=Path)
+    parser.add_argument('--opponent-config',type=Path)
     parser.add_argument('--resume',action='store_true')
     args = parser.parse_args()
+    opponent_config=None
+    if args.opponent_config:
+        from incumbent import verified_settings
+        if not args.opponent_model:raise RuntimeError('Nu predecessor configuration requires an opponent model')
+        opponent_config=verified_settings(dict(uhp_settings=json.loads(args.opponent_config.read_text())))
+        if opponent_config.get('Threads')!=args.threads or opponent_config.get('TableMiB')!=16 or opponent_config.get('BackgroundPondering') is not False:
+            raise RuntimeError('predecessor memory/thread/pondering allowance mismatch')
     if not 0<=args.hybrid_weight<=200 or not 0<=args.hybrid_terms<=127:parser.error('invalid hybrid settings')
     openings=json.loads(args.openings.read_text())['openings'] if args.openings else None
     if openings is not None and (len(openings)*2!=args.games or any(len(row['moves'])!=4 for row in openings)):
@@ -91,7 +100,8 @@ def main():
                   memory_policy=MEMORY_POLICY,
                   openings_sha256=hashlib.sha256(args.openings.read_bytes()).hexdigest() if args.openings else None)
     report.update(deadline_guard=args.deadline_guard,cooperative_ordering=args.cooperative_ordering,
-                  candidate_only_selectivity=args.candidate_only_selectivity,root_pvs=args.root_pvs)
+                  candidate_only_selectivity=args.candidate_only_selectivity,root_pvs=args.root_pvs,root_pv_first=args.root_pv_first)
+    report.update(opponent_config=opponent_config,opponent_config_sha256=hashlib.sha256(args.opponent_config.read_bytes()).hexdigest() if args.opponent_config else None)
     report.update(opponent_version='1.0.3' if opponent_hash==NOKAMUTE_SHA256 else None,
                   opponent_revision=NOKAMUTE_REVISION if opponent_hash==NOKAMUTE_SHA256 else None,
                   table_mib=16,background_pondering=False,random_opening=False)
@@ -101,8 +111,10 @@ def main():
     if saved is not None:
         keys=('kind','expected_games','engine_sha256','model_sha256','opponent_sha256','opponent_model_sha256','referee_sha256','validation_policy','memory_policy','depth_limit','openings_sha256','milliseconds','internal_ms','threads','cap','repetition_policy','threat_plies','lmr','seed_base','table_mib','background_pondering','random_opening')
         if saved.get('rejected') or any(saved.get(k)!=report.get(k) for k in keys):raise RuntimeError('arena resume identity/settings mismatch or rejected run')
-        if any(saved.get(k,False)!=report[k] for k in ('deadline_guard','cooperative_ordering','candidate_only_selectivity','root_pvs')):
+        if any(saved.get(k,False)!=report[k] for k in ('deadline_guard','cooperative_ordering','candidate_only_selectivity','root_pvs','root_pv_first')):
             raise RuntimeError('candidate search settings mismatch')
+        if any(saved.get(k)!=report[k] for k in ('opponent_config','opponent_config_sha256')):
+            raise RuntimeError('predecessor policy mismatch')
         previous_policy=saved.get('opponent_search_policy')
         if previous_policy is None:
             if args.opponent_model and (args.threat_plies or args.lmr):raise RuntimeError('legacy opponent search settings are not equivalent')
@@ -119,6 +131,8 @@ def main():
             if pair*2+color<len(rows):continue
             if args.openings and hashlib.sha256(args.openings.read_bytes()).hexdigest()!=report['openings_sha256']:
                 raise RuntimeError('immutable opening manifest changed')
+            if args.opponent_config and hashlib.sha256(args.opponent_config.read_bytes()).hexdigest()!=report['opponent_config_sha256']:
+                raise RuntimeError('immutable predecessor settings changed')
             if hashlib.sha256(args.referee.read_bytes()).hexdigest()!=report['referee_sha256'] or hashlib.sha256(args.engine.read_bytes()).hexdigest()!=engine_hash or hashlib.sha256(args.model.read_bytes()).hexdigest()!=model_hash or hashlib.sha256(args.opponent.read_bytes()).hexdigest()!=opponent_hash or (args.opponent_model and hashlib.sha256(args.opponent_model.read_bytes()).hexdigest()!=report['opponent_model_sha256']):raise RuntimeError('immutable arena artifact changed')
             from train import resource_guard
             resource_guard()
@@ -144,6 +158,7 @@ def main():
                 if args.deadline_guard:command(nu,'options DeadlineGuard True')
                 if args.cooperative_ordering:command(nu,'options CooperativeOrdering True')
                 if args.root_pvs:command(nu,'options RootPVS True')
+                if args.root_pv_first:command(nu,'options RootPVFirst True')
                 if args.hybrid:
                     command(nu,'options HybridEvaluation True')
                     command(nu,f'options HybridWeight {args.hybrid_weight}')
@@ -154,6 +169,8 @@ def main():
                     command(opponent,'options BackgroundPondering False')
                     command(opponent,f'options ThreatPlies {0 if args.candidate_only_selectivity else args.threat_plies}')
                     command(opponent,f'options LateMoveReductions {"True" if args.lmr and not args.candidate_only_selectivity else "False"}')
+                    if opponent_config:
+                        for name,value in opponent_config.items():command(opponent,f'options {name} {value}')
                 else:
                     command(opponent, f'options set NumThreads {args.threads}')
                     command(opponent, 'options set BackgroundPondering False')

@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "redaction": "invocation-filenames-only-v1",
+  "files": [
+    {
+      "file": "ablation-openings.json",
+      "private_original_sha256": "a1f59f9456dbbc4f24501dee5226d917e51c9c50c5d19105ba6f8e6a7d1abf74",
+      "public_sha256": "a1f59f9456dbbc4f24501dee5226d917e51c9c50c5d19105ba6f8e6a7d1abf74"
+    },
+    {
+      "file": "ablation-parallel-lmr.json",
+      "private_original_sha256": "13cf09e2d662bd584e6828d28157e9eb5032251a9978a6460ac6aba76b6401a3",
+      "public_sha256": "16bbbd94e4e02f86f34f57c328865762cdaf50b7c8ae45a9101630162c065a15"
+    },
+    {
+      "file": "ablation-parallel.json",
+      "private_original_sha256": "f1f882b07e204fe2e0f0ffd331e6d7b6ecca3b2c07380fd28d90aba40e93cf89",
+      "public_sha256": "9705d229e50d68e828733c51594949c356f3be8b6ba6169c550984d023e5f42a"
+    },
+    {
+      "file": "ablation-pv-first-lmr.json",
+      "private_original_sha256": "3f99d7637feebb85e3ee8a807baf0b1f4438365d01eb13f22e58ede0411ac0ca",
+      "public_sha256": "f275e5bd34900d9b56538263b22ffb91a220c73e9a10808fcf2a052ba709f2fc"
+    },
+    {
+      "file": "ablation-pv-first.json",
+      "private_original_sha256": "b0efce2c19aae3a7492e8b26579b58cad841b4ef208838536c368ae211243104",
+      "public_sha256": "61fdf7e291bd07a64d40a7555e5377bc8f948b45f7dee5e443cd882b2caa1418"
+    },
+    {
+      "file": "alpha-openings.json",
+      "private_original_sha256": "0d05e8ab9813b86935b87de7210f1a5a8ac8a70eedd941dc52e788b9ce6bd025",
+      "public_sha256": "0d05e8ab9813b86935b87de7210f1a5a8ac8a70eedd941dc52e788b9ce6bd025"
+    },
+    {
+      "file": "gate-openings.json",
+      "private_original_sha256": "0d05e8ab9813b86935b87de7210f1a5a8ac8a70eedd941dc52e788b9ce6bd025",
+      "public_sha256": "0d05e8ab9813b86935b87de7210f1a5a8ac8a70eedd941dc52e788b9ce6bd025"
+    },
+    {
+      "file": "pins.json",
+      "private_original_sha256": "523921324258589d1a6c6ef289dc7eec2cef0d003559f32519deb594d95c067b",
+      "public_sha256": "523921324258589d1a6c6ef289dc7eec2cef0d003559f32519deb594d95c067b"
+    },
+    {
+      "file": "predecessor-config.json",
+      "private_original_sha256": "6c67d1e1f319719443a83772ea5f1f2838c291b5e7dc1203ee3df4d8b5f6b7f0",
+      "public_sha256": "6c67d1e1f319719443a83772ea5f1f2838c291b5e7dc1203ee3df4d8b5f6b7f0"
+    },
+    {
+      "file": "probe.json",
+      "private_original_sha256": "1d831fe98d848dce7addc96b6d38b4a97a6d95417e0750800c0dc8650bce99e5",
+      "public_sha256": "1d831fe98d848dce7addc96b6d38b4a97a6d95417e0750800c0dc8650bce99e5"
+    },
+    {
+      "file": "roots.json",
+      "private_original_sha256": "836e1aaa53bb6a3ee3741545916231ed8c4c715025cbf4ac338a66fe55a17bb4",
+      "public_sha256": "836e1aaa53bb6a3ee3741545916231ed8c4c715025cbf4ac338a66fe55a17bb4"
+    },
+    {
+      "file": "selected.json",
+      "private_original_sha256": "91ceb89879b7a437bbad754bc74fe7b65b402ea2ddb6061128af95bf9926487d",
+      "public_sha256": "91ceb89879b7a437bbad754bc74fe7b65b402ea2ddb6061128af95bf9926487d"
+    }
+  ],
+  "summaries": [
+    {
+      "report": "ablation-parallel-lmr.json",
+      "completed": true,
+      "rejected": false,
+      "points": 2.5,
+      "games": 6,
+      "terminations": {
+        "natural": 5,
+        "ply_cap": 1
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    },
+    {
+      "report": "ablation-parallel.json",
+      "completed": true,
+      "rejected": false,
+      "points": 2.0,
+      "games": 6,
+      "terminations": {
+        "natural": 4,
+        "ply_cap": 1,
+        "repetition": 1
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    },
+    {
+      "report": "ablation-pv-first-lmr.json",
+      "completed": true,
+      "rejected": false,
+      "points": 1.0,
+      "games": 6,
+      "terminations": {
+        "natural": 4,
+        "ply_cap": 1,
+        "repetition": 1
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    },
+    {
+      "report": "ablation-pv-first.json",
+      "completed": true,
+      "rejected": false,
+      "points": 1.5,
+      "games": 6,
+      "terminations": {
+        "natural": 5,
+        "ply_cap": 1
+      },
+      "own_timeouts": 0,
+      "opponent_timeouts": 0
+    }
+  ],
+  "sealed_qualification": false,
+  "promotion": false
+}

@@ -9,6 +9,12 @@ void compare(nu::State& optimized,nu::State& reference) {
     require(optimized.accumulator.sums==reference.accumulator.sums);
     require(optimized.strategic_prior(nu::Color::white)==reference.strategic_prior(nu::Color::white));
     require(optimized.equivalent());
+    for(auto anchor:{nu::Hex{0,0},nu::Hex{3,-2}})for(unsigned perspective=0;perspective<2;++perspective) {
+        unsigned expected_frame=0,actual_frame=0;
+        auto expected=nu::canonical_coordinates(optimized.board,anchor,perspective,&expected_frame);
+        auto actual=nu::canonical8(optimized.fast8->pieces,anchor,perspective,actual_frame);
+        require(actual==expected&&actual_frame==expected_frame);
+    }
 }
 int main()try {
     for(unsigned width:{64u,128u})for(bool nonlinear:{false,true}) {
@@ -52,6 +58,19 @@ int main()try {
         require(x.move==y.move&&x.score==y.score&&x.nodes==y.nodes&&x.pv==y.pv);
     }
     nu::FeatureWorkspace8 pool;
+    genseki::NuPieceStack short_stack{{nu::Color::white,nu::Bug::queen,0}};
+    auto stale_tail=short_stack;stale_tail.push_back({nu::Color::black,nu::Bug::beetle,0});stale_tail.pop_back();
+    require(short_stack==stale_tail&&(short_stack<=>stale_tail)==0);
+    for(const char* text:{"G1|w|12|6|6|0,0=wQ,wB1,bB1,wB2,bB2;1,0=bQ",
+                         "G1|b|12|6|6|0,0=wQ,wB1,bB1,wB2,bB2;1,0=bQ"}) {
+        auto board=nu::Board::from_position_string(text);require(bool(board));
+        nu::State a(next,*board),b(old,*board);compare(a,b);
+        for(auto move:board->legal_moves()) {
+            auto au=a.make(move,true),bu=b.make(move,true);compare(a,b);
+            a.unmake(au);b.unmake(bu);compare(a,b);
+        }
+    }
+    require(!nu::Board::from_position_string("G1|w|12|6|6|0,0=wQ,wB1,bB1,wB2,bB2,wB1;1,0=bQ"));
     auto first=pool.acquire();first->prior_white=123;
     auto second=pool.acquire();require(first.get()!=second.get()&&first->prior_white==123);
     auto released=second.get();second.reset();require(pool.acquire().get()==released);
@@ -61,5 +80,5 @@ int main()try {
     cache.store(7,different,nu::CachedFeatures{});require(cache.find(7,identity)==nullptr);
     for(unsigned i=0;i<1000;++i){identity.ply=i;cache.store(i,identity,nu::CachedFeatures{});}
     require(cache.count==nu::FeatureCache::capacity);
-    std::cout<<"schema 8 features, block deltas, overflow, pool and collision parity passed\n";
+    std::cout<<"schema 8 features, block deltas, overflow, pool and collision parity passed; backend "<<nu::Accumulator::backend(next)<<'\n';
 }catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}
