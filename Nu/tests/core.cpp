@@ -138,7 +138,28 @@ int main(){
         auto result=parallel.run(canonical_state,4,10,4);
         check(canonical_state.board.is_legal(result.move)&&canonical_state.equivalent());
     }
+    nu::FeatureCache first_cache,second_cache;
+    canonical_state.bind_cache(first_cache);
+    first_cache.entries.emplace("worker-only",nu::CachedFeatures{});
     auto copied=canonical_state;
-    copied.feature_cache.emplace("worker-only",nu::State::CachedFeatures{});
-    check(!canonical_state.feature_cache.contains("worker-only"));
+    check(copied.worker_cache.value==nullptr);
+    copied.bind_cache(second_cache);
+    check(!second_cache.entries.contains("worker-only"));
+    auto assigned=canonical_state;assigned.bind_cache(second_cache);assigned=canonical_state;
+    check(assigned.worker_cache.value==nullptr);
+    auto moving=canonical_state;moving.bind_cache(second_cache);
+    auto moved=std::move(moving);check(moved.worker_cache.value==nullptr);
+    assigned.bind_cache(second_cache);assigned=std::move(moved);
+    check(assigned.worker_cache.value==nullptr);
+    auto move=canonical_state.legal().front();
+    for(unsigned repeat=0;repeat<2;++repeat) {
+        auto undo=canonical_state.make(move,true);canonical_state.evaluate();
+        check(canonical_state.equivalent());canonical_state.unmake(undo);
+    }
+    check(first_cache.hits>0&&first_cache.misses>0);
+    for(unsigned i=0;i<400;++i) {
+        if(first_cache.entries.size()>=nu::FeatureCache::capacity)first_cache.entries.erase(first_cache.entries.begin());
+        first_cache.entries.emplace("bound-"+std::to_string(i),nu::CachedFeatures{});
+    }
+    check(first_cache.entries.size()<=nu::FeatureCache::capacity);
 }

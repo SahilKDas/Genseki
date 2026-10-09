@@ -7,6 +7,24 @@
 namespace nu {
 struct Metrics {std::uint64_t features_ns=0,generation_ns=0,ordering_ns=0,tt_ns=0,inference_ns=0,mobility_full=0,mobility_incremental=0,fast_piece_rebuilds=0;};
 inline thread_local Metrics* metrics=nullptr;
+struct CachedFeatures {Features active;Mobility mobility;};
+struct FeatureCache {
+    static constexpr std::size_t capacity=256;
+    std::unordered_map<std::string,CachedFeatures> entries;
+    std::uint64_t hits=0,misses=0;
+    FeatureCache()=default;
+    FeatureCache(const FeatureCache&)=delete;
+    FeatureCache& operator=(const FeatureCache&)=delete;
+    FeatureCache(FeatureCache&&)=default;
+    FeatureCache& operator=(FeatureCache&&)=default;
+};
+// Copying/moving a position deliberately drops its non-owning worker binding.
+struct CacheBinding {
+    FeatureCache* value=nullptr;
+    CacheBinding()=default;
+    CacheBinding(const CacheBinding&) noexcept {}
+    CacheBinding& operator=(const CacheBinding&) noexcept {value=nullptr;return *this;}
+};
 struct State {
     Board board;
     const Model* model;
@@ -18,9 +36,9 @@ struct State {
     mutable std::optional<Move> pending_move;
     mutable bool pending_unchanged=false;
     mutable std::shared_ptr<const FastFeatures> fast;
-    struct CachedFeatures {Features active;Mobility mobility;};
-    // Value ownership keeps copied search workers isolated and avoids TLS teardown.
-    mutable std::unordered_map<std::string,CachedFeatures> feature_cache;
+    CacheBinding worker_cache;
+    void bind_cache(FeatureCache& cache) noexcept {worker_cache.value=&cache;}
+    std::size_t cache_entries() const noexcept {return worker_cache.value?worker_cache.value->entries.size():0;}
     std::uint64_t hash;
     std::uint64_t history_key;
     std::vector<std::uint64_t> path;
@@ -86,27 +104,29 @@ struct State {
         if(!move&&pending_move){move=&*pending_move;unchanged_occupancy=pending_unchanged;}
         // Worker-owned and bounded: serialized keys avoid hash aliasing and locks.
         // Inputs depend on the schema and board, not network weights or search history.
-        auto& cache=feature_cache;
+        auto* cache=worker_cache.value;
         std::string identity;
-        if(!eager_features) {
+        if(!eager_features&&cache) {
             identity=std::to_string(model->feature_schema)+":"+board.position_string();
-            auto found=cache.find(identity);
-            if(found!=cache.end()) {
+            auto found=cache->entries.find(identity);
+            if(found!=cache->entries.end()) {
+                ++cache->hits;
                 auto next=found->second.active;
                 accumulator.update(*model,active,next);
                 active=std::move(next);mobility=found->second.mobility;features_dirty=false;pending_move.reset();
                 if(metrics)metrics->features_ns+=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-started).count();
                 return;
             }
+            ++cache->misses;
         }
         // Build into temporaries so cancellation leaves the cached ancestor intact.
         if(metrics&&(model->feature_schema==4||model->feature_schema==6)){if(move&&unchanged_occupancy)++metrics->mobility_incremental;else ++metrics->mobility_full;}
         auto next_mobility=(model->feature_schema==4||model->feature_schema==6)?
             (move?update_movement_counts(board,mobility,*move,unchanged_occupancy):movement_counts(board)):Mobility{};
         auto next=features(board,model->feature_schema,&next_mobility);
-        if(!eager_features) {
-            if(cache.size()>=256)cache.erase(cache.begin());
-            cache.emplace(std::move(identity),CachedFeatures{next,next_mobility});
+        if(!eager_features&&cache) {
+            if(cache->entries.size()>=FeatureCache::capacity)cache->entries.erase(cache->entries.begin());
+            cache->entries.emplace(std::move(identity),CachedFeatures{next,next_mobility});
         }
         accumulator.update(*model,active,next);
         active=std::move(next);mobility=next_mobility;features_dirty=false;pending_move.reset();

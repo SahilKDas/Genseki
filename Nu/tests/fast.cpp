@@ -23,7 +23,7 @@ int main()try {
  nu::Model reference;reference.feature_schema=4;nu::State stack(reference,ant->with_side_to_move(nu::Color::black));
  bool exercised=false;
  for(auto move:stack.board.legal_moves())if(move.from&&*move.from==nu::Hex{0,0}&&move.to==nu::Hex{1,0}) {
-  exercised=true;stack.feature_cache.clear();nu::Metrics profile;nu::metrics=&profile;auto undo=stack.make(move,true);require(stack.pending_move.has_value()&&stack.pending_unchanged);require(stack.equivalent());require(profile.mobility_incremental==1&&profile.mobility_full==0);nu::metrics=nullptr;stack.unmake(undo);require(stack.equivalent());
+  exercised=true;nu::Metrics profile;nu::metrics=&profile;auto undo=stack.make(move,true);require(stack.pending_move.has_value()&&stack.pending_unchanged);require(stack.equivalent());require(profile.mobility_incremental==1&&profile.mobility_full==0);nu::metrics=nullptr;stack.unmake(undo);require(stack.equivalent());
  }
  require(exercised);
  bool worker_ok=false;std::jthread worker([&]{nu::State local(zero,*spider);worker_ok=local.equivalent();});worker.join();require(worker_ok&&state.equivalent());

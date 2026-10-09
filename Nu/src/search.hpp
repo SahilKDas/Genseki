@@ -209,6 +209,8 @@ public:
         SearchResult completed;completed.move=moves.front();completed.pv={completed.move};
         const auto count=std::min<unsigned>(std::clamp(threads,1u,12u),moves.size());
         std::vector<Ordering> orderings(count);Metrics aggregate;std::mutex profile_lock;
+        // These outlive all iterative-deepening workers; each lane has exclusive access.
+        std::vector<FeatureCache> feature_caches(count);
         double previous_ms=0;
         for(unsigned depth=1;depth<=max_depth;++depth) {
             auto now=std::chrono::steady_clock::now();
@@ -219,7 +221,7 @@ public:
             std::exception_ptr failure;std::mutex failure_lock;
             auto worker=[&](unsigned lane) {
               try {
-                State state=root;auto& ordering=orderings[lane];auto before=ordering.visited;
+                State state=root;state.bind_cache(feature_caches[lane]);auto& ordering=orderings[lane];auto before=ordering.visited;
                 Metrics profile;GenerationScope scope(*this,options.profile?&profile:nullptr);int root_alpha=-100001;
                 try {
                     for(;;) {
