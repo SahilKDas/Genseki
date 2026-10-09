@@ -32,6 +32,8 @@ def main():
         if sealed.get('kind')!='reserved-qualification' or len(sealed.get('openings',[]))!=50 or sealed.get('referee_sha256')!=digest(args.referee):
             raise RuntimeError('need the matching frozen fifty-opening qualification reservation')
     report = json.loads(args.development.read_text())
+    if any(report.get(key,False) for key in ('deadline_guard','cooperative_ordering','candidate_only_selectivity','root_pvs')):
+        raise RuntimeError('search challenger profiles require a separately verified qualification protocol; final qualification remains sealed')
     if digest(args.opponent)!=NOKAMUTE_SHA256 or report.get('opponent_revision')!=NOKAMUTE_REVISION:
         raise RuntimeError('qualification requires the pinned Nokamute reference artifact')
     if not report.get('completed') or len(report['games'])!=report.get('expected_games'):
@@ -44,6 +46,8 @@ def main():
                   opponent_sha256=digest(args.opponent), milliseconds=250, threads=report['threads'], cap=160,
                   repetition_policy=REPETITION_POLICY,threat_plies=report.get('threat_plies',0),lmr=report.get('lmr',False))
     incumbent=json.loads(args.incumbent_match.read_text())
+    if any(incumbent.get(key,False) for key in ('deadline_guard','cooperative_ordering','candidate_only_selectivity','root_pvs')):
+        raise RuntimeError('search challenger confirmation is not a legacy qualification configuration')
     if not incumbent.get('completed') or incumbent.get('rejected') or len(incumbent['games'])!=incumbent.get('expected_games') or len(incumbent['games'])<20 or incumbent['points']/len(incumbent['games'])<.5:
         raise RuntimeError('incumbent confirmation gate failed')
     if incumbent['model_sha256']!=frozen['model_sha256'] or incumbent['engine_sha256']!=frozen['engine_sha256'] or not incumbent.get('opponent_model_sha256'):

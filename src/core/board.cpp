@@ -753,6 +753,10 @@ std::expected<Board, std::string> Board::from_position_string(std::string_view t
 
 std::expected<std::string, std::string> Board::uhp_move_string(const Move& move) const {
     if (!is_legal(move)) return std::unexpected("move is not legal");
+    return generated_uhp_move_string(move);
+}
+
+std::expected<std::string, std::string> Board::generated_uhp_move_string(const Move& move) const {
     if (move.kind == MoveKind::pass) return std::string{"pass"};
     const auto moving = piece_name(move.piece);
     if (stacks_.empty()) return moving;

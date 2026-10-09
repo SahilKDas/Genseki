@@ -58,6 +58,10 @@ def main():
     parser.add_argument('--threads', type=int, default=1)
     parser.add_argument('--threat-plies', type=int, default=0)
     parser.add_argument('--lmr', action='store_true')
+    parser.add_argument('--deadline-guard',action='store_true')
+    parser.add_argument('--cooperative-ordering',action='store_true')
+    parser.add_argument('--root-pvs',action='store_true')
+    parser.add_argument('--candidate-only-selectivity',action='store_true')
     parser.add_argument('--hybrid',action='store_true')
     parser.add_argument('--hybrid-weight',type=int,default=100)
     parser.add_argument('--hybrid-terms',type=int,default=63)
@@ -81,11 +85,13 @@ def main():
                 repetition_policy=REPETITION_POLICY,threat_plies=args.threat_plies,lmr=args.lmr,seed_base=args.seed_base,
                 invocation=[str(args.opponent)],opponent_model_sha256=None)
     report.update(referee_sha256=hashlib.sha256(args.referee.read_bytes()).hexdigest(),
-                  opponent_search_policy='equal-nu-search-v1' if args.opponent_model else 'external-engine-v1',
+                  opponent_search_policy=('candidate-selectivity-v1' if args.candidate_only_selectivity else 'equal-nu-search-v1') if args.opponent_model else 'external-engine-v1',
                   hybrid=args.hybrid,hybrid_weight=args.hybrid_weight,hybrid_terms=args.hybrid_terms,
                   validation_policy=VALIDATION_POLICY,depth_limit=SEARCH_DEPTH_LIMIT,
                   memory_policy=MEMORY_POLICY,
                   openings_sha256=hashlib.sha256(args.openings.read_bytes()).hexdigest() if args.openings else None)
+    report.update(deadline_guard=args.deadline_guard,cooperative_ordering=args.cooperative_ordering,
+                  candidate_only_selectivity=args.candidate_only_selectivity,root_pvs=args.root_pvs)
     report.update(opponent_version='1.0.3' if opponent_hash==NOKAMUTE_SHA256 else None,
                   opponent_revision=NOKAMUTE_REVISION if opponent_hash==NOKAMUTE_SHA256 else None,
                   table_mib=16,background_pondering=False,random_opening=False)
@@ -95,6 +101,8 @@ def main():
     if saved is not None:
         keys=('kind','expected_games','engine_sha256','model_sha256','opponent_sha256','opponent_model_sha256','referee_sha256','validation_policy','memory_policy','depth_limit','openings_sha256','milliseconds','internal_ms','threads','cap','repetition_policy','threat_plies','lmr','seed_base','table_mib','background_pondering','random_opening')
         if saved.get('rejected') or any(saved.get(k)!=report.get(k) for k in keys):raise RuntimeError('arena resume identity/settings mismatch or rejected run')
+        if any(saved.get(k,False)!=report[k] for k in ('deadline_guard','cooperative_ordering','candidate_only_selectivity','root_pvs')):
+            raise RuntimeError('candidate search settings mismatch')
         previous_policy=saved.get('opponent_search_policy')
         if previous_policy is None:
             if args.opponent_model and (args.threat_plies or args.lmr):raise RuntimeError('legacy opponent search settings are not equivalent')
@@ -133,6 +141,9 @@ def main():
                 command(nu, 'options BackgroundPondering False')
                 command(nu, f'options ThreatPlies {args.threat_plies}')
                 command(nu, f'options LateMoveReductions {"True" if args.lmr else "False"}')
+                if args.deadline_guard:command(nu,'options DeadlineGuard True')
+                if args.cooperative_ordering:command(nu,'options CooperativeOrdering True')
+                if args.root_pvs:command(nu,'options RootPVS True')
                 if args.hybrid:
                     command(nu,'options HybridEvaluation True')
                     command(nu,f'options HybridWeight {args.hybrid_weight}')
@@ -141,8 +152,8 @@ def main():
                     command(opponent,f'options Threads {args.threads}')
                     command(opponent,'options TableMiB 16')
                     command(opponent,'options BackgroundPondering False')
-                    command(opponent,f'options ThreatPlies {args.threat_plies}')
-                    command(opponent,f'options LateMoveReductions {"True" if args.lmr else "False"}')
+                    command(opponent,f'options ThreatPlies {0 if args.candidate_only_selectivity else args.threat_plies}')
+                    command(opponent,f'options LateMoveReductions {"True" if args.lmr and not args.candidate_only_selectivity else "False"}')
                 else:
                     command(opponent, f'options set NumThreads {args.threads}')
                     command(opponent, 'options set BackgroundPondering False')
@@ -171,7 +182,10 @@ def main():
                         move = response[0]
                         if current is nu:
                             info, _ = command(nu, 'nu-searchinfo')
-                            searches.append(dict(ply=ply, move_ms=elapsed*1000, info=info))
+                            record=dict(ply=ply, move_ms=elapsed*1000, info=info)
+                            if args.deadline_guard:
+                                timing,_=command(nu,'nu-timing');record['timing']=timing
+                            searches.append(record)
                     moves.append(move)
                     game_strings=[command(engine,'play '+move)[0][0] for engine in engines]
                     results=[text.split(';')[1] for text in game_strings]

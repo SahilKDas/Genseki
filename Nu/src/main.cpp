@@ -103,10 +103,17 @@ int main(int argc,char** argv) {
                     else throw std::runtime_error("expected depth or time");
                     std::string extra;if(args>>extra)throw std::runtime_error("unexpected bestmove argument");
                     if(!std::isfinite(ms)||ms<0||ms>60000)throw std::runtime_error("invalid time budget");
-                    last=search->run(state,depth,ms,threads,nullptr,search_options);std::cout<<*state.board.uhp_move_string(last.move)<<'\n';
+                    last=search->run(state,depth,ms,threads,nullptr,search_options);
+                    auto reply_started=std::chrono::steady_clock::now();
+                    auto notation=search_options.deadline_guard?state.board.generated_uhp_move_string(last.move):state.board.uhp_move_string(last.move);
+                    if(!notation)throw std::runtime_error(notation.error());
+                    last.timing.reply_ns=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-reply_started).count();
+                    std::cout<<*notation<<'\n';
                 }else if(command=="options") {
                     if(argument.empty()){std::cout<<"Threads;int;"<<threads<<';'<<default_threads<<";1;12\nTableMiB;int;"<<mib<<";16;1;256\nBackgroundPondering;bool;"<<(pondering?"True":"False")<<";False\nThreatPlies;int;"<<search_options.threat_plies<<";0;0;4\nLateMoveReductions;bool;"<<(search_options.lmr?"True":"False")<<";False\nProfile;bool;"<<(search_options.profile?"True":"False")<<";False\nHybridEvaluation;bool;"<<(search_options.hybrid?"True":"False")<<";False\nHybridWeight;int;"<<search_options.hybrid_weight<<";100;0;200\n";
                         std::cout<<"HybridTerms;int;"<<search_options.hybrid_terms<<";63;0;127\n";
+                        std::cout<<"DeadlineGuard;bool;"<<(search_options.deadline_guard?"True":"False")<<";False\nCooperativeOrdering;bool;"<<(search_options.cooperative_ordering?"True":"False")<<";False\n";
+                        std::cout<<"RootPVS;bool;"<<(search_options.root_pvs?"True":"False")<<";False\n";
                     }
                     else {std::istringstream a(argument);std::string name;unsigned value;a>>name;
                         if(name=="set")a>>name;
@@ -118,16 +125,21 @@ int main(int argc,char** argv) {
                             else if(name=="HybridEvaluation")std::cout<<"HybridEvaluation;bool;"<<(search_options.hybrid?"True":"False")<<";False\n";
                             else if(name=="HybridWeight")std::cout<<"HybridWeight;int;"<<search_options.hybrid_weight<<";100;0;200\n";
                             else if(name=="HybridTerms")std::cout<<"HybridTerms;int;"<<search_options.hybrid_terms<<";63;0;127\n";
+                            else if(name=="DeadlineGuard"||name=="CooperativeOrdering")std::cout<<name<<";bool;"<<((name=="DeadlineGuard"?search_options.deadline_guard:search_options.cooperative_ordering)?"True":"False")<<";False\n";
+                            else if(name=="RootPVS")std::cout<<name<<";bool;"<<(search_options.root_pvs?"True":"False")<<";False\n";
                             else if(name=="LateMoveReductions"||name=="Profile")std::cout<<name<<";bool;"<<((name=="Profile"?search_options.profile:search_options.lmr)?"True":"False")<<";False\n";
                             else throw std::runtime_error("unknown option");
                             std::cout<<"ok\n"<<std::flush;continue;
                         }
-                        if(name=="BackgroundPondering"||name=="LateMoveReductions"||name=="Profile"||name=="HybridEvaluation") {
+                        if(name=="BackgroundPondering"||name=="LateMoveReductions"||name=="Profile"||name=="HybridEvaluation"||name=="DeadlineGuard"||name=="CooperativeOrdering"||name=="RootPVS") {
                             std::string boolean;a>>boolean;
                             if(boolean!="True"&&boolean!="False")throw std::runtime_error("invalid boolean");
                             if(name=="BackgroundPondering")pondering=boolean=="True";
                             else if(name=="Profile")search_options.profile=boolean=="True";
                             else if(name=="HybridEvaluation")search_options.hybrid=boolean=="True";
+                            else if(name=="DeadlineGuard")search_options.deadline_guard=boolean=="True";
+                            else if(name=="CooperativeOrdering")search_options.cooperative_ordering=boolean=="True";
+                            else if(name=="RootPVS")search_options.root_pvs=boolean=="True";
                             else search_options.lmr=boolean=="True";
                             std::cout<<name<<";bool;"<<boolean<<";False\nok\n"<<std::flush;continue;
                         }
@@ -158,6 +170,7 @@ int main(int argc,char** argv) {
                 }
                 else if(command=="nu-matchdraw")std::cout<<(state.repetition()?"True":"False")<<'\n';
                 else if(command=="nu-profile")std::cout<<"features_ns "<<last.profile.features_ns<<" generation_ns "<<last.profile.generation_ns<<" ordering_ns "<<last.profile.ordering_ns<<" tt_ns "<<last.profile.tt_ns<<" inference_ns "<<last.profile.inference_ns<<" mobility_full "<<last.profile.mobility_full<<" mobility_incremental "<<last.profile.mobility_incremental<<" fast_piece_rebuilds "<<last.profile.fast_piece_rebuilds<<'\n';
+                else if(command=="nu-timing")std::cout<<"setup_ns "<<last.timing.setup_ns<<" join_ns "<<last.timing.join_ns<<" total_ns "<<last.timing.total_ns<<" stop_lag_ns "<<last.timing.stop_lag_ns<<" reply_ns "<<last.timing.reply_ns<<'\n';
                 else if(command=="nu-repetition") {
                     auto target=nu::repetition_hash(state.board);nu::Board replay;
                     unsigned count=nu::repetition_hash(replay)==target;

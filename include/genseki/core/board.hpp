@@ -71,6 +71,8 @@ public:
     [[nodiscard]] std::string position_string() const;
     [[nodiscard]] std::string game_string() const;
     [[nodiscard]] std::expected<std::string, std::string> uhp_move_string(const Move& move) const;
+    // Precondition: move came from legal_moves() for this exact board.
+    [[nodiscard]] std::expected<std::string, std::string> generated_uhp_move_string(const Move& move) const;
     [[nodiscard]] std::expected<Move, std::string> parse_uhp_move(std::string_view text) const;
 
     [[nodiscard]] std::expected<void, MoveError> play(const Move& move);

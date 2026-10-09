@@ -36,6 +36,12 @@ try:
     assert command('options set ThreatPlies 1')[0].startswith('ThreatPlies;int;1')
     assert command('options set LateMoveReductions True')[0].startswith('LateMoveReductions;bool;True')
     assert command('options set LateMoveReductions False')[0].startswith('LateMoveReductions;bool;False')
+    for option in ('DeadlineGuard','CooperativeOrdering','RootPVS'):
+        assert command('options get '+option)==[option+';bool;False;False']
+        assert command('options '+option+' True')==[option+';bool;True;False']
+        assert command('options '+option+' nonsense')[0].startswith('err')
+        assert command('options '+option+' False')==[option+';bool;False;False']
+    assert command('nu-timing')[0].startswith('setup_ns ')
     assert command('options get HybridEvaluation')==['HybridEvaluation;bool;False;False']
     assert command('options set HybridEvaluation True')==['HybridEvaluation;bool;True;False']
     assert command('options HybridWeight 201')[0].startswith('err')

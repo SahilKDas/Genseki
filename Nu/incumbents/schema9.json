@@ -1,0 +1,55 @@
+{
+  "role": "qualified-research-generation",
+  "research_generation": 9,
+  "status": "user-gate-promoted",
+  "feature_schema": 8,
+  "feature_contract": "unchanged-schema8-weights",
+  "new_weights": false,
+  "required_pair": {
+    "engine": "Nu/work/search9-v2/candidate.exe",
+    "model": "Nu/work/search9-v2/model.nnue",
+    "engine_sha256": "76f9bcdac0e75620a1e2d4a4e77c638ce45dc8a438aefe29fdac5f31da8979c8",
+    "model_sha256": "78f265a5a96ee5994e2e5743817a2017fcbc7dc1d4d2c8fc5661d0584ed1d875"
+  },
+  "uhp_settings": {
+    "Threads": 8,
+    "TableMiB": 16,
+    "BackgroundPondering": false,
+    "DeadlineGuard": true,
+    "ThreatPlies": 0,
+    "LateMoveReductions": true,
+    "CooperativeOrdering": false,
+    "RootPVS": true
+  },
+  "predecessor": {
+    "generation": 8,
+    "engine_sha256": "0b33197bf99c138281941c726bd7df92af6b3257265d252dc6f92825a343a8a9",
+    "model_sha256": "78f265a5a96ee5994e2e5743817a2017fcbc7dc1d4d2c8fc5661d0584ed1d875"
+  },
+  "production_default_changed": false,
+  "sealed_qualification": false,
+  "promotion_authority": "explicit user: at least 13/20 mirrored 250ms versus predecessor",
+  "gate": {
+    "points": 15.5,
+    "games": 20,
+    "minimum_points": 13
+  },
+  "alpha_screen": {
+    "points": 1.0,
+    "games": 20
+  },
+  "evidence": {
+    "gate.json": {
+      "path": "Nu/reports/search9-v2/gate.json",
+      "sha256": "8ba548ba3e6b81a09125c3dff6342422179c66464c29180900be9ce9df41e05e"
+    },
+    "alpha.json": {
+      "path": "Nu/reports/search9-v2/alpha.json",
+      "sha256": "a417d19b8a1aa8b0c7e859724fb453ef106d85f9289fa8951d032085ccb18789"
+    },
+    "selected.json": {
+      "path": "Nu/reports/search9-v2/selected.json",
+      "sha256": "a2a0b65e67c0650a931cec27136be90d1adf0e2a88d11835bdf37c7b3207b417"
+    }
+  }
+}

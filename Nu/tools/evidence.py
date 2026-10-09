@@ -19,7 +19,7 @@ def atomic_json(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     pending = path.with_name(path.name + '.pending')
-    with pending.open('w', encoding='utf8') as handle:
+    with pending.open('w', encoding='utf8', newline='\n') as handle:
         json.dump(value, handle, indent=2)
         handle.flush()
         os.fsync(handle.fileno())

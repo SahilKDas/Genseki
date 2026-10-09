@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "policy": "both",
+  "pins": {
+    "candidate": "2ead074477941e445d7a6bd9353883543d372b55a9657eef8bb0c82cd642cad9",
+    "baseline": "0b33197bf99c138281941c726bd7df92af6b3257265d252dc6f92825a343a8a9",
+    "model": "78f265a5a96ee5994e2e5743817a2017fcbc7dc1d4d2c8fc5661d0584ed1d875",
+    "referee": "8f0616dcf73feccd349c6c5954772dd0be34e20d54a76161f43d664a665a9fdf",
+    "alpha": "80d1cc75571c2e3266e0246b2cec00d3657e3ba94029e5ca4635cfe0eaf12ef6"
+  },
+  "settings": {
+    "ThreatPlies": 1,
+    "LateMoveReductions": true,
+    "CooperativeOrdering": false
+  },
+  "deadline_guard": true,
+  "summaries": [
+    {
+      "policy": "guard",
+      "points": 3.0,
+      "natural_points": 2.0,
+      "own_timeouts": 0,
+      "probe_depths": 84,
+      "report_sha256": "6ec6ad67126fb280053d90c005d6bbff2add02fa43918ec67bd253c7b9698be7"
+    },
+    {
+      "policy": "threat",
+      "points": 3.5,
+      "natural_points": 3.0,
+      "own_timeouts": 0,
+      "probe_depths": 81,
+      "report_sha256": "1eaac39ed2ce5efbda3cc38be15cf42793578d27533d7f3e3a3676d76faa3de1"
+    },
+    {
+      "policy": "lmr",
+      "points": 2.5,
+      "natural_points": 1.0,
+      "own_timeouts": 0,
+      "probe_depths": 87,
+      "report_sha256": "04ed19a363314a9967da5f95dc55e389bd1bb8494f72dd2487c71b4acdb1b7ac"
+    },
+    {
+      "policy": "both",
+      "points": 3.5,
+      "natural_points": 3.0,
+      "own_timeouts": 0,
+      "probe_depths": 84,
+      "report_sha256": "c8cfda2db3a21eb1abb8eacc0fe23551e11c2361841f9cf6015bc8608e467ad1"
+    },
+    {
+      "policy": "coordination",
+      "points": 2.0,
+      "natural_points": 1.0,
+      "own_timeouts": 0,
+      "probe_depths": 80,
+      "report_sha256": "3a5c2d35fb377f87cf83fe989f5e78da68cc6d4a130dc6538f591feae79cc799"
+    }
+  ],
+  "gate_openings_sha256": "e1b6a690b552b7e12fda12f9f923738f68816ec3d989b06ac1c8835047804169",
+  "selection_rule": "points-natural-fewer-timeouts-depth-v1",
+  "promoted": false
+}
