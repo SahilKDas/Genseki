@@ -31,7 +31,7 @@ def index_corpus(paths, output):
         with path.open(encoding='utf8') as handle:
             first=next(handle,None)
             if first:versions.add(json.loads(first).get('feature_schema',1))
-    fast=len(versions)==1 and versions.issubset({5,6,7})
+    fast=len(versions)==1 and versions.issubset({5,6,7,8})
     if fast:
         from position_keys import position_key as key
         identity_payload=dict(sources=identities,position_key_version='base-symmetry-opening-v2')
@@ -66,8 +66,8 @@ def index_corpus(paths, output):
             with path.open(encoding='utf8') as handle:
                 for line in handle:
                     row=json.loads(line);schemas.add(row.get('feature_schema',1))
-                    if len(schemas)!=1 or not schemas.issubset({1,2,3,4,5,6,7}):raise RuntimeError('mixed/unsupported feature schemas')
-                    if row.get('feature_schema') in (5,7):validate_prior(row)
+                    if len(schemas)!=1 or not schemas.issubset({1,2,3,4,5,6,7,8}):raise RuntimeError('mixed/unsupported feature schemas')
+                    if row.get('feature_schema') in (5,7,8):validate_prior(row)
                     game=f"{row['source']}:{row.get('seed',0)}:{row['game']}"
                     family=families.get(game,game)
                     split=int(hashlib.sha256(family.encode()).hexdigest()[:8],16)%5==0
@@ -198,7 +198,7 @@ def run(args):
                 torch.tensor(targets,dtype=torch.float32,device=device),torch.tensor(eligible,device=device))
     def prediction(batch,ids,offsets,field='features'):
         result=net(ids,offsets)
-        if schema in (5,7):result=result+torch.tensor([prior_for(row,field) for row in batch],dtype=torch.float32,device=device)
+        if schema in (5,7,8):result=result+torch.tensor([prior_for(row,field) for row in batch],dtype=torch.float32,device=device)
         return result
     args.output.mkdir(parents=True,exist_ok=True);reports=[];started=time.monotonic()
     for width in args.widths:
@@ -216,7 +216,7 @@ def run(args):
                         ablate=args.ablate,outcome_only=args.outcome_only,
                         initialize_sha256=digest(args.initialize) if args.initialize else None,
                         ranking_weight=args.ranking_weight,selection=args.selection)
-            if schema in (5,7):config.update(strategic_prior_version=1,residual_training=True)
+            if schema in (5,7,8):config.update(strategic_prior_version=1,residual_training=True)
             epoch=cursor=updates=0;best_loss=float('inf');best_state=None;best_optimizer=None;selected=0
             best_decision=None;curves=[]
             if checkpoint.exists():
@@ -288,7 +288,7 @@ def run(args):
                     best_decision=decision
                 epoch+=1;cursor=0;save()
                 print(f'{name} epoch={epoch}/{args.epochs} updates={updates} validation_mse={total/count:.6f} decision={decision}',flush=True)
-            net.load_state_dict(best_state);path=args.output/(name+(f'-e{selected}-u{updates}' if schema in (5,7) else '')+'.nnue');export(net,path)
+            net.load_state_dict(best_state);path=args.output/(name+(f'-e{selected}-u{updates}' if schema in (5,7,8) else '')+'.nnue');export(net,path)
             atomic_checkpoint(path.with_suffix('.pt'),dict(state=best_state,optimizer=best_optimizer,config=config,selected_epoch=selected))
             report=dict(**config,updates=updates,completed=True,validation_mse=best_loss,selected_epoch=selected,
                         train_positions=len(train_ids),validation_positions=len(valid_ids),natural_games=natural,

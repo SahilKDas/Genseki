@@ -10,10 +10,23 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'Nu/tools'))
 import benchmark_schema7 as benchmark
 import cache_benchmark
+import cache_paired
 from evidence import digest
 
 
 class RecoveryTests(unittest.TestCase):
+    def test_paired_resume_rejects_changed_threads(self):
+        with tempfile.TemporaryDirectory(dir=ROOT/'Nu/work') as temporary:
+            directory=Path(temporary)
+            (directory/'manifest.json').write_text(json.dumps({'artifacts':{}}))
+            (directory/'candidate.json').write_text(json.dumps({'engine_sha256':'pin'}))
+            (directory/'baseline.json').write_text(json.dumps({'results':{'components':[]}}))
+            (directory/'paired-uhp.failure.json').write_text(json.dumps({'threads':[12]}))
+            with patch.object(sys,'argv',['cache_paired','--directory',str(directory),'--resume']),patch.object(cache_paired,'digest',return_value='pin'),patch.object(cache_paired,'UhpProcess') as process:
+                with self.assertRaisesRegex(RuntimeError,'resume identity'):
+                    cache_paired.main()
+                process.assert_not_called()
+
     def test_cache_evidence_is_not_overwritten(self):
         with tempfile.TemporaryDirectory(dir=ROOT/'Nu/work') as temporary:
             directory=Path(temporary)

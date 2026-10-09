@@ -15,9 +15,14 @@ from genseki.uhp import UhpProcess
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--directory', type=Path, required=True)
+    parser.add_argument('--threads', type=int, nargs='+', default=[1, 2, 4])
+    parser.add_argument('--output', type=Path)
+    parser.add_argument('--resume', action='store_true')
     args = parser.parse_args()
+    if len(set(args.threads)) != len(args.threads) or not all(1 <= value <= 12 for value in args.threads):
+        parser.error('threads must be distinct values between 1 and 12')
     directory = args.directory
-    output = directory / 'paired-uhp.json'
+    output = args.output or directory / 'paired-uhp.json'
     if output.exists():
         raise RuntimeError('refusing to overwrite paired measurements')
     manifest = json.loads((directory / 'manifest.json').read_text())
@@ -30,12 +35,31 @@ def main():
     pins = {name: digest(directory / name) for name in ['baseline-engine.exe', 'candidate-engine.exe', 'model.nnue']}
     roots = json.loads((directory / 'baseline.json').read_text())['results']['components']
     rows = []
+    root_identity = [{'category': r['category'], 'position': r['position']} for r in roots]
+    identity = {'pins': pins, 'threads': args.threads, 'repeats': 3, 'roots': root_identity,
+                'internal_ms': 230, 'external_ms': 250, 'table_mib': 16}
+    if args.resume:
+        saved = json.loads(output.with_suffix('.failure.json').read_text())
+        if any(saved.get(key) != value for key, value in identity.items()):
+            raise RuntimeError('resume identity differs')
+        rows = saved['measurements']
+        expected = [(lane, repeat, threads, root['category']) for repeat in range(3)
+                    for threads in args.threads for root in roots
+                    for lane in (['baseline', 'candidate'] if repeat % 2 == 0 else ['candidate', 'baseline'])]
+        actual = [(r['lane'], r['repeat'], r['threads'], r['category']) for r in rows]
+        if actual != expected[:len(actual)]:
+            raise RuntimeError('resume measurements are not a completed prefix')
+    retained = len(rows)
+    request_index = 0
     try:
         for repeat in range(3):
-            for threads in [1, 2, 4]:
+            for threads in args.threads:
                 for root in roots:
                     lanes = ['baseline', 'candidate'] if repeat % 2 == 0 else ['candidate', 'baseline']
                     for lane in lanes:
+                        request_index += 1
+                        if request_index <= retained:
+                            continue
                         resource_guard()
                         with closing(UhpProcess([str((directory / (lane + '-engine.exe')).resolve()),
                                                  '--model', str((directory / 'model.nnue').resolve())])) as engine:
@@ -63,20 +87,21 @@ def main():
                                        memory=working_set(engine.process.pid))
                             rows.append(row)
     except BaseException:
-        atomic_json(directory / 'paired-failure.json', {'measurements': rows})
+        atomic_json(output.with_suffix('.failure.json'), {**identity, 'measurements': rows})
         raise
     if any(digest(directory / name) != checksum for name, checksum in pins.items()):
         raise RuntimeError('artifact changed during measurements')
     summaries = []
     for lane in ['baseline', 'candidate']:
-        for threads in [1, 2, 4]:
+        for threads in args.threads:
             subset = [row for row in rows if row['lane'] == lane and row['threads'] == threads]
             summaries.append({'lane': lane, 'threads': threads, 'depth_total': sum(row['depth'] for row in subset),
                               'nodes_total': sum(row['nodes'] for row in subset),
                               'timeouts': sum(row['timeout'] for row in subset),
                               'max_ms': max(row['milliseconds'] for row in subset)})
     atomic_json(output, {'version': 1, 'pins': pins, 'table_mib': 16, 'internal_ms': 230,
-                        'external_ms': 250, 'roots': [{'category': r['category'], 'position': r['position']} for r in roots],
+                        'external_ms': 250, 'threads': args.threads, 'repeats': 3,
+                        'roots': [{'category': r['category'], 'position': r['position']} for r in roots],
                         'measurements': rows, 'summaries': summaries})
     print(json.dumps(summaries))
 

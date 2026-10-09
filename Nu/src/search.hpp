@@ -221,7 +221,9 @@ public:
             std::exception_ptr failure;std::mutex failure_lock;
             auto worker=[&](unsigned lane) {
               try {
-                State state=root;state.bind_cache(feature_caches[lane]);auto& ordering=orderings[lane];auto before=ordering.visited;
+                State state=root;state.bind_cache(feature_caches[lane]);
+                if(state.model->feature_schema==8)for(auto& bank:state.active)bank.reserve(134);
+                auto& ordering=orderings[lane];auto before=ordering.visited;
                 Metrics profile;GenerationScope scope(*this,options.profile?&profile:nullptr);int root_alpha=-100001;
                 try {
                     for(;;) {

@@ -3,6 +3,7 @@ import argparse
 import json
 from pathlib import Path
 import shutil
+import struct
 import subprocess
 
 from evidence import atomic_json, digest
@@ -24,6 +25,8 @@ def main():
     report_path = args.output / (args.lane + '.json')
     if report_path.exists():
         raise RuntimeError('refusing to overwrite completed evidence')
+    if struct.unpack_from('<I', args.model.read_bytes(), 8)[0] != 7:
+        raise RuntimeError('cache experiment requires an actual schema-7 model')
     if args.lane == 'baseline':
         if manifest_path.exists():
             raise RuntimeError('baseline already frozen')

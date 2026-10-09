@@ -74,6 +74,59 @@ depth improvement. Parallel search was not consistently better than one thread.
 
 ## Verification And Next Target
 
+### Additional Thread Sweep
+
+The later requested 3/8/9/10/11/12-thread sweep repeated one thread as a fresh
+control. Each lane/count has 12 requests (four roots, three repeats):
+
+| Requested Threads | Baseline Depth Sum | Candidate Depth Sum | Candidate Versus 1 Thread | Candidate Timeouts |
+| --- | ---: | ---: | ---: | ---: |
+| 1 | 35 | 34 | 0 | 0 |
+| 3 | 35 | 32 | -2 | 1 |
+| 8 | 36 | 37 | +3 | 0 |
+| 9 | 35 | 35 | +1 | 0 |
+| 10 | 35 | 36 | +2 | 0 |
+| 11 | 37 | 33 | -1 | 0 |
+| 12 | 32 | 32 | -2 | 0 |
+
+Evidence: `reports/cache-isolation-v1/high-thread-paired.json`. These are summed
+depths, not extra plies on every root. Search limits effective worker count to
+the number of legal root moves, so a four-move opening cannot use twelve workers.
+Eight threads scored highest for the candidate in this small sweep; this does
+not qualify it as the universal best setting or justify a default change.
+
+Free RAM dropped below the binding 0.5 GiB reserve during this run. The controller
+stopped, saved its completed prefix, and resumed after RAM recovered to about
+2.9 GiB. The frozen artifacts and settings were verified; completed requests,
+including the candidate's 3-thread timeout (approximately 252.8 ms), were retained
+and not rerun. Original stop evidence remains locally preserved. The result spans
+different resource conditions, so it is an exploratory scaling measurement,
+not a controlled proof that the cache change improves strength or throughput.
+
+### Repeat With Available RAM
+
+At the user's request, a fresh sweep started with approximately 5.9 GiB free
+RAM and completed without a resource-floor stop. Previous evidence was retained.
+Same binaries, model, roots, settings, and three repeats were used:
+
+| Requested Threads | Baseline Depth Sum | Candidate Depth Sum | Baseline / Candidate Timeouts |
+| --- | ---: | ---: | --- |
+| 1 | 34 | 38 | 1 / 0 |
+| 3 | 35 | 36 | 0 / 0 |
+| 8 | 39 | 39 | 0 / 0 |
+| 9 | 37 | 37 | 0 / 0 |
+| 10 | 37 | 37 | 0 / 0 |
+| 11 | 39 | 38 | 0 / 0 |
+| 12 | 37 | 38 | 0 / 0 |
+
+Evidence: `reports/cache-isolation-v1/high-thread-repeat.json`. All 84 candidate
+requests returned legal replies within the deadline; the baseline had one
+one-thread timeout at approximately 264 ms, retained with zero credited depth.
+Eight threads led the candidate by only one summed depth versus its one-thread
+control. This repeat does not establish a significant high-thread depth advantage
+or a cache-change speedup. More available RAM did not eliminate every deadline
+failure, and the baseline timeout makes its one-thread depth comparison incomplete.
+
 - All 16 Nu CTest suites passed after the ownership change.
 - Frozen baseline/candidate comparisons matched features, priors, moves, scores,
   node counts, and PVs on 12 roots across schemas 5, 6, and 7: 36 comparisons.

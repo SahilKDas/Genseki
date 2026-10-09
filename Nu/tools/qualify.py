@@ -25,8 +25,8 @@ def main():
     with args.model.open('rb') as model:
         header=model.read(12)
     if len(header)<12:raise RuntimeError('invalid qualification model')
-    if struct.unpack_from('<I',header,8)[0]==7 and not args.openings:
-        raise RuntimeError('schema 7 requires its frozen qualification opening reservation')
+    if struct.unpack_from('<I',header,8)[0] in (7,8) and not args.openings:
+        raise RuntimeError('canonical fast schemas require their frozen qualification opening reservation')
     if args.openings:
         sealed=json.loads(args.openings.read_text())
         if sealed.get('kind')!='reserved-qualification' or len(sealed.get('openings',[]))!=50 or sealed.get('referee_sha256')!=digest(args.referee):

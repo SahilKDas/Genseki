@@ -14,7 +14,7 @@ int brute(nu::State& state,int depth,int ply=0) {
     return best;
 }
 int main(){
-    for(unsigned width:{64u,128u})for(unsigned version:{3u,4u,5u,6u,7u}) {
+    for(unsigned width:{64u,128u})for(unsigned version:{3u,4u,5u,6u,7u,8u}) {
         nu::Model model(width);model.feature_schema=version;nu::State state(model);std::mt19937 rng(123);
         for(unsigned game=0;game<12;++game) {
             state=nu::State(model);std::vector<nu::State::Undo> undo;
@@ -140,11 +140,12 @@ int main(){
     }
     nu::FeatureCache first_cache,second_cache;
     canonical_state.bind_cache(first_cache);
-    first_cache.entries.emplace("worker-only",nu::CachedFeatures{});
+    auto cache_identity=nu::FeatureIdentity::from(canonical_state.board,6);
+    first_cache.store(cache_identity.hash(),cache_identity,nu::CachedFeatures{});
     auto copied=canonical_state;
     check(copied.worker_cache.value==nullptr);
     copied.bind_cache(second_cache);
-    check(!second_cache.entries.contains("worker-only"));
+    check(second_cache.count==0);
     auto assigned=canonical_state;assigned.bind_cache(second_cache);assigned=canonical_state;
     check(assigned.worker_cache.value==nullptr);
     auto moving=canonical_state;moving.bind_cache(second_cache);
@@ -158,8 +159,7 @@ int main(){
     }
     check(first_cache.hits>0&&first_cache.misses>0);
     for(unsigned i=0;i<400;++i) {
-        if(first_cache.entries.size()>=nu::FeatureCache::capacity)first_cache.entries.erase(first_cache.entries.begin());
-        first_cache.entries.emplace("bound-"+std::to_string(i),nu::CachedFeatures{});
+        cache_identity.ply=i;first_cache.store(i,cache_identity,nu::CachedFeatures{});
     }
-    check(first_cache.entries.size()<=nu::FeatureCache::capacity);
+    check(first_cache.count<=nu::FeatureCache::capacity);
 }

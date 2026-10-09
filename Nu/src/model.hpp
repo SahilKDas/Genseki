@@ -1,5 +1,5 @@
 #pragma once
-#include "features.hpp"
+#include "features8.hpp"
 #include <fstream>
 #include <limits>
 #include <random>
@@ -71,7 +71,29 @@ struct Accumulator {
     std::array<std::vector<std::int32_t>,2> sums;
     explicit Accumulator(const Model& m):sums{m.bias,m.bias} {}
     void add(const Model& m,unsigned perspective,unsigned feature,int sign) {
+#if defined(__GNUC__) && defined(__x86_64__)
+        if(m.feature_schema==8&&__builtin_cpu_supports("sse4.1")){add_vectorized(m,perspective,feature,sign);return;}
+#endif
         for(unsigned j=0;j<m.hidden;++j)sums[perspective][j]+=sign*m.embedding[feature*m.hidden+j];
+    }
+#if defined(__GNUC__) && defined(__x86_64__)
+    __attribute__((target("sse4.1"))) void add_vectorized(const Model& m,unsigned perspective,unsigned feature,int sign) {
+        for(unsigned j=0;j<m.hidden;j+=4) {
+            auto weights=_mm_cvtepi16_epi32(_mm_loadl_epi64(reinterpret_cast<const __m128i*>(m.embedding.data()+feature*m.hidden+j)));
+            auto current=_mm_loadu_si128(reinterpret_cast<const __m128i*>(sums[perspective].data()+j));
+            auto next=sign==1?_mm_add_epi32(current,weights):_mm_sub_epi32(current,weights);
+            _mm_storeu_si128(reinterpret_cast<__m128i*>(sums[perspective].data()+j),next);
+        }
+    }
+#endif
+    void update_blocks(const Model& m,const FastFeatures8& old,const FastFeatures8& next) {
+        for(unsigned id=0;id<22;++id)if(old.pieces[id]!=next.pieces[id])for(unsigned p=0;p<2;++p) {
+            for(auto feature:old.encoded[id][p])add(m,p,feature,-1);
+            for(auto feature:next.encoded[id][p])add(m,p,feature,1);
+        }
+        for(unsigned p=0;p<2;++p)for(unsigned color=0;color<2;++color)if(old.queen_features[p][color]!=next.queen_features[p][color]) {
+            add(m,p,old.queen_features[p][color],-1);add(m,p,next.queen_features[p][color],1);
+        }
     }
     void refresh(const Model& m,const Features& f) {
         sums={m.bias,m.bias};

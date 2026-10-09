@@ -45,7 +45,7 @@ def main():
                     activations=[np.clip(np.trunc((head@value+head_bias*256)/256).astype(np.int64),0,256) for value in (pair,swap)]
                     white=int((activations[0]-activations[1])@output)
                 else:white=int((clipped[0]-clipped[1])@output)
-                prior = int(engine.command('nu-prior')[0][0]) if schema in (5,7) else 0
+                prior = int(engine.command('nu-prior')[0][0]) if schema in (5,7,8) else 0
                 expected_white = max(-6800,min(6800,max(-5000, min(5000, int(white * 600 / (65536*(2 if nonlinear else 1)))))+prior))
                 expected = expected_white * (1 if ply % 2 == 0 else -1)
                 native = int(lines[2].split()[1])

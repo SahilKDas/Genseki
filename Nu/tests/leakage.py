@@ -20,11 +20,11 @@ class LeakageTests(unittest.TestCase):
     def row(self,schema,game,family,position):
         row=dict(source='unit',seed=1,game=game,ply=8,feature_schema=schema,
                  opening_family=family,position=position,features=[[1],[2]])
-        if schema in (5,7):row.update(prior_white=0,strategic_prior_version=1)
+        if schema in (5,7,8):row.update(prior_white=0,strategic_prior_version=1)
         return row
 
     def test_equivalent_parents_never_cross_splits(self):
-        for schema in (5,6,7):
+        for schema in (5,6,7,8):
             for second in ('G1|w|8|4|4|9,-3=wQ;10,-3=bQ;11,-3=wA2',
                            'G1|w|8|4|4|0,0=wQ;0,1=bQ;0,2=wA1'):
                 with tempfile.TemporaryDirectory(dir=WORK) as folder:
@@ -39,7 +39,7 @@ class LeakageTests(unittest.TestCase):
                     db.close()
 
     def test_child_exposure_removes_both_split_parents(self):
-        for schema in (6,7):
+        for schema in (6,7,8):
             with tempfile.TemporaryDirectory(dir=WORK) as folder:
                 root=Path(folder);data=root/'data.jsonl';families=self.families()
                 a=self.row(schema,0,families[0],'G1|w|8|4|4|0,0=wQ;1,0=bQ;2,0=wA1')

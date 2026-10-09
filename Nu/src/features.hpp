@@ -14,7 +14,7 @@ namespace nu {
 using namespace genseki;
 constexpr unsigned feature_count = 8192;
 constexpr unsigned schema = 3;
-constexpr unsigned latest_schema = 7;
+constexpr unsigned latest_schema = 8;
 inline std::uint64_t mix(std::uint64_t x) {
     x ^= x >> 30; x *= 0xbf58476d1ce4e5b9ULL;
     x ^= x >> 27; x *= 0x94d049bb133111ebULL;
@@ -27,7 +27,7 @@ inline unsigned slot(Piece p) {
 using Features = std::array<std::vector<unsigned>,2>;
 using Mobility = std::array<unsigned,22>;
 using Coordinates = std::array<std::array<int,2>,22>;
-inline std::array<int,2> orient(int q,int r,unsigned symmetry) {
+inline constexpr std::array<int,2> orient(int q,int r,unsigned symmetry) {
     if(symmetry>=6)std::swap(q,r);
     for(unsigned turn=0;turn<symmetry%6;++turn){int next=-r;r=q+r;q=next;}
     return {q,r};
@@ -75,7 +75,7 @@ inline Mobility update_movement_counts(const Board& board,const Mobility& previo
 // Schema 5 is a separate hybrid contract: cheap local features plus prior v1.
 // No exact mobility or articulation is embedded in the neural input.
 constexpr unsigned fast_schema=5;
-inline bool is_fast_schema(unsigned version){return version==5||version==7;}
+inline bool is_fast_schema(unsigned version){return version==5||version==7||version==8;}
 constexpr unsigned strategic_prior_version=1;
 struct FastPiece {
     bool present=false;
@@ -156,7 +156,7 @@ inline FastFeatures fast_features(const Board& board,const FastFeatures* previou
     auto height=[&](Hex cell){for(const auto& s:stacks)if(s.cell==cell)return unsigned(s.pieces.size());return 0u;};
     for(const auto& s:stacks){next.geometry.push_back(s.cell);for(auto p:s.pieces)if(p.bug==Bug::queen){anchors[unsigned(p.color)]=s.cell;queens[unsigned(p.color)]=true;}}
     std::array<Coordinates,2> coordinates{};std::array<unsigned,2> frames{};
-    if(version==7)for(unsigned perspective=0;perspective<2;++perspective) {
+    if(version>=7)for(unsigned perspective=0;perspective<2;++perspective) {
         if(!queens[perspective]) {
             unsigned first=22;
             for(const auto& stack:stacks)for(auto piece:stack.pieces) {
@@ -176,7 +176,7 @@ inline FastFeatures fast_features(const Board& board,const FastFeatures* previou
         for(unsigned h=0;h<s.pieces.size();++h) {
             auto piece=s.pieces[h];unsigned id=slot(piece);
             FastPiece descriptor{true,s.cell,h,unsigned(s.pieces.size()),unsigned(s.pieces.back().color),neighbors,anchors};
-            if(version==7) {
+            if(version>=7) {
                 descriptor.canonical=true;
                 for(unsigned p=0;p<2;++p) {
                     descriptor.coordinates[p]=coordinates[p][id];

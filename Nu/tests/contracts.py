@@ -18,7 +18,7 @@ def main():
     for name in ('engine', 'reference', 'positions', 'output'):
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--model', type=Path)
-    parser.add_argument('--schema', type=int, choices=range(1, 7), required=True)
+    parser.add_argument('--schema', type=int, choices=range(1, 9), required=True)
     parser.add_argument('--searches', type=int, default=12)
     parser.add_argument('--expected-reference-sha256', required=True)
     parser.add_argument('--expected-model-sha256')

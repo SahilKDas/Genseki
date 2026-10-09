@@ -59,7 +59,8 @@ int main(int argc,char** argv) {
             std::cout<<"verified "<<plies<<" random plies\n";return 0;
         }
         nu::State state(model);std::vector<nu::State::Undo> history;
-        unsigned threads=1,mib=16;auto search=std::make_unique<nu::Search>(mib);nu::SearchResult last;
+        const unsigned default_threads=model.feature_schema==8?8:1;
+        unsigned threads=default_threads,mib=16;auto search=std::make_unique<nu::Search>(mib);nu::SearchResult last;
         nu::SearchOptions search_options;
         (void)state.legal();
         bool pondering=false;std::jthread background;std::atomic<bool> entered{false};
@@ -104,13 +105,13 @@ int main(int argc,char** argv) {
                     if(!std::isfinite(ms)||ms<0||ms>60000)throw std::runtime_error("invalid time budget");
                     last=search->run(state,depth,ms,threads,nullptr,search_options);std::cout<<*state.board.uhp_move_string(last.move)<<'\n';
                 }else if(command=="options") {
-                    if(argument.empty()){std::cout<<"Threads;int;"<<threads<<";1;1;12\nTableMiB;int;"<<mib<<";16;1;256\nBackgroundPondering;bool;"<<(pondering?"True":"False")<<";False\nThreatPlies;int;"<<search_options.threat_plies<<";0;0;4\nLateMoveReductions;bool;"<<(search_options.lmr?"True":"False")<<";False\nProfile;bool;"<<(search_options.profile?"True":"False")<<";False\nHybridEvaluation;bool;"<<(search_options.hybrid?"True":"False")<<";False\nHybridWeight;int;"<<search_options.hybrid_weight<<";100;0;200\n";
+                    if(argument.empty()){std::cout<<"Threads;int;"<<threads<<';'<<default_threads<<";1;12\nTableMiB;int;"<<mib<<";16;1;256\nBackgroundPondering;bool;"<<(pondering?"True":"False")<<";False\nThreatPlies;int;"<<search_options.threat_plies<<";0;0;4\nLateMoveReductions;bool;"<<(search_options.lmr?"True":"False")<<";False\nProfile;bool;"<<(search_options.profile?"True":"False")<<";False\nHybridEvaluation;bool;"<<(search_options.hybrid?"True":"False")<<";False\nHybridWeight;int;"<<search_options.hybrid_weight<<";100;0;200\n";
                         std::cout<<"HybridTerms;int;"<<search_options.hybrid_terms<<";63;0;127\n";
                     }
                     else {std::istringstream a(argument);std::string name;unsigned value;a>>name;
                         if(name=="set")a>>name;
                         if(name=="get") {a>>name;
-                            if(name=="Threads")std::cout<<"Threads;int;"<<threads<<";1;1;12\n";
+                            if(name=="Threads")std::cout<<"Threads;int;"<<threads<<';'<<default_threads<<";1;12\n";
                             else if(name=="TableMiB")std::cout<<"TableMiB;int;"<<mib<<";16;1;256\n";
                             else if(name=="BackgroundPondering")std::cout<<"BackgroundPondering;bool;"<<(pondering?"True":"False")<<";False\n";
                             else if(name=="ThreatPlies")std::cout<<"ThreatPlies;int;"<<search_options.threat_plies<<";0;0;4\n";
@@ -137,7 +138,7 @@ int main(int argc,char** argv) {
                         else if(name=="HybridWeight"&&value<=200)search_options.hybrid_weight=value;
                         else if(name=="HybridTerms"&&value<=127)search_options.hybrid_terms=value;
                         else throw std::runtime_error("unknown option or out of range");
-                        if(name=="Threads")std::cout<<"Threads;int;"<<threads<<";1;1;12\n";
+                        if(name=="Threads")std::cout<<"Threads;int;"<<threads<<';'<<default_threads<<";1;12\n";
                         else if(name=="TableMiB")std::cout<<"TableMiB;int;"<<mib<<";16;1;256\n";
                         else if(name=="HybridWeight")std::cout<<"HybridWeight;int;"<<search_options.hybrid_weight<<";100;0;200\n";
                         else if(name=="HybridTerms")std::cout<<"HybridTerms;int;"<<search_options.hybrid_terms<<";63;0;127\n";

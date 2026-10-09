@@ -45,7 +45,7 @@ void verify(const genseki::Board& board,const nu::Model& model) {
 }
 
 int main() {
-    for(unsigned version:{6u,7u})for(unsigned width:{64u,128u}) {
+    for(unsigned version:{6u,7u,8u})for(unsigned width:{64u,128u}) {
         nu::Model model(width);model.feature_schema=version;
         for(const auto& position:{"G1|w|0|0|0|",
                 "G1|w|2|1|1|0,0=wA1;1,0=bS1",
@@ -65,7 +65,7 @@ int main() {
         verify(board,model);
     }
     bool rejected=false;
-    try{(void)nu::features(genseki::Board{},8);}catch(const std::runtime_error&){rejected=true;}
+    try{(void)nu::features(genseki::Board{},9);}catch(const std::runtime_error&){rejected=true;}
     require(rejected);
     std::cout<<"Nu D6 symmetry, translation, color-perspective and inference tests passed\n";
 }

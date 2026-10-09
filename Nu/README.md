@@ -32,6 +32,12 @@ Opt-in schema 7 combines the inexpensive schema-5 residual feature banks with
 schema-6 D6 frames, including directional masks. See [SCHEMA7.md](SCHEMA7.md)
 for verified repairs, historical validation limitations, and outstanding gates.
 
+Opt-in schema 8 retains schema 7's exact feature/score contract with fixed-capacity
+feature construction, reusable worker snapshots, block-level accumulator updates,
+and collision-verified compact cache identities. Schema-8 models default to eight
+search threads; schemas 1--7 keep their existing defaults. See [SCHEMA8.md](SCHEMA8.md)
+for checkpoint conversion provenance, parity tests, and measured performance.
+
 8192 x 64 and 8192 x 128 feature transformers, clipped-ReLU,
 paired queen-relative perspectives, and either a linear or nonlinear head. Every stone includes
 identity, relative ownership, coordinates, stack level and top/covered state.
@@ -72,7 +78,8 @@ The shared rules library uses signed 16-bit axial
 coordinates; Nu does not claim mathematically unbounded coordinates.
 
 Accumulator updates use sorted multiset differences, including queen-anchor
-changes. Integer scale is 256. SIMD output dispatch requires SSE4.1 and has a
+changes; schema 8 updates changed piece blocks and Queen globals directly.
+Integer scale is 256. SIMD output dispatch requires SSE4.1 and has a
 scalar fallback. Files use a 32-byte little-endian header: magic `NUNNUE1\0`,
 schema, feature count, width, quantization scale, FNV-1a payload checksum.
 Payload: int32 biases, int16 embeddings, int16 output weights. `NUNNUE2\0`
