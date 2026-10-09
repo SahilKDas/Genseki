@@ -44,7 +44,7 @@ struct Undo {
     Move move{};
     Color previous_side = Color::white;
     std::size_t previous_ply = 0;
-    std::array<std::uint8_t, 2> previous_turns{};
+    std::array<std::size_t, 2> previous_turns{};
     std::size_t previous_history_size = 0;
 };
 
@@ -88,7 +88,7 @@ private:
     Color side_to_move_ = Color::white;
     std::size_t ply_ = 0;
     std::vector<Stack> stacks_{};
-    std::array<std::uint8_t, 2> turns_taken_{0, 0};
+    std::array<std::size_t, 2> turns_taken_{0, 0};
     std::vector<Move> history_{};
 #ifdef GENSEKI_NU_CANCELLATION
     mutable std::array<int,64> cell_index_{};

@@ -12,6 +12,12 @@ from genseki.uhp import UhpProcess
 
 
 class TransportTests(unittest.TestCase):
+    def test_invalid_read_deadlines_rejected_without_waiting(self):
+        peer=UhpProcess([sys.executable,'-u','-c','import time; print("ok",flush=True); time.sleep(30)'])
+        try:
+            for timeout in (0,-1,float('nan'),float('inf')):
+                with self.assertRaises(ValueError):peer.read_response(timeout)
+        finally:peer.close()
     def test_startup_line_flood_is_reaped(self):
         original = subprocess.Popen
         children = []

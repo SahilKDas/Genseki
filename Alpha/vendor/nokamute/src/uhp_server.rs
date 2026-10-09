@@ -83,6 +83,15 @@ impl<W: Write> UhpServer<W> {
         self.pv_dirty = false;
         let board = self.board.as_ref().ok_or(UhpError::GameNotStarted)?;
         let arg_error = || UhpError::UnrecognizedCommand(args.to_string());
+        let checked_time = |duration: Duration| -> Result<Duration> {
+            if duration.is_zero() || std::time::Instant::now().checked_add(duration).is_none() {
+                return Err(UhpError::EngineError("invalid search duration".into()));
+            }
+            Ok(duration)
+        };
+        if <Rules as minimax::Game>::get_winner(board).is_some() {
+            return Err(UhpError::EngineError("game is over".into()));
+        }
         if let Some(arg) = args.strip_prefix("depth ") {
             let depth = arg.parse::<u8>().map_err(|_| arg_error())?;
             if depth == 0 {
@@ -90,11 +99,11 @@ impl<W: Write> UhpServer<W> {
             }
             self.engine.as_mut().unwrap().set_max_depth(depth);
         } else if let Some(arg) = args.strip_prefix("time ") {
-            let dur = parse_hhmmss(arg).ok_or_else(arg_error)?;
+            let dur = checked_time(parse_hhmmss(arg).ok_or_else(arg_error)?)?;
             self.engine.as_mut().unwrap().set_timeout(dur);
         } else if let Some(arg) = args.strip_prefix("seconds ") {
             // Unofficial command offering sub-second precision.
-            let dur = parse_seconds(arg).ok_or_else(arg_error)?;
+            let dur = checked_time(parse_seconds(arg).ok_or_else(arg_error)?)?;
             self.engine.as_mut().unwrap().set_timeout(dur);
         } else if let Some(arg) = args.strip_prefix("depthorseconds ") {
             // Unofficial command stopping whichever comes first.
@@ -104,7 +113,7 @@ impl<W: Write> UhpServer<W> {
             if depth == 0 {
                 return Err(UhpError::EngineError("depth must be positive".to_string()));
             }
-            let dur = parse_seconds(toks.next().ok_or_else(arg_error)?).ok_or_else(arg_error)?;
+            let dur = checked_time(parse_seconds(toks.next().ok_or_else(arg_error)?).ok_or_else(arg_error)?)?;
             if toks.next().is_some() {
                 return Err(arg_error());
             }
@@ -285,7 +294,9 @@ impl<W: Write> UhpServer<W> {
 
     // Bonus undocumented command.
     fn perft(&mut self, args: &str) -> Result<()> {
-        let depth = args.parse::<u8>().unwrap_or(20);
+        let depth = if args.is_empty() { 1 } else {
+            args.parse::<u8>().map_err(|_| UhpError::UnrecognizedCommand(args.into()))?
+        };
         let mut b = self.board.as_ref().ok_or(UhpError::GameNotStarted)?.clone();
         minimax::perft::<Rules>(&mut b, depth, false);
         Ok(())
@@ -318,9 +329,9 @@ impl<W: Write> UhpServer<W> {
         };
         if let Err(err) = result {
             if let UhpError::InvalidMove(invalid) = err {
-                writeln!(self.output, "invalidmove {invalid}").unwrap();
+                if writeln!(self.output, "invalidmove {invalid}").is_err() { return true; }
             } else {
-                writeln!(self.output, "err {err:?}").unwrap();
+                if writeln!(self.output, "err {err:?}").is_err() { return true; }
             }
         }
         false
@@ -564,6 +575,29 @@ fn test_parse_seconds() {
     assert_eq!(Some(Duration::from_mins(1)), parse_seconds("60"));
     assert_eq!(None, parse_seconds("01:23:45"));
     assert_eq!(None, parse_seconds("2e1"));
+}
+
+#[test]
+fn terminal_bestmove_is_an_error_not_a_panic() {
+    let mut board=Board::new_core_set();
+    let a=loc_to_hex((-1,-1));let b=loc_to_hex((-1,0));
+    let c=loc_to_hex((1,1));let d=loc_to_hex((1,0));
+    board.apply(Turn::Place(loc_to_hex((0,0)),Bug::Spider));
+    board.apply(Turn::Place(a,Bug::Queen));
+    board.apply(Turn::Place(c,Bug::Queen));
+    for _ in 0..2 {
+        for turn in [Turn::Move(a,b),Turn::Move(c,d),Turn::Move(b,a),Turn::Move(d,c)] {board.apply(turn);}
+    }
+    assert!(<Rules as minimax::Game>::get_winner(&board).is_some());
+    let mut config=PlayerConfig::default();config.num_threads=Some(1);
+    let mut server=UhpServer::new(config,Vec::new());
+    server.board=Some(board);
+    assert!(server.best_move("depth 1").is_err());
+    assert!(server.perft("bad-depth").is_err());
+    server.board=Some(Board::new_core_set());
+    assert!(server.best_move("seconds 0").is_err());
+    assert!(server.best_move("time 00:00:00").is_err());
+    assert!(server.best_move("seconds 18446744073709551615").is_err());
 }
 
 #[test]

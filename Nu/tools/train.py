@@ -11,16 +11,16 @@ import ctypes
 import copy
 
 def resource_guard():
-    from research_job import check_deadline
+    from research_job import check_deadline, StageStopped
     check_deadline()
     class Memory(ctypes.Structure):
         _fields_ = [('length', ctypes.c_ulong), ('load', ctypes.c_ulong)] + [(name, ctypes.c_ulonglong) for name in ('total', 'free', 'total_page', 'free_page', 'total_virtual', 'free_virtual', 'extended')]
     memory = Memory(); memory.length = ctypes.sizeof(memory)
     if os.name == 'nt':
         if not ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(memory)):
-            raise RuntimeError('cannot verify available RAM')
+            raise StageStopped('cannot verify available RAM')
         if memory.free < 512 * 1024**2:
-            raise RuntimeError('RAM reserve below 0.5 GiB; stopping safely')
+            raise StageStopped('RAM reserve below 0.5 GiB; stopping safely')
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))

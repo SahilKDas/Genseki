@@ -15,7 +15,7 @@ int main(int argc,char** argv)try {
                 for(unsigned lane=0;lane<2;++lane) {
                     unsigned mode=(lane+repeat)%2;
                     nu::State state(model,board);state.eager_features=mode==0;
-                    nu::State::feature_cache().clear();
+                    state.feature_cache.clear();
                     nu::Search search(16);nu::SearchOptions options;options.profile=true;
                     auto start=std::chrono::steady_clock::now();
                     results[mode]=search.run(state,2,5000,1,nullptr,options);

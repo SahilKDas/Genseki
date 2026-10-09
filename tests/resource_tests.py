@@ -111,7 +111,7 @@ class ResourceTests(unittest.TestCase):
             root = Path(folder)
             tools = root/'Nu/tools'
             tools.mkdir(parents=True)
-            for name in ('learning.py', 'train.py', 'evidence.py', 'decisions.py'):
+            for name in ('learning.py', 'train.py', 'evidence.py', 'decisions.py','position_keys.py'):
                 (tools/name).write_text('# fixture\n')
             (tools/'research_job.py').write_text('def check_deadline(): pass\n')
             with patch.object(gen2, 'ROOT', root), patch.object(gen2, 'WORK', root/'work'), \
@@ -137,7 +137,7 @@ class ResourceTests(unittest.TestCase):
             root = Path(folder)
             tools = root/'Nu/tools'
             tools.mkdir(parents=True)
-            for name in ('learning.py', 'train.py', 'evidence.py', 'decisions.py', 'research_job.py'):
+            for name in ('learning.py', 'train.py', 'evidence.py', 'decisions.py', 'research_job.py','position_keys.py'):
                 (tools/name).write_bytes((ROOT/'Nu/tools'/name).read_bytes())
             with patch.object(gen2, 'ROOT', root), patch.object(gen2, 'WORK', root/'work'), \
                     patch.object(gen2, 'REPORT', root/'reports'):

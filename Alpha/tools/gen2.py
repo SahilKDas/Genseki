@@ -41,7 +41,7 @@ def atomic(p,v):
 def read(p):return json.loads(Path(p).read_text())
 def training_runtime():
     pin=REPORT/'trainer-latest-pin.json'
-    files=['Nu/tools/'+name for name in ('learning.py','train.py','evidence.py','decisions.py','research_job.py')]
+    files=['Nu/tools/'+name for name in ('learning.py','train.py','evidence.py','decisions.py','research_job.py','position_keys.py')]
     identities={file:digest(ROOT/file) for file in files}
     revision=hashlib.sha256(json.dumps(identities,sort_keys=True).encode()).hexdigest()
     if pin.exists() and read(pin)['files']!=identities:
@@ -128,7 +128,14 @@ def tactical_keys(position_key):
             positions.append(cmd(e,'genseki-position')[0][0])
     return sorted({position_key(position) for position in positions})
 def curated_index(learning,files,index,checkpoint):
-    db=learning.index_corpus(files,index);keys=tactical_keys(learning.position_key)
+    db=learning.index_corpus(files,index)
+    version=db.execute('select value from metadata where key="position_key_version"').fetchone()
+    if version and version[0]=='base-symmetry-opening-v2':
+        from position_keys import position_key as key
+    elif version and version[0]=='legacy-position-v1':key=learning.position_key
+    else:
+        db.close();raise RuntimeError('unknown index key contract; rebuild into a new namespace')
+    keys=tactical_keys(key)
     signature=hashlib.sha256(json.dumps(keys).encode()).hexdigest()
     previous=db.execute('select value from metadata where key="tactical_exclusions"').fetchone()
     marks=','.join('?' for _ in keys)

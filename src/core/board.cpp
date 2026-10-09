@@ -679,7 +679,7 @@ std::string Board::summary() const {
 std::string Board::position_string() const {
     std::ostringstream out;
     out << "G1|" << color_char(side_to_move_) << '|' << ply_ << '|'
-        << static_cast<unsigned>(turns_taken_[0]) << '|' << static_cast<unsigned>(turns_taken_[1]) << '|';
+        << turns_taken_[0] << '|' << turns_taken_[1] << '|';
     bool first_stack = true;
     for (const auto& stack : stacks_) {
         if (!first_stack) out << ';';
@@ -700,18 +700,19 @@ std::expected<Board, std::string> Board::from_position_string(std::string_view t
     }
     Board board;
     board.side_to_move_ = fields[1] == "w" ? Color::white : Color::black;
-    unsigned white_turns = 0;
-    unsigned black_turns = 0;
+    std::size_t white_turns = 0;
+    std::size_t black_turns = 0;
     if (!parse_integer(fields[2], board.ply_) || !parse_integer(fields[3], white_turns)
         || !parse_integer(fields[4], black_turns)
-        || white_turns > std::numeric_limits<std::uint8_t>::max()
-        || black_turns > std::numeric_limits<std::uint8_t>::max()) {
+        || board.ply_ == std::numeric_limits<std::size_t>::max()
+        || white_turns > board.ply_ || black_turns > board.ply_) {
         return std::unexpected("invalid position counters");
     }
     board.turns_taken_ = {
-        static_cast<std::uint8_t>(white_turns),
-        static_cast<std::uint8_t>(black_turns),
+        white_turns,
+        black_turns,
     };
+    std::vector<Piece> identities;
     if (!fields[5].empty()) {
         for (const auto stack_text : split(fields[5], ';')) {
             const auto equals = stack_text.find('=');
@@ -722,13 +723,22 @@ std::expected<Board, std::string> Board::from_position_string(std::string_view t
             int q = 0;
             int r = 0;
             if (!parse_integer(stack_text.substr(0, comma), q)
-                || !parse_integer(stack_text.substr(comma + 1, equals - comma - 1), r)) {
+                || !parse_integer(stack_text.substr(comma + 1, equals - comma - 1), r)
+                || q < std::numeric_limits<std::int16_t>::min() || q > std::numeric_limits<std::int16_t>::max()
+                || r < std::numeric_limits<std::int16_t>::min() || r > std::numeric_limits<std::int16_t>::max()) {
                 return std::unexpected("invalid stack coordinate");
             }
             Stack stack{Hex{static_cast<std::int16_t>(q), static_cast<std::int16_t>(r)}, {}};
             for (const auto piece_text : split(stack_text.substr(equals + 1), ',')) {
                 auto piece = parse_piece(piece_text);
                 if (!piece) return std::unexpected(piece.error());
+                if (identities.size() >= 22 || std::ranges::find(identities, *piece) != identities.end()) {
+                    return std::unexpected("duplicate piece or exhausted Base inventory");
+                }
+                if (!stack.pieces.empty() && piece->bug != Bug::beetle) {
+                    return std::unexpected("only Beetles may occupy elevated layers in Base Hive");
+                }
+                identities.push_back(*piece);
                 stack.pieces.push_back(*piece);
             }
             if (stack.pieces.empty() || board.stack_at(stack.cell) != nullptr) {
@@ -742,8 +752,8 @@ std::expected<Board, std::string> Board::from_position_string(std::string_view t
 }
 
 std::expected<std::string, std::string> Board::uhp_move_string(const Move& move) const {
-    if (move.kind == MoveKind::pass) return std::string{"pass"};
     if (!is_legal(move)) return std::unexpected("move is not legal");
+    if (move.kind == MoveKind::pass) return std::string{"pass"};
     const auto moving = piece_name(move.piece);
     if (stacks_.empty()) return moving;
 
@@ -776,7 +786,11 @@ std::expected<std::string, std::string> Board::uhp_move_string(const Move& move)
 }
 
 std::expected<Move, std::string> Board::parse_uhp_move(std::string_view text) const {
-    if (text == "pass") return Move{.kind = MoveKind::pass};
+    if (text == "pass") {
+        const Move move{.kind = MoveKind::pass};
+        if (!is_legal(move)) return std::unexpected("pass is not legal");
+        return move;
+    }
     const auto space = text.find(' ');
     const auto moving_text = text.substr(0, space);
     auto moving = parse_piece(moving_text);
@@ -853,7 +867,7 @@ std::string Board::game_string() const {
         case GameResult::draw: out << "Draw"; break;
     }
     out << ';' << (side_to_move_ == Color::white ? "White" : "Black")
-        << '[' << static_cast<unsigned>(turns_taken_[index(side_to_move_)]) + 1 << ']';
+        << '[' << turns_taken_[index(side_to_move_)] + 1 << ']';
 
     Board replay;
     for (const auto& move : history_) {

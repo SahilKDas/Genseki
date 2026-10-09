@@ -1,4 +1,5 @@
 #include "alpha_process.hpp"
+#include "genseki/core/pipe_write.hpp"
 #include <algorithm>
 #include <sstream>
 #include <regex>
@@ -35,9 +36,10 @@ struct AlphaProcess::Impl {
     std::expected<std::vector<std::string>,std::string> command(const std::string& text,unsigned timeout,std::stop_token stop){
         if(!input||!output)return std::unexpected("The analysis engine is unavailable.");
         if(stop.stop_requested())return std::unexpected("Review cancelled.");
-        auto line=text+'\n';DWORD written=0;
-        if(line.size()>262144||!WriteFile(input,line.data(),DWORD(line.size()),&written,nullptr)||written!=line.size()){close();return std::unexpected("Could not contact the analysis engine.");}
-        return response(timeout,stop);
+        auto deadline=GetTickCount64()+timeout;auto line=text+'\n';
+        if(line.size()>262144||!bounded_pipe_write(input,std::move(line),deadline,stop)){close();return std::unexpected("Could not contact the analysis engine within its deadline.");}
+        auto now=GetTickCount64();
+        return response(now<deadline?unsigned(deadline-now):0,stop);
     }
 #endif
 };
@@ -52,6 +54,7 @@ unsigned AlphaProcess::process_id()const {
 }
 std::expected<void,std::string> AlphaProcess::start(const std::filesystem::path& requested,std::stop_token stop){
 #ifdef _WIN32
+    impl_->close();
     std::error_code error;auto path=std::filesystem::absolute(requested,error);
     if(error||!std::filesystem::is_regular_file(path))return std::unexpected("The Alpha executable is unavailable. Board facts remain available.");
     SECURITY_ATTRIBUTES sa{sizeof(sa),nullptr,TRUE};HANDLE r=nullptr,w=nullptr,ir=nullptr,iw=nullptr;

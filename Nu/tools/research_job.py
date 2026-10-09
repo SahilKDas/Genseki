@@ -11,9 +11,12 @@ sys.path.insert(0,str(ROOT))
 from genseki.resources import job_lock, heavy_job_path, team_job_path
 _deadline=None
 
+class StageStopped(RuntimeError):
+    """A resumable resource/deadline stop, not a rules or protocol failure."""
+
 def check_deadline():
     if _deadline is not None and time.monotonic()>=_deadline:
-        raise RuntimeError('research stage reached its two-hour limit')
+        raise StageStopped('research stage reached its two-hour limit')
 
 @contextmanager
 def research_job():

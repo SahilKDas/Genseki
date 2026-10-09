@@ -50,6 +50,7 @@ def main(path):
             "RandomOpening;bool;True;False"
         ]
         assert response(proc, "options set Aggression 101")[0].startswith("err ")
+        assert response(proc, "options set Aggression 50junk")[0].startswith("err ")
         assert response(proc, "newgame Base+P") == ["Base+P;NotStarted;White[1]"]
         assert response(proc, "perft 0") == ["1"]
         assert response(proc, "perft 1 trailing")[0].startswith("err ")

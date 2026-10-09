@@ -38,7 +38,11 @@ impl Board {
             return Err(err());
         }
         if let Some(exts) = toks.next() {
+            if exts.is_empty() {return Err(err());}
+            let mut seen=0u8;
             for ext in exts.chars() {
+                let bit=match ext {'M'=>1,'L'=>2,'P'=>4,_=>return Err(err())};
+                if seen&bit!=0 {return Err(err());}seen|=bit;
                 match ext {
                     'M' => starting[Bug::Mosquito as usize] = 1,
                     'L' => starting[Bug::Ladybug as usize] = 1,
@@ -47,6 +51,7 @@ impl Board {
                 }
             }
         }
+        if toks.next().is_some() {return Err(err());}
         Ok(Board::new(starting))
     }
 
@@ -370,6 +375,12 @@ mod tests {
     use super::*;
     use crate::Rules;
     use minimax::{Game, Strategy};
+    #[test]
+    fn invalid_game_types_are_rejected() {
+        for game in ["Base+", "Base+MM", "Base+MLP+M", "Base++"] {
+            assert!(Board::from_game_type(game).is_err());
+        }
+    }
 
     #[test]
     fn test_move_string_round_trip() {

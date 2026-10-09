@@ -20,6 +20,7 @@ class ResumeTests(unittest.TestCase):
             model_sha256=sha,engine_sha256=sha,opponent_sha256=sha,milliseconds=250,internal_ms=230,
             threads=1,cap=160,repetition_policy=arena.REPETITION_POLICY,threat_plies=0,lmr=False,seed_base=71000,
             hybrid=False,hybrid_weight=100,hybrid_terms=63,
+            opponent_search_policy='equal-nu-search-v1',
             invocation=[str(artifact),'--model',str(artifact)],opponent_model_sha256=sha,
             opponent_version=None,opponent_revision=None,table_mib=16,background_pondering=False,random_opening=False,
             referee_sha256=sha,validation_policy=arena.VALIDATION_POLICY,memory_policy=arena.MEMORY_POLICY,depth_limit=64)
@@ -36,7 +37,7 @@ class ResumeTests(unittest.TestCase):
             self.assertEqual(path.read_bytes(),before)
 
     def test_changed_identity_or_mirrored_order_rejected(self):
-        for field in ('model_sha256','validation_policy','depth_limit','referee_sha256','hybrid','hybrid_weight','hybrid_terms','order','rejected'):
+        for field in ('model_sha256','validation_policy','depth_limit','referee_sha256','hybrid','hybrid_weight','hybrid_terms','opponent_search_policy','order','rejected'):
             with tempfile.TemporaryDirectory() as folder:
                 args,path,report=self.fixture(Path(folder))
                 if field=='order':report['games'][0]['nu_color']='black'

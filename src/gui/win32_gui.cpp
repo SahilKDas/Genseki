@@ -25,6 +25,7 @@
 #include "audio_player.hpp"
 #include "svg_icons.hpp"
 #include "review_window.hpp"
+#include "genseki/core/pipe_write.hpp"
 
 namespace {
 
@@ -259,7 +260,6 @@ public:
 
     void stop() {
         if (in_) {
-            send_only("exit");
             CloseHandle(in_);
             in_ = nullptr;
         }
@@ -270,7 +270,7 @@ public:
         if (process_) {
             if (WaitForSingleObject(process_, 250) == WAIT_TIMEOUT) {
                 TerminateProcess(process_, 1);
-                WaitForSingleObject(process_, INFINITE);
+                WaitForSingleObject(process_, 1000);
             }
             CloseHandle(process_);
             process_ = nullptr;
@@ -283,17 +283,15 @@ public:
 
     std::vector<std::string> command(std::string text) {
         if (!in_ || !out_) return {"err Engine connection is closed; restart the engine"};
-        send_only(text);
-        return read_until_ok();
+        const auto deadline=GetTickCount64()+5000;
+        if(text.find_first_of("\r\n")!=std::string::npos||text.size()>1024*1024
+            ||!genseki::bounded_pipe_write(in_,text+"\n",deadline)) {
+            stop();return {"err Engine write deadline or pipe failure; restart the engine"};
+        }
+        return read_until_ok(deadline);
     }
 
 private:
-    void send_only(const std::string& text) {
-        std::string line = text + "\n";
-        DWORD written = 0;
-        WriteFile(in_, line.data(), static_cast<DWORD>(line.size()), &written, nullptr);
-    }
-
     std::optional<std::string> read_line(ULONGLONG deadline) {
         std::string line;
         char ch = 0;
@@ -310,10 +308,9 @@ private:
         return line;
     }
 
-    std::vector<std::string> read_until_ok() {
+    std::vector<std::string> read_until_ok(ULONGLONG deadline=GetTickCount64()+5000) {
         std::vector<std::string> lines;
         std::size_t bytes=0;
-        const auto deadline=GetTickCount64()+5000;
         for (;;) {
             auto line = read_line(deadline);
             if(!line){

@@ -131,4 +131,14 @@ int main(){
     search.cancel();worker.join();
     check(mate.board.is_legal(interrupted.move));check(mate.equivalent());
     std::cout<<"Nu state/search/perft tests passed\n";
+    nu::Model canonical;canonical.feature_schema=6;
+    nu::State canonical_state(canonical,*tactical);
+    nu::Search parallel(1);
+    for(unsigned repetition=0;repetition<24;++repetition) {
+        auto result=parallel.run(canonical_state,4,10,4);
+        check(canonical_state.board.is_legal(result.move)&&canonical_state.equivalent());
+    }
+    auto copied=canonical_state;
+    copied.feature_cache.emplace("worker-only",nu::State::CachedFeatures{});
+    check(!canonical_state.feature_cache.contains("worker-only"));
 }

@@ -1,4 +1,5 @@
 #include "../src/review/alpha_process.hpp"
+#include "genseki/core/pipe_write.hpp"
 #include <windows.h>
 #include <chrono>
 #include <cstdlib>
@@ -10,6 +11,12 @@ using namespace genseki::review;
 void require(bool value,const char* message){if(!value){std::cerr<<message<<'\n';std::exit(1);}}
 int main(int argc,char** argv){
     require(argc==2,"fake executable required");
+    HANDLE stalled_read=nullptr,stalled_write=nullptr;
+    require(CreatePipe(&stalled_read,&stalled_write,nullptr,4096),"stalled pipe fixture");
+    const auto write_started=GetTickCount64();
+    require(!bounded_pipe_write(stalled_write,std::string(262144,'x'),write_started+10),"blocked writer times out");
+    require(GetTickCount64()-write_started<100,"blocked writer has bounded caller latency");
+    CloseHandle(stalled_read);CloseHandle(stalled_write);
     for(const auto* mode:{L"normal",L"options",L"illegal",L"malformed",L"exit",L"hang"}){
         SetEnvironmentVariableW(L"GENSEKI_REVIEW_FAKE_MODE",mode);
         AlphaProcess engine;auto started=engine.start(argv[1],{});

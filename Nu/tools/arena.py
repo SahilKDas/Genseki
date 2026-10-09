@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from genseki.uhp import UhpProcess
 from genseki.gauntlet import SEARCH_DEPTH_LIMIT
+from research_job import StageStopped
 
 VALIDATION_POLICY = 'three-reconstructed-boards-repetition-v1'
 MEMORY_POLICY = 'configure-before-newgame-v1'
@@ -80,6 +81,7 @@ def main():
                 repetition_policy=REPETITION_POLICY,threat_plies=args.threat_plies,lmr=args.lmr,seed_base=args.seed_base,
                 invocation=[str(args.opponent)],opponent_model_sha256=None)
     report.update(referee_sha256=hashlib.sha256(args.referee.read_bytes()).hexdigest(),
+                  opponent_search_policy='equal-nu-search-v1' if args.opponent_model else 'external-engine-v1',
                   hybrid=args.hybrid,hybrid_weight=args.hybrid_weight,hybrid_terms=args.hybrid_terms,
                   validation_policy=VALIDATION_POLICY,depth_limit=SEARCH_DEPTH_LIMIT,
                   memory_policy=MEMORY_POLICY,
@@ -93,6 +95,10 @@ def main():
     if saved is not None:
         keys=('kind','expected_games','engine_sha256','model_sha256','opponent_sha256','opponent_model_sha256','referee_sha256','validation_policy','memory_policy','depth_limit','openings_sha256','milliseconds','internal_ms','threads','cap','repetition_policy','threat_plies','lmr','seed_base','table_mib','background_pondering','random_opening')
         if saved.get('rejected') or any(saved.get(k)!=report.get(k) for k in keys):raise RuntimeError('arena resume identity/settings mismatch or rejected run')
+        previous_policy=saved.get('opponent_search_policy')
+        if previous_policy is None:
+            if args.opponent_model and (args.threat_plies or args.lmr):raise RuntimeError('legacy opponent search settings are not equivalent')
+        elif previous_policy!=report['opponent_search_policy']:raise RuntimeError('opponent search policy mismatch')
         if any(saved.get(k)!=report[k] for k in ('hybrid','hybrid_weight','hybrid_terms')):raise RuntimeError('hybrid resume settings mismatch')
         rows=saved['games']
         if len(rows)>args.games or any(g.get('pair')!=i//2 or g.get('opening_seed')!=(openings[i//2]['seed'] if openings else args.seed_base+i//2) or g.get('nu_color')!=('white' if i%2==0 else 'black') for i,g in enumerate(rows)):raise RuntimeError('arena resume game prefix mismatch')
@@ -183,6 +189,12 @@ def main():
                         score=.5 if result=='Draw' else float((result=='WhiteWins') == (color==0));break
             except MoveDeadline:
                 termination='timeout';score=float(current is not nu);result='Forfeit';timeout_side='Nu' if current is nu else 'Opponent'
+            except (KeyboardInterrupt,StageStopped) as error:
+                interrupted=dict(pair=pair,opening_seed=opening_seed,moves=moves,searches=searches,
+                                 reason=type(error).__name__)
+                atomic_json(args.output.with_name(args.output.stem+f'.interrupted-{time.time_ns()}.json'),interrupted)
+                atomic_json(args.output,report)
+                raise
             except BaseException as error:
                 failure=dict(pair=pair,opening_seed=opening_seed,nu_color='white' if color==0 else 'black',
                              moves=moves,searches=searches,error=repr(error),termination='rejected')

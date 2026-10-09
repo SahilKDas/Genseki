@@ -70,6 +70,8 @@ class UhpProcess:
             self.finished.set()
 
     def read_response(self, timeout: float) -> list[str]:
+        if not math.isfinite(timeout) or timeout <= 0:
+            raise ValueError('UHP timeout must be positive and finite')
         return self._read_until(time.perf_counter() + timeout)
 
     def _read_until(self, deadline: float) -> list[str]:

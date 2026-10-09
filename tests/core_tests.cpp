@@ -167,6 +167,24 @@ void uhp_protocol() {
 }  // namespace
 
 int main() {
+    const genseki::Board opening;
+    require(!opening.parse_uhp_move("pass"),"checked notation rejects illegal opening pass");
+    require(!opening.uhp_move_string(genseki::Move{.kind=genseki::MoveKind::pass}),"checked formatting rejects illegal pass");
+    auto long_game=genseki::Board::from_position_string("G1|w|600|300|300|0,0=wQ,bB1;1,0=bQ");
+    require(bool(long_game),"long-game counters are not truncated to a byte");
+    auto long_before=long_game->position_string();
+    auto long_undo=long_game->make_generated_move(long_game->legal_moves().front());
+    require(long_game->position_string().starts_with("G1|b|601|301|300|"),"turn counter increments without wrapping");
+    long_game->unmake_move(long_undo);
+    require(long_game->position_string()==long_before,"long counters unmake exactly");
+    for (const auto text : {
+        "G1|w|8|4|4|0,0=wQ;1,0=wQ",
+        "G1|w|8|4|4|0,0=wQ,wQ",
+        "G1|w|8|4|4|65536,0=wQ",
+        "G1|w|8|4|4|0,-32769=wQ",
+        "G1|w|8|4|4|0,0=wQ,bA1"}) {
+        require(!genseki::Board::from_position_string(text), "reject unsafe diagnostic position");
+    }
     opening_and_queen_deadline();
     piece_movement();
     connectivity_and_results();

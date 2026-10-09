@@ -98,6 +98,7 @@ struct FastFeatures {
     unsigned rebuilt_pieces=0;
 };
 inline std::vector<bool> connectivity_pins(const std::vector<Hex>& cells) {
+    if(cells.size()>22)throw std::runtime_error("Base Hive has at most 22 occupied cells");
     std::vector<bool> pins(cells.size());
     std::array<std::array<unsigned,6>,22> edges{};std::array<unsigned,22> degree{};
     for(unsigned i=0;i<cells.size();++i)for(unsigned j=i+1;j<cells.size();++j)

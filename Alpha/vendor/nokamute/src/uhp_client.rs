@@ -4,15 +4,17 @@ use crate::notation::{Result, UhpError};
 use crate::{Board, Color, Player, Turn};
 
 use minimax::Winner;
-use std::io::{BufRead, BufReader, Write};
+use std::io::{BufRead, BufReader, Read, Write};
 use std::ops::Drop;
-use std::process::{Child, ChildStdin, ChildStdout, Command, Stdio};
-use std::time::Duration;
+use std::process::{Child, Command, Stdio};
+use std::sync::mpsc::{self, Receiver, SyncSender};
+use std::time::{Duration, Instant};
 
 pub(crate) struct UhpClient {
     proc: Child,
-    input: ChildStdin,
-    output: BufReader<ChildStdout>,
+    input: SyncSender<String>,
+    output: Receiver<std::io::Result<String>>,
+    failed: bool,
     board: Board,
     pub name: String,
     pub capabilities: String,
@@ -20,22 +22,42 @@ pub(crate) struct UhpClient {
 
 impl UhpClient {
     pub(crate) fn new(cmd_args: &[String]) -> Result<UhpClient> {
+        if cmd_args.is_empty() {return Err(UhpError::EngineError("missing engine command".into()));}
         let mut proc = Command::new(&cmd_args[0])
             .args(&cmd_args[1..])
             .stdin(Stdio::piped())
             .stdout(Stdio::piped())
             .spawn()?;
-        let input = proc.stdin.take().unwrap();
-        let output = BufReader::new(proc.stdout.take().unwrap());
+        let mut input = proc.stdin.take().unwrap();
+        let mut output = BufReader::new(proc.stdout.take().unwrap());
+        let (input_tx,input_rx)=mpsc::sync_channel::<String>(1);
+        let (output_tx,output_rx)=mpsc::sync_channel(1);
+        std::thread::spawn(move || {
+            while let Ok(line)=input_rx.recv() {
+                if input.write_all(line.as_bytes()).and_then(|_|input.flush()).is_err() {break;}
+            }
+        });
+        std::thread::spawn(move || loop {
+            let mut line=String::new();
+            let result=match output.by_ref().take(65537).read_line(&mut line) {
+                Ok(0)=>Err(std::io::Error::new(std::io::ErrorKind::UnexpectedEof,"engine exited before ok")),
+                Ok(_) if line.len()>65536=>Err(std::io::Error::new(std::io::ErrorKind::InvalidData,"engine output limit exceeded")),
+                Ok(_)=>Ok(line),
+                Err(error)=>Err(error),
+            };
+            let stop=result.is_err();
+            if output_tx.send(result).is_err() || stop {break;}
+        });
         let mut client = UhpClient {
             proc,
-            input,
-            output,
+            input: input_tx,
+            output: output_rx,
+            failed: false,
             board: Board::new_core_set(),
             name: String::new(),
             capabilities: String::new(),
         };
-        let id = client.consume_output()?;
+        let id = client.consume_output(Instant::now()+Duration::from_secs(30))?;
         client.name = id
             .first()
             .cloned()
@@ -55,12 +77,19 @@ impl UhpClient {
         game_type[5..].chars().all(|expansion| self.capabilities.contains(expansion))
     }
 
-    fn consume_output(&mut self) -> Result<Vec<String>> {
+    fn consume_output(&mut self, deadline: Instant) -> Result<Vec<String>> {
         let mut out = Vec::new();
         let mut err = None;
         loop {
-            let mut line = String::new();
-            self.output.read_line(&mut line)?;
+            let line = match self.output.recv_timeout(deadline.saturating_duration_since(Instant::now())) {
+                Ok(Ok(line))=>line,
+                _=> {
+                    self.failed=true;
+                    let _=self.proc.kill();
+                    return Err(UhpError::EngineError("engine transport failed or timed out".into()));
+                }
+            };
+            if line.len()>65536 || out.len()>=256 {return Err(UhpError::EngineError("engine output limit exceeded".into()));}
             if line.trim() == "ok" {
                 break;
             }
@@ -76,10 +105,17 @@ impl UhpClient {
     }
 
     fn command(&mut self, command: &str) -> Result<Vec<String>> {
+        let deadline=Instant::now()+Duration::from_secs(30);
+        if self.failed {return Err(UhpError::EngineError("engine session invalidated".into()));}
+        if command.len()>1048576 || command.contains(['\r','\n']) {return Err(UhpError::EngineError("invalid engine command".into()));}
         let mut line = command.to_owned();
         line.push('\n');
-        self.input.write_all(line.as_bytes())?;
-        self.consume_output()
+        if self.input.try_send(line).is_err() {
+            self.failed=true;
+            let _=self.proc.kill();
+            return Err(UhpError::EngineError("engine writer unavailable".into()));
+        }
+        self.consume_output(deadline)
     }
 
     pub(crate) fn new_game(&mut self, game_type: &str) -> Result<String> {
@@ -124,7 +160,7 @@ impl UhpClient {
     }
 
     pub(crate) fn raw_generate_moves(&mut self) -> Result<String> {
-        Ok(self.command("validmoves")?[0].clone())
+        self.command("validmoves")?.into_iter().next().ok_or_else(||UhpError::EngineError("missing validmoves reply".into()))
     }
 
     // Ask the engine for the next possible moves.
@@ -141,26 +177,43 @@ impl UhpClient {
     }
 
     pub(crate) fn best_move(&mut self, timeout: Duration) -> Result<Turn> {
-        let secs = timeout.as_secs();
-        let h = secs / 3600;
-        let m = secs % 3600 / 60;
-        let s = secs % 60;
         let move_string =
-            self.command(&format!("bestmove time {h:02}:{m:02}:{s:02}"))?.pop().unwrap();
+            self.command(&format!("bestmove seconds {:.9}",timeout.as_secs_f64()))?.pop()
+                .ok_or_else(||UhpError::EngineError("missing bestmove reply".into()))?;
         self.board.from_move_string(&move_string)
     }
 
     pub(crate) fn best_move_depth(&mut self, depth: u8) -> Result<Turn> {
-        let move_string = self.command(&format!("bestmove depth {depth}"))?.pop().unwrap();
+        let move_string = self.command(&format!("bestmove depth {depth}"))?.pop()
+            .ok_or_else(||UhpError::EngineError("missing bestmove reply".into()))?;
         self.board.from_move_string(&move_string)
     }
 }
 
 impl Drop for UhpClient {
     fn drop(&mut self) {
-        if let Err(err) = self.proc.kill() {
-            println!("{err}");
-        }
+        let _=self.proc.kill();
+        let _=self.proc.wait();
+    }
+}
+
+#[cfg(all(test, windows))]
+mod transport_tests {
+    use super::*;
+
+    #[test]
+    fn eof_and_stalled_response_are_bounded() {
+        assert!(UhpClient::new(&["cmd.exe".into(),"/c".into(),"exit".into()]).is_err());
+        let proc=Command::new("powershell.exe")
+            .args(["-NoProfile","-Command","Start-Sleep -Seconds 60"])
+            .stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null()).spawn().unwrap();
+        let (input,_input_rx)=mpsc::sync_channel(1);
+        let (_output_tx,output)=mpsc::sync_channel(1);
+        let mut client=UhpClient {proc,input,output,failed:false,board:Board::new_core_set(),name:String::new(),capabilities:String::new()};
+        let start=Instant::now();
+        assert!(client.consume_output(start+Duration::from_millis(10)).is_err());
+        assert!(start.elapsed()<Duration::from_millis(250));
+        assert!(client.command("info").is_err());
     }
 }
 

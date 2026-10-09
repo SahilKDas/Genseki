@@ -80,7 +80,7 @@ public:
     explicit Board(std::string game_type="Base") {
         if(game_type.substr(0,4)!="Base") throw std::runtime_error("invalid game type");
         if(game_type.size()>4) {
-            if(game_type[4]!='+' || game_type.size()>8) throw std::runtime_error("invalid game type");
+            if(game_type[4]!='+' || game_type.size()==5 || game_type.size()>8) throw std::runtime_error("invalid game type");
             for(size_t i=5;i<game_type.size();++i) {
                 if(std::string("MLP").find(game_type[i])==std::string::npos || !expansions.insert(game_type[i]).second)
                     throw std::runtime_error("invalid game type");
@@ -495,7 +495,9 @@ public:
                     if(action=="get"&&!(in>>extra))std::cout<<option_line(name)<<'\n';
                     else if(action=="set"&&(in>>value)&&!(in>>extra)) {
                         if(name=="Aggression"||name=="NumThreads"||name=="TableSizeMiB") {
-                            int x=std::stoi(value);
+                            std::size_t consumed=0;
+                            int x=std::stoi(value,&consumed);
+                            if(consumed!=value.size())throw std::runtime_error("invalid option");
                             if(name=="Aggression"&&x>=0&&x<=100)aggression=x;
                             else if(name=="NumThreads"&&x>=1&&x<=12)threads=x;
                             else if(name=="TableSizeMiB"&&x>=1&&x<=4096)table=x;
@@ -508,6 +510,9 @@ public:
                             else if(name=="Verbose")verbose=x;
                             else throw std::runtime_error("invalid option");
                         }
+                        last_search.reset();
+                        ponder_result.reset();
+                        ponder_position.clear();
                         std::cout<<option_line(name)<<'\n';
                     } else throw std::runtime_error("invalid option");
                 }

@@ -32,6 +32,8 @@ endif()
 include(CTest)
 find_package(Python3 COMPONENTS Interpreter)
 if(BUILD_TESTING AND Python3_Interpreter_FOUND)
+  add_test(NAME alpha_audit_repairs
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/audit_repairs.py)
   add_test(NAME alpha_smoke
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/smoke.py
             $<TARGET_FILE:alpha_nokamute>)

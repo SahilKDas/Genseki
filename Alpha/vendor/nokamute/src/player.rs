@@ -235,10 +235,12 @@ pub fn configure_player() -> Result<(PlayerConfig, Vec<String>), pico_args::Erro
     }
     let table_size: Option<usize> = args.opt_value_from_str("--table_mb")?;
     if let Some(table_size) = table_size {
-        config.opts.table_byte_size = table_size.checked_shl(20).unwrap();
+        if !(1..=256).contains(&table_size) {exit("table_mb must be between 1 and 256".into());}
+        config.opts.table_byte_size = table_size * (1 << 20);
     }
     let window_arg: Option<u32> = args.opt_value_from_str("--aspiration-window")?;
     if let Some(window) = window_arg {
+        if window == 0 || window > i16::MAX as u32 {exit("aspiration-window must be between 1 and 32767".into());}
         config.opts = config.opts.with_aspiration_window(window as minimax::Evaluation);
     }
     if args.contains("--double-step") {

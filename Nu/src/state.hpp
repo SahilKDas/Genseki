@@ -19,10 +19,8 @@ struct State {
     mutable bool pending_unchanged=false;
     mutable std::shared_ptr<const FastFeatures> fast;
     struct CachedFeatures {Features active;Mobility mobility;};
-    static auto& feature_cache() {
-        static thread_local std::unordered_map<std::string,CachedFeatures> cache;
-        return cache;
-    }
+    // Value ownership keeps copied search workers isolated and avoids TLS teardown.
+    mutable std::unordered_map<std::string,CachedFeatures> feature_cache;
     std::uint64_t hash;
     std::uint64_t history_key;
     std::vector<std::uint64_t> path;
@@ -86,9 +84,9 @@ struct State {
             return;
         }
         if(!move&&pending_move){move=&*pending_move;unchanged_occupancy=pending_unchanged;}
-        // Thread-local and bounded: full serialized keys avoid hash aliasing and locks.
+        // Worker-owned and bounded: serialized keys avoid hash aliasing and locks.
         // Inputs depend on the schema and board, not network weights or search history.
-        auto& cache=feature_cache();
+        auto& cache=feature_cache;
         std::string identity;
         if(!eager_features) {
             identity=std::to_string(model->feature_schema)+":"+board.position_string();
